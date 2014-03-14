@@ -1,4 +1,4 @@
-StringManupulation
+StringManipulation
 ==================
 
 IntelliJ plugin
