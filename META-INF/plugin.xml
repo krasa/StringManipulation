@@ -38,6 +38,12 @@
     <change-notes>
         <![CDATA[
         <p>
+        <h4>Version 2.6</h4>
+        <ul>
+            <li>Line break fix</li>
+        </ul>
+        </p>
+        <p>
         <h4>Version 2.5.135.445</h4>
         <ul>
             <li>Multiple Selections support</li>
@@ -129,7 +135,7 @@
     ]]>
     </change-notes>
 	
-    <version>2.5.135.445</version>
+    <version>2.6.135.445</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445" />
 	
@@ -211,7 +217,7 @@
             </action>
             <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
                     class="osmedile.intellij.stringmanip.DecodeBase64Action"
-                    text="Decode to Base64" description="Decode to Base 64">
+                    text="Decode to Base64" description="Decode Base 64">
             </action>
             <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                     class="osmedile.intellij.stringmanip.URLEncodeAction"

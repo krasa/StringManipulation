@@ -66,7 +66,8 @@ public abstract class AbstractStringManipAction extends EditorAction {
 							textParts[i] = transform(textParts[i]);
 						}
 
-						final String s = StringUtils.join(textParts, '\n');
+						String s = StringUtils.join(textParts, '\n');
+						s = s.replace("\r\n", "\n");
 						editor.getDocument().replaceString(selectionModel.getSelectionStart(),
 								selectionModel.getSelectionEnd(), s);
 						if (allLinSelected) {
