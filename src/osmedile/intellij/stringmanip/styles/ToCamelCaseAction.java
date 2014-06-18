@@ -1,5 +1,6 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.styles;
 
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 /**
@@ -11,6 +12,10 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
 public class ToCamelCaseAction extends AbstractStringManipAction {
 
     public String transform(String s) {
-        return StringUtil.toCamelCase(s);
+        if (!s.contains(" ")) {
+            return StringUtil.camelToText(s);
+        } else {
+            return StringUtil.toCamelCase(s);
+        }
     }
 }

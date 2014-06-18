@@ -1,5 +1,6 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.styles;
 
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 /**

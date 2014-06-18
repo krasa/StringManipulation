@@ -134,28 +134,34 @@
         </p>
     ]]>
     </change-notes>
-	
+
     <version>2.6.135.445</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
-    <idea-version since-build="135.445" />
-	
-	<depends>com.intellij.modules.platform</depends>
+    <idea-version since-build="135.445"/>
 
-	
+    <depends>com.intellij.modules.platform</depends>
+
+
     <actions>
         <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String manip ..." description="Popup String manip ...">
-            <add-to-group group-id="EditMenu" anchor="last" />
-            <keyboard-shortcut keymap="$default" first-keystroke="alt shift M" />
-            <keyboard-shortcut keymap="$default" first-keystroke="alt M" />
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
         </action>
+
 
         <group id="osmedile.ManipulateStringGroup" text="String Manipulation"
                description="Group of String manipulation"
                popup="true">
-            <add-to-group group-id="EditMenu" anchor="last" />
-
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <action id="osmedile.intellij.stringmanip.styles.SmartStyleConversionAction"
+                    class="osmedile.intellij.stringmanip.styles.SmartStyleConversionAction"
+                    text="Switch style (camelCase, hyphen, constant, words, capitalized words)"
+                    description="Switch style (camelCase, hyphen, constant, words, capitalized words)">
+                <add-to-group group-id="EditMenu" anchor="last"/>
+            </action>
             <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
                     class="osmedile.intellij.stringmanip.EscapeJavaAction"
                     text="Escape Java" description="Call StringEscapeUtils.escapeJava(selectedText)">
@@ -222,39 +228,37 @@
             <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                     class="osmedile.intellij.stringmanip.URLEncodeAction"
                     text="Encode URL" description="Encode URL">
-			</action>
-			<action id="osmedile.intellij.stringmanip.URLDecodeAction"
-					class="osmedile.intellij.stringmanip.URLDecodeAction"
-					text="Decode URL" description="Decode URL">
-			</action>
-			
-            <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                    class="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                    text="To Camel case" description="To Camel case">
+            </action>
+            <action id="osmedile.intellij.stringmanip.URLDecodeAction"
+                    class="osmedile.intellij.stringmanip.URLDecodeAction"
+                    text="Decode URL" description="Decode URL">
             </action>
 
-            <action id="osmedile.intellij.stringmanip.WordsToConstantStyleCaseAction"
-                    class="osmedile.intellij.stringmanip.WordsToConstantStyleCaseAction"
-                    text="Words to constant style case" description="Words to constant style case">
+            <action id="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.WordsAndHyphenAndCamelToConstantStyleCaseAction"
+                    text="To constant style case (or to camelCase)"
+                    description="Words, hyphen and camel to constant style case (or to camelCase)">
+            </action>
+            <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+                    text="To Camel case (or to words)" description="To Camel case (or to words)">
+            </action>
+            <action id="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
+                    text="To Hyphen Case Action" description="To Hyphen Case Action">
+            </action>
+            <action id="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
+                    class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
+                    text="Capitalize"
+                    description="Capitalize">
+            </action>
+            <action id="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
+                    class="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
+                    text="Capitalize Fully"
+                    description="Capitalize Fully">
             </action>
 
-            <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                    class="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                    text="Words and camel to constant style case"
-                    description="Words and camel to constant style case">
-            </action>
-			<action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
-					class="osmedile.intellij.stringmanip.WordsCapitalizeAction"
-					text="Capitalize"
-					description="Capitalize">
-			</action>
-			<action id="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
-					class="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
-					text="Capitalize Fully"
-					description="Capitalize Fully">
-			</action>
-
-			<action id="osmedile.intellij.stringmanip.DecrementAction"
+            <action id="osmedile.intellij.stringmanip.DecrementAction"
                     class="osmedile.intellij.stringmanip.DecrementAction"
                     text="Duplicate and decrement"
                     description="Duplicate and decrement numbers inside selected text">
@@ -282,7 +286,7 @@
                     class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
                     text="Escaped Unicode to String" description="Escaped Unicode to String">
             </action>
-			<action id="osmedile.intellij.stringmanip.EscapePHPAction"
+            <action id="osmedile.intellij.stringmanip.EscapePHPAction"
                     class="osmedile.intellij.stringmanip.EscapePHPAction"
                     text="Escape PHP" description="Call StringEscapeUtils.escapePHP(selectedText)">
             </action>
@@ -291,12 +295,17 @@
                     text="Unescape PHP" description="Call StringEscapeUtils.unescapePHP(selectedText)">
             </action>
         </group>
-		
-		<action id="osmedile.intellij.stringmanip.SwapCharactersAction"
-				class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
-				description="Exchange two selected characters, or ones surrounding the cursor if no selection">
-		</action>
 
-	</actions>
+
+        <action id="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
+                class="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
+                text="Words to constant style case" description="Words to constant style case">
+        </action>
+        <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
+                class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
+                description="Exchange two selected characters, or ones surrounding the cursor if no selection">
+        </action>
+
+    </actions>
 </idea-plugin>
     

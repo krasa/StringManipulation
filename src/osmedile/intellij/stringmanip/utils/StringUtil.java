@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Character.*;
+
 
 /**
  * @author Olivier Smedile
@@ -21,12 +23,18 @@ public class StringUtil {
 
     public static String camelToText(String s) {
         StringBuilder buf = new StringBuilder();
+        char lastChar = ' ';
         for (char c : s.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                buf.append(" ");
+            if (isUpperCase(c)) {
+                if (lastChar != ' ') {
+                    buf.append(" ");
+                }
                 c = Character.toLowerCase(c);
             }
-            buf.append(c);
+            if (!(lastChar == ' ' && c == ' ')) {
+                buf.append(c);
+            }
+            lastChar = c;
         }
         return buf.toString();
     }
@@ -70,17 +78,17 @@ public class StringUtil {
 
         char lastChar = 'a';
         for (char c : s.toCharArray()) {
-            if (Character.isWhitespace(lastChar) && (!Character.isWhitespace(c) && '_' != c) &&
+            if (isWhitespace(lastChar) && (!isWhitespace(c) && '_' != c) &&
                     buf.length() > 0 && buf.charAt(buf.length() - 1) != '_') {
                 buf.append("_");
             }
-            if (!Character.isWhitespace(c)) {
+            if (!isWhitespace(c)) {
                 buf.append(Character.toUpperCase(c));
 
             }
             lastChar = c;
         }
-        if (Character.isWhitespace(lastChar)) {
+        if (isWhitespace(lastChar)) {
             buf.append("_");
         }
 
@@ -89,25 +97,30 @@ public class StringUtil {
 
     }
 
-    public static String wordsAndCamelToConstantCase(String s) {
+    public static String wordsAndHyphenAndCamelToConstantCase(String s) {
         StringBuilder buf = new StringBuilder();
 
         char lastChar = 'a';
         for (char c : s.toCharArray()) {
-            if (buf.length() > 0 && buf.charAt(buf.length() - 1) != '_' && (Character.isUpperCase(c) || (
-                    Character.isWhitespace(lastChar) &&
-                            (!Character.isWhitespace(c) && '_' != c && !Character.isUpperCase(c))))) {
+            boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
+            boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
+            boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
+            boolean previousIsWhitespace = isWhitespace(lastChar);
+            boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
+            //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
+            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
                 buf.append("_");
-
             }
 
-            if (!Character.isWhitespace(c)) {
+            if (c == '-') {
+                buf.append('_');
+            } else if (!isWhitespace(c)) {
                 buf.append(Character.toUpperCase(c));
             }
 
             lastChar = c;
         }
-        if (Character.isWhitespace(lastChar)) {
+        if (isWhitespace(lastChar)) {
             buf.append("_");
         }
 
@@ -131,7 +144,6 @@ public class StringUtil {
      * </pre>
      *
      * @param input The character sequence to be split
-     *
      * @return The array of strings computed by splitting the input around matches of this pattern
      */
     public static String[] splitPreserveAllTokens(String input, String regex) {
@@ -185,7 +197,7 @@ public class StringUtil {
 
 
     public static String escapedUnicodeToString(String s) {
-		String[] parts = StringUtil.splitPreserveAllTokens(s, "\\\\u[0-9a-fA-F]{4}");
+        String[] parts = StringUtil.splitPreserveAllTokens(s, "\\\\u[0-9a-fA-F]{4}");
         for (int i = 0; i < parts.length; i++) {
             if (parts[i].startsWith("\\u")) {
                 int v = Integer.parseInt(parts[i].substring(2), 16);
