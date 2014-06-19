@@ -38,6 +38,20 @@
     <change-notes>
         <![CDATA[
         <p>
+        <h4>Version 2.8</h4>
+        <ul>
+            <li>Added dot style case action</li>
+        </ul>
+        </p>
+        <p>
+        <h4>Version 2.7</h4>
+        <ul>
+            <li>Improved constant and camel case actions</li>
+            <li>Added hyphen case action</li>
+            <li>Added action for switching between all styles (camelCase, hyphen, underscore, words)</li>
+        </ul>
+        </p>
+        <p>
         <h4>Version 2.6</h4>
         <ul>
             <li>Line break fix</li>
@@ -135,13 +149,13 @@
     ]]>
     </change-notes>
 
-    <version>2.6.135.445</version>
+    <version>2.8.135.445</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
     <depends>com.intellij.modules.platform</depends>
 
-
+	
     <actions>
         <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
@@ -151,17 +165,10 @@
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
         </action>
 
-
         <group id="osmedile.ManipulateStringGroup" text="String Manipulation"
                description="Group of String manipulation"
                popup="true">
             <add-to-group group-id="EditMenu" anchor="last"/>
-            <action id="osmedile.intellij.stringmanip.styles.SmartStyleConversionAction"
-                    class="osmedile.intellij.stringmanip.styles.SmartStyleConversionAction"
-                    text="Switch style (camelCase, hyphen, constant, words, capitalized words)"
-                    description="Switch style (camelCase, hyphen, constant, words, capitalized words)">
-                <add-to-group group-id="EditMenu" anchor="last"/>
-            </action>
             <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
                     class="osmedile.intellij.stringmanip.EscapeJavaAction"
                     text="Escape Java" description="Call StringEscapeUtils.escapeJava(selectedText)">
@@ -234,25 +241,31 @@
                     text="Decode URL" description="Decode URL">
             </action>
 
-            <action id="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.WordsAndHyphenAndCamelToConstantStyleCaseAction"
-                    text="To constant style case (or to camelCase)"
-                    description="Words, hyphen and camel to constant style case (or to camelCase)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+            <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                    text="To Camel case (or to words)" description="To Camel case (or to words)">
+                    text="To camel case (or to words)" description="To camel case (or to words)">
             </action>
-            <action id="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
+            <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
+                    text="To constant style case (or to camelCase)"
+                    description="To constant style case (or to camel case)">
+            </action>
+            <action id="StringManipulation.ToHyphenCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                    text="To Hyphen Case Action" description="To Hyphen Case Action">
+                    text="To hyphen style case (or to underscore)" description="To hyphen case (or to underscore)">
             </action>
-            <action id="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
+            <action id="StringManipulation.ToDotStyleAction"
+                    class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
+                    text="To properties style case (or to camel case)" description="To properties style case (or to camel case)">
+            </action>
+            
+            
+            <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                     class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
                     text="Capitalize"
                     description="Capitalize">
             </action>
-            <action id="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
+            <action id="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
                     class="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
                     text="Capitalize Fully"
                     description="Capitalize Fully">
@@ -294,13 +307,13 @@
                     class="osmedile.intellij.stringmanip.UnescapePHPAction"
                     text="Unescape PHP" description="Call StringEscapeUtils.unescapePHP(selectedText)">
             </action>
+            <action id="StringManipulation.SwitchStyleAction"
+                    class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
+                    text="Switch style (camelCase, hyphen, underscore, words, capitalized words)"
+                    description="Switch style (camelCase, hyphen, underscore, words, capitalized words)">
+            </action>
         </group>
 
-
-        <action id="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
-                class="osmedile.intellij.stringmanip.styles.WordsToConstantStyleCaseAction"
-                text="Words to constant style case" description="Words to constant style case">
-        </action>
         <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
                 class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
                 description="Exchange two selected characters, or ones surrounding the cursor if no selection">

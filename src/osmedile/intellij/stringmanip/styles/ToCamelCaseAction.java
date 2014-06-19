@@ -1,7 +1,6 @@
 package osmedile.intellij.stringmanip.styles;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-import osmedile.intellij.stringmanip.utils.StringUtil;
 
 /**
  * Action which trim selected text.
@@ -12,10 +11,11 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
 public class ToCamelCaseAction extends AbstractStringManipAction {
 
     public String transform(String s) {
-        if (!s.contains(" ")) {
-            return StringUtil.camelToText(s);
+        Style from = Style.from(s);
+        if (from == Style.CAMEL_CASE) {
+            return Style.WORD_CAPITALIZED.transform(from, s);
         } else {
-            return StringUtil.toCamelCase(s);
+            return Style.CAMEL_CASE.transform(from, s);
         }
     }
 }

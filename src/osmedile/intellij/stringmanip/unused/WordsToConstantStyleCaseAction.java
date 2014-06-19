@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip.styles;
+package osmedile.intellij.stringmanip.unused;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;

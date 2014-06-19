@@ -112,7 +112,9 @@ public class StringUtil {
                 buf.append("_");
             }
 
-            if (c == '-') {
+            if (c == '.') {
+                buf.append('_');
+            }  else if (c == '-') {
                 buf.append('_');
             } else if (!isWhitespace(c)) {
                 buf.append(Character.toUpperCase(c));
@@ -122,6 +124,37 @@ public class StringUtil {
         }
         if (isWhitespace(lastChar)) {
             buf.append("_");
+        }
+
+
+        return buf.toString();
+    }
+    public static String toDotCase(String s) {
+        StringBuilder buf = new StringBuilder();
+
+        char lastChar = 'a';
+        for (char c : s.toCharArray()) {
+            boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
+            boolean previousIsWhitespace = isWhitespace(lastChar);
+            boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '.';
+            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
+                buf.append(".");
+            }
+
+            if (c == '.') {
+                buf.append('.');
+            }  else if (c == '-') {
+                buf.append('.');
+            }  else if (c == '_') {
+                buf.append('.');
+            } else if (!isWhitespace(c)) {
+                buf.append(Character.toLowerCase(c));
+            }
+
+            lastChar = c;
+        }
+        if (isWhitespace(lastChar)) {
+            buf.append(".");
         }
 
 
@@ -209,4 +242,26 @@ public class StringUtil {
         return StringUtils.join(parts);
     }
 
+    public static String wordsToHyphenCase(String s) {
+        StringBuilder buf = new StringBuilder();
+        char lastChar = 'a';
+        for (char c : s.toCharArray()) {
+            if (isWhitespace(lastChar) && (!isWhitespace(c) && '-' != c) && buf.length() > 0
+                    && buf.charAt(buf.length() - 1) != '-') {
+                buf.append("-");
+            }
+            if ('_' == c) {
+                buf.append('-');
+            } else  if ('.' == c) {
+                buf.append('-');
+            } else if (!isWhitespace(c)) {
+                buf.append(toLowerCase(c));
+            }
+            lastChar = c;
+        }
+        if (isWhitespace(lastChar)) {
+            buf.append("-");
+        }
+        return buf.toString();
+    }
 }
