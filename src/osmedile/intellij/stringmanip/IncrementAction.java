@@ -19,7 +19,7 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
 public class IncrementAction extends EditorAction {
 
     public IncrementAction() {
-        super(new EditorWriteActionHandler(true) {
+        super(new EditorWriteActionHandler() {
             public void executeWriteAction(Editor editor, DataContext dataContext) {
 
                 //Column mode not supported

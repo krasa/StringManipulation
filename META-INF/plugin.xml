@@ -40,7 +40,7 @@
         <p>
         <h4>Version 2.8</h4>
         <ul>
-            <li>Added dot style case action</li>
+            <li>Added properties style action</li>
         </ul>
         </p>
         <p>
@@ -149,9 +149,10 @@
     ]]>
     </change-notes>
 
-    <version>2.8.135.445</version>
+    <version>2.8.100.000</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
-    <idea-version since-build="135.445"/>
+    <!--<idea-version since-build="135.445"/>-->
+    <idea-version since-build="100.000" until-build="135.444" />
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -241,22 +242,28 @@
                     text="Decode URL" description="Decode URL">
             </action>
 
+            
+            <action id="StringManipulation.SwitchStyleAction"
+                    class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
+                    text="Switch style"
+                    description="Switch style">
+            </action>
             <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
                     text="To camel case (or to words)" description="To camel case (or to words)">
             </action>
             <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
-                    text="To constant style case (or to camelCase)"
-                    description="To constant style case (or to camel case)">
+                    text="To constant style (or to camel case)"
+                    description="To constant style (or to camel case)">
             </action>
             <action id="StringManipulation.ToHyphenCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                    text="To hyphen style case (or to underscore)" description="To hyphen case (or to underscore)">
+                    text="To hyphen style (or to underscore)" description="To hyphen case (or to underscore)">
             </action>
             <action id="StringManipulation.ToDotStyleAction"
                     class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
-                    text="To properties style case (or to camel case)" description="To properties style case (or to camel case)">
+                    text="To properties style (or to camel case)" description="To properties style (or to camel case)">
             </action>
             
             
@@ -306,11 +313,6 @@
             <action id="osmedile.intellij.stringmanip.UnescapePHPAction"
                     class="osmedile.intellij.stringmanip.UnescapePHPAction"
                     text="Unescape PHP" description="Call StringEscapeUtils.unescapePHP(selectedText)">
-            </action>
-            <action id="StringManipulation.SwitchStyleAction"
-                    class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-                    text="Switch style (camelCase, hyphen, underscore, words, capitalized words)"
-                    description="Switch style (camelCase, hyphen, underscore, words, capitalized words)">
             </action>
         </group>
 
