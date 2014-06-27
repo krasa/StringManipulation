@@ -16,39 +16,38 @@ import java.util.Collection;
  */
 public class RemoveEmptyLinesAction extends EditorAction {
 
-    public RemoveEmptyLinesAction() {
-        super(new EditorWriteActionHandler(true) {
-            public void executeWriteAction(Editor editor, DataContext dataContext) {
+	public RemoveEmptyLinesAction() {
+		super(new EditorWriteActionHandler(true) {
 
-                //Column mode not supported
-                if (editor.isColumnMode()) {
-                    return;
-                }
+			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
-                final SelectionModel selectionModel = editor.getSelectionModel();
-                if (selectionModel.hasSelection()) {
+				// Column mode not supported
+				if (editor.isColumnMode()) {
+					return;
+				}
 
-                    final String selectedText = selectionModel.getSelectedText();
+				final SelectionModel selectionModel = editor.getSelectionModel();
+				if (selectionModel.hasSelection()) {
 
+					final String selectedText = selectionModel.getSelectedText();
 
-                    String[] textParts = selectedText.split("\n");
-                    Collection<String> result = new ArrayList<String>();
+					String[] textParts = selectedText.split("\n");
+					Collection<String> result = new ArrayList<String>();
 
-                    for (String textPart : textParts) {
-                        if (StringUtils.isNotBlank(textPart)) {
-                            result.add(textPart);
-                        }
-                    }
+					for (String textPart : textParts) {
+						if (StringUtils.isNotBlank(textPart)) {
+							result.add(textPart);
+						}
+					}
 
+					String[] res = result.toArray(new String[result.size()]);
 
-                    String[] res = result.toArray(new String[result.size()]);
+					final String s = StringUtils.join(res, '\n');
+					editor.getDocument().replaceString(selectionModel.getSelectionStart(),
+							selectionModel.getSelectionEnd(), s);
+				}
 
-                    final String s = StringUtils.join(res, '\n');
-                    editor.getDocument().replaceString(selectionModel.getSelectionStart(),
-                            selectionModel.getSelectionEnd(), s);
-                }
-
-            }
-        });
-    }
+			}
+		});
+	}
 }

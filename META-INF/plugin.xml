@@ -1,8 +1,8 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://code.google.com/p/idea-string-manip/">
-    <name>String Manipulation</name>
-    <description>
-        <![CDATA[
+	<name>String Manipulation</name>
+	<description>
+		<![CDATA[
        <p>
        Provide actions for text manipulation:
        <ul>
@@ -34,13 +34,13 @@
        If no text is selected, then the current line is selected.
        <p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".</p>
        ]]>
-    </description>
-    <change-notes>
-        <![CDATA[
+	</description>
+	<change-notes>
+		<![CDATA[
         <p>
         <h4>Version 2.8</h4>
         <ul>
-            <li>Added dot style case action</li>
+            <li>Added properties style action</li>
         </ul>
         </p>
         <p>
@@ -147,178 +147,179 @@
             Duplicate and increment now handles float number which ends with "."
         </p>
     ]]>
-    </change-notes>
+	</change-notes>
 
-    <version>2.8.135.445</version>
-    <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
-    <idea-version since-build="135.445"/>
+	<version>2.8.135.445</version>
+	<vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
+	<idea-version since-build="135.445" />
 
-    <depends>com.intellij.modules.platform</depends>
-
-	
-    <actions>
-        <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
-                class="osmedile.intellij.stringmanip.PopupChoiceAction"
-                text="Popup String manip ..." description="Popup String manip ...">
-            <add-to-group group-id="EditMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
-        </action>
-
-        <group id="osmedile.ManipulateStringGroup" text="String Manipulation"
-               description="Group of String manipulation"
-               popup="true">
-            <add-to-group group-id="EditMenu" anchor="last"/>
-            <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
-                    class="osmedile.intellij.stringmanip.EscapeJavaAction"
-                    text="Escape Java" description="Call StringEscapeUtils.escapeJava(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnescapeJavaAction"
-                    class="osmedile.intellij.stringmanip.UnescapeJavaAction"
-                    text="Unescape Java" description="Call StringEscapeUtils.unescapeJava(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
-                    class="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
-                    text="Escape Javascript"
-                    description="Call StringEscapeUtils.escapeJavaScript(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
-                    class="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
-                    text="Unescape Javascript"
-                    description="Call StringEscapeUtils.unescapeJavaScript(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
-                    class="osmedile.intellij.stringmanip.EscapeHtmlAction"
-                    text="Escape HTML" description="Call StringEscapeUtils.escapeHtml(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnescapeHtmlAction"
-                    class="osmedile.intellij.stringmanip.UnescapeHtmlAction"
-                    text="Unescape HTML" description="Call StringEscapeUtils.unescapeHtml(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EscapeSQLAction"
-                    class="osmedile.intellij.stringmanip.EscapeSQLAction"
-                    text="Escape SQL" description="Call StringEscapeUtils.escapeSql(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EscapeXMLAction"
-                    class="osmedile.intellij.stringmanip.EscapeXMLAction"
-                    text="Escape XML" description="Call StringEscapeUtils.escapeXml(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnescapeXMLAction"
-                    class="osmedile.intellij.stringmanip.UnescapeXMLAction"
-                    text="Unescape XML" description="Call StringEscapeUtils.unescapeXml(selectedText)">
-            </action>
-
-            <action id="osmedile.intellij.stringmanip.TrimAction"
-                    class="osmedile.intellij.stringmanip.TrimAction"
-                    text="Trim" description="Trim selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    text="Trim all spaces" description="Trim all spaces selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    text="Remove all spaces" description="Remove all spaces in selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
-                    class="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
-                    text="Encode to MD5 Hex16" description="Encode to MD5 Hex16">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
-                    class="osmedile.intellij.stringmanip.EncodeBase64Action"
-                    text="Encode to Base64" description="Encode to Base 64">
-            </action>
-            <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
-                    class="osmedile.intellij.stringmanip.DecodeBase64Action"
-                    text="Decode to Base64" description="Decode Base 64">
-            </action>
-            <action id="osmedile.intellij.stringmanip.URLEncodeAction"
-                    class="osmedile.intellij.stringmanip.URLEncodeAction"
-                    text="Encode URL" description="Encode URL">
-            </action>
-            <action id="osmedile.intellij.stringmanip.URLDecodeAction"
-                    class="osmedile.intellij.stringmanip.URLDecodeAction"
-                    text="Decode URL" description="Decode URL">
-            </action>
-
-            <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                    text="To camel case (or to words)" description="To camel case (or to words)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
-                    text="To constant style case (or to camelCase)"
-                    description="To constant style case (or to camel case)">
-            </action>
-            <action id="StringManipulation.ToHyphenCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                    text="To hyphen style case (or to underscore)" description="To hyphen case (or to underscore)">
-            </action>
-            <action id="StringManipulation.ToDotStyleAction"
-                    class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
-                    text="To properties style case (or to camel case)" description="To properties style case (or to camel case)">
-            </action>
-            
-            
-            <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
-                    class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
-                    text="Capitalize"
-                    description="Capitalize">
-            </action>
-            <action id="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
-                    class="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
-                    text="Capitalize Fully"
-                    description="Capitalize Fully">
-            </action>
-
-            <action id="osmedile.intellij.stringmanip.DecrementAction"
-                    class="osmedile.intellij.stringmanip.DecrementAction"
-                    text="Duplicate and decrement"
-                    description="Duplicate and decrement numbers inside selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.IncrementAction"
-                    class="osmedile.intellij.stringmanip.IncrementAction"
-                    text="Duplicate and increment"
-                    description="Duplicate and increment numbers inside selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.GrepAction"
-                    class="osmedile.intellij.stringmanip.GrepAction"
-                    text="Grep" description="Grep on selected text">
-            </action>
+	<depends>com.intellij.modules.platform</depends>
 
 
-            <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
-                    class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
-                    text="Remove empty lines" description="Remove empty lines on selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
-                    class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
-                    text="Escape non ascii to Unicode" description="Escape non ascii to Unicode">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
-                    class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
-                    text="Escaped Unicode to String" description="Escaped Unicode to String">
-            </action>
-            <action id="osmedile.intellij.stringmanip.EscapePHPAction"
-                    class="osmedile.intellij.stringmanip.EscapePHPAction"
-                    text="Escape PHP" description="Call StringEscapeUtils.escapePHP(selectedText)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.UnescapePHPAction"
-                    class="osmedile.intellij.stringmanip.UnescapePHPAction"
-                    text="Unescape PHP" description="Call StringEscapeUtils.unescapePHP(selectedText)">
-            </action>
-            <action id="StringManipulation.SwitchStyleAction"
-                    class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-                    text="Switch style (camelCase, hyphen, underscore, words, capitalized words)"
-                    description="Switch style (camelCase, hyphen, underscore, words, capitalized words)">
-            </action>
-        </group>
+	<actions>
+		<action id="osmedile.intellij.stringmanip.PopupChoiceAction"
+			class="osmedile.intellij.stringmanip.PopupChoiceAction"
+			text="Popup String manip ..." description="Popup String manip ...">
+			<add-to-group group-id="EditMenu" anchor="last" />
+			<keyboard-shortcut keymap="$default" first-keystroke="alt shift M" />
+			<keyboard-shortcut keymap="$default" first-keystroke="alt M" />
+		</action>
 
-        <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
-                class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
-                description="Exchange two selected characters, or ones surrounding the cursor if no selection">
-        </action>
+		<group id="osmedile.ManipulateStringGroup" text="String Manipulation"
+			description="Group of String manipulation"
+			popup="true">
+			<add-to-group group-id="EditMenu" anchor="last" />
+			<action id="osmedile.intellij.stringmanip.EscapeJavaAction"
+				class="osmedile.intellij.stringmanip.EscapeJavaAction"
+				text="Escape Java" description="Call StringEscapeUtils.escapeJava(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnescapeJavaAction"
+				class="osmedile.intellij.stringmanip.UnescapeJavaAction"
+				text="Unescape Java" description="Call StringEscapeUtils.unescapeJava(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
+				class="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
+				text="Escape Javascript"
+				description="Call StringEscapeUtils.escapeJavaScript(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
+				class="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
+				text="Unescape Javascript"
+				description="Call StringEscapeUtils.unescapeJavaScript(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
+				class="osmedile.intellij.stringmanip.EscapeHtmlAction"
+				text="Escape HTML" description="Call StringEscapeUtils.escapeHtml(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnescapeHtmlAction"
+				class="osmedile.intellij.stringmanip.UnescapeHtmlAction"
+				text="Unescape HTML" description="Call StringEscapeUtils.unescapeHtml(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EscapeSQLAction"
+				class="osmedile.intellij.stringmanip.EscapeSQLAction"
+				text="Escape SQL" description="Call StringEscapeUtils.escapeSql(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EscapeXMLAction"
+				class="osmedile.intellij.stringmanip.EscapeXMLAction"
+				text="Escape XML" description="Call StringEscapeUtils.escapeXml(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnescapeXMLAction"
+				class="osmedile.intellij.stringmanip.UnescapeXMLAction"
+				text="Unescape XML" description="Call StringEscapeUtils.unescapeXml(selectedText)">
+			</action>
 
-    </actions>
+			<action id="osmedile.intellij.stringmanip.TrimAction"
+				class="osmedile.intellij.stringmanip.TrimAction"
+				text="Trim" description="Trim selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+				class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+				text="Trim all spaces" description="Trim all spaces selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+				class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+				text="Remove all spaces" description="Remove all spaces in selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
+				class="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
+				text="Encode to MD5 Hex16" description="Encode to MD5 Hex16">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EncodeBase64Action"
+				class="osmedile.intellij.stringmanip.EncodeBase64Action"
+				text="Encode to Base64" description="Encode to Base 64">
+			</action>
+			<action id="osmedile.intellij.stringmanip.DecodeBase64Action"
+				class="osmedile.intellij.stringmanip.DecodeBase64Action"
+				text="Decode to Base64" description="Decode Base 64">
+			</action>
+			<action id="osmedile.intellij.stringmanip.URLEncodeAction"
+				class="osmedile.intellij.stringmanip.URLEncodeAction"
+				text="Encode URL" description="Encode URL">
+			</action>
+			<action id="osmedile.intellij.stringmanip.URLDecodeAction"
+				class="osmedile.intellij.stringmanip.URLDecodeAction"
+				text="Decode URL" description="Decode URL">
+			</action>
+
+
+			<action id="StringManipulation.SwitchStyleAction"
+				class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
+				text="Switch style"
+				description="Switch style">
+			</action>
+			<action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
+				class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+				text="To camel case (or to words)" description="To camel case (or to words)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
+				class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
+				text="To constant style (or to camel case)"
+				description="To constant style (or to camel case)">
+			</action>
+			<action id="StringManipulation.ToHyphenCaseAction"
+				class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
+				text="To hyphen style (or to underscore)" description="To hyphen case (or to underscore)">
+			</action>
+			<action id="StringManipulation.ToDotStyleAction"
+				class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
+				text="To properties style (or to camel case)" description="To properties style (or to camel case)">
+			</action>
+
+
+			<action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
+				class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
+				text="Capitalize"
+				description="Capitalize">
+			</action>
+			<action id="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
+				class="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
+				text="Capitalize Fully"
+				description="Capitalize Fully">
+			</action>
+
+			<action id="osmedile.intellij.stringmanip.DecrementAction"
+				class="osmedile.intellij.stringmanip.DecrementAction"
+				text="Duplicate and decrement"
+				description="Duplicate and decrement numbers inside selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.IncrementAction"
+				class="osmedile.intellij.stringmanip.IncrementAction"
+				text="Duplicate and increment"
+				description="Duplicate and increment numbers inside selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.GrepAction"
+				class="osmedile.intellij.stringmanip.GrepAction"
+				text="Grep" description="Grep on selected text">
+			</action>
+
+
+			<action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
+				class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
+				text="Remove empty lines" description="Remove empty lines on selected text">
+			</action>
+			<action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
+				class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
+				text="Escape non ascii to Unicode" description="Escape non ascii to Unicode">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
+				class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
+				text="Escaped Unicode to String" description="Escaped Unicode to String">
+			</action>
+			<action id="osmedile.intellij.stringmanip.EscapePHPAction"
+				class="osmedile.intellij.stringmanip.EscapePHPAction"
+				text="Escape PHP" description="Call StringEscapeUtils.escapePHP(selectedText)">
+			</action>
+			<action id="osmedile.intellij.stringmanip.UnescapePHPAction"
+				class="osmedile.intellij.stringmanip.UnescapePHPAction"
+				text="Unescape PHP" description="Call StringEscapeUtils.unescapePHP(selectedText)">
+			</action>
+		</group>
+
+		<action id="osmedile.intellij.stringmanip.SwapCharactersAction"
+			class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
+			description="Exchange two selected characters, or ones surrounding the cursor if no selection">
+		</action>
+
+	</actions>
 </idea-plugin>
     

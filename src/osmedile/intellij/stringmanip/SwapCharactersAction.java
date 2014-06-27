@@ -15,9 +15,9 @@ public class SwapCharactersAction extends EditorAction {
 		super(null);
 
 		this.setupHandler(new EditorWriteActionHandler(true) {
+
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
-
 
 				int selectionStart = selectionModel.getSelectionStart();
 				int selectionEnd = selectionModel.getSelectionEnd();
@@ -36,7 +36,7 @@ public class SwapCharactersAction extends EditorAction {
 							blockStart--;
 							blockEnd++;
 						}
-						if (blockStart<0 || blockEnd > textLength) {
+						if (blockStart < 0 || blockEnd > textLength) {
 							continue;
 						}
 						String selectedText = document.getText(TextRange.create(blockStart, blockEnd));
@@ -52,7 +52,7 @@ public class SwapCharactersAction extends EditorAction {
 					if (selectedText == null) {
 						selectionStart = selectionStart - 1;
 						selectionEnd = selectionEnd + 1;
-						if (selectionStart<0 || selectionEnd > textLength) {
+						if (selectionStart < 0 || selectionEnd > textLength) {
 							return;
 						}
 						selectedText = document.getText(TextRange.create(selectionStart, selectionEnd));
@@ -61,14 +61,13 @@ public class SwapCharactersAction extends EditorAction {
 					if (selectedText == null) {
 						return;
 					}
-	
+
 					document.replaceString(selectionStart,
 							selectionEnd, transform(selectedText));
 				}
 			}
 		});
 	}
-
 
 	public String transform(String s) {
 		if (s.contains("\n")) {

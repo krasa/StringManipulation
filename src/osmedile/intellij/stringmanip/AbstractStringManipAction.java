@@ -1,7 +1,5 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.openapi.editor.Caret;
-import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import com.intellij.openapi.actionSystem.DataContext;
@@ -24,6 +22,7 @@ public abstract class AbstractStringManipAction extends EditorAction {
 		super(null);
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(true) {
+
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					final SelectionModel selectionModel = editor.getSelectionModel();
 					String selectedText = selectionModel.getSelectedText();
