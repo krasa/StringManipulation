@@ -9,8 +9,14 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
  * @version $Id: ToCamelCaseAction.java 31 2008-03-22 10:17:44Z osmedile $
  */
 public class ToCamelCaseAction extends AbstractStringManipAction {
+	public ToCamelCaseAction() {
+	}
 
-    public String transform(String s) {
+	public ToCamelCaseAction(boolean setupHandler) {
+		super(setupHandler);
+	}
+
+	public String transform(String s) {
         Style from = Style.from(s);
         if (from == Style.CAMEL_CASE) {
             return Style.WORD_CAPITALIZED.transform(from, s);

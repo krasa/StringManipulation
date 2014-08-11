@@ -129,7 +129,7 @@ public enum Style {
         }
 
         boolean containsWhitespace = s.contains(" ");
-        if (!containsWhitespace) {
+        if (!containsWhitespace && containsUpperCase) {
             return CAMEL_CASE;
         }
 
@@ -137,7 +137,7 @@ public enum Style {
         if (onlyLowercase) {
             return WORD_LOWERCASE;
         }
-        if (containsUpperCase) {
+        if (startsWithUppercase(s)) {
             return WORD_CAPITALIZED;
         }
         return UNKNOWN;
@@ -151,6 +151,13 @@ public enum Style {
         }
         return false;
     }
+
+	private static boolean startsWithUppercase(String s) {
+		if (s.length() == 0) {
+			return false;
+		}
+		return Character.isUpperCase(s.charAt(0));
+	}
 
     private static boolean containsLowerCase(String s) {
         for (char c : s.toCharArray()) {

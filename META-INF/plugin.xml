@@ -28,7 +28,7 @@
             (Does not work in column mode)</li>
            <li>Increment/Decrement selected text. Duplicate line and increment/decrement all numbers found.
             (Does not work in column mode)</li>
-           <li>Alt+A - Swap Characters</li>
+           <li>Swap Characters - set a shortcut in Settings | Keymap</li>
        </ul>
        </p>
        If no text is selected, then the current line is selected.
@@ -37,6 +37,12 @@
 	</description>
 	<change-notes>
 		<![CDATA[
+        <p>
+        <h4>Version 2.9</h4>
+        <ul>
+            <li>To camel case fixed for a lower case word.</li>
+        </ul>
+        </p>
         <p>
         <h4>Version 2.8</h4>
         <ul>
@@ -126,9 +132,9 @@
             <li>Remove empty lines</li>
             <li>Duplicate and decrement numbers in a text</li>
         </ul>
-        <h5>Misc:</h5>
+        <h5>misc:</h5>
         <ul>
-            <li>Now works since IDEA 7.0 (build 7361)</li>
+            <li>now_works since IDEA 7.0 (build 7361)</li>
             <li>To camel case, now put the first letter on lowercase.</li>
         </ul>
         </p>
@@ -149,7 +155,7 @@
     ]]>
 	</change-notes>
 
-	<version>2.8.135.445</version>
+	<version>2.9.135.445</version>
 	<vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
 	<idea-version since-build="135.445" />
 
