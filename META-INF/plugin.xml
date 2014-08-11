@@ -132,9 +132,9 @@
             <li>Remove empty lines</li>
             <li>Duplicate and decrement numbers in a text</li>
         </ul>
-        <h5>misc:</h5>
+        <h5>Misc:</h5>
         <ul>
-            <li>now_works since IDEA 7.0 (build 7361)</li>
+            <li>Now works since IDEA 7.0 (build 7361)</li>
             <li>To camel case, now put the first letter on lowercase.</li>
         </ul>
         </p>
