@@ -68,4 +68,10 @@ public class StringUtilTest extends TestCase {
         assertEquals("_TEST_AGAIN", StringUtil.wordsToConstantCase("_  test agaIN"));
         assertEquals("_TEST_AGAIN", StringUtil.wordsToConstantCase("   _  test agaIN"));
     }
+
+    public void testWordsToUnderscoreStringInJava() {
+        assertEquals("THIS IS A TEXT", StringUtil.wordsToConstantCase("THIS_IS_A_TEXT"));
+        assertEquals("singleLine - clientA는 removeFormat하고, clientB는 EndOffset에 table 삽입하는 경우", StringUtil.wordsToConstantCase("singleLine_-_clientA는_emoveFormat하고_clientB는_EndOffset에_table_삽입하는_경우"));
+        assertEquals("multiLine - clientA는 removeFormat(newLine)하고, clientB는 EndOffset에 table 삽입하는 경우", StringUtil.wordsToConstantCase("multiLine_-_clientA는_removeFormat_newLine_하고_clientB는_EndOffset에_table_삽입하는_경우"));
+    }
 }
