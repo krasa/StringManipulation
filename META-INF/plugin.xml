@@ -326,6 +326,13 @@
 			description="Exchange two selected characters, or ones surrounding the cursor if no selection">
 		</action>
 
-	</actions>
+        <action id="ToRemoveNonAlphaAndToUnderscoreAction"
+                class="osmedile.intellij.stringmanip.ToRemoveNonAlphaAndToUnderscoreAction"
+                text="Remove NonAlpha"
+                description="Remove Non-Alpha characters and replace all spaces with underscore ">
+            <add-to-group group-id="osmedile.ManipulateStringGroup" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt S"/>
+        </action>
+    </actions>
 </idea-plugin>
     
