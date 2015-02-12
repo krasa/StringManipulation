@@ -1,9 +1,11 @@
 package osmedile.intellij.stringmanip;
 
+import com.intellij.codeInsight.lookup.LookupManager;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAwareAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
 
@@ -24,6 +26,14 @@ public class PopupChoiceAction extends DumbAwareAction {
                 e.getDataContext(), JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, false);
 
         popup.showInBestPositionFor(e.getDataContext());
+    }
 
+    @Override
+    public void update(AnActionEvent e) {
+        super.update(e);
+        Project project = getEventProject(e);
+        if (project != null) {
+            e.getPresentation().setEnabled(LookupManager.getInstance(project).getActiveLookup() == null);
+        }
     }
 }
