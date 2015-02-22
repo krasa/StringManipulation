@@ -1,12 +1,9 @@
 package osmedile.intellij.stringmanip.styles;
 
-import com.intellij.openapi.command.WriteCommandAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import static org.apache.commons.lang.WordUtils.capitalize;
-import static osmedile.intellij.stringmanip.utils.StringUtil.camelToText;
-import static osmedile.intellij.stringmanip.utils.StringUtil.toCamelCase;
-import static osmedile.intellij.stringmanip.utils.StringUtil.wordsAndHyphenAndCamelToConstantCase;
+import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
     HYPHEN_LOWERCASE("foo-bar") {
@@ -36,12 +33,14 @@ public enum Style {
     UNDERSCORE_LOWERCASE("foo_bar") {
         @Override
         public String transform(Style style, String s) {
+            s = CAMEL_CASE.transform(style, s);
             return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
         }
     },
     UNDERSCORE_UPPERCASE("FOO_BAR", "foo_Bar") {
         @Override
         public String transform(Style style, String s) {
+            s = CAMEL_CASE.transform(style, s);
             return wordsAndHyphenAndCamelToConstantCase(s);
         }
     },
@@ -152,12 +151,12 @@ public enum Style {
         return false;
     }
 
-	private static boolean startsWithUppercase(String s) {
-		if (s.length() == 0) {
-			return false;
-		}
-		return Character.isUpperCase(s.charAt(0));
-	}
+    private static boolean startsWithUppercase(String s) {
+        if (s.length() == 0) {
+            return false;
+        }
+        return Character.isUpperCase(s.charAt(0));
+    }
 
     private static boolean containsLowerCase(String s) {
         for (char c : s.toCharArray()) {

@@ -52,13 +52,7 @@ public class StringUtil {
 
 
     public static String toCamelCase(String s) {
-        String[] words = s.split("[\\s_]");
-
-        //TODO search not blank words
-
-//        if (words.length > 0) {
-//            words[0] = words[0].toLowerCase();
-//        }
+        String[] words = org.apache.commons.lang.StringUtils.splitByCharacterTypeCamelCase(s);
 
         boolean firstWordNotFound = true;
         for (int i = 0; i < words.length; i++) {
@@ -70,7 +64,7 @@ public class StringUtil {
             }
         }
 
-        return StringUtils.join(words);
+        return StringUtils.join(words).replaceAll("[\\s_]", "");
     }
 
     public static String wordsToConstantCase(String s) {
@@ -102,21 +96,20 @@ public class StringUtil {
 
         char lastChar = 'a';
         for (char c : s.toCharArray()) {
+            boolean isUpperCaseAndPreviousIsUpperCase = isUpperCase(lastChar) && isUpperCase(c);
             boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
             boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
             boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
             boolean previousIsWhitespace = isWhitespace(lastChar);
             boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
             //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
-            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
+            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace || isUpperCaseAndPreviousIsUpperCase)) {
                 buf.append("_");
             }
 
-            if (c == '.') {
+            if (!isLetter(c) && lastOneIsNotUnderscore) {
                 buf.append('_');
-            }  else if (c == '-') {
-                buf.append('_');
-            } else if (!isWhitespace(c)) {
+            } else if (!isWhitespace(c) && (c != '_' || lastOneIsNotUnderscore)) {
                 buf.append(Character.toUpperCase(c));
             }
 
@@ -129,6 +122,7 @@ public class StringUtil {
 
         return buf.toString();
     }
+
     public static String toDotCase(String s) {
         StringBuilder buf = new StringBuilder();
 
@@ -143,9 +137,9 @@ public class StringUtil {
 
             if (c == '.') {
                 buf.append('.');
-            }  else if (c == '-') {
+            } else if (c == '-') {
                 buf.append('.');
-            }  else if (c == '_') {
+            } else if (c == '_') {
                 buf.append('.');
             } else if (!isWhitespace(c)) {
                 buf.append(Character.toLowerCase(c));
@@ -252,7 +246,7 @@ public class StringUtil {
             }
             if ('_' == c) {
                 buf.append('-');
-            } else  if ('.' == c) {
+            } else if ('.' == c) {
                 buf.append('-');
             } else if (!isWhitespace(c)) {
                 buf.append(toLowerCase(c));

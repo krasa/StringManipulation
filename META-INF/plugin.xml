@@ -38,6 +38,13 @@
 	<change-notes>
 		<![CDATA[
         <p>
+        <h4>Version 3.1</h4>
+        <ul>
+            <li>Improved converting to camelCase and CONSTANT_CASE</li>
+        </ul>
+        </p>
+        <p>
+        <p>
         <h4>Version 3.0</h4>
         <ul>
             <li>Popup(Alt+M) disabled when refactoring popups are visible</li>
@@ -162,7 +169,7 @@
     ]]>
 	</change-notes>
 
-	<version>3.0.135.445</version>
+	<version>3.1.135.445</version>
 	<vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
 	<idea-version since-build="135.445" />
 
