@@ -5,6 +5,7 @@
 		<![CDATA[
        <p>
        Provides actions for text manipulation:
+       <ul>
            <li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, underscore_lowercase, UNDERSCORE_UPPERCASE, properties.style, words lowercase, Words Capitalized)
            </li>
            <li>To constant style (or to camel case)</li>
@@ -13,6 +14,8 @@
            <li>To hyphen style (or to lower underscore)</li>
            <li>Capitalize selected text</li>
        </ul>
+       </p>
+       <p>
        <ul>
            <li>Un/Escape selected Java text</li>
            <li>Un/Escape selected JavaScript text</li>
