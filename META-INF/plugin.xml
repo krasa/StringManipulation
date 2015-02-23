@@ -4,7 +4,15 @@
 	<description>
 		<![CDATA[
        <p>
-       Provide actions for text manipulation:
+       Provides actions for text manipulation:
+           <li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, underscore_lowercase, UNDERSCORE_UPPERCASE, properties.style, words lowercase, Words Capitalized)
+           </li>
+           <li>To constant style (or to camel case)</li>
+           <li>To properties style (or to camel case)</li>
+           <li>To camel case (or to words)</li>
+           <li>To hyphen style (or to lower underscore)</li>
+           <li>Capitalize selected text</li>
+       </ul>
        <ul>
            <li>Un/Escape selected Java text</li>
            <li>Un/Escape selected JavaScript text</li>
@@ -18,7 +26,6 @@
            <li>De/Encode selected text as URL</li>
            <li>Convert selected text to Camel Case</li>
            <li>Convert selected text to Constant Case</li>
-           <li>Capitalize selected text</li>
            <li>Encode selected text to MD5 Hex16</li>
            <li>De/Encode selected text to Base64</li>
            <li>Remove empty lines</li>
@@ -264,8 +271,8 @@
 
 			<action id="StringManipulation.SwitchStyleAction"
 				class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-				text="Switch style"
-				description="Switch style">
+				text="Toggle style"
+				description="Toggle style">
 			</action>
 			<action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
 				class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
