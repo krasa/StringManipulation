@@ -326,9 +326,12 @@ public class StringUtil {
             if ('(' == c || ')' == c) {
                 buf.append("_");
             }
-            if (!isWhitespace(c) && isAlphabetic(c)
+            if (!isWhitespace(c) /*&& isAlphabetic(c)*/
                     && '-' != c //hyphen 제거함
-                    && '_' != c) {
+                    && '_' != c
+                    && ',' != c
+                    && '(' != c
+                    && ')' != c) {
                 buf.append(c);
             }
 

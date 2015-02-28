@@ -7,6 +7,6 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
  */
 public class RemoveNonAlphaCharsAndToUnderscoreAction extends AbstractStringManipAction {
     public String transform(String s) {
-        return StringUtil.nonAsciiToUnicode(s);
+        return StringUtil.wordsToUnderscoreCase(s);
     }
 }
