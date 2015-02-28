@@ -50,7 +50,14 @@ public class StringUtil {
         return StringUtils.join(words);
     }
 
-
+    /**
+     * Compound words를 Java(CamelCase)로 변경함
+     * <p/>
+     * 참고: http://en.wikipedia.org/wiki/CamelCase
+     *
+     * @param s
+     * @return
+     */
     public static String toCamelCase(String s) {
         String[] words = s.split("[\\s_]");
 
@@ -73,6 +80,13 @@ public class StringUtil {
         return StringUtils.join(words);
     }
 
+    /**
+     * 1. UpperCase로 변경함
+     * 2. 중복되는 space 제거
+     *
+     * @param s
+     * @return
+     */
     public static String wordsToConstantCase(String s) {
         StringBuilder buf = new StringBuilder();
 
@@ -97,6 +111,10 @@ public class StringUtil {
 
     }
 
+    /**
+     * @param s
+     * @return
+     */
     public static String wordsAndHyphenAndCamelToConstantCase(String s) {
         StringBuilder buf = new StringBuilder();
 
@@ -114,7 +132,7 @@ public class StringUtil {
 
             if (c == '.') {
                 buf.append('_');
-            }  else if (c == '-') {
+            } else if (c == '-') {
                 buf.append('_');
             } else if (!isWhitespace(c)) {
                 buf.append(Character.toUpperCase(c));
@@ -129,6 +147,14 @@ public class StringUtil {
 
         return buf.toString();
     }
+
+    /**
+     * 1 [.-_] 인 경우에는 .으로 replace됨
+     * 2.space인 경우에는 .로 replace되나 여러 space가 있는 경우에는 추가로 삽입한됨
+     *
+     * @param s
+     * @return
+     */
     public static String toDotCase(String s) {
         StringBuilder buf = new StringBuilder();
 
@@ -143,9 +169,9 @@ public class StringUtil {
 
             if (c == '.') {
                 buf.append('.');
-            }  else if (c == '-') {
+            } else if (c == '-') {
                 buf.append('.');
-            }  else if (c == '_') {
+            } else if (c == '_') {
                 buf.append('.');
             } else if (!isWhitespace(c)) {
                 buf.append(Character.toLowerCase(c));
@@ -242,6 +268,13 @@ public class StringUtil {
         return StringUtils.join(parts);
     }
 
+    /**
+     * 1. If alpha chars, then converts to lowerCase
+     * 2. space -> '-' (hyphen)
+     *
+     * @param s
+     * @return
+     */
     public static String wordsToHyphenCase(String s) {
         StringBuilder buf = new StringBuilder();
         char lastChar = 'a';
@@ -252,7 +285,7 @@ public class StringUtil {
             }
             if ('_' == c) {
                 buf.append('-');
-            } else  if ('.' == c) {
+            } else if ('.' == c) {
                 buf.append('-');
             } else if (!isWhitespace(c)) {
                 buf.append(toLowerCase(c));
@@ -261,6 +294,50 @@ public class StringUtil {
         }
         if (isWhitespace(lastChar)) {
             buf.append("-");
+        }
+        return buf.toString();
+    }
+
+    /**
+     * 1. space (multi) -> '_' (underscore)
+     * 2. 중복 ___ -> 제거함
+     * 3. [,-] -> 제거함
+     * 4. [()] -> replace with '_'
+     *
+     * @param s
+     * @return
+     */
+    public static String wordsToUnderscoreCase(String s) {
+        StringBuilder buf = new StringBuilder();
+
+        char lastChar = 'a';
+        int i = 0;
+        for (char c : s.toCharArray()) {
+            if (isWhitespace(lastChar) && (!isWhitespace(c) && '_' != c) //중복된 '  '를 제거하겠다.
+                    && buf.length() > 0
+                    && buf.charAt(buf.length() - 1) != '_') {
+                buf.append("_");
+            } else if ('_' == lastChar && (!isWhitespace(c) && '_' != c) //중복된 '__'를 제거하겠다.
+                    && buf.length() > 0
+                    && buf.charAt(buf.length() - 1) != '_') {
+                buf.append("_");
+            }
+
+            if ('(' == c || ')' == c) {
+                buf.append("_");
+            }
+            if (!isWhitespace(c) && isAlphabetic(c)
+                    && '-' != c //hyphen 제거함
+                    && '_' != c) {
+                buf.append(c);
+            }
+
+            //space인 경우 그냥 skip
+            lastChar = c;
+        }
+
+        if (isWhitespace(lastChar)) {
+            buf.append("_");
         }
         return buf.toString();
     }

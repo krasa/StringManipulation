@@ -29,6 +29,13 @@ public class StringUtilTest extends TestCase {
         return new TestSuite(StringUtilTest.class);
     }
 
+    public void testToSoftCamelCase() {
+        assertEquals("ThisIsAText", StringUtil.toSoftCamelCase("This is a text"));
+        assertEquals("WhOAhATeSt", StringUtil.toSoftCamelCase("WhOAh a TeSt"));
+        assertEquals("WhOAhATeSt", StringUtil.toSoftCamelCase("WhOAh_a_TeSt"));
+        assertEquals("WhOAhATeSt", StringUtil.toSoftCamelCase("WhOAh a_TeSt"));
+    }
+
     public void testToCamelCase() {
         assertEquals("thisIsAText", StringUtil.toCamelCase("This is a text"));
         assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a TeSt"));
@@ -69,9 +76,32 @@ public class StringUtilTest extends TestCase {
         assertEquals("_TEST_AGAIN", StringUtil.wordsToConstantCase("   _  test agaIN"));
     }
 
+    public void testWordsToHyphenCase() {
+        assertEquals("this-is-a-text", StringUtil.wordsToHyphenCase("THIS IS A TEXT"));
+        assertEquals("whoah-a-test", StringUtil.wordsToHyphenCase("Whoah A Test"));
+        assertEquals("whoah-a-test", StringUtil.wordsToHyphenCase("Whoah    a tESt"));
+    }
+
+    public void testToDotCase() {
+        assertEquals("this.is.a.text", StringUtil.toDotCase("THIS IS A TEXT"));
+        assertEquals("whoah.a.test", StringUtil.toDotCase("Whoah A   Test"));
+        assertEquals("whoah.a...test", StringUtil.toDotCase("Whoah A - _ Test"));
+        assertEquals("whoah.a.t.est", StringUtil.toDotCase("Whoah    a tESt")); //todo: bug인지 확인 필요
+    }
+
     public void testWordsToUnderscoreStringInJava() {
-        assertEquals("THIS IS A TEXT", StringUtil.wordsToConstantCase("THIS_IS_A_TEXT"));
-        assertEquals("singleLine - clientA는 removeFormat하고, clientB는 EndOffset에 table 삽입하는 경우", StringUtil.wordsToConstantCase("singleLine_-_clientA는_emoveFormat하고_clientB는_EndOffset에_table_삽입하는_경우"));
-        assertEquals("multiLine - clientA는 removeFormat(newLine)하고, clientB는 EndOffset에 table 삽입하는 경우", StringUtil.wordsToConstantCase("multiLine_-_clientA는_removeFormat_newLine_하고_clientB는_EndOffset에_table_삽입하는_경우"));
+        assertEquals("THIS_IS_A_TEXT", StringUtil.wordsToUnderscoreCase("THIS IS A TEXT"));
+        assertEquals("THISISATEXT", StringUtil.wordsToUnderscoreCase("THIS--IS-A-TEXT"));
+        assertEquals("THIS_IS_A_TEXT", StringUtil.wordsToUnderscoreCase("THIS   IS A   TEXT"));
+        assertEquals("A_B_", StringUtil.wordsToUnderscoreCase("A_B "));
+        assertEquals("A_B", StringUtil.wordsToUnderscoreCase("A_B"));
+        assertEquals("A_B", StringUtil.wordsToUnderscoreCase("A  B"));
+        assertEquals("A_B", StringUtil.wordsToUnderscoreCase("A__B"));
+        assertEquals("ThisIsAText", StringUtil.wordsToUnderscoreCase("ThisIsAText"));
+        assertEquals("This_Is_A_Text", StringUtil.wordsToUnderscoreCase("This_Is_A__Text"));
+        assertEquals("Whoah_A_Test", StringUtil.wordsToUnderscoreCase("Whoah A Test"));
+        assertEquals("Whoah_a_tESt", StringUtil.wordsToUnderscoreCase("Whoah    a tESt"));
+        assertEquals("singleLine_clientA는_removeFormat하고_clientB는_EndOffset에_table_삽입하는_경우", StringUtil.wordsToUnderscoreCase("singleLine - clientA는 removeFormat하고, clientB는 EndOffset에 table 삽입하는 경우"));
+        assertEquals("multiLine_clientA는_removeFormat_newLine_하고_clientB는_EndOffset에_table_삽입하는_경우", StringUtil.wordsToUnderscoreCase("multiLine - clientA는 removeFormat(newLine)하고, clientB는 EndOffset에 table 삽입하는 경우"));
     }
 }
