@@ -21,7 +21,8 @@ public abstract class AbstractStringManipAction extends EditorAction {
 	protected AbstractStringManipAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new EditorWriteActionHandler() {
+			this.setupHandler(new EditorWriteActionHandler(true) {
+
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					final SelectionModel selectionModel = editor.getSelectionModel();
 					String selectedText = selectionModel.getSelectedText();

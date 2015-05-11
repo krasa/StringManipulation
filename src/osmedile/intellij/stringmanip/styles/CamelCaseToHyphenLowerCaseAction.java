@@ -2,21 +2,20 @@ package osmedile.intellij.stringmanip.styles;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-public class ToConstantStyleCaseAction extends AbstractStringManipAction {
-    public ToConstantStyleCaseAction() {
+public class CamelCaseToHyphenLowerCaseAction extends AbstractStringManipAction {
+    public CamelCaseToHyphenLowerCaseAction() {
     }
 
-    public ToConstantStyleCaseAction(boolean setupHandler) {
+    public CamelCaseToHyphenLowerCaseAction(boolean setupHandler) {
         super(setupHandler);
     }
 
     public String transform(String s) {
         Style from = Style.from(s);
-        if (from == Style.UNDERSCORE_UPPERCASE) {
+        if (from == Style.HYPHEN_LOWERCASE) {
             return Style.CAMEL_CASE.transform(from, s);
         } else {
-            return Style.UNDERSCORE_UPPERCASE.transform(from, s);
+            return Style.HYPHEN_LOWERCASE.transform(from, s);
         }
     }
-
 }

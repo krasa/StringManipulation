@@ -18,50 +18,51 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  */
 public class IncrementAction extends EditorAction {
 
-    public IncrementAction() {
-        super(new EditorWriteActionHandler() {
-            public void executeWriteAction(Editor editor, DataContext dataContext) {
+	public IncrementAction() {
+		super(new EditorWriteActionHandler(true) {
 
-                //Column mode not supported
-                if (editor.isColumnMode()) {
-                    return;
-                }
-                final CaretModel caretModel = editor.getCaretModel();
+			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
-                final int line = caretModel.getLogicalPosition().line;
-                final int column = caretModel.getLogicalPosition().column;
+				// Column mode not supported
+				if (editor.isColumnMode()) {
+					return;
+				}
+				final CaretModel caretModel = editor.getCaretModel();
+
+				final int line = caretModel.getLogicalPosition().line;
+				final int column = caretModel.getLogicalPosition().column;
 				long offset = caretModel.getOffset();
 
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				boolean hasSelection = selectionModel.hasSelection();
 				if (hasSelection == false) {
-                    selectionModel.selectLineAtCaret();
-                }
-                final String selectedText = selectionModel.getSelectedText();
+					selectionModel.selectLineAtCaret();
+				}
+				final String selectedText = selectionModel.getSelectedText();
 
-                if (selectedText != null) {
-                    String[] textParts = StringUtil
-                            .splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
-                    for (int i = 0; i < textParts.length; i++) {
-                        textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
-                    }
+				if (selectedText != null) {
+					String[] textParts = StringUtil
+						.splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
+					for (int i = 0; i < textParts.length; i++) {
+						textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
+					}
 
-                    final String s = StringUtils.join(textParts);
-                    editor.getDocument().insertString(selectionModel.getSelectionEnd(), s);
+					final String s = StringUtils.join(textParts);
+					editor.getDocument().insertString(selectionModel.getSelectionEnd(), s);
 
 					if (hasSelection) {
 						long selectionStart = selectionModel.getSelectionStart();
 						long selectionEnd = selectionModel.getSelectionEnd();
 						long length = s.length();
-						caretModel.moveToOffset((int) (offset+length));
+						caretModel.moveToOffset((int) (offset + length));
 						selectionModel.setSelection((int) (selectionStart + length), (int) (selectionEnd + length));
 						editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
 					} else {
 						selectionModel.removeSelection();
 						caretModel.moveToLogicalPosition(new LogicalPosition(line + 1, column));
-					} 
-                }
-            }
-        });
-    }
+					}
+				}
+			}
+		});
+	}
 }

@@ -31,20 +31,25 @@ public class StringUtilTest extends TestCase {
 
     public void testToCamelCase() {
         assertEquals("thisIsAText", StringUtil.toCamelCase("This is a text"));
-        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a TeSt"));
-        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh_a_TeSt"));
-        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a_TeSt"));
+        //this is ugly but nothing can be done about that.
+        assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh a TeSt"));
+        assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh_a_TeSt"));
+        assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh a_TeSt"));
+        //previously
+//        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a TeSt"));
+//        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh_a_TeSt"));
+//        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a_TeSt"));
     }
 
     public void testWordsAndCamelToConstantCase() {
         assertEquals("THIS_IS_A_TEXT", StringUtil.wordsAndHyphenAndCamelToConstantCase("ThisIsAText"));
         assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("WhoahATest"));
         assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah ATest"));
-        assertEquals("WHOAH_A_TEST,_AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
+        assertEquals("WHOAH_A_TEST_AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
         assertEquals("ANOTHER_T_EST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Another      t_Est"));
-        assertEquals("TEST_AGAIN__TEST",
+        assertEquals("TEST_AGAIN_TEST",
                 StringUtil.wordsAndHyphenAndCamelToConstantCase("test again     _    _    test"));
-        assertEquals("TEST_AGAIN__TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("TestAgain_   _    Test"));
+        assertEquals("TEST_AGAIN_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("TestAgain_   _    Test"));
     }
 
     public void testEscapedUnicodeToString() throws Exception {

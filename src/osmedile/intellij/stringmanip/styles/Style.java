@@ -1,12 +1,9 @@
 package osmedile.intellij.stringmanip.styles;
 
-import com.intellij.openapi.command.WriteCommandAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import static org.apache.commons.lang.WordUtils.capitalize;
-import static osmedile.intellij.stringmanip.utils.StringUtil.camelToText;
-import static osmedile.intellij.stringmanip.utils.StringUtil.toCamelCase;
-import static osmedile.intellij.stringmanip.utils.StringUtil.wordsAndHyphenAndCamelToConstantCase;
+import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
     HYPHEN_LOWERCASE("foo-bar") {
@@ -24,7 +21,7 @@ public enum Style {
             return StringUtil.wordsToHyphenCase(s);
         }
     },
-    HYPHEN_UPPERCASE("FOO-BAR", "foo-Bar") {
+    HYPHEN_UPPERCASE("FOO-BAR") {
         @Override
         public String transform(Style style, String s) {
             if (style == CAMEL_CASE) {
@@ -36,12 +33,14 @@ public enum Style {
     UNDERSCORE_LOWERCASE("foo_bar") {
         @Override
         public String transform(Style style, String s) {
+            s = CAMEL_CASE.transform(style, s);
             return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
         }
     },
-    UNDERSCORE_UPPERCASE("FOO_BAR", "foo_Bar") {
+    UNDERSCORE_UPPERCASE("FOO_BAR") {
         @Override
         public String transform(Style style, String s) {
+            s = CAMEL_CASE.transform(style, s);
             return wordsAndHyphenAndCamelToConstantCase(s);
         }
     },
@@ -129,7 +128,7 @@ public enum Style {
         }
 
         boolean containsWhitespace = s.contains(" ");
-        if (!containsWhitespace) {
+        if (!containsWhitespace && containsUpperCase) {
             return CAMEL_CASE;
         }
 
@@ -137,7 +136,7 @@ public enum Style {
         if (onlyLowercase) {
             return WORD_LOWERCASE;
         }
-        if (containsUpperCase) {
+        if (startsWithUppercase(s)) {
             return WORD_CAPITALIZED;
         }
         return UNKNOWN;
@@ -150,6 +149,13 @@ public enum Style {
             }
         }
         return false;
+    }
+
+    private static boolean startsWithUppercase(String s) {
+        if (s.length() == 0) {
+            return false;
+        }
+        return Character.isUpperCase(s.charAt(0));
     }
 
     private static boolean containsLowerCase(String s) {

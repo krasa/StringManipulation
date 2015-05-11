@@ -20,7 +20,8 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 public class DecrementAction extends EditorAction {
 
 	public DecrementAction() {
-		super(new EditorWriteActionHandler() {
+		super(new EditorWriteActionHandler(true) {
+
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
 				// Column mode not supported
@@ -55,7 +56,7 @@ public class DecrementAction extends EditorAction {
 						long selectionEnd = selectionModel.getSelectionEnd();
 						long length = s.length();
 						caretModel.moveToOffset((int) (offset));
-						selectionModel.setSelection((int) (selectionStart -length), (int) (selectionEnd -length));
+						selectionModel.setSelection((int) (selectionStart - length), (int) (selectionEnd - length));
 						editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
 					} else {
 						selectionModel.removeSelection();
