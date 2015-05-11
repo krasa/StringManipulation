@@ -21,7 +21,7 @@ public enum Style {
             return StringUtil.wordsToHyphenCase(s);
         }
     },
-    HYPHEN_UPPERCASE("FOO-BAR", "foo-Bar") {
+    HYPHEN_UPPERCASE("FOO-BAR") {
         @Override
         public String transform(Style style, String s) {
             if (style == CAMEL_CASE) {
@@ -37,7 +37,7 @@ public enum Style {
             return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
         }
     },
-    UNDERSCORE_UPPERCASE("FOO_BAR", "foo_Bar") {
+    UNDERSCORE_UPPERCASE("FOO_BAR") {
         @Override
         public String transform(Style style, String s) {
             s = CAMEL_CASE.transform(style, s);
