@@ -17,7 +17,7 @@ import java.util.Collection;
 public class RemoveEmptyLinesAction extends EditorAction {
 
 	public RemoveEmptyLinesAction() {
-		super(new EditorWriteActionHandler(true) {
+		super(new EditorWriteActionHandler() {
 
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 

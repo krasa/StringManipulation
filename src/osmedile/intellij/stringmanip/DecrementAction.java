@@ -20,7 +20,7 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 public class DecrementAction extends EditorAction {
 
 	public DecrementAction() {
-		super(new EditorWriteActionHandler(true) {
+		super(new EditorWriteActionHandler() {
 
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
