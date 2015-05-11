@@ -1,8 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://code.google.com/p/idea-string-manip/">
 	<name>String Manipulation</name>
-	<description>
-		<![CDATA[
+	<description><![CDATA[
        <p>
        Provides actions for text manipulation:
        <ul>
@@ -38,7 +37,7 @@
            <li>Convert escaped Unicode to String</li>
            <li>Grep selected text, All lines not matching input text wil be removed.
             (Does not work in column mode)</li>
-           <li>Increment/Decrement selected text. Duplicate line and increment/decrement all numbers found.
+           <li>Duplicate line and increment/decrement all numbers found.
             (Does not work in column mode)</li>
            <li>Swap Characters - set a shortcut in Settings | Keymap</li>
        </ul>
