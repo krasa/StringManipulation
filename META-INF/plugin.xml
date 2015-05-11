@@ -1,5 +1,5 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin url="http://code.google.com/p/idea-string-manip/">
+<idea-plugin url="https://github.com/krasa/StringManipulation">
 	<name>String Manipulation</name>
 	<description><![CDATA[
        <p>
