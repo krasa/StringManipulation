@@ -22,30 +22,32 @@ public class RemoveDuplicateLinesAction extends EditorAction {
 	public RemoveDuplicateLinesAction() {
 		super(new EditorWriteActionHandler(true) {
 			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
-
 				// Column mode not supported
 				if (editor.isColumnMode()) {
 					return;
 				}
-				final SelectionModel selectionModel = editor.getSelectionModel();
-				boolean hasSelection = selectionModel.hasSelection();
-				if (!hasSelection) {
-					return;
-				}
-				final String selectedText = selectionModel.getSelectedText();
-				if (selectedText != null) {
-					int selectionStart = selectionModel.getSelectionStart();
-					int selectionEnd = selectionModel.getSelectionEnd();
+				try {
+					final SelectionModel selectionModel = editor.getSelectionModel();
+					boolean hasSelection = selectionModel.hasSelection();
+					if (!hasSelection) {
+						return;
+					}
+					final String selectedText = selectionModel.getSelectedText();
+					if (selectedText != null) {
+						int selectionStart = selectionModel.getSelectionStart();
+						int selectionEnd = selectionModel.getSelectionEnd();
 
-					String[] split = selectedText.split("\n");
-					String[] uniqueLines = filter(editor, split);
+						String[] split = selectedText.split("\n");
+						String[] uniqueLines = filter(editor, split);
+
+						String result = join(uniqueLines, selectedText.length());
+
+						editor.getDocument().replaceString(selectionStart, selectionEnd, result);
+						editor.getCaretModel().moveToOffset(selectionStart + result.length());
+						selectionModel.setSelection(selectionStart, selectionStart + result.length());
+					}
+				} finally {
 					naiveCleanup(editor, caret);
-
-					String result = join(uniqueLines, selectedText.length());
-
-					editor.getDocument().replaceString(selectionStart, selectionEnd, result);
-					editor.getCaretModel().moveToOffset(selectionStart + result.length());
-					selectionModel.setSelection(selectionStart, selectionStart + result.length());
 				}
 			}
 
