@@ -1,25 +1,24 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.openapi.editor.ScrollType;
-import osmedile.intellij.stringmanip.utils.DuplicatUtils;
-import osmedile.intellij.stringmanip.utils.StringUtil;
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import osmedile.intellij.stringmanip.utils.DuplicatUtils;
+import osmedile.intellij.stringmanip.utils.StringUtil;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
  * @author Olivier Smedile
- * @version $Id: DecrementAction.java 62 2008-04-20 11:11:54Z osmedile $
+ * @version $Id: IncrementAction.java 40 2008-03-26 21:08:33Z osmedile $
  */
-public class DecrementAction extends EditorAction {
+public class DuplicateAndIncrementAction extends EditorAction {
 
-	public DecrementAction() {
+	public DuplicateAndIncrementAction() {
 		super(new EditorWriteActionHandler(true) {
 
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
@@ -42,25 +41,25 @@ public class DecrementAction extends EditorAction {
 				final String selectedText = selectionModel.getSelectedText();
 
 				if (selectedText != null) {
-					String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
-							DuplicatUtils.SIMPLE_NUMBER_REGEX);
+					String[] textParts = StringUtil
+						.splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
 					for (int i = 0; i < textParts.length; i++) {
-						textParts[i] = DuplicatUtils.simpleDec(textParts[i]);
+						textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
 					}
 
 					final String s = StringUtils.join(textParts);
-					editor.getDocument().insertString(selectionModel.getSelectionStart(), s);
+					editor.getDocument().insertString(selectionModel.getSelectionEnd(), s);
 
 					if (hasSelection) {
 						long selectionStart = selectionModel.getSelectionStart();
 						long selectionEnd = selectionModel.getSelectionEnd();
 						long length = s.length();
-						caretModel.moveToOffset((int) (offset));
-						selectionModel.setSelection((int) (selectionStart - length), (int) (selectionEnd - length));
+						caretModel.moveToOffset((int) (offset + length));
+						selectionModel.setSelection((int) (selectionStart + length), (int) (selectionEnd + length));
 						editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
 					} else {
 						selectionModel.removeSelection();
-						caretModel.moveToLogicalPosition(new LogicalPosition(line, column));
+						caretModel.moveToLogicalPosition(new LogicalPosition(line + 1, column));
 					}
 				}
 			}

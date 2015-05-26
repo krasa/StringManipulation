@@ -50,6 +50,13 @@
 	<change-notes>
 		<![CDATA[
         <p>
+        <h4>Version 3.3</h4>
+        <ul>
+            <li>new action: Remove duplicate lines</li>
+        </ul>
+        </p>
+        <p>
+        <p>
         <h4>Version 3.2</h4>
         <ul>
             <li>Renamed and added more case converting actions</li>
@@ -188,7 +195,7 @@
     ]]>
 	</change-notes>
 
-	<version>3.2.135.445</version>
+	<version>3.3.135.445</version>
 	<vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
 	<idea-version since-build="135.445" />
 
@@ -346,12 +353,12 @@
 			</action>
 
 			<action id="osmedile.intellij.stringmanip.DecrementAction"
-				class="osmedile.intellij.stringmanip.DecrementAction"
+				class="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
 				text="Duplicate and decrement"
 				description="Duplicate and decrement numbers inside selected text">
 			</action>
 			<action id="osmedile.intellij.stringmanip.IncrementAction"
-				class="osmedile.intellij.stringmanip.IncrementAction"
+				class="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
 				text="Duplicate and increment"
 				description="Duplicate and increment numbers inside selected text">
 			</action>
@@ -360,12 +367,16 @@
 				text="Grep"
 				description="Grep on selected text">
 			</action>
-
-
+			
+			<action id="StringManipulation.RemoveDuplicateLines"
+				class="osmedile.intellij.stringmanip.RemoveDuplicateLinesAction"
+				text="Remove duplicate lines"
+				description="Remove duplicate lines in selected text or lines within multiple selections">
+			</action>
 			<action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
 				class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
 				text="Remove empty lines"
-				description="Remove empty lines on selected text">
+				description="Remove empty lines in selected text">
 			</action>
 			<action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
 				class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
