@@ -53,6 +53,7 @@
         <h4>Version 3.3</h4>
         <ul>
             <li>new action: Remove duplicate lines</li>
+            <li>new action: Align to Columns / Wrap to Column - by any character</li>
         </ul>
         </p>
         <p>
@@ -398,6 +399,12 @@
 				text="Unescape PHP"
 				description="Call StringEscapeUtils.unescapePHP(selectedText)">
 			</action>
+			
+			<action id="StringManipulation.AlignToColumns"
+				   class="osmedile.intellij.stringmanip.AlignToColumnsAction"
+				   text="Align to Columns (String Manipulation)" description="Align to Columns / Wrap to Column (String Manipulation plugin)">
+			   <add-to-group group-id="CodeMenu" anchor="last"/>
+		   </action>
 		</group>
 
 		<action id="osmedile.intellij.stringmanip.SwapCharactersAction"
