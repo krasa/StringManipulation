@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.styles;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class ToConstantStyleCaseActionTest {
 
@@ -11,6 +11,8 @@ public class ToConstantStyleCaseActionTest {
     @Test
     public void testTransform() throws Exception {
         action = new ToConstantStyleCaseAction(false);
+        assertEquals("public", action.transform("PUBLIC"));
+        assertEquals("PUBLIC", action.transform("public"));
         assertEquals("THIS_IS_A_TEXT", action.transform("ThisIsAText"));
         assertEquals("WHOAH_A_TEST", action.transform("WhoahATest"));
         assertEquals("WHOAH_A_TEST", action.transform("Whoah ATest"));

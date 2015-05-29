@@ -1,9 +1,9 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.utils.StringUtil;
-
 import static org.apache.commons.lang.WordUtils.capitalize;
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
+
+import osmedile.intellij.stringmanip.utils.StringUtil;
 
 public enum Style {
     HYPHEN_LOWERCASE("foo-bar") {
@@ -12,7 +12,7 @@ public enum Style {
             if (style == HYPHEN_UPPERCASE) {
                 return s.toLowerCase();
             }
-            if (style == UNDERSCORE_UPPERCASE) {
+            if (style == SCREAMING_SNAKE_CASE) {
                 s = s.toLowerCase();
             }
             if (style == CAMEL_CASE) {
@@ -24,6 +24,9 @@ public enum Style {
     HYPHEN_UPPERCASE("FOO-BAR") {
         @Override
         public String transform(Style style, String s) {
+            if (style == ALL_UPPER_CASE) {
+                return CAMEL_CASE.transform(style, s);
+            }
             if (style == CAMEL_CASE) {
                 s = camelToText(s);
             }
@@ -37,14 +40,17 @@ public enum Style {
             return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
         }
     },
-    UNDERSCORE_UPPERCASE("FOO_BAR") {
+    SCREAMING_SNAKE_CASE("FOO_BAR") {
         @Override
         public String transform(Style style, String s) {
+            if (style == ALL_UPPER_CASE) {
+                return CAMEL_CASE.transform(style, s);
+            }
             s = CAMEL_CASE.transform(style, s);
             return wordsAndHyphenAndCamelToConstantCase(s);
         }
     },
-    CAMEL_CASE("fooBar", " fooBar") {
+    CAMEL_CASE("fooBar", "fooBar") {
         @Override
         public String transform(Style style, String s) {
             if (style == CAMEL_CASE) {
@@ -55,7 +61,7 @@ public enum Style {
             return toCamelCase(s);
         }
     },
-    DOT("foo.bar", " foo.Bar") {
+    DOT("foo.bar", "foo.Bar") {
         @Override
         public String transform(Style style, String s) {
             return StringUtil.toDotCase(s);
@@ -64,7 +70,10 @@ public enum Style {
     WORD_LOWERCASE("foo bar") {
         @Override
         public String transform(Style style, String s) {
-            if (style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE || style == UNDERSCORE_UPPERCASE) {
+            if (style == ALL_UPPER_CASE) {
+                return CAMEL_CASE.transform(style, s);
+            }
+            if (style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE || style == SCREAMING_SNAKE_CASE) {
                 s = CAMEL_CASE.transform(style, s);
             }
             return camelToText(s);
@@ -73,10 +82,19 @@ public enum Style {
     WORD_CAPITALIZED("Foo Bar") {
         @Override
         public String transform(Style style, String s) {
+            if (style == ALL_UPPER_CASE) {
+                return CAMEL_CASE.transform(style, s);
+            }
             if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
                 s = WORD_LOWERCASE.transform(style, s);
             }
-            return capitalize(s);
+			return capitalize(s, Constants.DELIMITERS);
+        }
+    },
+    ALL_UPPER_CASE("FOOBAR") {
+        @Override
+        public String transform(Style style, String s) {
+            return s;
         }
     },
     UNKNOWN() {
@@ -103,13 +121,14 @@ public enum Style {
 
 
     public static Style from(String s) {
+        s= removeBorderQuotes(s);
         boolean underscore = s.contains("_");
         boolean containsLowerCase = containsLowerCase(s);
         if (underscore && containsLowerCase) {
             return UNDERSCORE_LOWERCASE;
         }
         if (underscore) {
-            return UNDERSCORE_UPPERCASE;
+            return SCREAMING_SNAKE_CASE;
         }
 
         boolean containsUpperCase = containsUpperCase(s);
@@ -127,6 +146,11 @@ public enum Style {
             return DOT;
         }
 
+        boolean allUpperCase = containsOnlyUpperCase(s);
+        if (allUpperCase) {
+            return ALL_UPPER_CASE;
+        }
+
         boolean containsWhitespace = s.contains(" ");
         if (!containsWhitespace && containsUpperCase) {
             return CAMEL_CASE;
@@ -142,6 +166,27 @@ public enum Style {
         return UNKNOWN;
     }
 
+
+    private static String removeBorderQuotes(String s) {
+        if (s.length()>2&& border(s, "\"")||border(s, "\'")) {
+            s = s.substring(1, s.length() - 1);
+        }
+        return s;
+    }
+
+    private static boolean border(String s, String prefix) {
+        return s.startsWith(prefix) && s.endsWith("\"");
+    }
+
+    private static boolean containsOnlyUpperCase(String s) {
+        for (char c : s.toCharArray()) {
+            if (!Character.isUpperCase(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private static boolean containsUpperCase(String s) {
         for (char c : s.toCharArray()) {
             if (Character.isUpperCase(c)) {
@@ -165,5 +210,9 @@ public enum Style {
             }
         }
         return false;
+    }
+
+    private static class Constants {
+        private static final char[] DELIMITERS = new char[] { '\'', '\"', ' ' };
     }
 }

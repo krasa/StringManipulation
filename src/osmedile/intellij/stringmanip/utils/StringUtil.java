@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.utils;
 
+import static java.lang.Character.*;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Character.*;
 
 
 /**
@@ -26,12 +26,12 @@ public class StringUtil {
         char lastChar = ' ';
         for (char c : s.toCharArray()) {
             if (isUpperCase(c)) {
-                if (lastChar != ' ') {
+				if (isLetter(lastChar)) {
                     buf.append(" ");
                 }
                 c = Character.toLowerCase(c);
             }
-            if (!(lastChar == ' ' && c == ' ')) {
+			if (lastChar != ' ' || c != ' ') {
                 buf.append(c);
             }
             lastChar = c;
@@ -56,16 +56,21 @@ public class StringUtil {
 
         boolean firstWordNotFound = true;
         for (int i = 0; i < words.length; i++) {
-            if (firstWordNotFound && StringUtils.isNotBlank(words[i])) {
-                words[i] = words[i].toLowerCase();
+			String word = words[i];
+			if (firstWordNotFound && StringUtils.isNotBlank(word) && isNotQuote(word)) {
+				words[i] = word.toLowerCase();
                 firstWordNotFound = false;
             } else {
-                words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(words[i].toLowerCase());
+				words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(word.toLowerCase());
             }
         }
 
         return StringUtils.join(words).replaceAll("[\\s_]", "");
     }
+
+	private static boolean isNotQuote(String word) {
+		return !"\"".equals(word) && !"\'".equals(word);
+	}
 
     public static String wordsToConstantCase(String s) {
         StringBuilder buf = new StringBuilder();
@@ -95,11 +100,13 @@ public class StringUtil {
         StringBuilder buf = new StringBuilder();
 
         char lastChar = 'a';
-        for (char c : s.toCharArray()) {
+		char[] chars = s.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			char c = chars[i];
             boolean isUpperCaseAndPreviousIsUpperCase = isUpperCase(lastChar) && isUpperCase(c);
             boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
-            boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
-            boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
+			// boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
+			// boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
             boolean previousIsWhitespace = isWhitespace(lastChar);
             boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
             //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
@@ -107,9 +114,11 @@ public class StringUtil {
                 buf.append("_");
             }
 
-            if (!isLetter(c) && lastOneIsNotUnderscore) {
+			if (!isLetter(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
                 buf.append('_');
-            } else if (!isWhitespace(c) && (c != '_' || lastOneIsNotUnderscore)) {
+			} else if (!isWhitespace(c) && (c != '_' || lastOneIsNotUnderscore)) { // uppercase anything, do not add
+																					// whitespace, do not add _ if there
+																					// was previously
                 buf.append(Character.toUpperCase(c));
             }
 
@@ -121,6 +130,20 @@ public class StringUtil {
 
 
         return buf.toString();
+	}
+
+	private static boolean isNotBorderQuote(char actualChar, int i, char[] chars) {
+		if (chars.length - 1 == i) {
+			char firstChar = chars[0];
+			if (isQuote(actualChar) && isQuote(firstChar)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isQuote(char actualChar) {
+		return actualChar == '\'' || actualChar == '\"';
     }
 
     public static String toDotCase(String s) {

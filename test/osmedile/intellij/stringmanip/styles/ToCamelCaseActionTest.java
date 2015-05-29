@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.styles;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class ToCamelCaseActionTest {
 
@@ -23,5 +23,7 @@ public class ToCamelCaseActionTest {
         assertEquals("whOAhATeSt", action.transform("WhOAh a TeSt"));
         assertEquals("whOAhATeSt", action.transform("WhOAh_a_TeSt"));
         assertEquals("whOAhATeSt", action.transform("WhOAh a_TeSt"));
+		assertEquals("'closeBsAlert'", action.transform("'Close Bs Alert'"));
+		assertEquals("\"closeBsAlert\"", action.transform("\"Close Bs Alert\""));
     }
 }

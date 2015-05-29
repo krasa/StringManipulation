@@ -29,9 +29,8 @@ public abstract class AbstractStringManipAction extends EditorAction {
 
 					boolean allLinSelected = false;
 					if (selectedText == null) {
-						selectionModel.selectLineAtCaret();
+						allLinSelected = selectSomethingUnderCaret(editor, dataContext, selectionModel);
 						selectedText = selectionModel.getSelectedText();
-						allLinSelected = true;
 
 						if (selectedText == null) {
 							return;
@@ -77,6 +76,11 @@ public abstract class AbstractStringManipAction extends EditorAction {
 			});
 		}
 
+	}
+
+	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
+		selectionModel.selectLineAtCaret();
+		return true;
 	}
 
 	public abstract String transform(String s);

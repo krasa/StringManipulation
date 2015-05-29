@@ -1,8 +1,6 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.AbstractStringManipAction;
-
-public class ToHyphenCaseAction extends AbstractStringManipAction {
+public class ToHyphenCaseAction extends AbstractCaseConvertingAction {
 
     public String transform(String s) {
         Style from = Style.from(s);

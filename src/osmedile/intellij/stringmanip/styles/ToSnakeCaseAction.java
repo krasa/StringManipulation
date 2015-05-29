@@ -1,8 +1,6 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.AbstractStringManipAction;
-
-public class ToSnakeCaseAction extends AbstractStringManipAction {
+public class ToSnakeCaseAction extends AbstractCaseConvertingAction {
     public ToSnakeCaseAction() {
     }
 
