@@ -94,6 +94,7 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
+
 	@Test
 	public void test9() {
 		//  @formatter:off
@@ -114,6 +115,7 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
+
 	@Test
 	public void test10() {
 		//  @formatter:off
@@ -134,6 +136,7 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
+
 	@Test
 	public void test11() {
 		//  @formatter:off
