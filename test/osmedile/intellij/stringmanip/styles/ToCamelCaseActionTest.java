@@ -12,6 +12,8 @@ public class ToCamelCaseActionTest {
     public void testTransform() throws Exception {
         action = new ToCamelCaseAction(false);
         assertEquals("foo", action.transform("foo"));
+		assertEquals("!@#$%^&*)(*&|+!!!!!foo!!!!", action.transform("!@#$%^&*)(*&|+!!!!!FOO!!!!"));
+		assertEquals("public", action.transform("PUBLIC"));
 
         assertEquals("testFlexibleQuery", action.transform("testFLEXIBLE_QUERY"));
         assertEquals("testFlexibleQueryProductsForWorkflowAttachment",

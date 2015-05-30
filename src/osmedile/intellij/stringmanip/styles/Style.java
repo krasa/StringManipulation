@@ -184,7 +184,7 @@ public enum Style {
 
 	private static boolean containsOnlyUpperCase(String s) {
 		for (char c : s.toCharArray()) {
-			if (!Character.isUpperCase(c)) {
+			if (Character.isLowerCase(c)) {
 				return false;
 			}
 		}

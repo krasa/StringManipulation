@@ -11,6 +11,7 @@ public class ToConstantStyleCaseActionTest {
     @Test
     public void testTransform() throws Exception {
         action = new ToConstantStyleCaseAction(false);
+		assertEquals("!@#$%^&*)(*&|+!!!!!foo!!!!", action.transform("!@#$%^&*)(*&|+!!!!!FOO!!!!"));
         assertEquals("public", action.transform("PUBLIC"));
         assertEquals("PUBLIC", action.transform("public"));
         assertEquals("THIS_IS_A_TEXT", action.transform("ThisIsAText"));

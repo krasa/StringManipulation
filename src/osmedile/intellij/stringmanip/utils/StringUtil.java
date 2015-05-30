@@ -57,7 +57,7 @@ public class StringUtil {
         boolean firstWordNotFound = true;
         for (int i = 0; i < words.length; i++) {
 			String word = words[i];
-			if (firstWordNotFound && StringUtils.isNotBlank(word) && isNotQuote(word)) {
+			if (firstWordNotFound && startsWithLetter(word)) {
 				words[i] = word.toLowerCase();
                 firstWordNotFound = false;
             } else {
@@ -67,6 +67,10 @@ public class StringUtil {
 
         return StringUtils.join(words).replaceAll("[\\s_]", "");
     }
+
+	private static boolean startsWithLetter(String word) {
+		return word.length() > 0 && isLetter(word.charAt(0));
+	}
 
 	private static boolean isNotQuote(String word) {
 		return !"\"".equals(word) && !"\'".equals(word);
