@@ -142,6 +142,10 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 				selectionModel.removeSelection();
 				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			}
+			if (Style.isQuoted(selectedText)) {
+				selectionModel.setSelection(selectionModel.getSelectionStart() + 1,
+						selectionModel.getSelectionEnd() - 1);
+			}
 
 			if (caretOffset < selectionModel.getSelectionStart()) {
 				editor.getCaretModel().moveToOffset(selectionModel.getSelectionStart());
@@ -152,4 +156,5 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			return false;
 		}
 	}
+
 }

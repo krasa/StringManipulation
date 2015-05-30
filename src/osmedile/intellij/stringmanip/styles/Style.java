@@ -167,14 +167,19 @@ public enum Style {
 	}
 
 	private static String removeBorderQuotes(String s) {
-		if (s.length() > 2 && border(s, "\"") || border(s, "\'")) {
+		if (isQuoted(s)) {
 			s = s.substring(1, s.length() - 1);
 		}
 		return s;
 	}
 
-	private static boolean border(String s, String prefix) {
-		return s.startsWith(prefix) && s.endsWith("\"");
+	public static boolean isQuoted(String selectedText) {
+		return selectedText != null && selectedText.length() > 2
+				&& (Style.isBorderChar(selectedText, "\"") || Style.isBorderChar(selectedText, "\'"));
+	}
+
+	public static boolean isBorderChar(String s, String borderChar) {
+		return s.startsWith(borderChar) && s.endsWith(borderChar);
 	}
 
 	private static boolean containsOnlyUpperCase(String s) {
