@@ -230,6 +230,10 @@
             </action>
 
             <separator/>
+            <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
+                    class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
+                    description="Exchange two selected characters, or ones surrounding the cursor if no selection">
+            </action>
             <action id="osmedile.intellij.stringmanip.GrepAction"
                     class="osmedile.intellij.stringmanip.GrepAction"
                     text="Grep"
@@ -237,10 +241,6 @@
             </action>
         </group>
 
-        <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
-                class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
-                description="Exchange two selected characters, or ones surrounding the cursor if no selection">
-        </action>
 
     </actions>
 
@@ -294,6 +294,7 @@
 				<li>Remove all spaces in selected text</li>
 				<li>Remove duplicate lines</li>
 				<li>Remove empty lines</li>
+				<li>Swap characters at caret</li>
 				<li>Grep selected text, All lines not matching input text wil be removed.
 					(Does not work in column mode)
 				</li>
