@@ -70,16 +70,6 @@
                         text="Unescape XML"
                         description="Call StringEscapeUtils.unescapeXml(selectedText)">
                 </action>
-                <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
-                        class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
-                        text="Escape non ascii to Unicode"
-                        description="Escape non ascii to Unicode">
-                </action>
-                <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
-                        class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
-                        text="Escaped Unicode to String"
-                        description="Escaped Unicode to String">
-                </action>
                 <action id="osmedile.intellij.stringmanip.EscapePHPAction"
                         class="osmedile.intellij.stringmanip.EscapePHPAction"
                         text="Escape PHP"
@@ -89,6 +79,16 @@
                         class="osmedile.intellij.stringmanip.UnescapePHPAction"
                         text="Unescape PHP"
                         description="Call StringEscapeUtils.unescapePHP(selectedText)">
+                </action>
+                <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
+                        class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
+                        text="Escape non ascii to Unicode"
+                        description="Escape non ascii to Unicode">
+                </action>
+                <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
+                        class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
+                        text="Escaped Unicode to String"
+                        description="Escaped Unicode to String">
                 </action>
             </group>
 
@@ -130,33 +130,11 @@
                 <add-to-group group-id="CodeMenu" anchor="last"/>
             </action>
             <separator/>
-            <action id="osmedile.intellij.stringmanip.TrimAction"
-                    class="osmedile.intellij.stringmanip.TrimAction"
-                    text="Trim"
-                    description="Trim selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    text="Trim all spaces"
-                    description="Trim all spaces selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    text="Remove all spaces"
-                    description="Remove all spaces in selected text">
-            </action>
-
-            <separator/>
 
             <action id="StringManipulation.SwitchStyleAction"
                     class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
                     text="Toggle case"
                     description="Toggle case (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
-            </action>
-            <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                    text="To camelCase (or to words)"
-                    description="To camelCase (or to words)">
             </action>
             <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
@@ -184,6 +162,11 @@
                     description="To dot.case (or to camelCase)">
             </action>
 
+            <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+                    text="To camelCase (or to words)"
+                    description="To camelCase (or to words)">
+            </action>
 
             <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                     class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
@@ -230,6 +213,23 @@
             </action>
             <separator/>
 
+            <action id="osmedile.intellij.stringmanip.TrimAction"
+                    class="osmedile.intellij.stringmanip.TrimAction"
+                    text="Trim"
+                    description="Trim selected text">
+            </action>
+            <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+                    class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+                    text="Trim all spaces"
+                    description="Trim all spaces selected text">
+            </action>
+            <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+                    class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+                    text="Remove all spaces"
+                    description="Remove all spaces in selected text">
+            </action>
+
+            <separator/>
             <action id="osmedile.intellij.stringmanip.GrepAction"
                     class="osmedile.intellij.stringmanip.GrepAction"
                     text="Grep"
@@ -261,9 +261,9 @@
 				<li>Capitalize selected text</li>
 			</ul>
             -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
-			
 		</p>
 		<p>
+            Un/Escape:
 			<ul>
 				<li>Un/Escape selected Java text</li>
 				<li>Un/Escape selected JavaScript text</li>
@@ -271,33 +271,34 @@
 				<li>Un/Escape selected XML text</li>
 				<li>Un/Escape selected SQL text</li>
 				<li>Un/Escape selected PHP text</li>
-				<li>Trim selected text</li>
-				<li>Trim all spaces in selected text</li>
-				<li>Remove all spaces in selected text</li>
-				<li>De/Encode selected text as URL</li>
-				<li>Convert selected text to Camel Case</li>
-				<li>Convert selected text to Constant Case</li>
-				<li>Encode selected text to MD5 Hex16</li>
-				<li>De/Encode selected text to Base64</li>
-				<li>Remove duplicate lines</li>
-				<li>Remove empty lines</li>
-				<li>Convert non ASCII to escaped Unicode</li>
-				<li>Convert escaped Unicode to String</li>
-				<li>Grep selected text, All lines not matching input text wil be removed.
-					(Does not work in column mode)
-				</li>
-				<li>Increment/decrement all numbers found.
-				</li>
-				<li>Duplicate line and increment/decrement all numbers found.
-				</li>
+                <li>Convert non ASCII to escaped Unicode</li>
+                <li>Convert escaped Unicode to String</li>
 			</ul>
 		</p>
 		<p>
+            Encode/Decode:
 			<ul>
-				<li>Format selected text to columns/table by a chosen separator/delimiter</li>
+				<li>Encode selected text to MD5 Hex16</li>
+				<li>De/Encode selected text as URL</li>
+				<li>De/Encode selected text to Base64</li>
 			</ul>
 		</p>
-		If no text is selected, then the current line is selected.
+		<p>
+            Other:
+			<ul>
+                <li>Format selected text to columns/table by a chosen separator/delimiter</li>
+				<li>Increment/decrement all numbers found.</li>
+				<li>Duplicate line and increment/decrement all numbers found.</li>
+				<li>Trim selected text</li>
+				<li>Trim all spaces in selected text</li>
+				<li>Remove all spaces in selected text</li>
+				<li>Remove duplicate lines</li>
+				<li>Remove empty lines</li>
+				<li>Grep selected text, All lines not matching input text wil be removed.
+					(Does not work in column mode)
+				</li>
+			</ul>
+		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
 			You can setup your own shortcuts for better usability.
 		</p>
@@ -312,11 +313,10 @@
 	    <div>
 	        <h4>Version 4.0</h4>
 	        <ul>
-	            <li>smarter selecting for case converting actions - when nothing is selected, then either whole line or particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
-	            </li>
+	            <li>smarter selecting for case converting actions - when nothing is selected, then either a whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
 	            <li>fixed whole bunch of edge cases for case converting actions</li>
 				<li>new action: Increment/decrement all numbers found</li>
-				<li>Too many actions, introduced new subgroups</li>
+				<li>too many actions, introduced new subgroups</li>
 	        </ul>
 	    </div>
 	    <div>
