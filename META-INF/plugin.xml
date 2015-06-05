@@ -26,67 +26,67 @@
                    description="Group of String manipulation escape actions"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
-                        class="osmedile.intellij.stringmanip.EscapeJavaAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeJavaAction"
                         text="Escape Java"
                         description="Call StringEscapeUtils.escapeJava(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavaAction"
-                        class="osmedile.intellij.stringmanip.UnescapeJavaAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapeJavaAction"
                         text="Unescape Java"
                         description="Call StringEscapeUtils.unescapeJava(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
-                        class="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
                         text="Escape Javascript"
                         description="Call StringEscapeUtils.escapeJavaScript(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
-                        class="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapeJavaScriptAction"
                         text="Unescape Javascript"
                         description="Call StringEscapeUtils.unescapeJavaScript(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
-                        class="osmedile.intellij.stringmanip.EscapeHtmlAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeHtmlAction"
                         text="Escape HTML"
                         description="Call StringEscapeUtils.escapeHtml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeHtmlAction"
-                        class="osmedile.intellij.stringmanip.UnescapeHtmlAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapeHtmlAction"
                         text="Unescape HTML"
                         description="Call StringEscapeUtils.unescapeHtml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeSQLAction"
-                        class="osmedile.intellij.stringmanip.EscapeSQLAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeSQLAction"
                         text="Escape SQL"
                         description="Call StringEscapeUtils.escapeSql(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeXMLAction"
-                        class="osmedile.intellij.stringmanip.EscapeXMLAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeXMLAction"
                         text="Escape XML"
                         description="Call StringEscapeUtils.escapeXml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeXMLAction"
-                        class="osmedile.intellij.stringmanip.UnescapeXMLAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapeXMLAction"
                         text="Unescape XML"
                         description="Call StringEscapeUtils.unescapeXml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapePHPAction"
-                        class="osmedile.intellij.stringmanip.EscapePHPAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapePHPAction"
                         text="Escape PHP"
                         description="Call StringEscapeUtils.escapePHP(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapePHPAction"
-                        class="osmedile.intellij.stringmanip.UnescapePHPAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapePHPAction"
                         text="Unescape PHP"
                         description="Call StringEscapeUtils.unescapePHP(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
-                        class="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
+                        class="osmedile.intellij.stringmanip.escaping.NonAsciiToUnicodeEscapedAction"
                         text="Escape non ascii to Unicode"
                         description="Escape non ascii to Unicode">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
-                        class="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnicodeEscapedToStringAction"
                         text="Escaped Unicode to String"
                         description="Escaped Unicode to String">
                 </action>
@@ -96,27 +96,27 @@
                    description="Group of String manipulation encode/decode actions"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
-                        class="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeMd5Hex16Action"
                         text="Encode to MD5 Hex16"
                         description="Encode to MD5 Hex16">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
-                        class="osmedile.intellij.stringmanip.EncodeBase64Action"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeBase64Action"
                         text="Encode to Base64"
                         description="Encode to Base 64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
-                        class="osmedile.intellij.stringmanip.DecodeBase64Action"
+                        class="osmedile.intellij.stringmanip.encoding.DecodeBase64Action"
                         text="Decode to Base64"
                         description="Decode Base 64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
-                        class="osmedile.intellij.stringmanip.URLEncodeAction"
+                        class="osmedile.intellij.stringmanip.encoding.URLEncodeAction"
                         text="Encode URL"
                         description="Encode URL">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLDecodeAction"
-                        class="osmedile.intellij.stringmanip.URLDecodeAction"
+                        class="osmedile.intellij.stringmanip.encoding.URLDecodeAction"
                         text="Decode URL"
                         description="Decode URL">
                 </action>

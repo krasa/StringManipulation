@@ -1,4 +1,6 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.encoding;
+
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

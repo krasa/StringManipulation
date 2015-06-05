@@ -1,6 +1,7 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.encoding;
 
 import org.apache.commons.codec.binary.Base64;
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 /**
  * @author Olivier Smedile
