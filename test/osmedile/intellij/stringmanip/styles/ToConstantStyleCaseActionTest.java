@@ -21,6 +21,8 @@ public class ToConstantStyleCaseActionTest {
         assertEquals("ANOTHER_T_EST", action.transform("Another      t_Est"));
         assertEquals("TEST_AGAIN_TEST", action.transform("test again     _    _    test"));
         assertEquals("TEST_AGAIN_TEST", action.transform("TestAgain_   _    Test"));
+        assertEquals("V2_COUNTER", action.transform("v2Counter"));
+        assertEquals("2_V2_COUNTER2", action.transform("2v2Counter2"));
 //        
 //        
 //        

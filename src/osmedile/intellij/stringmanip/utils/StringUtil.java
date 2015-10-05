@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.utils;
 
-import static java.lang.Character.*;
-
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.lang.Character.*;
 
 
 /**
@@ -103,32 +103,37 @@ public class StringUtil {
     public static String wordsAndHyphenAndCamelToConstantCase(String s) {
         StringBuilder buf = new StringBuilder();
 
-        char lastChar = 'a';
-		char[] chars = s.toCharArray();
+        char previousChar = 'a';
+        char[] chars = s.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
-            boolean isUpperCaseAndPreviousIsUpperCase = isUpperCase(lastChar) && isUpperCase(c);
-            boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
-			// boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
+            boolean isUpperCaseAndPreviousIsUpperCase = isUpperCase(previousChar) && isUpperCase(c);
+            boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(previousChar) && isUpperCase(c);
+            // boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
 			// boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
-            boolean previousIsWhitespace = isWhitespace(lastChar);
+            boolean previousIsWhitespace = isWhitespace(previousChar);
             boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
+            boolean isNotUnderscore = c != '_';
             //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
+
+
+            //camelCase handling - add extra _
             if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace || isUpperCaseAndPreviousIsUpperCase)) {
                 buf.append("_");
+            } else if (isDigit(previousChar) && isLetter(c)) { //extra _ after number
+                buf.append('_');
             }
 
-			if (!isLetter(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
-                buf.append('_');
-			} else if (!isWhitespace(c) && (c != '_' || lastOneIsNotUnderscore)) { // uppercase anything, do not add
-																					// whitespace, do not add _ if there
-																					// was previously
+            if (!isLetterOrDigit(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
+                buf.append('_'); //replace special chars to _ (not quotes, no double _)
+            } else if (!isWhitespace(c) && (isNotUnderscore || lastOneIsNotUnderscore)) {
+                // uppercase anything, do not add whitespace, do not add _ if there was previously
                 buf.append(Character.toUpperCase(c));
             }
 
-            lastChar = c;
+            previousChar = c;
         }
-        if (isWhitespace(lastChar)) {
+        if (isWhitespace(previousChar)) {
             buf.append("_");
         }
 

@@ -42,6 +42,9 @@ public class StringUtilTest extends TestCase {
     }
 
     public void testWordsAndCamelToConstantCase() {
+        assertEquals("V2_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v2Counter"));
+        assertEquals("V22_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter"));
+        assertEquals("V22_COUNTER22", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter22"));
         assertEquals("THIS_IS_A_TEXT", StringUtil.wordsAndHyphenAndCamelToConstantCase("ThisIsAText"));
         assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("WhoahATest"));
         assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah ATest"));
