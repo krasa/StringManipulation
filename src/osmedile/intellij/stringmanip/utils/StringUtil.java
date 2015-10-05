@@ -101,8 +101,9 @@ public class StringUtil {
     }
 
     public static String wordsAndHyphenAndCamelToConstantCase(String s) {
+        boolean containsLowerCase = containsLowerCase(s);
+        
         StringBuilder buf = new StringBuilder();
-
         char previousChar = 'a';
         char[] chars = s.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
@@ -116,13 +117,13 @@ public class StringUtil {
             boolean isNotUnderscore = c != '_';
             //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
 
-
+           
             //camelCase handling - add extra _
-            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace || isUpperCaseAndPreviousIsUpperCase)) {
+            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace || (containsLowerCase &&isUpperCaseAndPreviousIsUpperCase))) {
                 buf.append("_");
             } else if (isDigit(previousChar) && isLetter(c)) { //extra _ after number
                 buf.append('_');
-            }
+            } 
 
             if (!isLetterOrDigit(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
                 buf.append('_'); //replace special chars to _ (not quotes, no double _)
@@ -289,5 +290,14 @@ public class StringUtil {
             buf.append("-");
         }
         return buf.toString();
+    }
+
+    public static boolean containsLowerCase(String s) {
+        for (char c : s.toCharArray()) {
+            if (isLowerCase(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

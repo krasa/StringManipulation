@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.1.135.445</version>
+    <version>4.1.135.445.1</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -314,7 +314,7 @@
 	    <div>
 	        <h4>Version 4.1</h4>
 	        <ul>
-	            <li>fixed converting with numbers (now: v2Counter3 -> V2_COUNTER3)</li>
+	            <li>fixed converting with numbers (now: v2Counter -> V2_COUNTER, _2_v2_Counter_3 -> 2_V2_COUNTER_3)</li>
 			</ul>
 	    </div>
 	    <div>

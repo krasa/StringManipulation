@@ -18,11 +18,17 @@ public class ToConstantStyleCaseActionTest {
         assertEquals("WHOAH_A_TEST", action.transform("WhoahATest"));
         assertEquals("WHOAH_A_TEST", action.transform("Whoah ATest"));
         assertEquals("WHOAH_A_TEST_AGAIN", action.transform("Whoah  A   Test, again"));
+        assertEquals("ANOTHER_T_EST", action.transform("anotherTEst"));
         assertEquals("ANOTHER_T_EST", action.transform("Another      t_Est"));
         assertEquals("TEST_AGAIN_TEST", action.transform("test again     _    _    test"));
         assertEquals("TEST_AGAIN_TEST", action.transform("TestAgain_   _    Test"));
         assertEquals("V2_COUNTER", action.transform("v2Counter"));
         assertEquals("2_V2_COUNTER2", action.transform("2v2Counter2"));
+        assertEquals("2_C_2", action.transform("2_c_2"));
+        assertEquals("ORGAN_VIZEPRAESIDENT_1", action.transform("organ-vizepraesident-1"));
+        assertEquals("FOO_BAR", action.transform("FOO-BAR"));
+        assertEquals("2_V2_COUNTER_3", action.transform("_2_v2_counter_3"));
+        assertEquals("2v2Counter3", action.transform("2_V2_COUNTER_3"));
 //        
 //        
 //        

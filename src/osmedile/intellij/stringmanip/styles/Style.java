@@ -36,7 +36,6 @@ public enum Style {
 	UNDERSCORE_LOWERCASE("foo_bar") {
 		@Override
 		public String transform(Style style, String s) {
-			s = CAMEL_CASE.transform(style, s);
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 		}
 	},
@@ -46,7 +45,6 @@ public enum Style {
 			if (style == ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
-			s = CAMEL_CASE.transform(style, s);
 			return wordsAndHyphenAndCamelToConstantCase(s);
 		}
 	},
@@ -124,21 +122,23 @@ public enum Style {
 	public static Style from(String s) {
 		s = removeBorderQuotes(s);
 		boolean underscore = s.contains("_");
-		boolean containsLowerCase = containsLowerCase(s);
-		if (underscore && containsLowerCase) {
+		boolean noUpperCase = noUpperCase(s);
+		boolean noLowerCase = noLowerCase(s);
+		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
+		boolean containsUpperCase = containsUpperCase(s);
+		
+		if (underscore && noUpperCase) {
 			return UNDERSCORE_LOWERCASE;
 		}
-		if (underscore) {
+		if (underscore && noLowerCase) {
 			return SCREAMING_SNAKE_CASE;
 		}
 
-		boolean containsUpperCase = containsUpperCase(s);
-		boolean onlyLowercase = !containsUpperCase;
 		boolean hyphen = s.contains("-");
-		if (hyphen && onlyLowercase) {
+		if (hyphen && noUpperCase) {
 			return HYPHEN_LOWERCASE;
 		}
-		if (hyphen) {
+		if (hyphen  && noLowerCase) {
 			return HYPHEN_UPPERCASE;
 		}
 
@@ -147,23 +147,39 @@ public enum Style {
 			return DOT;
 		}
 
-		boolean allUpperCase = containsOnlyUpperCase(s);
-		if (allUpperCase) {
+		if (noLowerCase) {
 			return ALL_UPPER_CASE;
 		}
 
-		boolean containsWhitespace = s.contains(" ");
-		if (!containsWhitespace && containsUpperCase) {
+		if (containsUpperCase && containsOnlyLettersAndDigits) {
 			return CAMEL_CASE;
 		}
 
-		if (onlyLowercase) {
+		if (noUpperCase) {
 			return WORD_LOWERCASE;
 		}
 		if (startsWithUppercase(s)) {
 			return WORD_CAPITALIZED;
 		}
 		return UNKNOWN;
+	}
+
+	private static boolean containsOnlyLettersAndDigits(String s) {
+		for (char c : s.toCharArray()) {
+			if (!Character.isLetterOrDigit(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean noUpperCase(String s) {
+		for (char c : s.toCharArray()) {
+			if (Character.isUpperCase(c)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static String removeBorderQuotes(String s) {
@@ -182,7 +198,7 @@ public enum Style {
 		return s.startsWith(borderChar) && s.endsWith(borderChar);
 	}
 
-	private static boolean containsOnlyUpperCase(String s) {
+	private static boolean noLowerCase(String s) {
 		for (char c : s.toCharArray()) {
 			if (Character.isLowerCase(c)) {
 				return false;
@@ -205,15 +221,6 @@ public enum Style {
 			return false;
 		}
 		return Character.isUpperCase(s.charAt(0));
-	}
-
-	private static boolean containsLowerCase(String s) {
-		for (char c : s.toCharArray()) {
-			if (Character.isLowerCase(c)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private static class Constants {
