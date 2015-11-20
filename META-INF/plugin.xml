@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.1.135.445.1</version>
+    <version>4.2.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -167,6 +167,11 @@
                     text="To camelCase (or to words)"
                     description="To camelCase (or to words)">
             </action>
+            <action id="StringManipulation.ToPascalCaseOrCamelCase"
+                    class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
+                    text="To PascalCase (or to camelCase)"
+                    description="To PascalCase (or to camelCase)">
+            </action>
 
             <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                     class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
@@ -250,7 +255,7 @@
 			Provides actions for text manipulation:
 			<ul>
 				<li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
-					words lowercase, Words Capitalized)
+					words lowercase, Words Capitalized, PascalCase)
 				</li>
 				<li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
 				<li>To snake_case (or to camelCase)</li>
@@ -258,6 +263,7 @@
 				<li>To hyphen-case (or to camelCase)</li>
 				<li>To hyphen-case (or to snake_case)</li>
 				<li>To camelCase (or to words)</li>
+				<li>To PascalCase (or to camelCase)</li>
 				<li>Capitalize selected text</li>
 			</ul>
             -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
@@ -311,6 +317,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 4.2<h4>
+	        <ul>
+	            <li>added PascalCase support</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 4.1</h4>
 	        <ul>

@@ -1,22 +1,22 @@
 package osmedile.intellij.stringmanip;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.styles.SwitchStyleAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/*+1 and -1 are magic*/
 public class SwitchStyleActionTest {
 
-    private static final int DUMMY_STYLES = 2;
+    private static final int DUMMY_STYLES = 2;//ALL_UPPER_CASE and UNKNOWN do not transform
 
     @Test
     public void testTransform5() throws Exception {
         String input = "foobar";
-        String result = transform(input, Style.values().length - DUMMY_STYLES);
+        String result = transform(input, Style.values().length - DUMMY_STYLES + 1);
         Assert.assertEquals(input, result);
     }
     @Test
@@ -29,7 +29,7 @@ public class SwitchStyleActionTest {
     @Test
     public void testTransform2() throws Exception {
         String input = "\"foo bar\"";
-        String result = transform(input, Style.values().length - DUMMY_STYLES);
+        String result = transform(input, Style.values().length - DUMMY_STYLES - 1);
         Assert.assertEquals(input, result);
     }
 
@@ -37,7 +37,7 @@ public class SwitchStyleActionTest {
     @Test
     public void testTransform4() throws Exception {
         String input = "\"Foo Bar\"";
-        String result = transform(input, Style.values().length - DUMMY_STYLES);
+        String result = transform(input, Style.values().length - DUMMY_STYLES - 1);
         Assert.assertEquals(input, result);
     }
 

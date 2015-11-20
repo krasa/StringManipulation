@@ -1,9 +1,9 @@
 package osmedile.intellij.stringmanip.styles;
 
+import osmedile.intellij.stringmanip.utils.StringUtil;
+
 import static org.apache.commons.lang.WordUtils.capitalize;
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
-
-import osmedile.intellij.stringmanip.utils.StringUtil;
 
 public enum Style {
 	HYPHEN_LOWERCASE("foo-bar") {
@@ -15,7 +15,7 @@ public enum Style {
 			if (style == SCREAMING_SNAKE_CASE) {
 				s = s.toLowerCase();
 			}
-			if (style == CAMEL_CASE) {
+			if (style == CAMEL_CASE || style == PASCAL_CASE) {
 				s = camelToText(s);
 			}
 			return StringUtil.wordsToHyphenCase(s);
@@ -27,7 +27,7 @@ public enum Style {
 			if (style == ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
-			if (style == CAMEL_CASE) {
+			if (style == CAMEL_CASE || style == PASCAL_CASE) {
 				s = camelToText(s);
 			}
 			return StringUtil.wordsToHyphenCase(s).toUpperCase();
@@ -46,6 +46,15 @@ public enum Style {
 				return CAMEL_CASE.transform(style, s);
 			}
 			return wordsAndHyphenAndCamelToConstantCase(s);
+		}
+	},
+	PASCAL_CASE("FooBar", "FooBar") {
+		@Override
+		public String transform(Style style, String s) {
+			if (style != CAMEL_CASE) {
+				s = CAMEL_CASE.transform(s);
+			}
+			return s.substring(0, 1).toUpperCase() + s.substring(1);
 		}
 	},
 	CAMEL_CASE("fooBar", "fooBar") {
@@ -151,6 +160,10 @@ public enum Style {
 			return ALL_UPPER_CASE;
 		}
 
+		boolean startsWithUppercase = startsWithUppercase(s);
+		if (startsWithUppercase && containsOnlyLettersAndDigits) {
+			return PASCAL_CASE;
+		}
 		if (containsUpperCase && containsOnlyLettersAndDigits) {
 			return CAMEL_CASE;
 		}
@@ -158,7 +171,7 @@ public enum Style {
 		if (noUpperCase) {
 			return WORD_LOWERCASE;
 		}
-		if (startsWithUppercase(s)) {
+		if (startsWithUppercase) {
 			return WORD_CAPITALIZED;
 		}
 		return UNKNOWN;
@@ -215,6 +228,7 @@ public enum Style {
 		}
 		return false;
 	}
+
 
 	private static boolean startsWithUppercase(String s) {
 		if (s.length() == 0) {
