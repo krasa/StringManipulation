@@ -1,4 +1,4 @@
-7package osmedile.intellij.stringmanip.align;
+package osmedile.intellij.stringmanip.align;
 
 public class AlignCenterAction extends TextAlignmentAction {
 

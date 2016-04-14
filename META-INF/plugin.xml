@@ -312,9 +312,15 @@
 			</ul>
 		</p>
 		<p>
+            Align:
+			<ul>
+				<li>Format selected text to columns/table by a chosen separator/delimiter</li>
+				<li>Align text to left/center/right</li>
+			</ul>
+		</p>
+		<p>
             Other:
 			<ul>
-                <li>Format selected text to columns/table by a chosen separator/delimiter</li>
 				<li>Increment/decrement all numbers found.</li>
 				<li>Duplicate line and increment/decrement all numbers found.</li>
 				<li>Trim selected text</li>
@@ -339,6 +345,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 4.3<h4>
+	        <ul>
+	            <li>added aligning to left/center/right</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 4.2<h4>
 	        <ul>
