@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.align;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,11 +181,11 @@ public class AlignToColumnsAction extends EditorAction {
 			} else {
 				split = StringUtils.splitByWholeSeparatorPreserveAllTokens(textPart, separator);
 			}
-			hasSeparatorBeforeFirstToken = split.length>0 && split[0].length()==0;
+			hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 		}
 
 		public void appendInitialSpace(int initialSeparatorPosition) {
-			if (hasToken() &&hasSeparatorBeforeFirstToken) {
+			if (hasToken() && hasSeparatorBeforeFirstToken) {
 				int initialSpaces = initialSeparatorPosition - 1; // -1 for empty space which is around separator
 				for (int j = 0; j < initialSpaces; j++) {
 					sb.append(" ");

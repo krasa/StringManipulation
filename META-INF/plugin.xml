@@ -122,13 +122,35 @@
                 </action>
             </group>
 
-            <separator/>
-            <action id="StringManipulation.AlignToColumns"
-                    class="osmedile.intellij.stringmanip.AlignToColumnsAction"
-                    text="Align to Columns"
-                    description="Format selected text to columns/table by a chosen separator/delimiter">
-                <add-to-group group-id="CodeMenu" anchor="last"/>
-            </action>
+            <group text="Align"
+                   description="Text and columns alignment"
+                   popup="true">
+                <action id="StringManipulation.AlignToColumns"
+                        class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
+                        text="Align to Columns"
+                        description="Format selected text to columns/table by a chosen separator/delimiter">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.AlignLeftAction"
+                        class="osmedile.intellij.stringmanip.align.AlignLeftAction"
+                        text="Align Left"
+                        description="Align Left">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.AlignCenterAction"
+                        class="osmedile.intellij.stringmanip.align.AlignCenterAction"
+                        text="Align Center"
+                        description="Align Center">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.AlignRightAction"
+                        class="osmedile.intellij.stringmanip.align.AlignRightAction"
+                        text="Align Right"
+                        description="Align Right">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+            </group>
+            
             <separator/>
 
             <action id="StringManipulation.SwitchStyleAction"
