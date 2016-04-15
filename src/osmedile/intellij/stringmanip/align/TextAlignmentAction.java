@@ -44,7 +44,7 @@ public abstract class TextAlignmentAction extends EditorAction {
 							new TextRange(editor.logicalPositionToOffset(selectionStart),
 									editor.logicalPositionToOffset(selectionEnd)));
 
-					String charSequence = alignment.align(text);
+					String charSequence = alignment.alignLines(text);
 
 					editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
 							editor.logicalPositionToOffset(selectionEnd), charSequence);
@@ -78,7 +78,7 @@ public abstract class TextAlignmentAction extends EditorAction {
 	private List<String> alignLines(List<String> lines, Alignment alignment) {
 		ArrayList<String> strings = new ArrayList<String>();
 		for (String line : lines) {
-			strings.add(alignment.align(line));
+			strings.add(alignment.alignLines(line));
 		}
 		return strings;
 	}
@@ -86,29 +86,29 @@ public abstract class TextAlignmentAction extends EditorAction {
 	public enum Alignment {
 		LEFT() {
 			@NotNull
-			protected String trim(String s) {
+			protected String align(String s) {
 				return ltrim(s);
 			}
 		},
 		RIGHT {
 			@NotNull
-			protected String trim(String s) {
+			protected String align(String s) {
 				return rtrim(s);
 			}
 		},
 		CENTER {
 			@NotNull
-			protected String trim(String s) {
+			protected String align(String s) {
 				return center(s);
 			}
 
 		};
 
-		public String align(String text) {
+		public String alignLines(String text) {
 			String[] split = text.split("\n");
 			for (int i = 0; i < split.length; i++) {
 				String s = split[i];
-				split[i] = trim(s);
+				split[i] = align(s);
 			}
 			String join = StringUtils.join(split, '\n');
 			if (text.endsWith("\n")) {
@@ -117,7 +117,7 @@ public abstract class TextAlignmentAction extends EditorAction {
 			return join;
 		}
 
-		protected abstract String trim(String s);
+		protected abstract String align(String s);
 
 	}
 

@@ -7,20 +7,17 @@ import org.junit.Test;
 public class TextAlignmentActionTest {
 	@Test
 	public void align() throws Exception {
-		TextAlignmentAction action = new TextAlignmentAction(false, null) {
-		};
+		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.alignLines("foo  "));
+		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.alignLines(" foo "));
+		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.alignLines("  foo"));
 
-		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.align("foo  "));
-		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.align(" foo "));
-		assertEquals("foo  ", TextAlignmentAction.Alignment.LEFT.align("  foo"));
+		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.alignLines("foo  "));
+		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.alignLines(" foo "));
+		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.alignLines("  foo"));
 
-		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.align("foo  "));
-		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.align(" foo "));
-		assertEquals("  foo", TextAlignmentAction.Alignment.RIGHT.align("  foo"));
-
-		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.align("foo  "));
-		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.align(" foo "));
-		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.align("  foo"));
+		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.alignLines("foo  "));
+		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.alignLines(" foo "));
+		assertEquals(" foo ", TextAlignmentAction.Alignment.CENTER.alignLines("  foo"));
 	}
 
 }
