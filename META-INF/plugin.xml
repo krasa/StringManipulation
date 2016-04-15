@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.2.135.445.0</version>
+    <version>4.3.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -126,82 +126,6 @@
                         description="Decode URL">
                 </action>
             </group>
-
-            <group text="Align..."
-                   description="Text and columns alignment"
-                   popup="true">
-                <action id="StringManipulation.AlignToColumns"
-                        class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align to Columns"
-                        description="Format selected text to columns/table by a chosen separator/delimiter">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.AlignLeftAction"
-                        class="osmedile.intellij.stringmanip.align.AlignLeftAction"
-                        text="Align Left"
-                        description="Align Left">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.AlignCenterAction"
-                        class="osmedile.intellij.stringmanip.align.AlignCenterAction"
-                        text="Align Center"
-                        description="Align Center">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.AlignRightAction"
-                        class="osmedile.intellij.stringmanip.align.AlignRightAction"
-                        text="Align Right"
-                        description="Align Right">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-            </group>
-            
-            <group text="Sort..."
-                   description="Sort lines, delimited text"
-                   popup="true">
-                <action id="StringManipulation.ReverseAction"
-                        class="osmedile.intellij.stringmanip.sort.ReverseAction"
-                        text="Reverse lines"
-                        description="Reverse order of lines">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortCaseSensitiveAzAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveAzAction"
-                        text="Sort case-sensitive A-z"
-                        description="Sort case-sensitive A-z">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortCaseSensitiveZaAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveZaAction"
-                        text="Sort case-sensitive z-A"
-                        description="Sort case-sensitive z-A">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortCaseInSensitiveAzAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveAzAction"
-                        text="Sort case-insensitive a-z"
-                        description="Sort case-insensitive a-z">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortCaseInSensitiveZaAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveZaAction"
-                        text="Sort case-insensitive z-a"
-                        description="Sort case-insensitive z-a">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortByLenghtAscAction"
-                        class="osmedile.intellij.stringmanip.sort.SortByLengthAscAction"
-                        text="Sort by length ascending"
-                        description="Sort by length ascending">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-                <action id="StringManipulation.SortByLenghtDescAction"
-                        class="osmedile.intellij.stringmanip.sort.SortByLengthDescAction"
-                        text="Sort by length descending "
-                        description="Sort by length descending ">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
-            </group>
             
             <separator/>
 
@@ -280,43 +204,116 @@
                     description="Duplicate and increment numbers inside selected text">
             </action>
             <separator/>
-            <action id="StringManipulation.RemoveDuplicateLines"
-                    class="osmedile.intellij.stringmanip.RemoveDuplicateLinesAction"
-                    text="Remove duplicate lines"
-                    description="Remove duplicate lines in selected text or lines within multiple selections">
-            </action>
-            <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
-                    class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
-                    text="Remove empty lines"
-                    description="Remove empty lines in selected text">
-            </action>
-            <separator/>
+            
+            <group text="Sort..."
+                   description="Sort lines, delimited text"
+                   popup="true">
+                <action id="StringManipulation.ReverseAction"
+                        class="osmedile.intellij.stringmanip.sort.ReverseAction"
+                        text="Reverse lines"
+                        description="Reverse order of lines">
+                </action>
+                <action id="StringManipulation.SortCaseSensitiveAzAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveAzAction"
+                        text="Sort case-sensitive A-z"
+                        description="Sort case-sensitive A-z">
+                </action>
+                <action id="StringManipulation.SortCaseSensitiveZaAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveZaAction"
+                        text="Sort case-sensitive z-A"
+                        description="Sort case-sensitive z-A">
+                </action>
+                <action id="StringManipulation.SortCaseInSensitiveAzAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveAzAction"
+                        text="Sort case-insensitive a-z"
+                        description="Sort case-insensitive a-z">
+                </action>
+                <action id="StringManipulation.SortCaseInSensitiveZaAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveZaAction"
+                        text="Sort case-insensitive z-a"
+                        description="Sort case-insensitive z-a">
+                </action>
+                <action id="StringManipulation.SortByLenghtAscAction"
+                        class="osmedile.intellij.stringmanip.sort.SortByLengthAscAction"
+                        text="Sort by length ascending"
+                        description="Sort by length ascending">
+                </action>
+                <action id="StringManipulation.SortByLenghtDescAction"
+                        class="osmedile.intellij.stringmanip.sort.SortByLengthDescAction"
+                        text="Sort by length descending "
+                        description="Sort by length descending ">
+                </action>
+            </group>
+              
+            <group text="Filter/Remove/Trim..."
+                   description="Filter/Remove/Trim..."
+                   popup="true">
+                <action id="osmedile.intellij.stringmanip.GrepAction"
+                        class="osmedile.intellij.stringmanip.GrepAction"
+                        text="Grep"
+                        description="Grep on selected text">
+                </action>
+                <separator/>
+                <action id="StringManipulation.RemoveDuplicateLines"
+                        class="osmedile.intellij.stringmanip.RemoveDuplicateLinesAction"
+                        text="Remove duplicate lines"
+                        description="Remove duplicate lines in selected text or lines within multiple selections">
+                </action>
+                <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
+                        class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
+                        text="Remove empty lines"
+                        description="Remove empty lines in selected text">
+                </action>
+                <separator/>
+    
+                <action id="osmedile.intellij.stringmanip.TrimAction"
+                        class="osmedile.intellij.stringmanip.TrimAction"
+                        text="Trim"
+                        description="Trim selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+                        class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+                        text="Trim all spaces"
+                        description="Trim all spaces selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+                        class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+                        text="Remove all spaces"
+                        description="Remove all spaces in selected text">
+                </action>
+            </group>
 
-            <action id="osmedile.intellij.stringmanip.TrimAction"
-                    class="osmedile.intellij.stringmanip.TrimAction"
-                    text="Trim"
-                    description="Trim selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                    text="Trim all spaces"
-                    description="Trim all spaces selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                    text="Remove all spaces"
-                    description="Remove all spaces in selected text">
-            </action>
+            <group text="Align..."
+                   description="Text and columns alignment"
+                   popup="true">
+                <action id="StringManipulation.AlignToColumns"
+                        class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
+                        text="Align to Columns"
+                        description="Format selected text to columns/table by a chosen separator/delimiter">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.AlignLeftAction"
+                        class="osmedile.intellij.stringmanip.align.AlignLeftAction"
+                        text="Align Left"
+                        description="Align Left">
+                </action>
+                <action id="StringManipulation.AlignCenterAction"
+                        class="osmedile.intellij.stringmanip.align.AlignCenterAction"
+                        text="Align Center"
+                        description="Align Center">
+                </action>
+                <action id="StringManipulation.AlignRightAction"
+                        class="osmedile.intellij.stringmanip.align.AlignRightAction"
+                        text="Align Right"
+                        description="Align Right">
+                </action>
+            </group>
+
 
             <separator/>
             <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
                     class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
                     description="Exchange two selected characters, or ones surrounding the cursor if no selection">
-            </action>
-            <action id="osmedile.intellij.stringmanip.GrepAction"
-                    class="osmedile.intellij.stringmanip.GrepAction"
-                    text="Grep"
-                    description="Grep on selected text">
             </action>
         </group>
 
@@ -365,6 +362,17 @@
 			</ul>
 		</p>
 		<p>
+            Sort with natural order:
+			<ul>
+				<li>Reversing order of lines</li>
+				<li>Sort case-sensitive A-z</li>
+				<li>Sort case-sensitive z-A</li>
+				<li>Sort case-insensitive A-Z</li>
+				<li>Sort case-insensitive Z-A</li>
+				<li>Sort line length asc., desc.</li>
+			</ul>
+		</p>
+		<p>
             Align:
 			<ul>
 				<li>Format selected text to columns/table by a chosen separator/delimiter</li>
@@ -372,19 +380,24 @@
 			</ul>
 		</p>
 		<p>
-            Other:
+            Filter/Remove/Trim...:
 			<ul>
-				<li>Increment/decrement all numbers found.</li>
-				<li>Duplicate line and increment/decrement all numbers found.</li>
+				<li>Grep selected text, All lines not matching input text wil be removed.
+					(Does not work in column mode)
+				</li>
 				<li>Trim selected text</li>
 				<li>Trim all spaces in selected text</li>
 				<li>Remove all spaces in selected text</li>
 				<li>Remove duplicate lines</li>
 				<li>Remove empty lines</li>
+			</ul>
+		</p>
+		<p>
+            Other:
+			<ul>
+				<li>Increment/decrement all numbers found.</li>
+				<li>Duplicate line and increment/decrement all numbers found.</li>
 				<li>Swap characters at caret</li>
-				<li>Grep selected text, All lines not matching input text wil be removed.
-					(Does not work in column mode)
-				</li>
 			</ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
@@ -403,6 +416,7 @@
 	        <ul>
 	            <li>added action: Align to left/center/right</li>
 	            <li>added action: Convert diacritics(accents) to ASCII</li>
+	            <li>added action: Sorting with natural ordering</li>
 			</ul>
 	    </div>
 	    <div>
