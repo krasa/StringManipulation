@@ -127,7 +127,7 @@
                 </action>
             </group>
 
-            <group text="Align"
+            <group text="Align..."
                    description="Text and columns alignment"
                    popup="true">
                 <action id="StringManipulation.AlignToColumns"
@@ -152,6 +152,53 @@
                         class="osmedile.intellij.stringmanip.align.AlignRightAction"
                         text="Align Right"
                         description="Align Right">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+            </group>
+            
+            <group text="Sort..."
+                   description="Sort lines, delimited text"
+                   popup="true">
+                <action id="StringManipulation.ReverseAction"
+                        class="osmedile.intellij.stringmanip.sort.ReverseAction"
+                        text="Reverse lines"
+                        description="Reverse order of lines">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortCaseSensitiveAzAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveAzAction"
+                        text="Sort case-sensitive A-z"
+                        description="Sort case-sensitive A-z">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortCaseSensitiveZaAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveZaAction"
+                        text="Sort case-sensitive z-A"
+                        description="Sort case-sensitive z-A">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortCaseInSensitiveAzAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveAzAction"
+                        text="Sort case-insensitive a-z"
+                        description="Sort case-insensitive a-z">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortCaseInSensitiveZaAction"
+                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveZaAction"
+                        text="Sort case-insensitive z-a"
+                        description="Sort case-insensitive z-a">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortByLenghtAscAction"
+                        class="osmedile.intellij.stringmanip.sort.SortByLengthAscAction"
+                        text="Sort by length ascending"
+                        description="Sort by length ascending">
+                    <add-to-group group-id="CodeMenu" anchor="last"/>
+                </action>
+                <action id="StringManipulation.SortByLenghtDescAction"
+                        class="osmedile.intellij.stringmanip.sort.SortByLengthDescAction"
+                        text="Sort by length descending "
+                        description="Sort by length descending ">
                     <add-to-group group-id="CodeMenu" anchor="last"/>
                 </action>
             </group>

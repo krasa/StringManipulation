@@ -1,4 +1,6 @@
 /**
+NaturalOrderComparator.java -- Perform improved 'natural order' comparisons of strings in Java.
+Copyright (C) 2016 by Vojtech Krasa <vojta.krasa@gmail.com>
 NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
 Copyright (C) 2003 by Pierre-Luc Paour <natorder@paour.com>
 Based on the C version by Martin Pool, of which this is more or less a straight conversion.
@@ -24,7 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/** https://github.com/paour/natorder , edited by Vojtech Krasa */
 public class NaturalOrderComparator implements Comparator {
 	int compareRight(String a, String b) {
 		int bias = 0;
@@ -77,8 +78,8 @@ public class NaturalOrderComparator implements Comparator {
 			cb = charAt(b, ib);
 
 			// skip over leading spaces or zeros
-			// do not skip space if there was number before => '50 X' < '50B X'
-			while ((Character.isSpaceChar(ca) && Character.isDigit(pca)) || ca == '0') {
+			// skip space if there was not a number before => '50 X' < '50B X'
+			while ((Character.isSpaceChar(ca) && !Character.isDigit(pca)) || ca == '0') {
 				if (ca == '0') {
 					nza++;
 				} else {
@@ -86,10 +87,11 @@ public class NaturalOrderComparator implements Comparator {
 					nza = 0;
 				}
 
+				pca = ca;
 				ca = charAt(a, ++ia);
 			}
 
-			while ((Character.isSpaceChar(cb) && Character.isDigit(pcb)) || cb == '0') {
+			while ((Character.isSpaceChar(cb) && !Character.isDigit(pcb)) || cb == '0') {
 				if (cb == '0') {
 					nzb++;
 				} else {
@@ -97,6 +99,7 @@ public class NaturalOrderComparator implements Comparator {
 					nzb = 0;
 				}
 
+				pcb = cb;
 				cb = charAt(b, ++ib);
 			}
 
@@ -121,8 +124,6 @@ public class NaturalOrderComparator implements Comparator {
 
 			++ia;
 			++ib;
-			pca = ca;
-			pcb = cb;
 		}
 	}
 

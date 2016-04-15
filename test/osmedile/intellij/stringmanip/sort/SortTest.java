@@ -26,6 +26,13 @@ private static final String[] INPUT_1 = new String[]{
 //@formatter:on
 
 	@Test
+	public void test0() throws Exception {
+		String[] input = { "a", "A" };
+		String[] result = { "A", "a" };
+		assertSort(input, SortAction.Sort.CASE_SENSITIVE_A_Z, result);
+	}
+
+	@Test
 	public void test1() throws Exception {
 //@formatter:off
 String[] result =new String[]{  
