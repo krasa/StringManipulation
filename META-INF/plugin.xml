@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.3.135.445.0</version>
+    <version>4.4.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -411,6 +411,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 4.4<h4>
+	        <ul>
+	            <li>fixed AssertionError: Wrong line separators</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 4.3<h4>
 	        <ul>

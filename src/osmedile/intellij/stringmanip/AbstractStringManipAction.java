@@ -52,6 +52,8 @@ public abstract class AbstractStringManipAction extends EditorAction {
 							if (allLinSelected) {
 								newTextPart += "\n";
 							}
+							newTextPart = newTextPart.replace("\r\n", "\n");
+							newTextPart = newTextPart.replace("\r", "\n");
 
 							editor.getDocument().replaceString(blockStarts[i] + plusOffset, blockEnds[i] + plusOffset,
 									newTextPart);
@@ -66,6 +68,7 @@ public abstract class AbstractStringManipAction extends EditorAction {
 
 						String s = StringUtils.join(textParts, '\n');
 						s = s.replace("\r\n", "\n");
+						s = s.replace("\r", "\n");
 						editor.getDocument().replaceString(selectionModel.getSelectionStart(),
 								selectionModel.getSelectionEnd(), s);
 						if (allLinSelected) {
