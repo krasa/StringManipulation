@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.4.135.445.0</version>
+    <version>4.5.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -182,28 +182,36 @@
                     description="Capitalize Fully">
             </action>
             <separator/>
-
-            <action id="osmedile.intellij.stringmanip.DecrementAction"
-                    class="osmedile.intellij.stringmanip.DecrementAction"
-                    text="Decrement"
-                    description="Decrement numbers inside selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.IncrementAction"
-                    class="osmedile.intellij.stringmanip.IncrementAction"
-                    text="Increment"
-                    description="Increment numbers inside selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
-                    class="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
-                    text="Duplicate and decrement"
-                    description="Duplicate and decrement numbers inside selected text">
-            </action>
-            <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
-                    class="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
-                    text="Duplicate and increment"
-                    description="Duplicate and increment numbers inside selected text">
-            </action>
-            <separator/>
+            
+            <group text="Increment/Decrement..."
+                   description="Increment, decrement, build sequence"
+                   popup="true">
+                <action id="osmedile.intellij.stringmanip.DecrementAction"
+                        class="osmedile.intellij.stringmanip.increment.DecrementAction"
+                        text="Decrement"
+                        description="Decrement numbers inside selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.IncrementAction"
+                        class="osmedile.intellij.stringmanip.increment.IncrementAction"
+                        text="Increment"
+                        description="Increment numbers inside selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
+                        class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
+                        text="Duplicate and decrement"
+                        description="Duplicate and decrement numbers inside selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
+                        class="osmedile.intellij.stringmanip.increment.DuplicateAndIncrementAction"
+                        text="Duplicate and increment"
+                        description="Duplicate and increment numbers inside selected text">
+                </action>
+                <action id="StringManipulation.BuildSequenceAction"
+                        class="osmedile.intellij.stringmanip.increment.BuildSequenceAction"
+                        text="Increment to build sequence"
+                        description="Increment to build unique numbers">
+                </action>
+            </group>
             
             <group text="Sort..."
                    description="Sort lines, delimited text"
@@ -362,6 +370,14 @@
 			</ul>
 		</p>
 		<p>
+            Increment/Decrement:
+			<ul>
+				<li>Increment/decrement all numbers found.</li>
+				<li>Duplicate line and increment/decrement all numbers found.</li>	
+				<li>Increment to produce unique sequence of numbers</li>	
+            </ul>
+		</p>
+		<p>
             Sort with natural order:
 			<ul>
 				<li>Reversing order of lines</li>
@@ -395,8 +411,6 @@
 		<p>
             Other:
 			<ul>
-				<li>Increment/decrement all numbers found.</li>
-				<li>Duplicate line and increment/decrement all numbers found.</li>
 				<li>Swap characters at caret</li>
 			</ul>
 		</p>
@@ -412,6 +426,10 @@
         <![CDATA[
 	<p>
 	    <div>
+	        <h4>Version 4.5<h4>
+	        <ul>
+	            <li>new action: Increment to produce unique sequence of numbers ("s0,s0,s0" => "s1,s2,s3")</li>
+			</ul>
 	        <h4>Version 4.4<h4>
 	        <ul>
 	            <li>fixed AssertionError: Wrong line separators</li>
