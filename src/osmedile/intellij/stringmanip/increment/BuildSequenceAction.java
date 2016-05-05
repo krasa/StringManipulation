@@ -1,19 +1,17 @@
 package osmedile.intellij.stringmanip.increment;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import com.intellij.openapi.util.TextRange;
-
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import osmedile.intellij.stringmanip.utils.StringUtils;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class BuildSequenceAction extends EditorAction {
 
