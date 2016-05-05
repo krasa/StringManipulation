@@ -34,15 +34,11 @@ public class BuildSequenceAction extends EditorAction {
 			}
 
 			private void processCaret(Editor editor, Caret caret, Set<String> values) {
-				boolean hasSelection = caret.hasSelection();
-				if (!hasSelection) {
+				if (!caret.hasSelection()) {
 					caret.selectLineAtCaret();
 				}
 
-				int selectionStart = caret.getSelectionStart();
-				int selectionEnd = caret.getSelectionEnd();
-				TextRange textRange = new TextRange(selectionStart, selectionEnd);
-				String selectedText = editor.getDocument().getText(textRange);
+				String selectedText = caret.getSelectedText();
 
 				String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
 				for (int i = 0; i < textParts.length; i++) {
@@ -50,7 +46,7 @@ public class BuildSequenceAction extends EditorAction {
 				}
 
 				final String newText = StringUtils.join(textParts);
-				editor.getDocument().replaceString(textRange.getStartOffset(), textRange.getEndOffset(), newText);
+				editor.getDocument().replaceString(caret.getSelectionStart(), caret.getSelectionEnd(), newText);
 			}
 
 			private String processText(Set<String> values, String textPart) {
