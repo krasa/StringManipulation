@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.increment;
 
 import com.intellij.openapi.editor.*;
 

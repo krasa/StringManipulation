@@ -1,6 +1,8 @@
 package osmedile.intellij.stringmanip.utils;
 
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Olivier Smedile
  * @version $Id: DuplicatUtils.java 62 2008-04-20 11:11:54Z osmedile $
@@ -47,6 +49,9 @@ public class DuplicatUtils {
     public static String simpleInc(String str) {
         return simpleAddition(str, 1);
     }
+    public static String simpleInc(Number str) {
+        return simpleAddition(str, 1);
+    }
 
     /**
      * Add the specified number to the the number found in the specified string.
@@ -58,6 +63,28 @@ public class DuplicatUtils {
      * @return
      */
     public static String simpleAddition(final String str, final int add) {
+        Number number = getNumber(str);
+        if (number != null) {
+            return simpleAddition(number, add);
+        } else {
+            return str;
+        }
+    }
+
+    public static String simpleAddition(Number number, int add) {
+        Number n;
+        if (number instanceof Float) {
+			n = number.floatValue() + add;
+		} else if (number instanceof Double) {
+			n = number.doubleValue() + add;
+		} else {
+			n = number.intValue() + add;
+		}
+        return n.toString();
+    }
+
+    @Nullable
+    public static Number getNumber(String str) {
         Number number = null;
         try {
             number = NumberUtils.createNumber(str);
@@ -76,22 +103,7 @@ public class DuplicatUtils {
                 //nothing to do, really not a number or too complex for NumberUtils
             }
         }
-
-        Number n;
-        if (number != null) {
-            if (number instanceof Float) {
-                n = number.floatValue() + add;
-            } else if (number instanceof Double) {
-                n = number.doubleValue() + add;
-            } else {
-                n = number.intValue() + add;
-            }
-            return n.toString();
-        } else {
-            return str;
-
-        }
-
+        return number;
     }
 
     public static String simpleDec(String str) {
