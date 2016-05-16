@@ -1,12 +1,11 @@
 package osmedile.intellij.stringmanip;
 
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
  * @author Olivier Smedile
@@ -40,40 +39,18 @@ public abstract class AbstractStringManipAction extends EditorAction {
 
 					}
 					String[] textParts = selectedText.split("\n");
-					if (selectionModel.hasBlockSelection()) {
-						int[] blockStarts = selectionModel.getBlockSelectionStarts();
-						int[] blockEnds = selectionModel.getBlockSelectionEnds();
 
-						int plusOffset = 0;
+					for (int i = 0; i < textParts.length; i++) {
+						textParts[i] = transform(textParts[i]);
+					}
 
-						for (int i = 0; i < textParts.length; i++) {
-
-							String newTextPart = transform(textParts[i]);
-							if (allLinSelected) {
-								newTextPart += "\n";
-							}
-							newTextPart = newTextPart.replace("\r\n", "\n");
-							newTextPart = newTextPart.replace("\r", "\n");
-
-							editor.getDocument().replaceString(blockStarts[i] + plusOffset, blockEnds[i] + plusOffset,
-									newTextPart);
-
-							int realOldTextLength = blockEnds[i] - blockStarts[i];
-							plusOffset += newTextPart.length() - realOldTextLength;
-						}
-					} else {
-						for (int i = 0; i < textParts.length; i++) {
-							textParts[i] = transform(textParts[i]);
-						}
-
-						String s = StringUtils.join(textParts, '\n');
-						s = s.replace("\r\n", "\n");
-						s = s.replace("\r", "\n");
-						editor.getDocument().replaceString(selectionModel.getSelectionStart(),
-								selectionModel.getSelectionEnd(), s);
-						if (allLinSelected) {
-							editor.getDocument().insertString(selectionModel.getSelectionEnd(), "\n");
-						}
+					String s = StringUtils.join(textParts, '\n');
+					s = s.replace("\r\n", "\n");
+					s = s.replace("\r", "\n");
+					editor.getDocument().replaceString(selectionModel.getSelectionStart(),
+							selectionModel.getSelectionEnd(), s);
+					if (allLinSelected) {
+						editor.getDocument().insertString(selectionModel.getSelectionEnd(), "\n");
 					}
 				}
 			});

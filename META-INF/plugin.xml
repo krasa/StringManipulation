@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.5.135.445.0</version>
+    <version>4.6.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -426,10 +426,18 @@
         <![CDATA[
 	<p>
 	    <div>
+	        <h4>Version 4.6<h4>
+	        <ul>
+	            <li>IntelliJ 2016.2 EAP compatibility</li>
+			</ul>
+	    </div>
+	    <div>
 	        <h4>Version 4.5<h4>
 	        <ul>
 	            <li>new action: Increment to produce unique sequence of numbers ("s0,s0,s0" => "s1,s2,s3")</li>
 			</ul>
+	    </div>
+	    <div>
 	        <h4>Version 4.4<h4>
 	        <ul>
 	            <li>fixed AssertionError: Wrong line separators</li>
