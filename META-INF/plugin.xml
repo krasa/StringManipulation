@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.6.135.445.0</version>
+    <version>4.7.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -184,7 +184,7 @@
             <separator/>
             
             <group text="Increment/Decrement..."
-                   description="Increment, decrement, build sequence"
+                   description="Increment, decrement, create sequence, unique numbers"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.DecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DecrementAction"
@@ -206,10 +206,15 @@
                         text="Duplicate and increment"
                         description="Duplicate and increment numbers inside selected text">
                 </action>
-                <action id="StringManipulation.BuildSequenceAction"
-                        class="osmedile.intellij.stringmanip.increment.BuildSequenceAction"
-                        text="Increment to build sequence"
-                        description="Increment to build unique numbers">
+                <action id="StringManipulation.CreateSequenceAction"
+                        class="osmedile.intellij.stringmanip.increment.CreateSequenceAction"
+                        text="Create sequence"
+                        description="Keep first number, replace all other by incrementing">
+                </action>
+                <action id="StringManipulation.IncrementDuplicateNumbersAction"
+                        class="osmedile.intellij.stringmanip.increment.IncrementDuplicateNumbersAction"
+                        text="Increment duplicates"
+                        description="Increment duplicate numbers">
                 </action>
             </group>
             
@@ -426,6 +431,13 @@
         <![CDATA[
 	<p>
 	    <div>
+	        <h4>Version 4.7<h4>
+	        <ul>
+               <li>new action: Increment duplicate numbers ("1 3 3" => "1 3 4")</li>
+               <li>replaced 'Increment to produce unique sequence' to 'Create Sequence' ("1 5 0" => "1 2 3")</li>
+			</ul>
+	    </div>
+	    <div>
 	        <h4>Version 4.6<h4>
 	        <ul>
 	            <li>IntelliJ 2016.2 EAP compatibility</li>
@@ -434,7 +446,7 @@
 	    <div>
 	        <h4>Version 4.5<h4>
 	        <ul>
-	            <li>new action: Increment to produce unique sequence of numbers ("s0,s0,s0" => "s1,s2,s3")</li>
+	            <li>new action: Increment to produce unique sequence of numbers ("0 0 0" => "1 2 3")</li>
 			</ul>
 	    </div>
 	    <div>
