@@ -1,25 +1,24 @@
 package osmedile.intellij.stringmanip.increment;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.HashSet;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class IncrementDuplicateNumbersActionTest {
 	public IncrementDuplicateNumbersAction action = new IncrementDuplicateNumbersAction(false);
 
 	@Test
 	public void processSelection() throws Exception {
-		assertEquals("1 2 3 4", run("1 1 1 1"));
-		assertEquals("1 2 3 4", run("1 1 2 2"));
-		assertEquals("5 2 3 4", run("5 2 3 4"));
-		assertEquals("1 0 2 3", run("1 0 2 3"));
-
+		check("1 2 3 4", "1 1 1 1");
+		check("1 2 3 4", "1 1 2 2");
+		check("5 2 3 4", "5 2 3 4");
+		check("1 0 2 3", "1 0 2 3");
 	}
 
-	public String run(String selectedText) {
-		return action.processSelection(selectedText, new HashSet<String>());
+	public void check(String expected, String input) {
+		assertEquals(expected, action.processSelection(input, new HashSet<String>()));
 	}
 
 }
