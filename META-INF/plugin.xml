@@ -379,7 +379,8 @@
 			<ul>
 				<li>Increment/decrement all numbers found.</li>
 				<li>Duplicate line and increment/decrement all numbers found.</li>	
-				<li>Increment to produce unique sequence of numbers</li>	
+				<li>Create sequence - Keep first number, replace all other by incrementing</li>	
+				<li>Increment duplicate numbers</li>	
             </ul>
 		</p>
 		<p>
