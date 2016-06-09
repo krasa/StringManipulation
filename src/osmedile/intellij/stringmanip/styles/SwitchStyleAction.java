@@ -19,6 +19,7 @@ public class SwitchStyleAction extends AbstractCaseConvertingAction {
 	private boolean setupHandler;
 
 	public SwitchStyleAction() {
+		this(true);
 	}
 
 	public SwitchStyleAction(boolean setupHandler) {
