@@ -1,5 +1,8 @@
 package osmedile.intellij.stringmanip.encoding;
 
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Editor;
+import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import java.io.UnsupportedEncodingException;
@@ -12,10 +15,11 @@ import java.security.NoSuchAlgorithmException;
  */
 public class EncodeMd5Hex16Action extends AbstractStringManipAction {
 
-    public String transform(String s) {
-        try {
+	@Override
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+		try {
 
-            byte[] hash = MessageDigest.getInstance("md5").digest(s.getBytes("UTF-8"));
+					byte[] hash = MessageDigest.getInstance("md5").digest(selectedText.getBytes("UTF-8"));
 
 
             StringBuffer hashString = new StringBuffer();
@@ -38,5 +42,10 @@ public class EncodeMd5Hex16Action extends AbstractStringManipAction {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-    }
+	}
+
+	@Override
+	public String transform(String s) {
+		throw new NotImplementedException();
+	}
 }

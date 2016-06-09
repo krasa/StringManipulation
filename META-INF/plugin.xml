@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.7.135.445.0</version>
+    <version>4.7.135.445.1</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -436,6 +436,9 @@
 	        <ul>
                <li>new action: Increment duplicate numbers ("1 3 3" => "1 3 4")</li>
                <li>replaced 'Increment to produce unique sequence' to 'Create Sequence' ("1 5 0" => "1 2 3")</li>
+               <li>Added Base64 options for URL safe, chunked encoding and charset</li>
+               <li>Fixed multiline Base64 encoding</li>
+               <li>Auto-selection of the whole line will not select the 'new line' character on the end of the line</li>
 			</ul>
 	    </div>
 	    <div>
