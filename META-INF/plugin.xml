@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.7.135.445.1</version>
+    <version>4.7.135.445.2</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -439,6 +439,8 @@
                <li>Added Base64 options for URL safe, chunked encoding and charset</li>
                <li>Fixed multiline Base64 encoding</li>
                <li>Auto-selection of the whole line will not select the 'new line' character on the end of the line</li>
+               <li>Case converting: #14 NoClassDefFoundError fix for WebStorm</li>
+               <li>Case converting: improved auto selection handling</li>
 			</ul>
 	    </div>
 	    <div>

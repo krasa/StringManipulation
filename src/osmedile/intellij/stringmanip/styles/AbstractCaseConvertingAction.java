@@ -1,7 +1,5 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.AbstractStringManipAction;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
@@ -14,6 +12,7 @@ import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 /** todo write some tests for this shit */
 public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction {
@@ -34,19 +33,35 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			}
 			FileType fileType = psiFile.getFileType();
-			if (fileType.equals(StdFileTypes.JAVA)) {
-				return javaHandling(editor, dataContext, selectionModel, psiFile);
-			} else if (fileType.equals(StdFileTypes.PROPERTIES)) {
-				return propertiesHandling(editor, dataContext, selectionModel, psiFile);
-			} else if (fileType.equals(StdFileTypes.PLAIN_TEXT)) {
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
-			} else {
-				return genericHandling(editor, dataContext, selectionModel, psiFile);
+			boolean handled = false;
+			if (fileType.equals(StdFileTypes.JAVA) && isJavaInstalled()) {
+				handled = javaHandling(editor, dataContext, selectionModel, psiFile);
 			}
+			if (!handled && fileType.equals(StdFileTypes.PROPERTIES)) {
+				handled = propertiesHandling(editor, dataContext, selectionModel, psiFile);
+			}
+			if (!handled && fileType.equals(StdFileTypes.PLAIN_TEXT)) {
+				handled = super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			}
+			if (!handled) {
+				handled = genericHandling(editor, dataContext, selectionModel, psiFile);
+			}
+			return handled;
 		} catch (Exception e) {
 			LOG.error("please report this, so I can fix it :(", e);
 			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 		}
+	}
+
+	private boolean isJavaInstalled() {
+		boolean javaInstalled;
+		try {
+			Class.forName("com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl");
+			javaInstalled = true;
+		} catch (ClassNotFoundException e) {
+			javaInstalled = false;
+		}
+		return javaInstalled;
 	}
 
 	private boolean propertiesHandling(Editor editor, DataContext dataContext, SelectionModel selectionModel,
@@ -63,6 +78,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 					return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 				}
 				selectionModel.setSelection(textRange.getStartOffset(), textRange.getEndOffset());
+				return true;
 			}
 		}
 		return false;
@@ -112,7 +128,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			if (caretOffset > selectionModel.getSelectionEnd()) {
 				editor.getCaretModel().moveToOffset(selectionModel.getSelectionEnd());
 			}
-			return false;
+			return true;
 		} else {
 			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 		}
@@ -153,7 +169,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			if (caretOffset > selectionModel.getSelectionEnd()) {
 				editor.getCaretModel().moveToOffset(selectionModel.getSelectionEnd());
 			}
-			return false;
+			return true;
 		}
 	}
 
