@@ -26,40 +26,47 @@ public abstract class AbstractStringManipAction extends EditorAction {
 					final SelectionModel selectionModel = editor.getSelectionModel();
 					String selectedText = selectionModel.getSelectedText();
 
-					boolean allLinSelected = false;
 					if (selectedText == null) {
-						allLinSelected = selectSomethingUnderCaret(editor, dataContext, selectionModel);
+						selectSomethingUnderCaret(editor, dataContext, selectionModel);
 						selectedText = selectionModel.getSelectedText();
 
 						if (selectedText == null) {
 							return;
 						}
-					} else if (selectedText.endsWith("\n")) {
-						allLinSelected = true;
-
-					}
-					String[] textParts = selectedText.split("\n");
-
-					for (int i = 0; i < textParts.length; i++) {
-						textParts[i] = transform(textParts[i]);
 					}
 
-					String s = StringUtils.join(textParts, '\n');
+					String s = transformSelection(editor, dataContext, selectedText);
 					s = s.replace("\r\n", "\n");
 					s = s.replace("\r", "\n");
 					editor.getDocument().replaceString(selectionModel.getSelectionStart(),
 							selectionModel.getSelectionEnd(), s);
-					if (allLinSelected) {
-						editor.getDocument().insertString(selectionModel.getSelectionEnd(), "\n");
-					}
 				}
 			});
 		}
 
 	}
 
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+		String[] textParts = selectedText.split("\n");
+
+		for (int i = 0; i < textParts.length; i++) {
+			textParts[i] = transform(textParts[i]);
+		}
+
+		String join = StringUtils.join(textParts, '\n');
+
+		if (selectedText.endsWith("\n")) {
+			return join + "\n";
+		}
+		return join;
+	}
+
 	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
 		selectionModel.selectLineAtCaret();
+		String selectedText = selectionModel.getSelectedText();
+		if (selectedText != null && selectedText.endsWith("\n")) {
+			selectionModel.setSelection(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd() - 1);
+		}
 		return true;
 	}
 
