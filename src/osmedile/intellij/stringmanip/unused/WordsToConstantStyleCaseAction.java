@@ -11,7 +11,7 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
  */
 public class WordsToConstantStyleCaseAction extends AbstractStringManipAction {
 
-    public String transform(String s) {
+    public String transformByLine(String s) {
         return StringUtil.wordsToConstantCase(s);
     }
 }

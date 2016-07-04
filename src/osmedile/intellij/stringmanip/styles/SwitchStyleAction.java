@@ -28,7 +28,7 @@ public class SwitchStyleAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transform(String s) {
+	public String transformByLine(String s) {
 		Style style = Style.from(s);
 		for (Style[] styles : transformation) {
 			if (styles[0] == style) {

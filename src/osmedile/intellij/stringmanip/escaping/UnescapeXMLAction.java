@@ -9,7 +9,7 @@ import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
  */
 public class UnescapeXMLAction extends AbstractStringManipAction {
 
-    public String transform(String s) {
+    public String transformByLine(String s) {
         return StringEscapeUtil.unescapeXml(s);
     }
 }

@@ -14,7 +14,7 @@ public class ToCamelCaseAction extends AbstractCaseConvertingAction {
 		super(setupHandler);
 	}
 
-	public String transform(String s) {
+	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.CAMEL_CASE) {
 			return Style.WORD_CAPITALIZED.transform(from, s);

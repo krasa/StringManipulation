@@ -5,7 +5,7 @@ import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
 
 public class UnescapePHPAction extends AbstractStringManipAction {
 
-    public String transform(String s) {
+    public String transformByLine(String s) {
         return StringEscapeUtil.unescapePHP(s);
     }
 }

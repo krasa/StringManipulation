@@ -2,7 +2,7 @@ package osmedile.intellij.stringmanip.styles;
 
 public class ToDotStyleAction extends AbstractCaseConvertingAction {
 
-	public String transform(String s) {
+	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.DOT) {
 			return Style.CAMEL_CASE.transform(from, s);

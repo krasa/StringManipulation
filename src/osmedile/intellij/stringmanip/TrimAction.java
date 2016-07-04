@@ -8,7 +8,7 @@ package osmedile.intellij.stringmanip;
  */
 public class TrimAction extends AbstractStringManipAction {
 
-    public String transform(String s) {
+    public String transformByLine(String s) {
         return s == null ? null : s.trim();
     }
 }

@@ -50,7 +50,7 @@ public abstract class AbstractStringManipAction extends EditorAction {
 		String[] textParts = selectedText.split("\n");
 
 		for (int i = 0; i < textParts.length; i++) {
-			textParts[i] = transform(textParts[i]);
+			textParts[i] = transformByLine(textParts[i]);
 		}
 
 		String join = StringUtils.join(textParts, '\n');
@@ -70,5 +70,5 @@ public abstract class AbstractStringManipAction extends EditorAction {
 		return true;
 	}
 
-	public abstract String transform(String s);
+	public abstract String transformByLine(String s);
 }

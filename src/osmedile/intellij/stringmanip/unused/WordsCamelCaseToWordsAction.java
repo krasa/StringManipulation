@@ -10,7 +10,7 @@ public class WordsCamelCaseToWordsAction extends AbstractStringManipAction {
         super(setupHandler);
     }
 
-    public String transform(String s) {
+    public String transformByLine(String s) {
         String res = "";
         for (int i = 0; i < s.length(); i++) {
             Character ch = s.charAt(i);

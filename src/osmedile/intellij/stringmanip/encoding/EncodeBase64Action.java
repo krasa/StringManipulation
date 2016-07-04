@@ -79,7 +79,7 @@ public class EncodeBase64Action extends AbstractStringManipAction {
 	}
 
 	@Override
-	public String transform(String s) {
+	public String transformByLine(String s) {
 		throw new NotImplementedException();
 	}
 }

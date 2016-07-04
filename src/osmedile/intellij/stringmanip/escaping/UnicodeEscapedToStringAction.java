@@ -9,7 +9,7 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
  */
 public class UnicodeEscapedToStringAction extends AbstractStringManipAction {
 
-    public String transform(String s) {
-        return StringUtil.escapedUnicodeToString(s);
+	public String transformByLine(String s) {
+		return StringUtil.escapedUnicodeToString(s);
     }
 }
