@@ -1,12 +1,5 @@
 package osmedile.intellij.stringmanip.sort;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -14,14 +7,20 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
-public class ReverseAction extends EditorAction {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-	protected ReverseAction() {
+public class ReverseLinesAction extends EditorAction {
+
+	protected ReverseLinesAction() {
 		this(true);
 	}
 
-	protected ReverseAction(boolean setupHandler) {
+	protected ReverseLinesAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {

@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.7.135.445.2</version>
+    <version>4.8.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -222,9 +222,14 @@
                    description="Sort lines, delimited text"
                    popup="true">
                 <action id="StringManipulation.ReverseAction"
-                        class="osmedile.intellij.stringmanip.sort.ReverseAction"
+                        class="osmedile.intellij.stringmanip.sort.ReverseLinesAction"
                         text="Reverse lines"
                         description="Reverse order of lines">
+                </action>
+                <action id="StringManipulation.ShuffleLinesAction"
+                        class="osmedile.intellij.stringmanip.sort.ShuffleLinesAction"
+                        text="Shuffle lines"
+                        description="Shuffle lines">
                 </action>
                 <action id="StringManipulation.SortCaseSensitiveAzAction"
                         class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveAzAction"
@@ -328,6 +333,11 @@
                     class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
                     description="Exchange two selected characters, or ones surrounding the cursor if no selection">
             </action>
+            <action id="StringManipulation.SwitchFilePathSeparators"
+                    class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
+                    text="Switch file path separators: Windows&lt;-&gt;UNIX"
+                    description="Switch file path separators: Windows&lt;-&gt;UNIX">
+            </action>
         </group>
 
 
@@ -387,6 +397,7 @@
             Sort with natural order:
 			<ul>
 				<li>Reversing order of lines</li>
+				<li>Shuffle lines</li>
 				<li>Sort case-sensitive A-z</li>
 				<li>Sort case-sensitive z-A</li>
 				<li>Sort case-insensitive A-Z</li>
@@ -418,6 +429,7 @@
             Other:
 			<ul>
 				<li>Swap characters at caret</li>
+				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
 			</ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
@@ -431,6 +443,13 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 4.8<h4>
+	        <ul>
+               <li>new action: Switch file path separators: Windows&lt;-&gt;UNIX</li>
+               <li>new action: Shuffle lines</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 4.7<h4>
 	        <ul>
