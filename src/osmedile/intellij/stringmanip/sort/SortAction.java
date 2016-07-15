@@ -1,9 +1,5 @@
 package osmedile.intellij.stringmanip.sort;
 
-import java.util.*;
-
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -11,6 +7,9 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
+import osmedile.intellij.stringmanip.utils.StringUtils;
+
+import java.util.*;
 
 public abstract class SortAction extends EditorAction {
 
@@ -115,9 +114,9 @@ public abstract class SortAction extends EditorAction {
 			}
 		});
 
-		private Comparator comparator;
+		private Comparator<String> comparator;
 
-		Sort(Comparator comparator) {
+		Sort(Comparator<String> comparator) {
 			this.comparator = comparator;
 		}
 
@@ -138,6 +137,10 @@ public abstract class SortAction extends EditorAction {
 				join = join + "\n";
 			}
 			return join;
+		}
+
+		public Comparator<String> getComparator() {
+			return comparator;
 		}
 	}
 }

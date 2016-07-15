@@ -7,14 +7,18 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.*;
 
 public class SortLinesBySubSelectionAction extends EditorAction {
 
 	private static final NaturalOrderComparator NATURAL_ORDER_COMPARATOR = new NaturalOrderComparator();
+	private SortAction.Sort sortType;
 
 	public SortLinesBySubSelectionAction() {
 		this(true);
@@ -28,6 +32,43 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 
 				@SuppressWarnings("deprecation")
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
+					final SortTypeDialog dialog = new SortTypeDialog(sortType);
+					DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
+						{
+							init();
+							setTitle("Choose Charset");
+						}
+
+						@Nullable
+						@Override
+						public JComponent getPreferredFocusedComponent() {
+							return dialog.insensitive;
+						}
+
+						@Nullable
+						@Override
+						protected String getDimensionServiceKey() {
+							return "StringManipulation.SortTypeDialog";
+						}
+
+						@Nullable
+						@Override
+						protected JComponent createCenterPanel() {
+							return dialog.contentPane;
+						}
+
+						@Override
+						protected void doOKAction() {
+							super.doOKAction();
+						}
+					};
+
+					boolean b = dialogWrapper.showAndGet();
+					if (!b) {
+						return;
+					}
+					sortType = dialog.getResult();
+
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);
@@ -71,11 +112,15 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 						LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
 						int selectionEndOffset = editor.logicalPositionToOffset(selectionEnd);
 						LogicalPosition caretPosition = caretsAndSelection.getCaretPosition();
+						//no selection -> expand to end of line
 						if (selectionStartOffset == selectionEndOffset) {
-							selectionEndOffset = editor.getDocument().getText().indexOf("\n", selectionStartOffset);
+							String text = editor.getDocument().getText();
+							selectionEndOffset = text.indexOf("\n", selectionStartOffset);
+							if (selectionEndOffset == -1) {
+								selectionEndOffset = text.length();
+							}
 							Caret caret = editor.getCaretModel().getCaretAt(caretPosition.toVisualPosition());
 							caret.setSelection(selectionStartOffset, selectionEndOffset);
-							selectionEnd = editor.visualToLogicalPosition(caret.getSelectionEndPosition());
 							caretPosition = caret.getLogicalPosition();
 						}
 
@@ -87,7 +132,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 						String line = editor.getDocument().getText(new TextRange(lineStartOffset, lineEndOffset));
 
 
-						lines.add(new SortLine(line, selection, lineStartOffset, lineEndOffset, selectionStart, selectionEnd, caretPosition));
+						lines.add(new SortLine(line, selection, lineStartOffset, lineEndOffset, selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset, caretPosition));
 					}
 
 					List<SortLine> sortedLines = new ArrayList<SortLine>(lines);
@@ -101,10 +146,10 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 						SortLine oldLine = lines.get(i);
 						SortLine newLine = sortedLines.get(i);
 						int lineStartOffset = oldLine.lineStartOffset;
-						editor.getDocument().replaceString(lineStartOffset, oldLine.lineEndOffset, newLine.line);
 						Caret caret = editor.getCaretModel().getCaretAt(oldLine.caretPosition.toVisualPosition());
-						int startColumn = newLine.selectionStart.column;
-						int endColumn = newLine.selectionEnd.column;
+						editor.getDocument().replaceString(lineStartOffset, oldLine.lineEndOffset, newLine.line);
+						int startColumn = newLine.selectionStartLineOffset;
+						int endColumn = newLine.selectionEndLineOffset;
 						caret.setSelection(lineStartOffset + startColumn, lineStartOffset + endColumn);
 						caret.moveToOffset(lineStartOffset + startColumn);
 					}
@@ -118,23 +163,23 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		private final String selection;
 		private final int lineStartOffset;
 		private final int lineEndOffset;
-		private final LogicalPosition selectionStart;
-		private final LogicalPosition selectionEnd;
+		private final int selectionStartLineOffset;
+		private final int selectionEndLineOffset;
 		private final LogicalPosition caretPosition;
 
-		public SortLine(String line, String selection, int lineStartOffset, int lineEndOffset, LogicalPosition selectionStart, LogicalPosition selectionEnd, LogicalPosition caretPosition) {
+		public SortLine(String line, String selection, int lineStartOffset, int lineEndOffset, int selectionStartLineOffset, int selectionEndLineOffset, LogicalPosition caretPosition) {
 			this.line = line;
 			this.selection = selection;
 			this.lineStartOffset = lineStartOffset;
 			this.lineEndOffset = lineEndOffset;
-			this.selectionStart = selectionStart;
-			this.selectionEnd = selectionEnd;
+			this.selectionStartLineOffset = selectionStartLineOffset;
+			this.selectionEndLineOffset = selectionEndLineOffset;
 			this.caretPosition = caretPosition;
 		}
 
 		@Override
 		public int compareTo(@NotNull Object o) {
-			return NATURAL_ORDER_COMPARATOR.compare(selection, ((SortLine) o).selection);
+			return sortType.getComparator().compare(selection, ((SortLine) o).selection);
 		}
 	}
 }
