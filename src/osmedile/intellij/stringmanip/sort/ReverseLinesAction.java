@@ -9,10 +9,7 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ReverseLinesAction extends EditorAction {
 
@@ -27,7 +24,12 @@ public class ReverseLinesAction extends EditorAction {
 
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-
+					Collections.sort(caretsAndSelections, new Comparator<CaretState>() {
+						@Override
+						public int compare(CaretState o1, CaretState o2) {
+							return o1.getCaretPosition().compareTo(o2.getCaretPosition());
+						}
+					});
 					if (caretsAndSelections.size() > 1) {
 						processMultiCaret(editor, caretsAndSelections);
 					} else if (caretsAndSelections.size() == 1) {

@@ -261,6 +261,11 @@
                         text="Sort by length descending "
                         description="Sort by length descending ">
                 </action>
+                <action id="StringManipulation.SortLinesBySubSelectionAction"
+                        class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
+                        text="Sort lines by subselection"
+                        description="Sort lines by subselection - only for multi carets">
+                </action>
             </group>
               
             <group text="Filter/Remove/Trim..."
@@ -403,6 +408,7 @@
 				<li>Sort case-insensitive A-Z</li>
 				<li>Sort case-insensitive Z-A</li>
 				<li>Sort line length asc., desc.</li>
+				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
 			</ul>
 		</p>
 		<p>
@@ -448,6 +454,7 @@
 	        <ul>
                <li>new action: Switch file path separators: Windows&lt;-&gt;UNIX</li>
                <li>new action: Shuffle lines</li>
+               <li>new action: Sort lines by subselection</li>
 			</ul>
 	    </div>
 	    <div>
