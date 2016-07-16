@@ -452,7 +452,7 @@
 	    <div>
 	        <h4>Version 4.9<h4>
 	        <ul>
-               <li>removed separator between upper case letters, separators after digits made consistent </li>
+               <li>toggle case actions fix: removed separator between upper case letters, separators after digits made consistent </li>
 			</ul>
 	    </div>
 	    <div>
