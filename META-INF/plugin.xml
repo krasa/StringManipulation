@@ -450,6 +450,12 @@
         <![CDATA[
 	<p>
 	    <div>
+	        <h4>Version 4.9<h4>
+	        <ul>
+               <li>removed separator between upper case letters, separators after digits made consistent </li>
+			</ul>
+	    </div>
+	    <div>
 	        <h4>Version 4.8<h4>
 	        <ul>
                <li>new action: Switch file path separators: Windows&lt;-&gt;UNIX</li>

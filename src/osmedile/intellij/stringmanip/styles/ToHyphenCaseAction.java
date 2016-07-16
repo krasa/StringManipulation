@@ -2,6 +2,13 @@ package osmedile.intellij.stringmanip.styles;
 
 public class ToHyphenCaseAction extends AbstractCaseConvertingAction {
 
+	public ToHyphenCaseAction() {
+	}
+
+	public ToHyphenCaseAction(boolean b) {
+		super(b);
+	}
+
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.HYPHEN_LOWERCASE) {

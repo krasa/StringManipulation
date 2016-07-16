@@ -50,6 +50,20 @@ public class SwitchStyleActionTest {
     }
 
     @Test
+	public void testTransform6() throws Exception {
+		String input = "fooBAR";
+		String result = transform(input, Style.values().length - DUMMY_STYLES);
+		Assert.assertEquals("fooBar", result);
+	}
+
+	@Test
+	public void testTransform7() throws Exception {
+		String input = "11foo22fooBAR33BAR44foo55x6Y7Z";
+		String result = transform(input, Style.values().length - DUMMY_STYLES - 1);
+		Assert.assertEquals("11foo22FooBar33Bar44Foo55X6Y7Z", result);
+	}
+
+	@Test
     public void testTransformVariations() throws Exception {
         List<String> failed = new ArrayList<String>();
         for (Style expectedStyle : Style.values()) {

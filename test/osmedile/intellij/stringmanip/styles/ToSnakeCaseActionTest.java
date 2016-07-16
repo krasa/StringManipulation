@@ -9,7 +9,10 @@ public class ToSnakeCaseActionTest {
 
     @Test
     public void testTransform() throws Exception {
-        action = new ToSnakeCaseAction(false);
+		action = new ToSnakeCaseAction(false);
+		assertEquals("11_foo22_foo_bar33_bar44_foo55_x6_y7_z",
+				action.transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
+		assertEquals("transform_db", action.transformByLine("transformDB"));
 		assertEquals("2_c_2", action.transformByLine("2_C_2"));
 		assertEquals("organ_vizepraesident_1", action.transformByLine("organ-vizepraesident-1"));
 		assertEquals("foo_bar", action.transformByLine("FOO-BAR"));

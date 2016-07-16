@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.utils;
 
+import static java.lang.Character.*;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Character.*;
 
 
 /**
@@ -12,6 +12,10 @@ import static java.lang.Character.*;
  * @version $Id: StringUtil.java 62 2008-04-20 11:11:54Z osmedile $
  */
 public class StringUtil {
+	/* V_2V */
+	static boolean separatorBeforeDigit = false;
+	/* V2_V */
+	static boolean separatorAfterDigit = true; // false might not work totally fine e.g. ToHyphenCaseActionTest
 
     public static String removeAllSpace(String s) {
         return StringUtils.join(s.split("\\s"), "").trim();
@@ -25,16 +29,24 @@ public class StringUtil {
         StringBuilder buf = new StringBuilder();
         char lastChar = ' ';
         for (char c : s.toCharArray()) {
-            if (isUpperCase(c)) {
-				if (isLetter(lastChar)) {
-                    buf.append(" ");
-                }
-                c = Character.toLowerCase(c);
-            }
+			char nc = c;
+			if (isUpperCase(nc) && !isUpperCase(lastChar)) {
+				if (lastChar != ' ') {
+					buf.append(" ");
+				}
+				nc = Character.toLowerCase(c);
+			} else if ((separatorAfterDigit && isDigit(lastChar) && !isDigit(c))
+					|| (separatorBeforeDigit && isDigit(c) && !isDigit(lastChar))) {
+				if (lastChar != ' ') {
+					buf.append(" ");
+				}
+				nc = Character.toLowerCase(c);
+			}
+
 			if (lastChar != ' ' || c != ' ') {
-                buf.append(c);
-            }
-            lastChar = c;
+				buf.append(nc);
+			}
+			lastChar = c;
         }
         return buf.toString();
     }
@@ -101,11 +113,12 @@ public class StringUtil {
     }
 
     public static String wordsAndHyphenAndCamelToConstantCase(String s) {
-        boolean containsLowerCase = containsLowerCase(s);
-        
+		boolean _betweenUpperCases = false;
+		boolean containsLowerCase = containsLowerCase(s);
+
         StringBuilder buf = new StringBuilder();
-        char previousChar = 'a';
-        char[] chars = s.toCharArray();
+		char previousChar = ' ';
+		char[] chars = s.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			char c = chars[i];
             boolean isUpperCaseAndPreviousIsUpperCase = isUpperCase(previousChar) && isUpperCase(c);
@@ -117,13 +130,15 @@ public class StringUtil {
             boolean isNotUnderscore = c != '_';
             //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
 
-           
+
             //camelCase handling - add extra _
-            if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace || (containsLowerCase &&isUpperCaseAndPreviousIsUpperCase))) {
-                buf.append("_");
-            } else if (isDigit(previousChar) && isLetter(c)) { //extra _ after number
-                buf.append('_');
-            } 
+			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace
+					|| (_betweenUpperCases && containsLowerCase && isUpperCaseAndPreviousIsUpperCase))) {
+				buf.append("_");
+			} else if ((separatorAfterDigit && isDigit(previousChar) && isLetter(c))
+					|| (separatorBeforeDigit && isDigit(c) && isLetter(previousChar))) { // extra _ after number
+				buf.append('_');
+			}
 
             if (!isLetterOrDigit(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
                 buf.append('_'); //replace special chars to _ (not quotes, no double _)
@@ -159,14 +174,17 @@ public class StringUtil {
     public static String toDotCase(String s) {
         StringBuilder buf = new StringBuilder();
 
-        char lastChar = 'a';
-        for (char c : s.toCharArray()) {
-            boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
+		char lastChar = ' ';
+		for (char c : s.toCharArray()) {
+			boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(lastChar) && isUpperCase(c);
             boolean previousIsWhitespace = isWhitespace(lastChar);
             boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '.';
             if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
-                buf.append(".");
-            }
+				buf.append(".");
+			} else if ((separatorAfterDigit && isDigit(lastChar) && isLetter(c))
+					|| (separatorBeforeDigit && isDigit(c) && isLetter(lastChar))) {
+				buf.append(".");
+			}
 
             if (c == '.') {
                 buf.append('.');

@@ -11,14 +11,16 @@ public class ToConstantStyleCaseActionTest {
     @Test
     public void testTransform() throws Exception {
         action = new ToConstantStyleCaseAction(false);
+		assertEquals("11_FOO22_FOO_BAR33_BAR44_FOO55_X6_Y7_Z",
+				action.transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
 		assertEquals("!@#$%^&*)(*&|+!!!!!foo!!!!", action.transformByLine("!@#$%^&*)(*&|+!!!!!FOO!!!!"));
 		assertEquals("public", action.transformByLine("PUBLIC"));
 		assertEquals("PUBLIC", action.transformByLine("public"));
-		assertEquals("THIS_IS_A_TEXT", action.transformByLine("ThisIsAText"));
-		assertEquals("WHOAH_A_TEST", action.transformByLine("WhoahATest"));
-		assertEquals("WHOAH_A_TEST", action.transformByLine("Whoah ATest"));
+		assertEquals("THIS_IS_ATEXT", action.transformByLine("ThisIsAText"));
+		assertEquals("WHOAH_ATEST", action.transformByLine("WhoahATest"));
+		assertEquals("WHOAH_ATEST", action.transformByLine("Whoah ATest"));
 		assertEquals("WHOAH_A_TEST_AGAIN", action.transformByLine("Whoah  A   Test, again"));
-		assertEquals("ANOTHER_T_EST", action.transformByLine("anotherTEst"));
+		assertEquals("ANOTHER_TEST", action.transformByLine("anotherTEst"));
 		assertEquals("ANOTHER_T_EST", action.transformByLine("Another      t_Est"));
 		assertEquals("TEST_AGAIN_TEST", action.transformByLine("test again     _    _    test"));
 		assertEquals("TEST_AGAIN_TEST", action.transformByLine("TestAgain_   _    Test"));
@@ -32,7 +34,7 @@ public class ToConstantStyleCaseActionTest {
 //        
 //        
 //        
-		assertEquals("THIS_IS_A_TEXT", action.transformByLine("ThisIsAText"));
+		assertEquals("THIS_IS_ATEXT", action.transformByLine("ThisIsAText"));
 		assertEquals("WHOAH_A_TEST", action.transformByLine("Whoah A Test"));
 
         //todo new insensitive converter?

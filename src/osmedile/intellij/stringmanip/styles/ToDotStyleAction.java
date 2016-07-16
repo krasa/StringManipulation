@@ -1,6 +1,12 @@
 package osmedile.intellij.stringmanip.styles;
 
 public class ToDotStyleAction extends AbstractCaseConvertingAction {
+	public ToDotStyleAction() {
+	}
+
+	public ToDotStyleAction(boolean b) {
+		super(b);
+	}
 
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
