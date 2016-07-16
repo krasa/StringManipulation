@@ -1,12 +1,13 @@
 package osmedile.intellij.stringmanip;
 
-import org.junit.Assert;
-import org.junit.Test;
-import osmedile.intellij.stringmanip.styles.Style;
-import osmedile.intellij.stringmanip.styles.SwitchStyleAction;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import osmedile.intellij.stringmanip.styles.Style;
+import osmedile.intellij.stringmanip.styles.SwitchStyleAction;
 
 /*+1 and -1 are magic*/
 public class SwitchStyleActionTest {
@@ -100,7 +101,7 @@ public class SwitchStyleActionTest {
         String result = null;
         String input = fooBar;
         for (int i = 0; i < i1; i++) {
-            result = new SwitchStyleAction(false).transform(input);
+			result = new SwitchStyleAction(false).transformByLine(input);
             System.out.println(input + " -> " + result);
             Assert.assertNotEquals(input + " -> " + result, input, result);
             input = result;

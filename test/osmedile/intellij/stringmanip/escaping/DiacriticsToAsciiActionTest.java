@@ -10,13 +10,13 @@ public class DiacriticsToAsciiActionTest {
 	private boolean fail;
 
 	@Test
-	public void transform() throws Exception {
+	public void transformByLine() throws Exception {
 		action = new DiacriticsToAsciiAction(false);
-		assertEquals("Ceska Republika", action.transform("Česká Republika"));
-		assertEquals("escrzyaie", action.transform("ěščřžýáíé"));
-		assertEquals("Et ca sera sa moitie.", action.transform("Et ça sera sa moitié."));
-		assertEquals("oeisoc", action.transform("òéışöç"));
-		assertEquals("ldh", action.transform("łđħ"));
+		assertEquals("Ceska Republika", action.transformByLine("Česká Republika"));
+		assertEquals("escrzyaie", action.transformByLine("ěščřžýáíé"));
+		assertEquals("Et ca sera sa moitie.", action.transformByLine("Et ça sera sa moitié."));
+		assertEquals("oeisoc", action.transformByLine("òéışöç"));
+		assertEquals("ldh", action.transformByLine("łđħ"));
 
 		// diacritics from https://docs.oracle.com/cd/E29584_01/webhelp/mdex_basicDev/src/rbdv_chars_mapping.html
 		// expected output by http://www.miniwebtool.com/remove-accent/
@@ -214,7 +214,7 @@ public class DiacriticsToAsciiActionTest {
 	}
 
 	private void checkTransformation(String expected, String input) {
-		String s = action.transform(input);
+		String s = action.transformByLine(input);
 		if (!expected.equals(s)) {
 			System.err.println("\n" + "\t\t\tcase '" + input + "':\n" + "\t\t\t\tsb.append(\"" + expected + "\");\n"
 					+ "\t\t\t\tbreak;");

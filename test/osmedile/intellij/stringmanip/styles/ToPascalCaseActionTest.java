@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.styles;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class ToPascalCaseActionTest {
     protected ToPascalCaseAction action;
@@ -10,16 +10,16 @@ public class ToPascalCaseActionTest {
     @Test
     public void testTransform() throws Exception {
         action = new ToPascalCaseAction(false);
-        assertEquals("HelloWorld", action.transform("hello-world"));
-        assertEquals("HelloWorld", action.transform("HELLO-WORLD"));
-        assertEquals("HelloWorld", action.transform("hello_world"));
-        assertEquals("HelloWorld", action.transform("HELLO_WORLD"));
-        assertEquals("HelloWorld", action.transform("hello.world"));
-        assertEquals("HelloWorld", action.transform("hello world"));
-        assertEquals("HelloWorld", action.transform("Hello World"));
-        assertEquals("helloWorld", action.transform("HelloWorld"));
-        assertEquals("HelloWorld", action.transform("helloWorld"));
-        assertEquals("Foo", action.transform("FOO"));
-        assertEquals("foo", action.transform("Foo"));
+		assertEquals("HelloWorld", action.transformByLine("hello-world"));
+		assertEquals("HelloWorld", action.transformByLine("HELLO-WORLD"));
+		assertEquals("HelloWorld", action.transformByLine("hello_world"));
+		assertEquals("HelloWorld", action.transformByLine("HELLO_WORLD"));
+		assertEquals("HelloWorld", action.transformByLine("hello.world"));
+		assertEquals("HelloWorld", action.transformByLine("hello world"));
+		assertEquals("HelloWorld", action.transformByLine("Hello World"));
+		assertEquals("helloWorld", action.transformByLine("HelloWorld"));
+		assertEquals("HelloWorld", action.transformByLine("helloWorld"));
+		assertEquals("Foo", action.transformByLine("FOO"));
+		assertEquals("foo", action.transformByLine("Foo"));
     }
 }
