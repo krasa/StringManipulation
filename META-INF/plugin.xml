@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>4.9.135.445.0</version>
+    <version>5.0.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -346,6 +346,15 @@
         </group>
 
 
+        <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
+               description="String Manipulation"
+               popup="false">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
+
+            <separator/>
+            <reference ref="osmedile.ManipulateStringGroup"></reference>
+        </group>
+
     </actions>
 
     <description><![CDATA[
@@ -449,6 +458,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.0<h4>
+	        <ul>
+               <li>Added String Manipulation actions to Editor Context Menu</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 4.9<h4>
 	        <ul>
