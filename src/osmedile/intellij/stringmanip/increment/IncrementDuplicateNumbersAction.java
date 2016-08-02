@@ -25,6 +25,7 @@ public class IncrementDuplicateNumbersAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				@Override
 				public void executeWriteAction(final Editor editor, DataContext dataContext) {
 					final HashSet<String> values = new HashSet<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {

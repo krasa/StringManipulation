@@ -9,6 +9,7 @@ public class ToHyphenCaseAction extends AbstractCaseConvertingAction {
 		super(b);
 	}
 
+	@Override
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.HYPHEN_LOWERCASE) {

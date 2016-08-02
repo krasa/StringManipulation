@@ -9,6 +9,7 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
  */
 public class TrimAllSpacesAction extends AbstractStringManipAction {
 
+	@Override
     public String transformByLine(String s) {
         return StringUtil.trimAllSpace(s);
     }

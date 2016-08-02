@@ -1,5 +1,10 @@
 package osmedile.intellij.stringmanip.sort;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -7,12 +12,8 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 public class ShuffleLinesAction extends EditorAction {
 
@@ -25,6 +26,7 @@ public class ShuffleLinesAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				@Override
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 

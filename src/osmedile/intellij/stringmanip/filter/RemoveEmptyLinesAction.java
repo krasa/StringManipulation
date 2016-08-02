@@ -20,6 +20,7 @@ public class RemoveEmptyLinesAction extends EditorAction {
 	public RemoveEmptyLinesAction() {
 		super(new EditorWriteActionHandler(true) {
 
+			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
 				// Column mode not supported

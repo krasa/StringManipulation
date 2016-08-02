@@ -8,6 +8,7 @@ public class ToSnakeCaseAction extends AbstractCaseConvertingAction {
 		super(setupHandler);
 	}
 
+	@Override
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.UNDERSCORE_LOWERCASE) {

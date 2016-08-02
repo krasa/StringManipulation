@@ -8,7 +8,8 @@ public class ToPascalCaseAction extends AbstractCaseConvertingAction {
         super(setupHandler);
     }
 
-    public String transformByLine(String s) {
+	@Override
+	public String transformByLine(String s) {
         Style from = Style.from(s);
         if (from == Style.PASCAL_CASE) {
             return Style.CAMEL_CASE.transform(from, s);

@@ -9,7 +9,8 @@ import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
  */
 public class UnescapeJavaAction extends AbstractStringManipAction {
 
-    public String transformByLine(String s) {
+	@Override
+	public String transformByLine(String s) {
         return StringEscapeUtil.unescapeJava(s);
     }
 }

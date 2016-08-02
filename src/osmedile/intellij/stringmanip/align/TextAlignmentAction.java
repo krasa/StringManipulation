@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -14,6 +12,8 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
+
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 public abstract class TextAlignmentAction extends EditorAction {
 
@@ -26,6 +26,7 @@ public abstract class TextAlignmentAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				@Override
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 
@@ -85,18 +86,21 @@ public abstract class TextAlignmentAction extends EditorAction {
 
 	public enum Alignment {
 		LEFT() {
+			@Override
 			@NotNull
 			protected String align(String s) {
 				return ltrim(s);
 			}
 		},
 		RIGHT {
+			@Override
 			@NotNull
 			protected String align(String s) {
 				return rtrim(s);
 			}
 		},
 		CENTER {
+			@Override
 			@NotNull
 			protected String align(String s) {
 				return center(s);

@@ -1,15 +1,15 @@
 package osmedile.intellij.stringmanip.increment;
 
-import osmedile.intellij.stringmanip.utils.DuplicatUtils;
-import osmedile.intellij.stringmanip.utils.StringUtil;
-import osmedile.intellij.stringmanip.utils.StringUtils;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+
+import osmedile.intellij.stringmanip.utils.DuplicatUtils;
+import osmedile.intellij.stringmanip.utils.StringUtil;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
  * @author Olivier Smedile
@@ -20,6 +20,7 @@ public class DecrementAction extends EditorAction {
 	public DecrementAction() {
 		super(null);
 		this.setupHandler(new EditorWriteActionHandler(true) {
+			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 
 				// Column mode not supported

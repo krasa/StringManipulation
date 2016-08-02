@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.sort;
 
+import java.util.*;
+
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -7,9 +9,8 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.TextRange;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
-import java.util.*;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 public class ReverseLinesAction extends EditorAction {
 
@@ -22,6 +23,7 @@ public class ReverseLinesAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				@Override
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					Collections.sort(caretsAndSelections, new Comparator<CaretState>() {

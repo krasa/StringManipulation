@@ -21,6 +21,7 @@ public class GrepAction extends EditorAction {
 
     public GrepAction() {
         super(new EditorWriteActionHandler() {
+			@Override
             public void executeWriteAction(Editor editor, DataContext dataContext) {
 
                 //Column mode not supported

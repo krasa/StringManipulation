@@ -21,6 +21,7 @@ public class RemoveDuplicateLinesAction extends EditorAction {
 
 	public RemoveDuplicateLinesAction() {
 		super(new EditorWriteActionHandler(true) {
+			@Override
 			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
 				// Column mode not supported
 				if (editor.isColumnMode()) {

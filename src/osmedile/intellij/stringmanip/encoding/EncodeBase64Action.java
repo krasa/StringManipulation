@@ -1,15 +1,18 @@
 package osmedile.intellij.stringmanip.encoding;
 
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.ui.DialogWrapper;
+import java.nio.charset.Charset;
+
+import javax.swing.*;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-import javax.swing.*;
-import java.nio.charset.Charset;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.ui.DialogWrapper;
+
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 /**
  * @author Olivier Smedile
@@ -17,6 +20,7 @@ import java.nio.charset.Charset;
  */
 public class EncodeBase64Action extends AbstractStringManipAction {
 
+	@Override
 	public String transformSelection(Editor editor, DataContext dataContext, final String s) {
 		final Base64EncodingDialog base64EncodingDialog = new Base64EncodingDialog();
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {

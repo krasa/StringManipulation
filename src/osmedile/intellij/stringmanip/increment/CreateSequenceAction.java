@@ -24,6 +24,7 @@ public class CreateSequenceAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				@Override
 				public void executeWriteAction(final Editor editor, DataContext dataContext) {
 					final AtomicReference<String> lastValue = new AtomicReference<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {

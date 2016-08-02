@@ -11,6 +11,7 @@ public class DiacriticsToAsciiAction extends AbstractStringManipAction {
 		super(setupHandler);
 	}
 
+	@Override
 	public String transformByLine(String s) {
 		return toPlain(s);
 	}

@@ -9,7 +9,8 @@ import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
  */
 public class EscapeJavaScriptAction extends AbstractStringManipAction {
 
-    public String transformByLine(String s) {
+	@Override
+	public String transformByLine(String s) {
         return StringEscapeUtil.escapeJavaScript(s);
     }
 }

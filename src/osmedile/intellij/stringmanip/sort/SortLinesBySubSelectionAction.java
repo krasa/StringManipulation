@@ -1,5 +1,12 @@
 package osmedile.intellij.stringmanip.sort;
 
+import java.util.*;
+
+import javax.swing.*;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
@@ -9,11 +16,6 @@ import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.util.*;
 
 public class SortLinesBySubSelectionAction extends EditorAction {
 
@@ -30,6 +32,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
 
+				@Override
 				@SuppressWarnings("deprecation")
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
 					final SortTypeDialog dialog = new SortTypeDialog(sortType);

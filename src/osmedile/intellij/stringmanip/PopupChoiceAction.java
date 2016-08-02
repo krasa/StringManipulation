@@ -21,6 +21,7 @@ public class PopupChoiceAction extends DumbAwareAction {
         actionGroup = (ActionGroup) ActionManager.getInstance().getAction("osmedile.ManipulateStringGroup");
     }
 
+	@Override
     public void actionPerformed(AnActionEvent e) {
         ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, actionGroup,
                 e.getDataContext(), JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, false);

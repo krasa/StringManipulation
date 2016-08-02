@@ -1,11 +1,11 @@
 package osmedile.intellij.stringmanip.utils;
 
+import java.util.Arrays;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.Arrays;
 
 /**
  * DuplicatUtils Tester.
@@ -18,10 +18,12 @@ public class DuplicatUtilsTest extends TestCase {
         super(name);
     }
 
+	@Override
     public void setUp() throws Exception {
         super.setUp();
     }
 
+	@Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

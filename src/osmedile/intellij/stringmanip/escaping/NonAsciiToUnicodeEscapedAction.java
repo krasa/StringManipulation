@@ -9,7 +9,8 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
  */
 public class NonAsciiToUnicodeEscapedAction extends AbstractStringManipAction {
 
-    public String transformByLine(String s) {
+	@Override
+	public String transformByLine(String s) {
         return StringUtil.nonAsciiToUnicode(s);
     }
 }

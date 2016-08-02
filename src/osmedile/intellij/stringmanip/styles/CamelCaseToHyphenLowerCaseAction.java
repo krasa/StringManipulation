@@ -8,6 +8,7 @@ public class CamelCaseToHyphenLowerCaseAction extends AbstractCaseConvertingActi
 		super(setupHandler);
 	}
 
+	@Override
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
 		if (from == Style.HYPHEN_LOWERCASE) {

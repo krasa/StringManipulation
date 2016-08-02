@@ -15,6 +15,7 @@ public class SwapCharactersAction extends EditorAction {
 
 		this.setupHandler(new EditorWriteActionHandler(true) {
 
+			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 
