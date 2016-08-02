@@ -287,6 +287,11 @@
                         text="Remove empty lines"
                         description="Remove empty lines in selected text">
                 </action>
+                <action id="StringManipulation.RemoveNewLinesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
+                        text="Remove all newlines"
+                        description="Remove all line breaks in selected text">
+                </action>
                 <separator/>
     
                 <action id="osmedile.intellij.stringmanip.TrimAction"
@@ -303,11 +308,6 @@
                         class="osmedile.intellij.stringmanip.filter.RemoveAllSpacesAction"
                         text="Remove all spaces"
                         description="Remove all spaces in selected text">
-                </action>
-                <action id="StringManipulation.RemoveNewLinesAction"
-                        class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
-                        text="Remove all newlines"
-                        description="Remove all line breaks in selected text">
                 </action>
             </group>
 
