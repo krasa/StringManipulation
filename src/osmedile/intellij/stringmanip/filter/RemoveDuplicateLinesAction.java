@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.filter;
 
 import java.util.HashSet;
 import java.util.List;

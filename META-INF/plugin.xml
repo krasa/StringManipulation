@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.0.135.445.0</version>
+    <version>5.1.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -272,37 +272,42 @@
                    description="Filter/Remove/Trim..."
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
-                        class="osmedile.intellij.stringmanip.GrepAction"
+                        class="osmedile.intellij.stringmanip.filter.GrepAction"
                         text="Grep"
                         description="Grep on selected text">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
-                        class="osmedile.intellij.stringmanip.RemoveDuplicateLinesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
                         text="Remove duplicate lines"
                         description="Remove duplicate lines in selected text or lines within multiple selections">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
-                        class="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
                         text="Remove empty lines"
                         description="Remove empty lines in selected text">
                 </action>
                 <separator/>
     
                 <action id="osmedile.intellij.stringmanip.TrimAction"
-                        class="osmedile.intellij.stringmanip.TrimAction"
+                        class="osmedile.intellij.stringmanip.filter.TrimAction"
                         text="Trim"
                         description="Trim selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
-                        class="osmedile.intellij.stringmanip.TrimAllSpacesAction"
+                        class="osmedile.intellij.stringmanip.filter.TrimAllSpacesAction"
                         text="Trim all spaces"
                         description="Trim all spaces selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
-                        class="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveAllSpacesAction"
                         text="Remove all spaces"
                         description="Remove all spaces in selected text">
+                </action>
+                <action id="StringManipulation.RemoveNewLinesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
+                        text="Remove all newlines"
+                        description="Remove all line breaks in selected text">
                 </action>
             </group>
 
@@ -438,6 +443,7 @@
 				<li>Remove all spaces in selected text</li>
 				<li>Remove duplicate lines</li>
 				<li>Remove empty lines</li>
+				<li>Remove all newlines</li>
 			</ul>
 		</p>
 		<p>
@@ -458,6 +464,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.1<h4>
+	        <ul>
+               <li>new action: Remove all newlines</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.0<h4>
 	        <ul>

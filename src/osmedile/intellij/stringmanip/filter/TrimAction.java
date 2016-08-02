@@ -1,4 +1,6 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.filter;
+
+import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 /**
  * Action which trim selected text.

@@ -1,14 +1,15 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.filter;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
  * @author Olivier Smedile
