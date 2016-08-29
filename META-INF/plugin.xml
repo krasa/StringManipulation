@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.1.135.445.0</version>
+    <version>5.2.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -126,7 +126,7 @@
                         description="Decode URL">
                 </action>
             </group>
-            
+
             <separator/>
 
             <action id="StringManipulation.SwitchStyleAction"
@@ -182,7 +182,7 @@
                     description="Capitalize Fully">
             </action>
             <separator/>
-            
+
             <group text="Increment/Decrement..."
                    description="Increment, decrement, create sequence, unique numbers"
                    popup="true">
@@ -217,7 +217,7 @@
                         description="Increment duplicate numbers">
                 </action>
             </group>
-            
+
             <group text="Sort..."
                    description="Sort lines, delimited text"
                    popup="true">
@@ -267,7 +267,7 @@
                         description="Sort lines by subselection - only for multi carets">
                 </action>
             </group>
-              
+
             <group text="Filter/Remove/Trim..."
                    description="Filter/Remove/Trim..."
                    popup="true">
@@ -293,7 +293,7 @@
                         description="Remove all line breaks in selected text">
                 </action>
                 <separator/>
-    
+
                 <action id="osmedile.intellij.stringmanip.TrimAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAction"
                         text="Trim"
@@ -339,9 +339,9 @@
 
 
             <separator/>
-            <action id="osmedile.intellij.stringmanip.SwapCharactersAction"
-                    class="osmedile.intellij.stringmanip.SwapCharactersAction" text="Swap Characters"
-                    description="Exchange two selected characters, or ones surrounding the cursor if no selection">
+            <action id="osmedile.intellij.stringmanip.swap.SwapAction"
+                    class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
+                    description="Depending on what is selected or how many carets there are">
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
@@ -449,7 +449,7 @@
 		<p>
             Other:
 			<ul>
-				<li>Swap characters at caret</li>
+				<li>Swap Characters/Selections/Lines/Tokens</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
 			</ul>
 		</p>
@@ -464,6 +464,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.2<h4>
+	        <ul>
+               <li>replaced Swap Characters with a new action: Swap Characters/Selections/Lines/Tokens - depending on what is selected or how many carets there are</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.1<h4>
 	        <ul>
@@ -493,7 +499,7 @@
 	    <div>
 	        <h4>Version 4.7<h4>
 	        <ul>
-               <li>new action: Increment duplicate numbers ("1 3 3" => "1 3 4")</li>
+               <li>new action: dIncrement numbers ( uplicate"1 3 3" => "1 3 4")</li>
                <li>replaced 'Increment to produce unique sequence' to 'Create Sequence' ("1 5 0" => "1 2 3")</li>
                <li>Added Base64 options for URL safe, chunked encoding and charset</li>
                <li>Fixed multiline Base64 encoding</li>

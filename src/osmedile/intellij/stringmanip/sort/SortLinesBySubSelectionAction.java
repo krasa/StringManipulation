@@ -1,6 +1,9 @@
 package osmedile.intellij.stringmanip.sort;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -17,6 +20,8 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
 
+import osmedile.intellij.stringmanip.utils.IdeUtils;
+
 public class SortLinesBySubSelectionAction extends EditorAction {
 
 	private static final NaturalOrderComparator NATURAL_ORDER_COMPARATOR = new NaturalOrderComparator();
@@ -30,7 +35,6 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		super(null);
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
-
 
 				@Override
 				@SuppressWarnings("deprecation")
@@ -73,21 +77,12 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 					sortType = dialog.getResult();
 
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-					sort(caretsAndSelections);
+					IdeUtils.sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);
 
 					if (caretsAndSelections.size() > 1) {
 						processMultiCaret(editor, caretsAndSelections);
 					}
-				}
-
-				public void sort(List<CaretState> caretsAndSelections) {
-					Collections.sort(caretsAndSelections, new Comparator<CaretState>() {
-						@Override
-						public int compare(CaretState o1, CaretState o2) {
-							return o1.getCaretPosition().compareTo(o2.getCaretPosition());
-						}
-					});
 				}
 
 				public void filterCarets(Editor editor, List<CaretState> caretsAndSelections) {
@@ -96,7 +91,8 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 					while (iterator.hasNext()) {
 						CaretState caretsAndSelection = iterator.next();
 						LogicalPosition caretPosition = caretsAndSelection.getCaretPosition();
-						int lineNumber = editor.getDocument().getLineNumber(editor.logicalPositionToOffset(caretPosition));
+						int lineNumber = editor.getDocument().getLineNumber(
+								editor.logicalPositionToOffset(caretPosition));
 						if (lineNumber == previousLineNumber) {
 							Caret caret = editor.getCaretModel().getCaretAt(caretPosition.toVisualPosition());
 							editor.getCaretModel().removeCaret(caret);
@@ -106,7 +102,6 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 					}
 				}
 
-
 				private void processMultiCaret(Editor editor, List<CaretState> caretsAndSelections) {
 					List<SortLine> lines = new ArrayList<SortLine>();
 					for (CaretState caretsAndSelection : caretsAndSelections) {
@@ -115,7 +110,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 						LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
 						int selectionEndOffset = editor.logicalPositionToOffset(selectionEnd);
 						LogicalPosition caretPosition = caretsAndSelection.getCaretPosition();
-						//no selection -> expand to end of line
+						// no selection -> expand to end of line
 						if (selectionStartOffset == selectionEndOffset) {
 							String text = editor.getDocument().getText();
 							selectionEndOffset = text.indexOf("\n", selectionStartOffset);
@@ -127,15 +122,17 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 							caretPosition = caret.getLogicalPosition();
 						}
 
-						String selection = editor.getDocument().getText(new TextRange(selectionStartOffset, selectionEndOffset));
+						String selection = editor.getDocument().getText(
+								new TextRange(selectionStartOffset, selectionEndOffset));
 
 						int lineNumber = editor.getDocument().getLineNumber(selectionStartOffset);
 						int lineStartOffset = editor.getDocument().getLineStartOffset(lineNumber);
 						int lineEndOffset = editor.getDocument().getLineEndOffset(lineNumber);
 						String line = editor.getDocument().getText(new TextRange(lineStartOffset, lineEndOffset));
 
-
-						lines.add(new SortLine(line, selection, lineStartOffset, lineEndOffset, selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset, caretPosition));
+						lines.add(new SortLine(line, selection, lineStartOffset, lineEndOffset,
+								selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset,
+								caretPosition));
 					}
 
 					List<SortLine> sortedLines = new ArrayList<SortLine>(lines);
@@ -170,7 +167,8 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		private final int selectionEndLineOffset;
 		private final LogicalPosition caretPosition;
 
-		public SortLine(String line, String selection, int lineStartOffset, int lineEndOffset, int selectionStartLineOffset, int selectionEndLineOffset, LogicalPosition caretPosition) {
+		public SortLine(String line, String selection, int lineStartOffset, int lineEndOffset,
+				int selectionStartLineOffset, int selectionEndLineOffset, LogicalPosition caretPosition) {
 			this.line = line;
 			this.selection = selection;
 			this.lineStartOffset = lineStartOffset;
