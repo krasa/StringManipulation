@@ -13,6 +13,12 @@ public class LinesTest {
 	private List<String> expected = Arrays.asList("aa,", "b", "ccc;;");
 	private List<String> expected_preserveTrailing = Arrays.asList("aa;;", "b,", "ccc");
 
+	private List<String> inputWithLeadingSpace = Arrays.asList("  c,", " a", "b;");
+	private List<String> expectedWithLeadingSpace = Arrays.asList("  c,", " a", "b;");
+	private List<String> expectedWithLeadingSpace_ignoreLeading = Arrays.asList(" a", "b;", "  c,");
+	private List<String> expectedWithLeadingSpace_ignoreLeading_preserveLeading = Arrays.asList("  a", " b;", "c,");
+	private List<String> expectedWithLeadingSpace_preserveLeading_preserveTrailing = Arrays.asList("  a,", " b", "c;");
+
 
 	@Test
 	public void sort() throws Exception {
@@ -31,36 +37,36 @@ public class LinesTest {
 	@Test
 	public void ignoreLeadingSpace() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true);
-		List<String> result = new Lines(Arrays.asList("  c,", " a", "b;"), sortSettings).sortLines();
-		Assert.assertEquals(Arrays.asList(" a", "b;", "  c,"), result);
+		List<String> result = new Lines(inputWithLeadingSpace, sortSettings).sortLines();
+		Assert.assertEquals(expectedWithLeadingSpace_ignoreLeading, result);
 	}
 
 	@Test
 	public void ignoreLeadingSpace_preserveLeading() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true).preserveLeadingSpaces(true);
-		List<String> result = new Lines(Arrays.asList("  c,", " a", "b;"), sortSettings).sortLines();
-		Assert.assertEquals(Arrays.asList("  a", " b;", "c,"), result);
+		List<String> result = new Lines(inputWithLeadingSpace, sortSettings).sortLines();
+		Assert.assertEquals(expectedWithLeadingSpace_ignoreLeading_preserveLeading, result);
 	}
 
 	@Test
 	public void ignoreLeadingSpace_preserveLeading_preserveTrailing() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true).preserveLeadingSpaces(true).preserveTrailingSpecialCharacters(true);
-		List<String> result = new Lines(Arrays.asList("  c,", " a", "b;"), sortSettings).sortLines();
-		Assert.assertEquals("input: " + Arrays.asList("  c,", " a", "b;"), Arrays.asList("  a,", " b", "c;"), result);
+		List<String> result = new Lines(inputWithLeadingSpace, sortSettings).sortLines();
+		Assert.assertEquals("input: " + inputWithLeadingSpace, expectedWithLeadingSpace_preserveLeading_preserveTrailing, result);
 	}
 
 	@Test
 	public void not_ignoreLeadingSpace() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z);
-		List<String> result = new Lines(Arrays.asList("  c,", " a", "b;"), sortSettings).sortLines();
-		Assert.assertEquals(Arrays.asList("  c,", " a", "b;"), result);
+		List<String> result = new Lines(inputWithLeadingSpace, sortSettings).sortLines();
+		Assert.assertEquals(expectedWithLeadingSpace, result);
 	}
 
 	@Test
 	public void not_ignoreLeadingSpace_preserveLeading() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).preserveLeadingSpaces(true);
-		List<String> result = new Lines(Arrays.asList("  c,", " a", "b;"), sortSettings).sortLines();
-		Assert.assertEquals(Arrays.asList("  c,", " a", "b;"), result);
+		List<String> result = new Lines(inputWithLeadingSpace, sortSettings).sortLines();
+		Assert.assertEquals(expectedWithLeadingSpace, result);
 	}
 
 }
