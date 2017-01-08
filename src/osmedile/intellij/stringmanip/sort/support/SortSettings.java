@@ -19,8 +19,8 @@ public class SortSettings {
 	private boolean preserveLeadingSpaces = true;
 	private boolean preserveTrailingSpecialCharacters = true;
 
-	public static SortSettings allFeaturesDisabled(Sort caseInsensitiveAZ) {
-		return new SortSettings(caseInsensitiveAZ).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
+	public static SortSettings allFeaturesDisabled(Sort sort) {
+		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
 	}
 
 	public SortSettings(Sort sort) {
