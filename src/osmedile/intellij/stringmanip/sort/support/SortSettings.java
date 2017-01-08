@@ -14,14 +14,14 @@ public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
 	public static final Key<SortSettings> KEY = Key.create("StringManipulation.SortSettings.UserData");
 
-	private String trailingChars = " ,;";
+	private String trailingChars = ",;";
 	private final Sort sortType;
 	private boolean ignoreLeadingSpaces = true;
 	private boolean preserveLeadingSpaces = true;
 	private boolean preserveTrailingSpecialCharacters = true;
 
-	public static SortSettings allFeaturesDisabled(Sort caseInsensitiveAZ) {
-		return new SortSettings(caseInsensitiveAZ).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
+	public static SortSettings allFeaturesDisabled(Sort sort) {
+		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
 	}
 
 	public SortSettings(Sort sort) {

@@ -3,6 +3,8 @@ package osmedile.intellij.stringmanip.sort.support;
 import org.apache.commons.lang.StringUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
+import static com.intellij.openapi.util.text.StringUtil.trimTrailing;
+
 public class Line {
 
 	private final String text;
@@ -24,6 +26,7 @@ public class Line {
 			textToComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text), text.length());
 		}
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
+			textToComparison = trimTrailing(textToComparison);
 			textToComparison = StringUtils.stripEnd(textToComparison, sortSettings.getTrailingChars());
 		}
 		return textToComparison;
