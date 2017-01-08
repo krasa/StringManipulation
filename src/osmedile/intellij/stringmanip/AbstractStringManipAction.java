@@ -1,11 +1,13 @@
 package osmedile.intellij.stringmanip;
 
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Caret;
+import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
@@ -21,32 +23,60 @@ public abstract class AbstractStringManipAction extends EditorAction {
 	protected AbstractStringManipAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new EditorWriteActionHandler(true) {
-
+			this.setupHandler(new EditorWriteActionHandler(false) {
 				@Override
-				public void executeWriteAction(Editor editor, DataContext dataContext) {
-					final SelectionModel selectionModel = editor.getSelectionModel();
-					String selectedText = selectionModel.getSelectedText();
-
-					if (selectedText == null) {
-						selectSomethingUnderCaret(editor, dataContext, selectionModel);
-						selectedText = selectionModel.getSelectedText();
-
-						if (selectedText == null) {
-							return;
+				public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+					if (doBeforeWriteAction(editor, dataContext)) {
+						try {
+							super.doExecute(editor, caret, dataContext);
+						} finally {
+							cleanupAfterWriteAction(editor, dataContext);
 						}
 					}
+				}
 
-					String s = transformSelection(editor, dataContext, selectedText);
-					s = s.replace("\r\n", "\n");
-					s = s.replace("\r", "\n");
-					editor.getDocument().replaceString(selectionModel.getSelectionStart(),
-							selectionModel.getSelectionEnd(), s);
+				@Override
+				public void executeWriteAction(final Editor editor, @Nullable Caret caret, final DataContext dataContext) {
+					editor.getCaretModel().runForEachCaret(new CaretAction() {
+						@Override
+						public void perform(Caret caret) {
+							executeMyActionPerCaret(caret.getEditor(), caret, dataContext);
+						}
+					});
 				}
 			});
 		}
 
 	}
+
+	protected boolean doBeforeWriteAction(Editor editor, DataContext dataContext) {
+		return true;
+	}
+
+	protected void cleanupAfterWriteAction(Editor editor, DataContext dataContext) {
+
+	}
+
+	protected void executeMyActionPerCaret(Editor editor, Caret caret, DataContext dataContext) {
+		final SelectionModel selectionModel = editor.getSelectionModel();
+		String selectedText = selectionModel.getSelectedText();
+
+		if (selectedText == null) {
+			selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			selectedText = selectionModel.getSelectedText();
+
+			if (selectedText == null) {
+				return;
+			}
+		}
+
+		String s = transformSelection(editor, dataContext, selectedText);
+		s = s.replace("\r\n", "\n");
+		s = s.replace("\r", "\n");
+		editor.getDocument().replaceString(selectionModel.getSelectionStart(),
+				selectionModel.getSelectionEnd(), s);
+	}
+
 
 	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
 		String[] textParts = selectedText.split("\n");

@@ -1,18 +1,17 @@
 package osmedile.intellij.stringmanip.encoding;
 
-import java.nio.charset.Charset;
-
-import javax.swing.*;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.NotImplementedException;
-import org.jetbrains.annotations.Nullable;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
-
+import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.Key;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.NotImplementedException;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+
+import javax.swing.*;
+import java.nio.charset.Charset;
 
 /**
  * @author Olivier Smedile
@@ -20,8 +19,10 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
  */
 public class EncodeBase64Action extends AbstractStringManipAction {
 
+	private static final Key<Base64EncodingDialog> KEY = Key.create("osmedile.intellij.stringmanip.encoding.EncodeBase64Action");
+
 	@Override
-	public String transformSelection(Editor editor, DataContext dataContext, final String s) {
+	public boolean doBeforeWriteAction(Editor editor, DataContext dataContext) {
 		final Base64EncodingDialog base64EncodingDialog = new Base64EncodingDialog();
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
@@ -57,9 +58,30 @@ public class EncodeBase64Action extends AbstractStringManipAction {
 
 		boolean b = dialogWrapper.showAndGet();
 		if (!b) {
-			return s;
+			return false;
 		}
 
+
+		try {
+			Charset.forName(base64EncodingDialog.getCharset());
+		} catch (Exception e) {
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			return false;
+		}
+		editor.putUserData(KEY, base64EncodingDialog);
+		return true;
+	}
+
+	@Override
+	protected void cleanupAfterWriteAction(Editor editor, DataContext dataContext) {
+		super.cleanupAfterWriteAction(editor, dataContext);
+		editor.putUserData(KEY, null);
+	}
+
+
+	@Override
+	public String transformSelection(Editor editor, DataContext dataContext, final String s) {
+		Base64EncodingDialog base64EncodingDialog = editor.getUserData(KEY);
 
 		Charset charset = null;
 		try {
