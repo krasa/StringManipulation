@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.sort.support;
 
 import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -78,7 +79,7 @@ public class SortSettings {
 	}
 
 	protected static SortSettings fromString(String s) {
-		List<String> strings = Splitter.on("|").limit(5).splitToList(s);
+		List<String> strings = Lists.newArrayList(Splitter.on("|").limit(5).split(s));
 		SortSettings sortSettings = new SortSettings(Sort.valueOf(strings.get(0)));
 		sortSettings.ignoreLeadingSpaces(Boolean.parseBoolean(strings.get(1)));
 		sortSettings.preserveLeadingSpaces(Boolean.parseBoolean(strings.get(2)));
