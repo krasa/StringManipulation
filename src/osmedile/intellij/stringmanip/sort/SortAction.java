@@ -10,8 +10,8 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.sort.support.Lines;
 import osmedile.intellij.stringmanip.sort.support.Sort;
+import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 
@@ -110,7 +110,7 @@ public class SortAction extends EditorAction {
 				new TextRange(editor.logicalPositionToOffset(selectionStart),
 						editor.logicalPositionToOffset(selectionEnd)));
 
-		String charSequence = new Lines(text, settings).sort();
+		String charSequence = new SortLines(text, settings).sort();
 
 		editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
 				editor.logicalPositionToOffset(selectionEnd), charSequence);

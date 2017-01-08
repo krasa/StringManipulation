@@ -12,7 +12,6 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.sort.support.Line;
 import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -209,7 +208,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 
 		@Override
 		public int compareTo(@NotNull Object o) {
-			return sortType.getComparator().compare(new Line(selection), new Line(((SortLine) o).selection));
+			return sortType.getComparator().compare(new osmedile.intellij.stringmanip.sort.support.SortLine(selection), new osmedile.intellij.stringmanip.sort.support.SortLine(((SortLine) o).selection));
 		}
 	}
 

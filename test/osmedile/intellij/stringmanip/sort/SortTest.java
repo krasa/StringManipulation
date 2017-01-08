@@ -3,8 +3,8 @@ package osmedile.intellij.stringmanip.sort;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
-import osmedile.intellij.stringmanip.sort.support.Lines;
 import osmedile.intellij.stringmanip.sort.support.Sort;
+import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
@@ -268,7 +268,7 @@ public class SortTest {
 	private void assertSort(String[] input, Sort sort, String... result) {
 		List<String> list = new ArrayList<String>();
 		list.addAll(Arrays.asList(input));
-		List<String> sorted = new Lines(list, SortSettings.allFeaturesDisabled(sort)).sortLines();
+		List<String> sorted = new SortLines(list, SortSettings.allFeaturesDisabled(sort)).sortLines();
 		Assert.assertArrayEquals(StringUtils.join(sorted.toArray(), '\n') + "\n", result, sorted.toArray());
 	}
 }

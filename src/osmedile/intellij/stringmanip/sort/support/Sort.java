@@ -6,62 +6,62 @@ import java.util.List;
 
 public enum Sort {
 
-	CASE_SENSITIVE_A_Z(new Comparator<Line>() {
+	CASE_SENSITIVE_A_Z(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return COMPARATOR.compare(o1.getTextForComparison(), o2.getTextForComparison());
 		}
 	}),
-	CASE_SENSITIVE_Z_A(new Comparator<Line>() {
+	CASE_SENSITIVE_Z_A(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return COMPARATOR.compare(o2.getTextForComparison(), o1.getTextForComparison());
 		}
 	}),
-	CASE_INSENSITIVE_A_Z(new Comparator<Line>() {
+	CASE_INSENSITIVE_A_Z(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return COMPARATOR.compare(o1.getTextForComparison().toLowerCase(), o2.getTextForComparison().toLowerCase());
 		}
 	}),
-	CASE_INSENSITIVE_Z_A(new Comparator<Line>() {
+	CASE_INSENSITIVE_Z_A(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return COMPARATOR.compare(o2.getTextForComparison().toLowerCase(), o1.getTextForComparison().toLowerCase());
 		}
 	}),
-	LINE_LENGTH_SHORT_LONG(new Comparator<Line>() {
+	LINE_LENGTH_SHORT_LONG(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return o1.getTextForComparison().length() - o2.getTextForComparison().length();
 		}
 	}),
-	LINE_LENGTH_LONG_SHORT(new Comparator<Line>() {
+	LINE_LENGTH_LONG_SHORT(new Comparator<SortLine>() {
 		@Override
-		public int compare(Line o1, Line o2) {
+		public int compare(SortLine o1, SortLine o2) {
 			return o2.getTextForComparison().length() - o1.getTextForComparison().length();
 
 		}
 	});
 
-	private Comparator<Line> comparator;
+	private Comparator<SortLine> comparator;
 
-	Sort(Comparator<Line> comparator) {
+	Sort(Comparator<SortLine> comparator) {
 		this.comparator = comparator;
 	}
 
-	public List<Line> sortLines(List<Line> lines) {
+	public List<SortLine> sortLines(List<SortLine> lines) {
 		Collections.sort(lines, comparator);
 		return lines;
 	}
 
 
-	public Comparator<Line> getComparator() {
+	public Comparator<SortLine> getComparator() {
 		return comparator;
 	}
 
 	public static List<String> sortLines(SortSettings settings, List<String> lines) {
-		return new Lines(lines, settings).sortLines();
+		return new SortLines(lines, settings).sortLines();
 	}
 
 	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();

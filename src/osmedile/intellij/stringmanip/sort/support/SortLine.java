@@ -3,19 +3,19 @@ package osmedile.intellij.stringmanip.sort.support;
 import org.apache.commons.lang.StringUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
-import static com.intellij.openapi.util.text.StringUtil.trimTrailing;
+import static com.intellij.openapi.util.text.StringUtil.*;
 
-public class Line {
+public class SortLine {
 
 	private final String text;
 	private final SortSettings sortSettings;
 
-	public Line(String text, SortSettings sortSettings) {
+	public SortLine(String text, SortSettings sortSettings) {
 		this.text = text;
 		this.sortSettings = sortSettings;
 	}
 
-	public Line(String selection) {
+	public SortLine(String selection) {
 		text = selection;
 		sortSettings = SortSettings.allFeaturesDisabled(null);
 	}
@@ -33,7 +33,7 @@ public class Line {
 	}
 
 
-	public String transformTo(Line line) {
+	public String transformTo(SortLine line) {
 		String result = line.text;
 		String fromText = text;
 		if (sortSettings.isPreserveLeadingSpaces()) {
@@ -45,10 +45,6 @@ public class Line {
 		}
 
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
-			//lets trim it, it's better for edge cases
-			fromText = trimTrailing(fromText);
-			result = trimTrailing(result);
-
 			int newContentEndIndex = lastIndexOfAnyBut(result, sortSettings.getTrailingChars());
 			int oldContentEndIndex = lastIndexOfAnyBut(fromText, sortSettings.getTrailingChars());
 
@@ -63,14 +59,26 @@ public class Line {
 		return result;
 	}
 
-	protected int lastIndexOfAnyBut(String text, String trailingChars) {
-		//todo perhaps optimize this shit 
-		String reverse = StringUtils.reverse(text);
-		int i = StringUtils.indexOfAnyBut(reverse, trailingChars);
-		if (i == -1) {
-			return reverse.length();
+	protected int lastIndexOfAnyBut(String str, String searchChars) {
+		if (!isEmpty(str) && !isEmpty(searchChars)) {
+			int lastSearchCharFoundIndex = str.length();
+			for (int i = str.length() - 1; i < str.length(); --i) {
+				boolean isSearchChar = searchChars.indexOf(str.charAt(i)) >= 0;
+
+				if (isSearchChar) {
+					lastSearchCharFoundIndex = i;
+				} else if (isWhiteSpace(str.charAt(i))) {
+					continue;
+				} else {
+					return lastSearchCharFoundIndex;
+				}
+			}
+
+			return str.length();
+		} else {
+			return str.length();
 		}
-		return text.length() - i;
 	}
+
 
 }

@@ -6,27 +6,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Lines {
-	private List<Line> lines = new ArrayList<Line>();
+public class SortLines {
+	private List<SortLine> lines = new ArrayList<SortLine>();
 	private boolean endsWith;
 	private final SortSettings sortSettings;
 
-	public Lines(String text, SortSettings sortSettings) {
+	public SortLines(String text, SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
 		this.endsWith = text.endsWith("\n");
 
 		String[] split = text.split("\n");
 		List<String> list = Arrays.asList(split);
 		for (String s : list) {
-			this.lines.add(new Line(s, sortSettings));
+			this.lines.add(new SortLine(s, sortSettings));
 		}
 	}
 
-	public Lines(List<String> text, SortSettings sortSettings) {
+	public SortLines(List<String> text, SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
 
 		for (String s : text) {
-			this.lines.add(new Line(s, sortSettings));
+			this.lines.add(new SortLine(s, sortSettings));
 		}
 	}
 
@@ -41,12 +41,12 @@ public class Lines {
 
 	public List<String> sortLines() {
 		Sort sortType = sortSettings.getSortType();
-		List<Line> lines = sortType.sortLines(new ArrayList<Line>(this.lines));
+		List<SortLine> lines = sortType.sortLines(new ArrayList<SortLine>(this.lines));
 
 		List<String> result = new ArrayList<String>();
 		for (int i = 0; i < lines.size(); i++) {
-			Line originalLine = this.lines.get(i);
-			Line newLine = lines.get(i);
+			SortLine originalLine = this.lines.get(i);
+			SortLine newLine = lines.get(i);
 			result.add(originalLine.transformTo(newLine));
 		}
 		return result;
