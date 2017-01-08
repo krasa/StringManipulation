@@ -37,19 +37,33 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		if (setupHandler) {
 			this.setupHandler(new EditorWriteActionHandler(false) {
 
+				public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+					SortSettings settings = null;
+					if (editor.getCaretModel().getCaretCount() > 1) {
+						settings = getSortSettings(editor);
+					} else {
+						Messages.showInfoMessage(editor.getProject(), "You must have multiple selections/carets on multiple lines.", "Sort By Subselection");
+					}
+
+					if (settings == null) return;
+					try {
+						editor.putUserData(SortSettings.KEY, settings);
+						super.doExecute(editor, caret, dataContext);
+					} finally {
+						editor.putUserData(SortSettings.KEY, null);
+					}
+				}
+
 				@Override
 				@SuppressWarnings("deprecation")
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
+					SortSettings sortSettings = editor.getUserData(SortSettings.KEY);
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					IdeUtils.sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);
 
 					if (caretsAndSelections.size() > 1) {
-						SortSettings sortSettings = getSettings(editor);
-						if (sortSettings == null) return;
 						processMultiCaret(editor, sortSettings, caretsAndSelections);
-					} else {
-						Messages.showInfoMessage(editor.getProject(), "You must have multiple selections/carets on multiple lines.", "Sort By Subselection");
 					}
 				}
 
@@ -59,7 +73,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 
 	@SuppressWarnings("Duplicates")
 	@Nullable
-	protected SortSettings getSettings(final Editor editor) {
+	protected SortSettings getSortSettings(final Editor editor) {
 		final SortTypeDialog dialog = new SortTypeDialog(SortSettings.readFromStore(STORE_KEY), false);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
@@ -118,7 +132,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		}
 	}
 
-	private void processMultiCaret(Editor editor, SortSettings sortSettings, List<CaretState> caretsAndSelections) {
+	private void processMultiCaret(Editor editor, @NotNull SortSettings sortSettings, List<CaretState> caretsAndSelections) {
 		List<SortLine> lines = new ArrayList<SortLine>();
 		for (CaretState caretsAndSelection : caretsAndSelections) {
 			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();

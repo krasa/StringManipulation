@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.sort;
 
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
@@ -28,11 +29,23 @@ public class SortAction extends EditorAction {
 	protected SortAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) this.setupHandler(new EditorWriteActionHandler(false) {
+			@Override
+			public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+				SortSettings settings = getSortSettings(editor);
+				if (settings == null) return;
+
+				try {
+					editor.putUserData(SortSettings.KEY, settings);
+					super.doExecute(editor, caret, dataContext);
+				} finally {
+					editor.putUserData(SortSettings.KEY, null);
+				}
+			}
 
 			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
-				SortSettings settings = getSortSettings(editor);
-				if (settings == null) return;
+				SortSettings settings = editor.getUserData(SortSettings.KEY);
+
 				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 
 				if (caretsAndSelections.size() > 1) {
