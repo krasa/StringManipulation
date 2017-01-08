@@ -35,21 +35,26 @@ public class Line {
 
 	public String transformTo(Line line) {
 		String result = line.text;
+		String fromText = text;
 		if (sortSettings.isPreserveLeadingSpaces()) {
-			int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(text);
+			int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(fromText);
 			int newContentStartIndex = StringUtil.indexOfAnyButWhitespace(result);
-			String start = text.substring(0, oldContentStartIndex);
+			String start = fromText.substring(0, oldContentStartIndex);
 			String end = result.substring(newContentStartIndex, result.length());
 			result = start + end;
 		}
 
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
+			//lets trim it, it's better for edge cases
+			fromText = trimTrailing(fromText);
+			result = trimTrailing(result);
+
 			int newContentEndIndex = lastIndexOfAnyBut(result, sortSettings.getTrailingChars());
-			int oldContentEndIndex = lastIndexOfAnyBut(text, sortSettings.getTrailingChars());
+			int oldContentEndIndex = lastIndexOfAnyBut(fromText, sortSettings.getTrailingChars());
 
 
 			String newContentWithoutTrailingCharacters = result.substring(0, newContentEndIndex);
-			String oldTrailingCharacters = text.substring(oldContentEndIndex);
+			String oldTrailingCharacters = fromText.substring(oldContentEndIndex);
 
 			result = newContentWithoutTrailingCharacters + oldTrailingCharacters;
 		}
