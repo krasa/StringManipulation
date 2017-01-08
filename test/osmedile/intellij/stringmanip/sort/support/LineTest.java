@@ -8,6 +8,8 @@ import static osmedile.intellij.stringmanip.sort.support.SortSettings.allFeature
 public class LineTest {
 	private SortSettings enabledFeatures = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT);
 	private SortSettings disabledFeatures = allFeaturesDisabled(Sort.CASE_INSENSITIVE_A_Z);
+	private SortSettings noTrailingChars = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).trailingChars("");
+	private SortSettings noTrailingChars2 = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).trailingChars(" \t");
 
 	@Test
 	public void getTextForComparison() throws Exception {
@@ -43,6 +45,8 @@ public class LineTest {
 	public void transformTo() throws Exception {
 //		@formatter:off
 		assertThatWith(disabledFeatures).line("foo"                  ).trasformedTo( "bar"                 ).produces("bar"             ) ;
+		assertThatWith(disabledFeatures).line("foo"                  ).trasformedTo( " "                   ).produces(" "               ) ;
+		assertThatWith(disabledFeatures).line(""                     ).trasformedTo( "bar"                 ).produces("bar"             ) ;
 		assertThatWith(disabledFeatures).line(" foo "                ).trasformedTo( "bar"                 ).produces("bar"             ) ;
 		assertThatWith(disabledFeatures).line("\tfoo"                ).trasformedTo( "bar"                 ).produces("bar"             ) ;
 		assertThatWith(disabledFeatures).line("\tfoo\n"              ).trasformedTo( "bar"                 ).produces("bar"             ) ;
@@ -54,8 +58,8 @@ public class LineTest {
 		assertThatWith(disabledFeatures).line("     \t  foo ;,."     ).trasformedTo( "bar"                 ).produces("bar"             ) ;
 		assertThatWith(disabledFeatures).line("     \t  foo ;,     " ).trasformedTo( "bar"                 ).produces("bar"             ) ;
 		assertThatWith(disabledFeatures).line("     \t  foo.,;"      ).trasformedTo( "bar"                 ).produces("bar"             ) ;
-		
-		
+
+
 		assertThatWith(enabledFeatures).line ("foo    "                  ).trasformedTo( "bar"             ).produces("bar"             ) ;
 		assertThatWith(enabledFeatures).line (" foo "                ).trasformedTo( "bar            "     ).produces(" bar"            ) ; //trailing whitespaces trimmed - feature ;)
 		assertThatWith(enabledFeatures).line ("\tfoo"                ).trasformedTo( "bar"                 ).produces("\tbar"           ) ;
@@ -68,7 +72,7 @@ public class LineTest {
 		assertThatWith(enabledFeatures).line ("     \t  foo ;,."     ).trasformedTo( "bar"                 ).produces("     \t  bar"    ) ;
 		assertThatWith(enabledFeatures).line ("     \t  foo ;,     " ).trasformedTo( "bar"                 ).produces("     \t  bar;,"  ) ;    
 		assertThatWith(enabledFeatures).line ("     \t  foo.,;"      ).trasformedTo( "bar"                 ).produces("     \t  bar,;"  ) ;
-		
+
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "bar"                 ).produces("bar"              ) ;
 		assertThatWith(enabledFeatures).line (" foo "                ).trasformedTo( "bar "                ).produces(" bar"             ) ;
 		assertThatWith(enabledFeatures).line ("\tfoo"                ).trasformedTo( "\tbar"               ).produces("\tbar"            ) ;
@@ -81,7 +85,7 @@ public class LineTest {
 		assertThatWith(enabledFeatures).line ("     \t  foo ;,."     ).trasformedTo( "     \t  bar ,;|"    ).produces("     \t  bar ,;|" ) ;
 		assertThatWith(enabledFeatures).line ("     \t  foo ;,     " ).trasformedTo( "     \t  bar ;,  "   ).produces("     \t  bar ;,"  ) ;  
 		assertThatWith(enabledFeatures).line ("     \t  foo.,;"      ).trasformedTo( "     \t  bar|,;"     ).produces("     \t  bar|,;"  ) ;
-		
+
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "bar"                 ).produces("bar"              ) ;
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( " bar "               ).produces("bar"              ) ;
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "\tbar"               ).produces("bar"              ) ;
@@ -94,6 +98,16 @@ public class LineTest {
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "     \t  bar ,;|"    ).produces("bar ,;|"          ) ;
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "     \t  bar ;,  "   ).produces("bar "             ) ;
 		assertThatWith(enabledFeatures).line ("foo"                  ).trasformedTo( "     \t  bar|,;"     ).produces("bar|"             ) ;
+//		
+		
+		assertThatWith(noTrailingChars).line ("     \t  foo   "      ).trasformedTo( "bar  "               ).produces("     \t  bar"     ) ;
+		assertThatWith(noTrailingChars).line (""                     ).trasformedTo( "bar "                ).produces("bar"              ) ;
+		assertThatWith(noTrailingChars).line ("foo"                  ).trasformedTo( " "                   ).produces(""                 ) ;
+		
+		assertThatWith(noTrailingChars2).line ("     \t  foo   ;"    ).trasformedTo( "bar  "               ).produces("     \t  bar"     ) ;
+		assertThatWith(noTrailingChars2).line (""                    ).trasformedTo( "bar "                ).produces("bar"              ) ;
+		assertThatWith(noTrailingChars2).line ("foo"                 ).trasformedTo( " "                   ).produces(""                 ) ;
+		
 		//@formatter:on
 	}
 

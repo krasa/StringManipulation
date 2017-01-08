@@ -68,7 +68,7 @@ public class Line {
 		String reverse = StringUtils.reverse(text);
 		int i = StringUtils.indexOfAnyBut(reverse, trailingChars);
 		if (i == -1) {
-			i = reverse.length();
+			return reverse.length();
 		}
 		return text.length() - i;
 	}
