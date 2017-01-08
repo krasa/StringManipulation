@@ -23,9 +23,8 @@ public class SwapActionExecutorSupport {
 		this.action = action;
 		this.editor = editor;
 		this.dataContext = dataContext;
-		caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-		IdeUtils.sort(caretsAndSelections);
 		document = editor.getDocument();
+		caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 	}
 
 	@NotNull
