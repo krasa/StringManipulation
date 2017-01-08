@@ -1,9 +1,16 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.3.135.445.0</version>
+    <version>5.3.143.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
-    <idea-version since-build="135.445"/>
+    <idea-version since-build="143.000"/>
+
+    <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
+    <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
+    <!--branch 139 - IntelliJ IDEA 14, WebStorm 9, PyCharm 4, PhpStorm 8, RubyMine 7-->
+    <!--branch 135 - IntelliJ IDEA 13.1, WebStorm 8-->
+    <!--branch 133 - IntelliJ IDEA 13, PyCharm 3.1, WebStorm 7, PhpStorm 7-->
+    <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
 
     <depends>com.intellij.modules.platform</depends>
 
@@ -443,6 +450,7 @@
 	        <h4>Version 5.3<h4>
 	        <ul>
                <li>Introduced one generic Sort action with a settings dialog and options to ignore and preserve leading whitespaces and preserve trailing characters</li>
+               <li>IntelliJ 2017 compatibility</li>
 			</ul>
 	    </div>
 	    <div>
