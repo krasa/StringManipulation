@@ -55,7 +55,7 @@ public class SortLineTest {
 	}
 
 	@Test
-	public void testTrailingDisabled() throws Exception {
+	public void trailingDisabled() throws Exception {
 //		@formatter:off
 	String [] s =new String[]{	
 			"(foo)      | [bar]     | {bar}     | ",
@@ -88,7 +88,6 @@ public class SortLineTest {
 			"(foo , )   | [bar ; ]  | {bar ; }  | ",
 			"(foo , )   | [bar ; X] | {bar ; X} | ",
 			"(foo , , ) | [bar ; ]  | {bar ; }  | ",
-			
 	} ;
 		//@formatter:on
 		test(s, disabledFeatures);
@@ -97,7 +96,7 @@ public class SortLineTest {
 	}
 
 	@Test
-	public void testTrailingEnabled() throws Exception {
+	public void trailing() throws Exception {
 //		@formatter:off
 	String [] s =new String[]{	
 			"(foo)      | [bar]     | {bar}       | ",
@@ -137,7 +136,7 @@ public class SortLineTest {
 			"(foo , , ) | [bar ; ]  | {bar , , }  | ",
 	} ;
 		//@formatter:on
-		test(s, enabledFeatures);
+		test(s, new SortSettings(null).trailingChars(",;"));
 	}
 
 	@Test
@@ -180,12 +179,9 @@ public class SortLineTest {
 			"(foo , , ) | [bar; ]   | {bar , , }   | ",
 			"(foo , , ) | [bar ;]   | {bar , , }   | ",
 			"(foo , , ) | [bar ; ]  | {bar , , }   | ",
-		
-		 
-			
 	} ;
 		//@formatter:on
-		test(s, new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).trailingChars(" ,;"));
+		test(s, new SortSettings(null).trailingChars(" ,;"));
 	}
 
 	private void printAlignedResult() {
