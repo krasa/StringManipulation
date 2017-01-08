@@ -1,15 +1,13 @@
 package osmedile.intellij.stringmanip.swap;
 
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
-
+import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
+
+import java.util.List;
 
 public class SwapActionExecutorSupport {
 	private SwapAction action;
@@ -176,7 +174,7 @@ public class SwapActionExecutorSupport {
 		}
 
 		String s = sb.toString();
-		if (lastSeparator.equals(",") && !s.contains(",")) {
+		if (!s.contains(lastSeparator)) {
 			if (s.contains(";")) {
 				lastSeparator = ";";
 			} else if (s.contains("||")) {

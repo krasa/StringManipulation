@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.2.135.445.0</version>
+    <version>5.3.135.445.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="135.445"/>
 
@@ -221,6 +221,16 @@
             <group text="Sort..."
                    description="Sort lines, delimited text"
                    popup="true">
+                <action id="StringManipulation.Sort"
+                        class="osmedile.intellij.stringmanip.sort.SortAction"
+                        text="Sort lines..."
+                        description="Universal lines sort with all kinds of features">
+                </action>
+                <action id="StringManipulation.SortLinesBySubSelectionAction"
+                        class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
+                        text="Sort lines by subselection"
+                        description="Sort lines by subselection - only for multi carets">
+                </action>
                 <action id="StringManipulation.ReverseAction"
                         class="osmedile.intellij.stringmanip.sort.ReverseLinesAction"
                         text="Reverse lines"
@@ -230,41 +240,6 @@
                         class="osmedile.intellij.stringmanip.sort.ShuffleLinesAction"
                         text="Shuffle lines"
                         description="Shuffle lines">
-                </action>
-                <action id="StringManipulation.SortCaseSensitiveAzAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveAzAction"
-                        text="Sort case-sensitive A-z"
-                        description="Sort case-sensitive A-z">
-                </action>
-                <action id="StringManipulation.SortCaseSensitiveZaAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseSensitiveZaAction"
-                        text="Sort case-sensitive z-A"
-                        description="Sort case-sensitive z-A">
-                </action>
-                <action id="StringManipulation.SortCaseInSensitiveAzAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveAzAction"
-                        text="Sort case-insensitive a-z"
-                        description="Sort case-insensitive a-z">
-                </action>
-                <action id="StringManipulation.SortCaseInSensitiveZaAction"
-                        class="osmedile.intellij.stringmanip.sort.SortCaseInSensitiveZaAction"
-                        text="Sort case-insensitive z-a"
-                        description="Sort case-insensitive z-a">
-                </action>
-                <action id="StringManipulation.SortByLenghtAscAction"
-                        class="osmedile.intellij.stringmanip.sort.SortByLengthAscAction"
-                        text="Sort by length ascending"
-                        description="Sort by length ascending">
-                </action>
-                <action id="StringManipulation.SortByLenghtDescAction"
-                        class="osmedile.intellij.stringmanip.sort.SortByLengthDescAction"
-                        text="Sort by length descending "
-                        description="Sort by length descending ">
-                </action>
-                <action id="StringManipulation.SortLinesBySubSelectionAction"
-                        class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort lines by subselection"
-                        description="Sort lines by subselection - only for multi carets">
                 </action>
             </group>
 
@@ -464,6 +439,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.3<h4>
+	        <ul>
+               <li>Introduced one generic Sort action with a settings dialog and options to ignore and preserve leading whitespaces and preserve trailing characters</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.2<h4>
 	        <ul>

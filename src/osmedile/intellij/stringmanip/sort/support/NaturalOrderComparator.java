@@ -18,8 +18,8 @@ appreciated but is not required.
 2. Altered source versions must be plainly marked as such, and must not be
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
-*/
-package osmedile.intellij.stringmanip.sort;
+ */
+package osmedile.intellij.stringmanip.sort.support;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class NaturalOrderComparator implements Comparator {
 		// value wins, but we can't know that it will until we've scanned
 		// both numbers to know that they have the same magnitude, so we
 		// remember it in BIAS.
-		for (;; ia++, ib++) {
+		for (; ; ia++, ib++) {
 			char ca = charAt(a, ia);
 			char cb = charAt(b, ib);
 
@@ -80,7 +80,7 @@ public class NaturalOrderComparator implements Comparator {
 
 			// skip over leading spaces or zeros
 			// skip space if there was not a number before => '50 X' < '50B X'
-			while ((Character.isSpaceChar(ca) && !Character.isDigit(pca)) || ca == '0') {
+			while ((disabled_isWhitespace(ca) && !Character.isDigit(pca)) || ca == '0') {
 				if (ca == '0') {
 					nza++;
 				} else {
@@ -92,7 +92,7 @@ public class NaturalOrderComparator implements Comparator {
 				ca = charAt(a, ++ia);
 			}
 
-			while ((Character.isSpaceChar(cb) && !Character.isDigit(pcb)) || cb == '0') {
+			while ((disabled_isWhitespace(cb) && !Character.isDigit(pcb)) || cb == '0') {
 				if (cb == '0') {
 					nzb++;
 				} else {
@@ -128,6 +128,12 @@ public class NaturalOrderComparator implements Comparator {
 		}
 	}
 
+	public boolean disabled_isWhitespace(char ca) {
+		//do not ignore leading whitespaces 
+		return false;
+//		return Character.isSpaceChar(ca);     - originally
+	}
+
 	static char charAt(String s, int i) {
 		if (i >= s.length()) {
 			return 0;
@@ -137,10 +143,10 @@ public class NaturalOrderComparator implements Comparator {
 	}
 
 	public static void main(String[] args) {
-		String[] strings = new String[] { "1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01", "pic2", "pic02",
+		String[] strings = new String[]{"1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01", "pic2", "pic02",
 				"pic02a", "pic3", "pic4", "pic 4 else", "pic 5", "pic05", "pic 5", "pic 5 something", "pic 6",
 				"pic   7", "pic100", "pic100a", "pic120", "pic121", "pic02000", "tom", "x2-g8", "x2-y7", "x2-y08",
-				"x8-y8" };
+				"x8-y8"};
 
 		List orig = Arrays.asList(strings);
 
