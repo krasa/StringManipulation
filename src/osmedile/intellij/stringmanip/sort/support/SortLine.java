@@ -1,9 +1,9 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import org.apache.commons.lang.StringUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
-import static com.intellij.openapi.util.text.StringUtil.*;
+import static com.intellij.openapi.util.text.StringUtil.isEmpty;
+import static com.intellij.openapi.util.text.StringUtil.isWhiteSpace;
 
 public class SortLine {
 
@@ -21,17 +21,16 @@ public class SortLine {
 	}
 
 	public String getTextForComparison() {
-		String textToComparison = text;
+		String textForComparison = text;
 		if (sortSettings.isIgnoreLeadingSpaces()) {
-			textToComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text), text.length());
+			textForComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text), text.length());
 		}
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
-			textToComparison = trimTrailing(textToComparison);
-			textToComparison = StringUtils.stripEnd(textToComparison, sortSettings.getTrailingChars());
+			int textWithoutTrailingCharsEndIndex = lastIndexOfAnyBut(textForComparison, sortSettings.getTrailingChars());
+			textForComparison = textForComparison.substring(0, textWithoutTrailingCharsEndIndex);
 		}
-		return textToComparison;
+		return textForComparison;
 	}
-
 
 	public String transformTo(SortLine line) {
 		String result = line.text;
@@ -39,15 +38,16 @@ public class SortLine {
 		if (sortSettings.isPreserveLeadingSpaces()) {
 			int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(fromText);
 			int newContentStartIndex = StringUtil.indexOfAnyButWhitespace(result);
-			String start = fromText.substring(0, oldContentStartIndex);
-			String end = result.substring(newContentStartIndex, result.length());
-			result = start + end;
+
+			String oldContentLeadingSpaces = fromText.substring(0, oldContentStartIndex);
+			String newActualContent = result.substring(newContentStartIndex, result.length());
+
+			result = oldContentLeadingSpaces + newActualContent;
 		}
 
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
 			int newContentEndIndex = lastIndexOfAnyBut(result, sortSettings.getTrailingChars());
 			int oldContentEndIndex = lastIndexOfAnyBut(fromText, sortSettings.getTrailingChars());
-
 
 			String newContentWithoutTrailingCharacters = result.substring(0, newContentEndIndex);
 			String oldTrailingCharacters = fromText.substring(oldContentEndIndex);
