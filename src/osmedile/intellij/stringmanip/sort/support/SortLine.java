@@ -71,7 +71,7 @@ public class SortLine {
 	protected int lastIndexOfAnyBut(String str, String searchChars) {
 		if (!isEmpty(str) && !isEmpty(searchChars)) {
 			int lastSearchCharFoundIndex = str.length();
-			for (int i = str.length() - 1; i < str.length(); --i) {
+			for (int i = str.length() - 1; i >= 0; --i) {
 				boolean isSearchChar = searchChars.indexOf(str.charAt(i)) >= 0;
 
 				if (isSearchChar) {
@@ -91,3 +91,4 @@ public class SortLine {
 
 
 }
+							
