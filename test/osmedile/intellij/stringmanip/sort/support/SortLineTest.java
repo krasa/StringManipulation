@@ -2,7 +2,7 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
-import osmedile.intellij.stringmanip.align.ColumnAligner;
+import osmedile.intellij.stringmanip.align.support.ColumnAligner;
 
 import static org.junit.Assert.assertEquals;
 import static osmedile.intellij.stringmanip.sort.support.SortSettings.allFeaturesDisabled;
@@ -29,9 +29,8 @@ public class SortLineTest {
 		
 		
 		assertThatWith(enabledFeatures).line ("foo"                  ).isComparedAs("foo"      ) ;
-		assertThatWith(enabledFeatures).line (" foo "                ).isComparedAs("foo"      ) ;
+		assertThatWith(enabledFeatures).line (" foo "                ).isComparedAs("foo "      ) ;
 		assertThatWith(enabledFeatures).line ("\tfoo"                ).isComparedAs("foo"      ) ;
-		assertThatWith(enabledFeatures).line ("\tfoo\n"              ).isComparedAs("foo"      ) ;
 		assertThatWith(enabledFeatures).line ("\t  foo;"             ).isComparedAs("foo"      ) ;
 		assertThatWith(enabledFeatures).line ("\t  foo,"             ).isComparedAs("foo"      ) ;
 		assertThatWith(enabledFeatures).line ("\t  foo,;"            ).isComparedAs("foo"      ) ;
@@ -186,7 +185,7 @@ public class SortLineTest {
 
 	private void printAlignedResult() {
 		System.out.println("----ALIGNED OUTPUT---");
-		System.out.println(new ColumnAligner().reformat("|", output.toString()));
+		System.out.println(new ColumnAligner().reformat(output.toString(), "|"));
 		output.setLength(0);
 		System.out.println("----ALIGNED OUTPUT END---");
 	}

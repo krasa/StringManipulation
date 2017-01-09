@@ -9,18 +9,23 @@ public class SortLine {
 
 	private final String text;
 	private final SortSettings sortSettings;
+	private final String textForComparison;
 
 	public SortLine(String text, SortSettings sortSettings) {
 		this.text = text;
 		this.sortSettings = sortSettings;
+
+		this.textForComparison = makeTextForComparison(text, sortSettings);
 	}
 
 	public SortLine(String selection) {
 		text = selection;
 		sortSettings = SortSettings.allFeaturesDisabled(null);
+
+		this.textForComparison = makeTextForComparison(text, sortSettings);
 	}
 
-	public String getTextForComparison() {
+	protected String makeTextForComparison(String text, SortSettings sortSettings) {
 		String textForComparison = text;
 		if (sortSettings.isIgnoreLeadingSpaces()) {
 			textForComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text), text.length());
@@ -29,6 +34,10 @@ public class SortLine {
 			int textWithoutTrailingCharsEndIndex = lastIndexOfAnyBut(textForComparison, sortSettings.getTrailingChars());
 			textForComparison = textForComparison.substring(0, textWithoutTrailingCharsEndIndex);
 		}
+		return textForComparison;
+	}
+
+	public String getTextForComparison() {
 		return textForComparison;
 	}
 
