@@ -4,23 +4,28 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.util.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class SwapActionExecutorSupport {
+public class SwapActionExecutor {
+
+
 	protected Editor editor;
 	protected DataContext dataContext;
 	protected List<CaretState> caretsAndSelections;
 	protected String separator;
 	protected Document document;
 
-	public SwapActionExecutorSupport() {
+	public SwapActionExecutor() {
 	}
 
-	public SwapActionExecutorSupport(Editor editor, DataContext dataContext, @Nullable String separator) {
+	public SwapActionExecutor(Editor editor, DataContext dataContext, @Nullable String separator) {
 		this.editor = editor;
 		this.dataContext = dataContext;
 		document = editor.getDocument();
@@ -247,4 +252,76 @@ public class SwapActionExecutorSupport {
 		return selections == 0;
 	}
 
+	public boolean isSwappingTokens() {
+		if (singleCaret() && (noSelection() || max2CharSelection())) {
+			return false;
+		} else if (singleCaret() && singleSelection()) {
+			return true;
+		}
+		return false;
+	}
+
+	public void execute() {
+		IdeUtils.sort(caretsAndSelections);
+		if (singleCaret() && (noSelection() || max2CharSelection())) {
+			swapCharacters();
+		} else if (singleCaret() && singleSelection()) {
+			swapTokens();
+		} else {// multiple carets || multiple selections
+			selectLines_for_caretsWithoutSelection();
+			rotateSelections();
+		}
+	}
+
+	public void swapCharacters() {
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			int selectionStart = startOffset(caretsAndSelection);
+			int selectionEnd = endOffset(caretsAndSelection);
+
+			final Document document = this.document;
+			final int textLength = document.getTextLength();
+			String selectedText;
+			if (selectionStart == selectionEnd) {
+				selectionStart = selectionStart - 1;
+				selectionEnd = selectionEnd + 1;
+				if (selectionStart < 0 || selectionEnd > textLength) {
+					return;
+				}
+				selectedText = document.getText(TextRange.create(selectionStart, selectionEnd));
+			} else {
+				selectedText = document.getText(TextRange.create(selectionStart, selectionEnd));
+			}
+			document.replaceString(selectionStart, selectionEnd, swapCharacters(selectedText));
+		}
+
+	}
+
+	private void swapTokens() {
+		ObjectUtils.assertNotNull(separator);
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			int start = toOffset(caretsAndSelection.getSelectionStart());
+			int end = toOffset(caretsAndSelection.getSelectionEnd());
+			String selectedText = document.getText(TextRange.create(start, end));
+			String result = swapTokens(separator, selectedText);
+			document.replaceString(start, end, result);
+		}
+
+	}
+
+	private void rotateSelections() {
+		List<String> selections = new ArrayList<String>();
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			String text = editor.getDocument().getText(getTextRange(caretsAndSelection));
+			selections.add(text);
+		}
+
+		Collections.rotate(selections, 1);
+
+		for (int i = selections.size() - 1; i >= 0; i--) {
+			String text = selections.get(i);
+			CaretState caretsAndSelection = caretsAndSelections.get(i);
+			TextRange textRange = getTextRange(caretsAndSelection);
+			editor.getDocument().replaceString(textRange.getStartOffset(), textRange.getEndOffset(), text);
+		}
+	}
 }
