@@ -40,8 +40,8 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	public abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, T additionalParam);
 
 	@NotNull
-	public Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
-		return null;
+	protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
+		return continueExecution();
 	}
 
 	protected final Pair<Boolean, T> stopExecution() {

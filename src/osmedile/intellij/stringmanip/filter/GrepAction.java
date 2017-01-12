@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.utils.StringUtils;
@@ -23,6 +24,7 @@ public class GrepAction extends EditorAction {
 
 	public GrepAction() {
 		super(new MyEditorWriteActionHandler<String>() {
+			@NotNull
 			@Override
 			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
