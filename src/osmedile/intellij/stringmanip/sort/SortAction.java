@@ -30,7 +30,7 @@ public class SortAction extends EditorAction {
 
 	protected SortAction(boolean setupHandler) {
 		super(null);
-		this.setupHandler(new MyEditorWriteActionHandler<SortSettings>(false) {
+		this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
 			@NotNull
 			@Override
 			public Pair beforeWriteAction(Editor editor, DataContext dataContext) {

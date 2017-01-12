@@ -22,7 +22,7 @@ import java.util.Collection;
 public class GrepAction extends EditorAction {
 
 	public GrepAction() {
-		super(new MyEditorWriteActionHandler<String>(false) {
+		super(new MyEditorWriteActionHandler<String>() {
 			@Override
 			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();

@@ -26,7 +26,7 @@ public class AlignToColumnsAction extends EditorAction {
 	protected AlignToColumnsAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<String>(false) {
+			this.setupHandler(new MyEditorWriteActionHandler<String>() {
 				@Override
 				public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 					String separator = chooseSeparator();

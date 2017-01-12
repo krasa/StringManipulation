@@ -1,54 +1,39 @@
 package osmedile.intellij.stringmanip;
 
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.*;
+import com.intellij.openapi.editor.Caret;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
-import com.intellij.openapi.editor.actionSystem.EditorActionManager;
-import com.intellij.openapi.editor.textarea.TextComponentEditor;
+import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler {
-	public MyEditorWriteActionHandler() {
-	}
 
-	public MyEditorWriteActionHandler(boolean runForEachCaret) {
-		super(runForEachCaret);
+	public MyEditorWriteActionHandler() {
+		super(false);
 	}
 
 	@Override
 	public final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
-		if (editor.isViewer()) return;
-		if (!ApplicationManager.getApplication().isWriteAccessAllowed() && !EditorModificationUtil.requestWriting(editor)) return;
-
-
 		final Pair<Boolean, T> additionalParam = beforeWriteAction(editor, dataContext);
 		if (!additionalParam.first) {
 			return;
 		}
 
-		DocumentRunnable runnable = new DocumentRunnable(editor.getDocument(), editor.getProject()) {
+		final Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				final Document doc = editor.getDocument();
-
-				doc.startGuardedBlockChecking();
-				try {
-					executeWriteAction(editor, caret, dataContext, additionalParam.second);
-				} catch (ReadOnlyFragmentModificationException e) {
-					EditorActionManager.getInstance().getReadonlyFragmentModificationHandler(doc).handle(e);
-				} finally {
-					doc.stopGuardedBlockChecking();
-				}
+				executeWriteAction(editor, caret, dataContext, additionalParam.second);
 			}
 		};
-		if (editor instanceof TextComponentEditor) {
-			runnable.run();
-		} else {
-			ApplicationManager.getApplication().runWriteAction(runnable);
-		}
+		new EditorWriteActionHandler(false) {
+			@Override
+			public void executeWriteAction(Editor editor1, @Nullable Caret caret1, DataContext dataContext1) {
+				runnable.run();
+			}
+		}.doExecute(editor, caret, dataContext);
 	}
 
 

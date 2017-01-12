@@ -15,7 +15,7 @@ public class SwapAction extends EditorAction {
 
 	protected SwapAction() {
 		super(null);
-		this.setupHandler(new MyEditorWriteActionHandler<SwapActionExecutor>(false) {
+		this.setupHandler(new MyEditorWriteActionHandler<SwapActionExecutor>() {
 
 			@NotNull
 			public Pair<Boolean, SwapActionExecutor> beforeWriteAction(Editor editor, DataContext dataContext) {

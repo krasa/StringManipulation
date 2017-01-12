@@ -24,7 +24,7 @@ public abstract class AbstractStringManipAction<T> extends EditorAction {
 	protected AbstractStringManipAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<T>(false) {
+			this.setupHandler(new MyEditorWriteActionHandler<T>() {
 				@NotNull
 				@Override
 				public Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {

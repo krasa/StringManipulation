@@ -35,7 +35,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 	public SortLinesBySubSelectionAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>(false) {
+			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
 				@NotNull
 				@Override
 				public Pair beforeWriteAction(Editor editor, DataContext dataContext) {
