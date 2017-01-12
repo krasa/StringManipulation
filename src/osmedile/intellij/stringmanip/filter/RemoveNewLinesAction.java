@@ -1,16 +1,14 @@
 package osmedile.intellij.stringmanip.filter;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-
+import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 public class RemoveNewLinesAction extends AbstractStringManipAction {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
 		return selectedText.replaceAll("\n", "");
 	}
 

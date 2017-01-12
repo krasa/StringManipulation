@@ -2,7 +2,7 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
-import osmedile.intellij.stringmanip.align.support.ColumnAligner;
+import osmedile.intellij.stringmanip.align.ColumnAligner;
 
 import static org.junit.Assert.assertEquals;
 import static osmedile.intellij.stringmanip.sort.support.SortSettings.allFeaturesDisabled;

@@ -6,10 +6,12 @@ import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
@@ -28,24 +30,18 @@ public class SortAction extends EditorAction {
 
 	protected SortAction(boolean setupHandler) {
 		super(null);
-		if (setupHandler) this.setupHandler(new EditorWriteActionHandler(false) {
+		this.setupHandler(new MyEditorWriteActionHandler<SortSettings>(false) {
+			@NotNull
 			@Override
-			public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+			public Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 				SortSettings settings = getSortSettings(editor);
-				if (settings == null) return;
+				if (settings == null) return stopExecution();
 
-				try {
-					editor.putUserData(SortSettings.KEY, settings);
-					super.doExecute(editor, caret, dataContext);
-				} finally {
-					editor.putUserData(SortSettings.KEY, null);
-				}
+				return continueExecution(settings);
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, DataContext dataContext) {
-				SortSettings settings = editor.getUserData(SortSettings.KEY);
-
+			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings settings) {
 				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 
 				if (caretsAndSelections.size() > 1) {

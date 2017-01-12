@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 public class URLEncodeAction extends AbstractStringManipAction {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
 
         try {
 					return URLEncoder.encode(selectedText, "UTF-8");

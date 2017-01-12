@@ -6,12 +6,13 @@ import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -34,9 +35,10 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 	public SortLinesBySubSelectionAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new EditorWriteActionHandler(false) {
-
-				public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>(false) {
+				@NotNull
+				@Override
+				public Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 					SortSettings settings = null;
 					if (editor.getCaretModel().getCaretCount() > 1) {
 						settings = getSortSettings(editor);
@@ -44,19 +46,13 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 						Messages.showInfoMessage(editor.getProject(), "You must have multiple selections/carets on multiple lines.", "Sort By Subselection");
 					}
 
-					if (settings == null) return;
-					try {
-						editor.putUserData(SortSettings.KEY, settings);
-						super.doExecute(editor, caret, dataContext);
-					} finally {
-						editor.putUserData(SortSettings.KEY, null);
-					}
+					if (settings == null) return stopExecution();
+					return continueExecution(settings);
 				}
 
+
 				@Override
-				@SuppressWarnings("deprecation")
-				public void executeWriteAction(Editor editor, DataContext dataContext) {
-					SortSettings sortSettings = editor.getUserData(SortSettings.KEY);
+				public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings sortSettings) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					IdeUtils.sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);

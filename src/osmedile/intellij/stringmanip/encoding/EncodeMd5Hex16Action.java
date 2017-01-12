@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 public class EncodeMd5Hex16Action extends AbstractStringManipAction {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
 		try {
 
 					byte[] hash = MessageDigest.getInstance("md5").digest(selectedText.getBytes("UTF-8"));

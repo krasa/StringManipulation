@@ -3,7 +3,6 @@ package osmedile.intellij.stringmanip.sort.support;
 import com.google.common.base.Splitter;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Key;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
-	public static final Key<SortSettings> KEY = Key.create("StringManipulation.SortSettings.UserData");
 
 	private String trailingChars = ",;";
 	private final Sort sortType;

@@ -4,9 +4,10 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.Pair;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.NotImplementedException;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
@@ -18,11 +19,11 @@ import java.nio.charset.Charset;
  * @author Olivier Smedile
  * @version $Id: EscapeHtmlAction.java 16 2008-03-20 19:21:43Z osmedile $
  */
-public class DecodeBase64Action extends AbstractStringManipAction {
-	public static final Key<Charset> KEY = Key.create("StringManipulation.DecodeBase64Action.UserData");
+public class DecodeBase64Action extends AbstractStringManipAction<Charset> {
 
+	@NotNull
 	@Override
-	public boolean doBeforeWriteAction(Editor editor, DataContext dataContext) {
+	public Pair<Boolean, Charset> beforeWriteAction(Editor editor, DataContext dataContext) {
 		final Base64EncodingDialog base64EncodingDialog = new Base64EncodingDialog();
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
@@ -50,37 +51,26 @@ public class DecodeBase64Action extends AbstractStringManipAction {
 
 			@Override
 			protected void doOKAction() {
-
-
 				super.doOKAction();
 			}
 		};
 
 		boolean b = dialogWrapper.showAndGet();
 		if (!b) {
-			return false;
+			return stopExecution();
 		}
 
 		try {
 			Charset charset = Charset.forName(base64EncodingDialog.getCharset());
-			editor.putUserData(KEY, charset);
-			return true;
+			return continueExecution(charset);
 		} catch (Exception e) {
 			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
-			return false;
+			return stopExecution();
 		}
 	}
 
 	@Override
-	protected void cleanupAfterWriteAction(Editor editor, DataContext dataContext) {
-		super.cleanupAfterWriteAction(editor, dataContext);
-		editor.putUserData(KEY, null);
-	}
-
-
-	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String s) {
-		Charset charset = editor.getUserData(KEY);
+	protected String transformSelection(Editor editor, DataContext dataContext, String s, Charset charset) {
 		return new String(Base64.decodeBase64(s.getBytes(charset)), charset);
 	}
 

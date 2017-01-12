@@ -6,17 +6,16 @@ import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlignToColumnsAction extends EditorAction {
-	public static final Key<String> KEY = Key.create("StringManipulation.AlignToColumnsAction.UserData");
 
 	private String lastSeparator = ",";
 
@@ -27,24 +26,19 @@ public class AlignToColumnsAction extends EditorAction {
 	protected AlignToColumnsAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new EditorWriteActionHandler(false) {
+			this.setupHandler(new MyEditorWriteActionHandler<String>(false) {
 				@Override
-				public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+				public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 					String separator = chooseSeparator();
-					if (separator == null)
-						return;
-					try {
-						editor.putUserData(KEY, separator);
-						super.doExecute(editor, caret, dataContext);
-					} finally {
-						editor.putUserData(KEY, null);
+					if (separator == null) {
+						return stopExecution();
 					}
+					return continueExecution(separator);
 				}
 
 				@Override
-				public void executeWriteAction(Editor editor, DataContext dataContext) {
+				public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String separator) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-					String separator = editor.getUserData(KEY);
 					if (caretsAndSelections.size() > 1) {
 						processMultiCaret(editor, separator, caretsAndSelections);
 					} else if (caretsAndSelections.size() == 1) {

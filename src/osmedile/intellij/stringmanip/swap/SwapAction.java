@@ -6,10 +6,12 @@ import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.util.ObjectUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.ArrayList;
@@ -17,44 +19,37 @@ import java.util.Collections;
 import java.util.List;
 
 public class SwapAction extends EditorAction {
-	public static final Key<String> KEY = Key.create("StringManipulation.SwapAction.UserData");
 
 	String lastSeparator = ",";
 
 	protected SwapAction() {
 		super(null);
-		this.setupHandler(new EditorWriteActionHandler(false) {
-			@Override
-			public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
-				SwapActionExecutor swapActionExecutor = new SwapActionExecutor(SwapAction.this, editor, dataContext);
+		this.setupHandler(new MyEditorWriteActionHandler<String>(false) {
+
+			@NotNull
+			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
+				SwapActionExecutor swapActionExecutor = new SwapActionExecutor(SwapAction.this, editor, dataContext, lastSeparator);
 				if (swapActionExecutor.isSwappingTokens()) {
 					String separator = swapActionExecutor.chooseSeparator();
-					if (separator == null) {
-						return;
-					} else {
-						try {
-							editor.putUserData(KEY, separator);
-							super.doExecute(editor, caret, dataContext);
-						} finally {
-							editor.putUserData(KEY, null);
-						}
+					if (separator != null) {
+						return continueExecution(separator);
 					}
-				} else {
-					super.doExecute(editor, caret, dataContext);
 				}
+				return stopExecution();
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, DataContext dataContext) {
-				new SwapActionExecutor(SwapAction.this, editor, dataContext).execute();
+			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String separator) {
+				new SwapActionExecutor(SwapAction.this, editor, dataContext, separator).execute();
 			}
+
 		});
 	}
 
 	private class SwapActionExecutor extends SwapActionExecutorSupport {
 
-		public SwapActionExecutor(SwapAction action, Editor editor, DataContext dataContext) {
-			super(action, editor, dataContext);
+		public SwapActionExecutor(SwapAction action, Editor editor, DataContext dataContext, String separator) {
+			super(action, editor, dataContext, separator);
 		}
 
 		public boolean isSwappingTokens() {
@@ -102,10 +97,7 @@ public class SwapAction extends EditorAction {
 		}
 
 		private void swapTokens() {
-			String separator = editor.getUserData(KEY);
-			if (separator == null) {
-				return;
-			}
+			ObjectUtils.assertNotNull(separator);
 			for (CaretState caretsAndSelection : caretsAndSelections) {
 				int start = toOffset(caretsAndSelection.getSelectionStart());
 				int end = toOffset(caretsAndSelection.getSelectionEnd());

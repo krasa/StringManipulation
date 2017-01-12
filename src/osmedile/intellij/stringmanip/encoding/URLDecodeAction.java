@@ -11,7 +11,7 @@ import java.net.URLDecoder;
 public class URLDecodeAction extends AbstractStringManipAction {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText) {
+	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
 		try {
 					return URLDecoder.decode(selectedText, "UTF-8");
 		} catch (UnsupportedEncodingException e) {

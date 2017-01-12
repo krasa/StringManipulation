@@ -5,11 +5,11 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.Key;
+import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -20,31 +20,23 @@ import java.util.Collection;
  * @version $Id: GrepAction.java 60 2008-04-18 06:51:03Z osmedile $
  */
 public class GrepAction extends EditorAction {
-	public static final Key<String> KEY = Key.create("StringManipulation.GrepAction.UserData");
 
 	public GrepAction() {
-		super(new EditorWriteActionHandler() {
-
+		super(new MyEditorWriteActionHandler<String>(false) {
 			@Override
-			public void doExecute(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
 					String grepos = Messages.showInputDialog(editor.getProject(), "Grep text", "Grep", null);
-					if (StringUtil.isEmptyOrSpaces(grepos)) {
-						return;
-					}
-					try {
-						editor.putUserData(KEY, grepos);
-						super.doExecute(editor, caret, dataContext);
-					} finally {
-						editor.putUserData(KEY, null);
+					if (!StringUtil.isEmptyOrSpaces(grepos)) {
+						return continueExecution(grepos);
 					}
 				}
+				return stopExecution();
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, DataContext dataContext) {
-
+			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String grepos) {
 				//Column mode not supported
 				if (editor.isColumnMode()) {
 					return;
@@ -53,7 +45,6 @@ public class GrepAction extends EditorAction {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
 
-					String grepos = editor.getUserData(KEY);
 					if (StringUtil.isEmptyOrSpaces(grepos)) {
 						return;
 					}

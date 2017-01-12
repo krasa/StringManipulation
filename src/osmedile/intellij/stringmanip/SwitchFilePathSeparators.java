@@ -1,14 +1,13 @@
 package osmedile.intellij.stringmanip;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
+import org.apache.commons.lang.NotImplementedException;
 
 public class SwitchFilePathSeparators extends AbstractStringManipAction {
 
 	@Override
-	public String transformSelection(Editor editor, DataContext dataContext, String s) {
+	public String transformSelection(Editor editor, DataContext dataContext, String s, Object additionalParam) {
 		String s1;
 		if (s.contains("/")) {
 			s1 = s.replace("/", "\\");

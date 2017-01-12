@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.*;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.List;
@@ -14,17 +15,19 @@ public class SwapActionExecutorSupport {
 	protected Editor editor;
 	protected DataContext dataContext;
 	protected List<CaretState> caretsAndSelections;
+	protected String separator;
 	protected Document document;
 
 	public SwapActionExecutorSupport() {
 	}
 
-	public SwapActionExecutorSupport(SwapAction action, Editor editor, DataContext dataContext) {
+	public SwapActionExecutorSupport(SwapAction action, Editor editor, DataContext dataContext, @Nullable String separator) {
 		this.action = action;
 		this.editor = editor;
 		this.dataContext = dataContext;
 		document = editor.getDocument();
 		caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+		this.separator = separator;
 	}
 
 	@NotNull
