@@ -11,7 +11,6 @@ import osmedile.intellij.stringmanip.utils.IdeUtils;
 import java.util.List;
 
 public class SwapActionExecutorSupport {
-	private SwapAction action;
 	protected Editor editor;
 	protected DataContext dataContext;
 	protected List<CaretState> caretsAndSelections;
@@ -21,8 +20,7 @@ public class SwapActionExecutorSupport {
 	public SwapActionExecutorSupport() {
 	}
 
-	public SwapActionExecutorSupport(SwapAction action, Editor editor, DataContext dataContext, @Nullable String separator) {
-		this.action = action;
+	public SwapActionExecutorSupport(Editor editor, DataContext dataContext, @Nullable String separator) {
 		this.editor = editor;
 		this.dataContext = dataContext;
 		document = editor.getDocument();
@@ -165,7 +163,6 @@ public class SwapActionExecutorSupport {
 	}
 
 	protected String chooseSeparator() {
-		String lastSeparator = action.lastSeparator;
 		StringBuilder sb = new StringBuilder();
 
 		for (CaretState caretsAndSelection : caretsAndSelections) {
@@ -176,34 +173,34 @@ public class SwapActionExecutorSupport {
 		}
 
 		String s = sb.toString();
-		if (!s.contains(lastSeparator)) {
+		if (!s.contains(separator)) {
 			if (s.contains(";")) {
-				lastSeparator = ";";
+				separator = ";";
 			} else if (s.contains("||")) {
-				lastSeparator = "||";
+				separator = "||";
 			} else if (s.contains("|")) {
-				lastSeparator = "|";
+				separator = "|";
 			} else if (s.contains("/")) {
-				lastSeparator = "/";
+				separator = "/";
 			} else if (s.contains("&&")) {
-				lastSeparator = "&&";
+				separator = "&&";
 			} else if (s.contains(".")) {
-				lastSeparator = ".";
+				separator = ".";
 			} else if (s.contains(" ")) {
-				lastSeparator = " ";
+				separator = " ";
 			}
 		}
 
-		String separator = Messages.showInputDialog("Separator", "Split by separator and swap",
-				Messages.getQuestionIcon(), lastSeparator, null);
-		if (separator != null) {
-			if (separator.equals("")) {
-				separator = " ";
+		String newSeparator = Messages.showInputDialog("Separator", "Split by separator and swap",
+				Messages.getQuestionIcon(), separator, null);
+		if (newSeparator != null) {
+			if (newSeparator.equals("")) {
+				newSeparator = " ";
 			}
-			action.lastSeparator = separator;
 		} else {
 			return null;
 		}
+		separator = newSeparator;
 		return separator;
 	}
 

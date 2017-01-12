@@ -24,23 +24,25 @@ public class SwapAction extends EditorAction {
 
 	protected SwapAction() {
 		super(null);
-		this.setupHandler(new MyEditorWriteActionHandler<String>(false) {
+		this.setupHandler(new MyEditorWriteActionHandler<SwapActionExecutor>(false) {
 
 			@NotNull
-			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
-				SwapActionExecutor swapActionExecutor = new SwapActionExecutor(SwapAction.this, editor, dataContext, lastSeparator);
+			public Pair<Boolean, SwapActionExecutor> beforeWriteAction(Editor editor, DataContext dataContext) {
+				SwapActionExecutor swapActionExecutor = new SwapActionExecutor(editor, dataContext, lastSeparator);
 				if (swapActionExecutor.isSwappingTokens()) {
 					String separator = swapActionExecutor.chooseSeparator();
-					if (separator != null) {
-						return continueExecution(separator);
-					}
+					if (separator == null) {
+						return stopExecution();
+					} else {
+						lastSeparator = separator;
+					} 
 				}
-				return stopExecution();
+				return continueExecution(swapActionExecutor);
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String separator) {
-				new SwapActionExecutor(SwapAction.this, editor, dataContext, separator).execute();
+			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SwapActionExecutor swapActionExecutor) {
+				swapActionExecutor.execute();
 			}
 
 		});
@@ -48,8 +50,8 @@ public class SwapAction extends EditorAction {
 
 	private class SwapActionExecutor extends SwapActionExecutorSupport {
 
-		public SwapActionExecutor(SwapAction action, Editor editor, DataContext dataContext, String separator) {
-			super(action, editor, dataContext, separator);
+		public SwapActionExecutor(Editor editor, DataContext dataContext, String separator) {
+			super(editor, dataContext, separator);
 		}
 
 		public boolean isSwappingTokens() {
