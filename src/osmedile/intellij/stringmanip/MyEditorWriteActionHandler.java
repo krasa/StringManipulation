@@ -16,7 +16,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	}
 
 	@Override
-	public final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
+	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
 			return;
@@ -37,7 +37,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	}
 
 
-	public abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter);
+	protected abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter);
 
 	@NotNull
 	protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {

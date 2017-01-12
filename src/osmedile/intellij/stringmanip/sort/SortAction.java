@@ -33,7 +33,7 @@ public class SortAction extends EditorAction {
 		this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
 			@NotNull
 			@Override
-			public Pair beforeWriteAction(Editor editor, DataContext dataContext) {
+			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 				SortSettings settings = getSortSettings(editor);
 				if (settings == null) return stopExecution();
 
@@ -41,7 +41,7 @@ public class SortAction extends EditorAction {
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings settings) {
+			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings settings) {
 				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 
 				if (caretsAndSelections.size() > 1) {

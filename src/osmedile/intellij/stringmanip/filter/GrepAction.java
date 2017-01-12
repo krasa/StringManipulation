@@ -26,7 +26,7 @@ public class GrepAction extends EditorAction {
 		super(new MyEditorWriteActionHandler<String>() {
 			@NotNull
 			@Override
-			public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
+			protected Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
 					String grepos = Messages.showInputDialog(editor.getProject(), "Grep text", "Grep", null);
@@ -38,7 +38,7 @@ public class GrepAction extends EditorAction {
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String grepos) {
+			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String grepos) {
 				//Column mode not supported
 				if (editor.isColumnMode()) {
 					return;

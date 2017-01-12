@@ -38,7 +38,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
 				@NotNull
 				@Override
-				public Pair beforeWriteAction(Editor editor, DataContext dataContext) {
+				protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 					SortSettings settings = null;
 					if (editor.getCaretModel().getCaretCount() > 1) {
 						settings = getSortSettings(editor);
@@ -52,7 +52,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 
 
 				@Override
-				public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings sortSettings) {
+				protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings sortSettings) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					IdeUtils.sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);

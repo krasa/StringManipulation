@@ -30,7 +30,7 @@ public class AlignToColumnsAction extends EditorAction {
 			this.setupHandler(new MyEditorWriteActionHandler<String>() {
 				@NotNull
 				@Override
-				public Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
+				protected Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 					String separator = chooseSeparator();
 					if (separator == null) {
 						return stopExecution();
@@ -39,7 +39,7 @@ public class AlignToColumnsAction extends EditorAction {
 				}
 
 				@Override
-				public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String separator) {
+				protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String separator) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					if (caretsAndSelections.size() > 1) {
 						processMultiCaret(editor, separator, caretsAndSelections);

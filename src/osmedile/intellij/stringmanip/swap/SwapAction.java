@@ -18,7 +18,7 @@ public class SwapAction extends EditorAction {
 		this.setupHandler(new MyEditorWriteActionHandler<SwapActionExecutor>() {
 
 			@NotNull
-			public Pair<Boolean, SwapActionExecutor> beforeWriteAction(Editor editor, DataContext dataContext) {
+			protected Pair<Boolean, SwapActionExecutor> beforeWriteAction(Editor editor, DataContext dataContext) {
 				SwapActionExecutor swapActionExecutor = new SwapActionExecutor(editor, dataContext, lastSeparator);
 				if (swapActionExecutor.isSwappingTokens()) {
 					String separator = swapActionExecutor.chooseSeparator();
@@ -32,7 +32,7 @@ public class SwapAction extends EditorAction {
 			}
 
 			@Override
-			public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SwapActionExecutor swapActionExecutor) {
+			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SwapActionExecutor swapActionExecutor) {
 				swapActionExecutor.execute();
 			}
 

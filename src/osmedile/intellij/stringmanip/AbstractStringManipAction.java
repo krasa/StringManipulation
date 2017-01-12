@@ -27,12 +27,12 @@ public abstract class AbstractStringManipAction<T> extends EditorAction {
 			this.setupHandler(new MyEditorWriteActionHandler<T>() {
 				@NotNull
 				@Override
-				public Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
+				protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
 					return AbstractStringManipAction.this.beforeWriteAction(editor, dataContext);
 				}
 
 				@Override
-				public void executeWriteAction(Editor editor, @Nullable Caret caret, final DataContext dataContext, final T additionalParam) {
+				protected void executeWriteAction(Editor editor, @Nullable Caret caret, final DataContext dataContext, final T additionalParam) {
 					executeMyWriteAction(editor, dataContext, additionalParam);
 				}
 
