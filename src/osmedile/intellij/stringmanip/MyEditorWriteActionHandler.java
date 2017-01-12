@@ -48,8 +48,8 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 		return new Pair<Boolean, T>(false, null);
 	}
 
-	protected final Pair<Boolean, T> continueExecution(T param) {
-		return new Pair<Boolean, T>(true, param);
+	protected final Pair<Boolean, T> continueExecution(T additionalParameter) {
+		return new Pair<Boolean, T>(true, additionalParameter);
 	}
 
 	protected final Pair<Boolean, T> continueExecution() {
