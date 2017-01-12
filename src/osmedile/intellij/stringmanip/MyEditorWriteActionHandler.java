@@ -37,7 +37,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	}
 
 
-	public abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, T additionalParameter);
+	public abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter);
 
 	@NotNull
 	protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
