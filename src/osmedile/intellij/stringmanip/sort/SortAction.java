@@ -12,7 +12,6 @@ import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
-import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -123,15 +122,24 @@ public class SortAction extends EditorAction {
 			lines.add(text);
 		}
 
-		lines = Sort.sortLines(settings, lines);
+		lines = new SortLines(lines, settings).sortLines();
 
-		for (int i = lines.size() - 1; i >= 0; i--) {
-			String line = lines.get(i);
+		for (int i = caretsAndSelections.size() - 1; i >= 0; i--) {
 			CaretState caretsAndSelection = caretsAndSelections.get(i);
 			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
 			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-			editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
-					editor.logicalPositionToOffset(selectionEnd), line);
+
+
+			if (lines.size() > i) {
+				String line = lines.get(i);
+				editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
+						editor.logicalPositionToOffset(selectionEnd), line);
+			} else {
+				editor.getDocument().deleteString(editor.logicalPositionToOffset(selectionStart), editor.logicalPositionToOffset(selectionEnd));
+				Caret caretAt = editor.getCaretModel().getCaretAt(editor.logicalToVisualPosition(selectionStart));
+				editor.getCaretModel().removeCaret(caretAt);
+			} 
 		}
+
 	}
 }

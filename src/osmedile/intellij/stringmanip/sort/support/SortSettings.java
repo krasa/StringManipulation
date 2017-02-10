@@ -13,13 +13,17 @@ public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
 
 	private String trailingChars = ",;";
-	private final Sort sortType;
+	private BlankLines blankLines = BlankLines.REMOVE;
+	private Sort sortType = Sort.CASE_INSENSITIVE_A_Z;
 	private boolean ignoreLeadingSpaces = true;
 	private boolean preserveLeadingSpaces = true;
 	private boolean preserveTrailingSpecialCharacters = true;
 
 	public static SortSettings allFeaturesDisabled(Sort sort) {
 		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
+	}
+
+	public SortSettings() {
 	}
 
 	public SortSettings(Sort sort) {
@@ -46,6 +50,16 @@ public class SortSettings {
 		return this;
 	}
 
+	public SortSettings sortType(final Sort sortType) {
+		this.sortType = sortType;
+		return this;
+	}
+
+	public SortSettings emptyLines(BlankLines blankLines) {
+		this.blankLines = blankLines;
+		return this;
+	}
+
 	public String getTrailingChars() {
 		return trailingChars;
 	}
@@ -66,10 +80,21 @@ public class SortSettings {
 		return preserveTrailingSpecialCharacters;
 	}
 
+	public BlankLines emptyLines() {
+		return blankLines;
+	}
+
+	public void setBlankLines(String blankLines) {
+		try {
+			this.blankLines = BlankLines.valueOf(blankLines);
+		} catch (IllegalArgumentException e) {
+		}
+	}
 
 	protected String asString() {
 		return new StringBuilder()
 				.append(sortType).append("|")
+				.append(blankLines).append("|")
 				.append(ignoreLeadingSpaces).append("|")
 				.append(preserveLeadingSpaces).append("|")
 				.append(preserveTrailingSpecialCharacters).append("|")
@@ -78,12 +103,17 @@ public class SortSettings {
 	}
 
 	protected static SortSettings fromString(String s) {
-		List<String> strings = Splitter.on("|").limit(5).splitToList(s);
-		SortSettings sortSettings = new SortSettings(Sort.valueOf(strings.get(0)));
-		sortSettings.ignoreLeadingSpaces(Boolean.parseBoolean(strings.get(1)));
-		sortSettings.preserveLeadingSpaces(Boolean.parseBoolean(strings.get(2)));
-		sortSettings.preserveTrailingSpecialCharacters(Boolean.parseBoolean(strings.get(3)));
-		sortSettings.trailingChars(strings.get(4));
+		List<String> strings = Splitter.on("|").limit(6).splitToList(s);
+		SortSettings sortSettings = new SortSettings();
+		int i = 0;
+		if (strings.size() >= 6) {
+			sortSettings.sortType(Sort.valueOf(strings.get(i++)));
+			sortSettings.setBlankLines(strings.get(i++));
+			sortSettings.ignoreLeadingSpaces(Boolean.parseBoolean(strings.get(i++)));
+			sortSettings.preserveLeadingSpaces(Boolean.parseBoolean(strings.get(i++)));
+			sortSettings.preserveTrailingSpecialCharacters(Boolean.parseBoolean(strings.get(i++)));
+			sortSettings.trailingChars(strings.get(i++));
+		}
 		return sortSettings;
 	}
 
@@ -120,6 +150,7 @@ public class SortSettings {
 				.append(preserveTrailingSpecialCharacters, that.preserveTrailingSpecialCharacters)
 				.append(trailingChars, that.trailingChars)
 				.append(sortType, that.sortType)
+				.append(blankLines, that.blankLines)
 				.isEquals();
 	}
 
@@ -131,6 +162,7 @@ public class SortSettings {
 				.append(ignoreLeadingSpaces)
 				.append(preserveLeadingSpaces)
 				.append(preserveTrailingSpecialCharacters)
+				.append(blankLines)
 				.toHashCode();
 	}
 
@@ -142,7 +174,11 @@ public class SortSettings {
 				.append("ignoreLeadingSpaces", ignoreLeadingSpaces)
 				.append("preserveLeadingSpaces", preserveLeadingSpaces)
 				.append("preserveTrailingSpecialCharacters", preserveTrailingSpecialCharacters)
+				.append("emptyLines", blankLines)
 				.toString();
 	}
 
+	public static enum BlankLines {
+		PRESERVE, REMOVE
+	}
 }

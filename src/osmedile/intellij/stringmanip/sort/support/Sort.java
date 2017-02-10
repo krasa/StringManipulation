@@ -60,10 +60,6 @@ public enum Sort {
 		return comparator;
 	}
 
-	public static List<String> sortLines(SortSettings settings, List<String> lines) {
-		return new SortLines(lines, settings).sortLines();
-	}
-
 	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();
 
 	// final static Comparator alphanumComparator = Ordering.natural();

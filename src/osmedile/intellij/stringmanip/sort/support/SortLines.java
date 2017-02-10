@@ -2,14 +2,14 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class SortLines {
 	private List<SortLine> lines = new ArrayList<SortLine>();
+	private Map<Integer, String> emptyLines = new TreeMap<Integer, String>();
 	private boolean endsWith;
 	private final SortSettings sortSettings;
+
 
 	public SortLines(String text, SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
@@ -17,7 +17,18 @@ public class SortLines {
 
 		String[] split = text.split("\n");
 		List<String> list = Arrays.asList(split);
-		for (String s : list) {
+		initLines(sortSettings, list);
+	}
+
+	protected void initLines(SortSettings sortSettings, List<String> list) {
+		for (int i = 0; i < list.size(); i++) {
+			String s = list.get(i);
+			if (org.apache.commons.lang.StringUtils.isBlank(s)) {
+				if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE) {
+					emptyLines.put(i, s);
+				}
+				continue;
+			}
 			this.lines.add(new SortLine(s, sortSettings));
 		}
 	}
@@ -25,9 +36,7 @@ public class SortLines {
 	public SortLines(List<String> text, SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
 
-		for (String s : text) {
-			this.lines.add(new SortLine(s, sortSettings));
-		}
+		initLines(sortSettings, text);
 	}
 
 	public String sort() {
@@ -48,6 +57,11 @@ public class SortLines {
 			SortLine originalLine = this.lines.get(i);
 			SortLine newLine = lines.get(i);
 			result.add(originalLine.transformTo(newLine));
+		}
+
+
+		for (Map.Entry<Integer, String> emptyLine : emptyLines.entrySet()) {
+			result.add(emptyLine.getKey(), emptyLine.getValue());
 		}
 		return result;
 

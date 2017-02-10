@@ -24,18 +24,33 @@ public class SortTypeDialog {
 	private JCheckBox preserveLeadingSpaces;
 	private JCheckBox preserveTrailingSpecialCharacters;
 	private JTextField trailingCharacters;
+	private JRadioButton removeBlank;
+	private JRadioButton preserveBlank;
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		ignoreLeadingSpaces.setVisible(additionaloptions);
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
+		removeBlank.setVisible(additionaloptions);
+		preserveBlank.setVisible(additionaloptions);
 
 		ignoreLeadingSpaces.setSelected(sortSettings.isIgnoreLeadingSpaces());
 		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
 		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
 
+		switch (sortSettings.emptyLines()) {
+
+			case PRESERVE:
+				preserveBlank.setSelected(true);
+				break;
+			case REMOVE:
+				removeBlank.setSelected(true);
+				break;
+		}
+		
+		
 		switch (sortSettings.getSortType()) {
 			case CASE_SENSITIVE_A_Z:
 				sensitive.setSelected(true);
@@ -73,6 +88,8 @@ public class SortTypeDialog {
 				jRadioButtons.add(length);
 				jRadioButtons.add(asc);
 				jRadioButtons.add(desc);
+				jRadioButtons.add(removeBlank);
+				jRadioButtons.add(preserveBlank);
 				jRadioButtons.add(ignoreLeadingSpaces);
 				jRadioButtons.add(preserveLeadingSpaces);
 				jRadioButtons.add(preserveTrailingSpecialCharacters);
@@ -100,6 +117,7 @@ public class SortTypeDialog {
 
 	public SortSettings getSettings() {
 		return new SortSettings(getResult())
+				.emptyLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE)
 				.ignoreLeadingSpaces(ignoreLeadingSpaces.isSelected())
 				.preserveLeadingSpaces(preserveLeadingSpaces.isSelected())
 				.preserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected())
