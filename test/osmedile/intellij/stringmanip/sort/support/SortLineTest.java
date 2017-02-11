@@ -8,10 +8,10 @@ import static org.junit.Assert.assertEquals;
 import static osmedile.intellij.stringmanip.sort.support.SortSettings.allFeaturesDisabled;
 
 public class SortLineTest {
-	private SortSettings enabledFeatures = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT);
+	private SortSettings enabledFeatures = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).preserveTrailingSpecialCharacters(true);
 	private SortSettings disabledFeatures = allFeaturesDisabled(Sort.CASE_INSENSITIVE_A_Z);
-	private SortSettings noTrailingChars = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).trailingChars("");
-	private SortSettings onlyWhitespacesTrailingChars = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).trailingChars(" \t");
+	private SortSettings noTrailingChars = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).preserveTrailingSpecialCharacters(true).trailingChars("");
+	private SortSettings onlyWhitespacesTrailingChars = new SortSettings(Sort.LINE_LENGTH_LONG_SHORT).preserveTrailingSpecialCharacters(true).trailingChars(" \t");
 
 	@Test
 	public void getTextForComparison() throws Exception {
@@ -135,7 +135,7 @@ public class SortLineTest {
 			"(foo , , ) | [bar ; ]  | {bar , , }  | ",
 	} ;
 		//@formatter:on
-		test(s, new SortSettings(null).trailingChars(",;"));
+		test(s, new SortSettings(null).preserveTrailingSpecialCharacters(true).trailingChars(",;"));
 	}
 
 	@Test
@@ -180,7 +180,7 @@ public class SortLineTest {
 			"(foo , , ) | [bar ; ]  | {bar , , }   | ",
 	} ;
 		//@formatter:on
-		test(s, new SortSettings(null).trailingChars(" ,;"));
+		test(s, new SortSettings(null).preserveTrailingSpecialCharacters(true).trailingChars(" ,;"));
 	}
 
 	private void printAlignedResult() {

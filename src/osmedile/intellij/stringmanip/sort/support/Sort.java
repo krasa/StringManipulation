@@ -6,6 +6,18 @@ import java.util.List;
 
 public enum Sort {
 
+	SHUFFLE(new Comparator<SortLine>() {
+		@Override
+		public int compare(SortLine o1, SortLine o2) {
+			throw new RuntimeException();
+		}
+	}),
+	REVERSE(new Comparator<SortLine>() {
+		@Override
+		public int compare(SortLine o1, SortLine o2) {
+			throw new RuntimeException();
+		}
+	}),
 	CASE_SENSITIVE_A_Z(new Comparator<SortLine>() {
 		@Override
 		public int compare(SortLine o1, SortLine o2) {
@@ -50,8 +62,17 @@ public enum Sort {
 		this.comparator = comparator;
 	}
 
-	public List<SortLine> sortLines(List<SortLine> lines) {
-		Collections.sort(lines, comparator);
+	public <T extends SortLine> List<T> sortLines(List<T> lines) {
+		switch (this) {
+			case SHUFFLE:
+				Collections.shuffle(lines);
+				break;
+			case REVERSE:
+				Collections.reverse(lines);
+				break;
+			default:
+				Collections.sort(lines, comparator);
+		}
 		return lines;
 	}
 

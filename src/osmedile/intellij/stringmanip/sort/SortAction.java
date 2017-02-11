@@ -22,6 +22,12 @@ import java.util.List;
 
 public class SortAction extends EditorAction {
 	public static final String STORE_KEY = "StringManipulation.SortAction.SortSettings";
+	private String storeKey = STORE_KEY;
+
+	public SortAction(String storeKey) {
+		this();
+		this.storeKey = storeKey;
+	}
 
 	protected SortAction() {
 		this(true);
@@ -56,7 +62,7 @@ public class SortAction extends EditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(SortSettings.readFromStore(STORE_KEY), true);
+		final SortTypeDialog dialog = new SortTypeDialog(getSortSettings(storeKey), true);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
@@ -93,8 +99,12 @@ public class SortAction extends EditorAction {
 			return null;
 		}
 		SortSettings settings = dialog.getSettings();
-		settings.store(STORE_KEY);
+		settings.store(storeKey);
 		return settings;
+	}
+
+	protected SortSettings getSortSettings(String storeKey) {
+		return SortSettings.readFromStore(storeKey);
 	}
 
 	private void processSingleSelection(Editor editor, List<CaretState> caretsAndSelections, SortSettings settings) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="osmedile.intellij.stringmanip.sort.support.SortTypeDialog">
-  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="575" height="250"/>
+      <xy x="48" y="54" width="575" height="316"/>
     </constraints>
     <properties>
       <focusCycleRoot value="false"/>
@@ -13,7 +13,7 @@
     <children>
       <vspacer id="a729c">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="53392" class="javax.swing.JRadioButton" binding="sensitive">
@@ -44,6 +44,83 @@
           <text value="By &amp;Length"/>
         </properties>
       </component>
+      <component id="df5eb" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="da2ec" class="javax.swing.JCheckBox" binding="ignoreLeadingSpaces">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&amp;Ignore Leading Whitespaces"/>
+        </properties>
+      </component>
+      <component id="ab233" class="javax.swing.JCheckBox" binding="preserveLeadingSpaces">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&amp;Preserve Leading Whitespaces"/>
+        </properties>
+      </component>
+      <component id="6cdb9" class="javax.swing.JCheckBox" binding="preserveTrailingSpecialCharacters">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Preserve &amp;Trailing Characters"/>
+        </properties>
+      </component>
+      <component id="1af2b" class="javax.swing.JTextField" binding="trailingCharacters">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="c54df" class="javax.swing.JRadioButton" binding="reverse">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <focusCycleRoot value="false"/>
+          <selected value="false"/>
+          <text value="&amp;Reverse"/>
+        </properties>
+      </component>
+      <component id="b8161" class="javax.swing.JRadioButton" binding="shuffle">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <selected value="false"/>
+          <text value="&amp;Shuffle"/>
+        </properties>
+      </component>
+      <component id="8680" class="javax.swing.JRadioButton" binding="removeBlank">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <selected value="true"/>
+          <text value="Remove Blank Lines"/>
+        </properties>
+      </component>
+      <component id="ee9b0" class="javax.swing.JRadioButton" binding="preserveBlank">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <selected value="false"/>
+          <text value="Preserve Blank Lines"/>
+        </properties>
+      </component>
       <component id="dd0cb" class="javax.swing.JRadioButton" binding="desc">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -61,62 +138,6 @@
           <text value="&amp;Ascending"/>
         </properties>
       </component>
-      <component id="df5eb" class="javax.swing.JSeparator">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="da2ec" class="javax.swing.JCheckBox" binding="ignoreLeadingSpaces">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="&amp;Ignore Leading Whitespaces"/>
-        </properties>
-      </component>
-      <component id="ab233" class="javax.swing.JCheckBox" binding="preserveLeadingSpaces">
-        <constraints>
-          <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="&amp;Preserve Leading Whitespaces"/>
-        </properties>
-      </component>
-      <component id="6cdb9" class="javax.swing.JCheckBox" binding="preserveTrailingSpecialCharacters">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Preserve &amp;Trailing Characters"/>
-        </properties>
-      </component>
-      <component id="1af2b" class="javax.swing.JTextField" binding="trailingCharacters">
-        <constraints>
-          <grid row="6" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="8680" class="javax.swing.JRadioButton" binding="removeBlank">
-        <constraints>
-          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <selected value="true"/>
-          <text value="&amp;Remove Blank Lines"/>
-        </properties>
-      </component>
-      <component id="ee9b0" class="javax.swing.JRadioButton" binding="preserveBlank">
-        <constraints>
-          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <selected value="false"/>
-          <text value="Pr&amp;eserve Blank Lines"/>
-        </properties>
-      </component>
     </children>
   </grid>
   <buttonGroups>
@@ -125,6 +146,8 @@
       <member id="53392"/>
       <member id="cf3e5"/>
       <member id="a2729"/>
+      <member id="c54df"/>
+      <member id="b8161"/>
     </group>
     <group name="order">
       <member id="95de7"/>

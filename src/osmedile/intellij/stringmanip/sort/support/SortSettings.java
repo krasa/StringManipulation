@@ -17,7 +17,7 @@ public class SortSettings {
 	private Sort sortType = Sort.CASE_INSENSITIVE_A_Z;
 	private boolean ignoreLeadingSpaces = true;
 	private boolean preserveLeadingSpaces = true;
-	private boolean preserveTrailingSpecialCharacters = true;
+	private boolean preserveTrailingSpecialCharacters = false;
 
 	public static SortSettings allFeaturesDisabled(Sort sort) {
 		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);

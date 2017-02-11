@@ -16,6 +16,8 @@ public class SortTypeDialog {
 	public JRadioButton insensitive;
 	protected JRadioButton sensitive;
 	protected JRadioButton length;
+	private JRadioButton shuffle;
+	private JRadioButton reverse;
 
 	private JRadioButton asc;
 	private JRadioButton desc;
@@ -28,7 +30,6 @@ public class SortTypeDialog {
 	private JRadioButton preserveBlank;
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
-		ignoreLeadingSpaces.setVisible(additionaloptions);
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
@@ -52,6 +53,12 @@ public class SortTypeDialog {
 		
 		
 		switch (sortSettings.getSortType()) {
+			case SHUFFLE:
+				shuffle.setSelected(true);
+				break;
+			case REVERSE:
+				reverse.setSelected(true);
+				break;
 			case CASE_SENSITIVE_A_Z:
 				sensitive.setSelected(true);
 				asc.setSelected(true);
@@ -86,6 +93,8 @@ public class SortTypeDialog {
 				jRadioButtons.add(insensitive);
 				jRadioButtons.add(sensitive);
 				jRadioButtons.add(length);
+				jRadioButtons.add(reverse);
+				jRadioButtons.add(shuffle);
 				jRadioButtons.add(asc);
 				jRadioButtons.add(desc);
 				jRadioButtons.add(removeBlank);
@@ -143,6 +152,10 @@ public class SortTypeDialog {
 			} else {
 				return Sort.LINE_LENGTH_LONG_SHORT;
 			}
+		} else if (reverse.isSelected()) {
+			return Sort.REVERSE;
+		} else if (shuffle.isSelected()) {
+			return Sort.SHUFFLE;
 		}
 
 		throw new IllegalStateException();
