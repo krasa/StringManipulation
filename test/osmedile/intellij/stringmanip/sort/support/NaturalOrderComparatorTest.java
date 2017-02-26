@@ -51,6 +51,13 @@ public class NaturalOrderComparatorTest {
 	}
 
 	@Test
+	public void test5() throws Exception {
+		String[] input = new String[]{"_1_", "_0_",};
+		String[] result = new String[]{"_0_", "_1_"};
+		assertSort(input, result);
+	}
+
+	@Test
 	public void doNotIgnoreLeadingSpace() throws Exception {
 		String[] input = new String[]{" a", "  c",};
 		String[] result = new String[]{"  c", " a",};

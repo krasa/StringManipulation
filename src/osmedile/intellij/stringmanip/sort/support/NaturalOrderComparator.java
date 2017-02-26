@@ -78,9 +78,8 @@ public class NaturalOrderComparator implements Comparator {
 			ca = charAt(a, ia);
 			cb = charAt(b, ib);
 
-			// skip over leading spaces or zeros
-			// skip space if there was not a number before => '50 X' < '50B X'
-			while ((disabled_isWhitespace(ca) && !Character.isDigit(pca)) || ca == '0') {
+			// skip over leading zeros
+			while (ca == '0' && nextIsDigit(a, ia)) {
 				if (ca == '0') {
 					nza++;
 				} else {
@@ -92,7 +91,7 @@ public class NaturalOrderComparator implements Comparator {
 				ca = charAt(a, ++ia);
 			}
 
-			while ((disabled_isWhitespace(cb) && !Character.isDigit(pcb)) || cb == '0') {
+			while (cb == '0' && nextIsDigit(b, ib)) {
 				if (cb == '0') {
 					nzb++;
 				} else {
@@ -106,9 +105,14 @@ public class NaturalOrderComparator implements Comparator {
 
 			// process run of digits
 			if (Character.isDigit(ca) && Character.isDigit(cb)) {
-				if ((result = compareRight(a.substring(ia), b.substring(ib))) != 0) {
+				result = compareRight(a.substring(ia), b.substring(ib));
+				if (result != 0) {
 					return result;
 				}
+//				//'2' < '02'
+//				if (result == 0 && nza - nzb != 0) {
+//					return nza - nzb;
+//				}
 			}
 
 			if (ca == 0 && cb == 0) {
@@ -139,6 +143,14 @@ public class NaturalOrderComparator implements Comparator {
 			return 0;
 		} else {
 			return s.charAt(i);
+		}
+	}
+
+	private boolean nextIsDigit(String s, int i) {
+		if (i + 1 >= s.length()) {
+			return false;
+		} else {
+			return Character.isDigit(s.charAt(i + 1));
 		}
 	}
 
