@@ -33,7 +33,8 @@ public class ColumnAligner {
 		return lines;
 	}
 
-	public void process(List<ColumnAlignerLine> lines) {
+	public ArrayList<String> process(List<ColumnAlignerLine> lines) {
+		ArrayList<String> strings = new ArrayList<String>();
 		int initialSeparatorPosition = initialSeparatorPosition(lines);
 		for (ColumnAlignerLine line : lines) {
 			line.appendInitialSpace(initialSeparatorPosition);
@@ -63,6 +64,11 @@ public class ColumnAligner {
 				process = process || line.hasToken();
 			}
 		}
+
+		for (ColumnAlignerLine line : lines) {
+			strings.add(line.sb.toString().trim());
+		}
+		return strings;
 	}
 
 	private int initialSeparatorPosition(List<ColumnAlignerLine> lines) {

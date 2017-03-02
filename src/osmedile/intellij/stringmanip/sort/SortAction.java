@@ -1,23 +1,18 @@
 package osmedile.intellij.stringmanip.sort;
 
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Caret;
-import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
+import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SortAction extends EditorAction {
@@ -35,7 +30,7 @@ public class SortAction extends EditorAction {
 
 	protected SortAction(boolean setupHandler) {
 		super(null);
-		this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
+		this.setupHandler(new MultiCaretHandlerHandler<SortSettings>() {
 			@NotNull
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
@@ -46,14 +41,13 @@ public class SortAction extends EditorAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings settings) {
-				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+			protected String processSingleSelection(String text, SortSettings settings) {
+				return new SortLines(text, settings).sort();
+			}
 
-				if (caretsAndSelections.size() > 1) {
-					processMultiCaret(editor, caretsAndSelections, settings);
-				} else if (caretsAndSelections.size() == 1) {
-					processSingleSelection(editor, caretsAndSelections, settings);
-				}
+			@Override
+			protected List<String> processMultiSelections(List<String> lines, SortSettings settings) {
+				return new SortLines(lines, settings).sortLines();
 			}
 
 		});
@@ -107,49 +101,4 @@ public class SortAction extends EditorAction {
 		return SortSettings.readFromStore(storeKey);
 	}
 
-	private void processSingleSelection(Editor editor, List<CaretState> caretsAndSelections, SortSettings settings) {
-		CaretState caretsAndSelection = caretsAndSelections.get(0);
-		LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-		LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-		String text = editor.getDocument().getText(
-				new TextRange(editor.logicalPositionToOffset(selectionStart),
-						editor.logicalPositionToOffset(selectionEnd)));
-
-		String charSequence = new SortLines(text, settings).sort();
-
-		editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
-				editor.logicalPositionToOffset(selectionEnd), charSequence);
-	}
-
-	private void processMultiCaret(Editor editor, List<CaretState> caretsAndSelections, SortSettings settings) {
-		List<String> lines = new ArrayList<String>();
-		for (CaretState caretsAndSelection : caretsAndSelections) {
-			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-			String text = editor.getDocument().getText(
-					new TextRange(editor.logicalPositionToOffset(selectionStart),
-							editor.logicalPositionToOffset(selectionEnd)));
-			lines.add(text);
-		}
-
-		lines = new SortLines(lines, settings).sortLines();
-
-		for (int i = caretsAndSelections.size() - 1; i >= 0; i--) {
-			CaretState caretsAndSelection = caretsAndSelections.get(i);
-			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-
-
-			if (lines.size() > i) {
-				String line = lines.get(i);
-				editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
-						editor.logicalPositionToOffset(selectionEnd), line);
-			} else {
-				editor.getDocument().deleteString(editor.logicalPositionToOffset(selectionStart), editor.logicalPositionToOffset(selectionEnd));
-				Caret caretAt = editor.getCaretModel().getCaretAt(editor.logicalToVisualPosition(selectionStart));
-				editor.getCaretModel().removeCaret(caretAt);
-			} 
-		}
-
-	}
 }
