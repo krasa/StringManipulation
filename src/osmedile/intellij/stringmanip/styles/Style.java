@@ -15,8 +15,8 @@ public enum Style {
 			if (style == SCREAMING_SNAKE_CASE) {
 				s = s.toLowerCase();
 			}
-			if (style == CAMEL_CASE || style == PASCAL_CASE) {
-				s = camelToText(s);
+            if (style == CAMEL_CASE || style == PASCAL_CASE || style == UNKNOWN) {
+                s = camelToText(s);
 			}
 			return StringUtil.wordsToHyphenCase(s);
 		}

@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip.utils;
 
-import java.lang.Character;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +31,7 @@ public class StringUtil {
 		for (char c : s.toCharArray()) {
 			char nc = c;
 			if (isUpperCase(nc) && !isUpperCase(lastChar)) {
-				if (lastChar != ' ') {
+				if (lastChar != ' ' && isLetterOrDigit(lastChar)) {
 					buf.append(" ");
 				}
 				nc = Character.toLowerCase(c);
@@ -134,15 +133,15 @@ public class StringUtil {
 
 			//camelCase handling - add extra _
 			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace
-					|| (_betweenUpperCases && containsLowerCase && isUpperCaseAndPreviousIsUpperCase))) {
+				|| (_betweenUpperCases && containsLowerCase && isUpperCaseAndPreviousIsUpperCase))) {
 				buf.append("_");
 			} else if ((separatorAfterDigit && isDigit(previousChar) && isLetter(c))
-					|| (separatorBeforeDigit && isDigit(c) && isLetter(previousChar))) { // extra _ after number
+				|| (separatorBeforeDigit && isDigit(c) && isLetter(previousChar))) { // extra _ after number
 				buf.append('_');
 			}
 
-			if (!isLetterOrDigit(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars)) {
-				buf.append('_'); //replace special chars to _ (not quotes, no double _)
+			if (shouldReplace(c) && lastOneIsNotUnderscore) {
+				buf.append('_');
 			} else if (!isWhitespace(c) && (isNotUnderscore || lastOneIsNotUnderscore)) {
 				// uppercase anything, do not add whitespace, do not add _ if there was previously
 				buf.append(Character.toUpperCase(c));
@@ -156,6 +155,15 @@ public class StringUtil {
 
 
 		return buf.toString();
+	}
+
+	private static boolean shouldReplace(char c) {
+//		return !isLetterOrDigit(c) && !isSlash(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars);       //replace special chars to _ (not quotes, no double _)
+		return c == '.' || c == '_' || c == '-';
+	}
+
+	private static boolean isSlash(char c) {
+		return c == '\\' || c == '/';
 	}
 
 	private static boolean isNotBorderQuote(char actualChar, int i, char[] chars) {

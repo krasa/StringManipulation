@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.styles;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ToSnakeCaseActionTest {
     protected ToSnakeCaseAction action;
@@ -19,5 +19,6 @@ public class ToSnakeCaseActionTest {
 		assertEquals("2_v2_counter_3", action.transformByLine("2-v2-counter-3"));
 		assertEquals("2_v2_counter_3", action.transformByLine("2_v2_Counter_3"));
 		assertEquals("2_v2_counter_3", action.transformByLine("2_V2_COUNTER_3"));
-    }
+		assertEquals("\\my\\app_bundle\\app\\twig\\google_tag_manager_data_layer", action.transformByLine("\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer"));
+	}
 }

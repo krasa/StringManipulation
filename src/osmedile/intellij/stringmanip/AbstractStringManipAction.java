@@ -82,9 +82,8 @@ public abstract class AbstractStringManipAction<T> extends EditorAction {
 		String s = transformSelection(editor, dataContext, selectedText, additionalParam);
 		s = s.replace("\r\n", "\n");
 		s = s.replace("\r", "\n");
-		editor.getDocument().replaceString(selectionModel.getSelectionStart(),
-				selectionModel.getSelectionEnd(), s);
-	}
+        editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
+    }
 
 
 	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, T additionalParam) {
