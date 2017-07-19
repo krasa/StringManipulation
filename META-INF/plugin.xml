@@ -194,9 +194,9 @@
                     description="Capitalize">
             </action>
             <action id="osmedile.intellij.stringmanip.SwapCaseAction"
-                    class="osmedile.intellij.stringmanip.styles.SwapCaseAction"
-                    text="Swap Case"
-                    description="Invert/Swap Case -> sWAP cASE">
+                    class="osmedile.intellij.stringmanip.styles.InvertCaseAction"
+                    text="Invert case"
+                    description="Invert Case -> iNVERT cASE">
             </action>
             <separator/>
 
@@ -375,7 +375,7 @@
 				<li>To camelCase (or to words)</li>
 				<li>To PascalCase (or to camelCase)</li>
 				<li>Capitalize selected text</li>
-				<li>Swap case</li>
+				<li>Invert case</li>
 			</ul>
             -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
 		</p>
@@ -468,7 +468,7 @@
 	        <ul>
                 <li>Removed action: Capitalize Fully</li>
                 <li>Added action: Keep only duplicates</li>
-                <li>Added action: Swap Case</li>
+                <li>Added action: Invert case</li>
                 <li>Added action: Encode/Decode URL according to RFC 3986 (space character as %20 instead of +, using org.springframework.web.util.UriUtils 4.3.9.RELEASE) </li>
 			</ul>
 	    </div>

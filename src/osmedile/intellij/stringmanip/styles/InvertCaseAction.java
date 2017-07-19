@@ -2,11 +2,11 @@ package osmedile.intellij.stringmanip.styles;
 
 import org.apache.commons.lang.StringUtils;
 
-public class SwapCaseAction extends AbstractCaseConvertingAction {
-    public SwapCaseAction() {
+public class InvertCaseAction extends AbstractCaseConvertingAction {
+    public InvertCaseAction() {
     }
 
-    public SwapCaseAction(boolean setupHandler) {
+    public InvertCaseAction(boolean setupHandler) {
         super(setupHandler);
     }
 
