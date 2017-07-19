@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>MavenShade</groupId>
+    <artifactId>MavenShade</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.9.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <outputDirectory>../jars</outputDirectory>
+                    <jarName>spring-shade</jarName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <!-- put your configurations here -->
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>krasa/*</exclude>
+                                <exclude>META-INF/*</exclude>
+                                <exclude>org/springframework/aop/config/*</exclude>
+                                <exclude>org/springframework/beans/factory/xml/*</exclude>
+                                <exclude>org/springframework/cache/config/*</exclude>
+                                <exclude>org/springframework/cglib/util/*</exclude>
+                                <exclude>org/springframework/context/config/*</exclude>
+                                <exclude>org/springframework/core/*</exclude>
+                                <exclude>org/springframework/ejb/config/*</exclude>
+                                <exclude>org/springframework/expression/spel/generated/*</exclude>
+                                <exclude>org/springframework/http/*</exclude>
+                                <exclude>org/springframework/remoting/rmi/*</exclude>
+                                <exclude>org/springframework/scheduling/config/*</exclude>
+                                <exclude>org/springframework/scripting/config/*</exclude>
+                            </excludes>
+
+                        </filter>
+                    </filters>
+                    <relocations>
+                        <relocation>
+                            <pattern>org</pattern>
+                            <shadedPattern>shaded.org</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

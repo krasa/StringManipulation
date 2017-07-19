@@ -125,17 +125,22 @@
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeAction"
                         text="Encode URL"
-                        description="Encode URL">
-                </action>
-                <action id="osmedile.intellij.stringmanip.URLEncodeWithoutPlusAction"
-                        class="osmedile.intellij.stringmanip.encoding.URLEncodeWithoutPlusAction"
-                        text="Encode URL (space character as %20)"
-                        description="Encode URL (space character as %20 instead of +)">
+                        description="Encode URL (by java.net.URLEncoder)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLDecodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLDecodeAction"
                         text="Decode URL"
-                        description="Decode URL">
+                        description="Decode URL (by java.net.URLDecoder)">
+                </action>
+                <action id="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986"
+                        class="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986Action"
+                        text="Encode URL (RFC 3986)"
+                        description="Encode URL (RFC 3986 - space character as %20 instead of +)">
+                </action>
+                <action id="osmedile.intellij.stringmanip.encoding.URLDecodeRFC3986"
+                        class="osmedile.intellij.stringmanip.encoding.URLDecodeRFC3986Action"
+                        text="Decode URL (RFC 3986)"
+                        description="Decode URL (RFC 3986 - space character as %20 instead of +)">
                 </action>
             </group>
 
@@ -143,8 +148,8 @@
 
             <action id="StringManipulation.SwitchStyleAction"
                     class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-                    text="Toggle case"
-                    description="Toggle case (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
+                    text="Switch case"
+                    description="Switch/Toggle case (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
             </action>
             <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
@@ -464,7 +469,7 @@
                 <li>Removed action: Capitalize Fully</li>
                 <li>Added action: Keep only duplicates</li>
                 <li>Added action: Swap Case</li>
-                <li>Added action: Encode URL (space character as %20)</li>
+                <li>Added action: Encode/Decode URL according to RFC 3986 (space character as %20 instead of +, using org.springframework.web.util.UriUtils 4.3.9.RELEASE) </li>
 			</ul>
 	    </div>
 	    <div>

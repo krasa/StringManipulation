@@ -6,9 +6,9 @@ Provides actions for text manipulation:
 
 <p>
     <p>
-        Toggle case:
-          <ul>
-            <li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+        Switch case:
+        <ul>
+            <li>Switch style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
                 words lowercase, Words Capitalized, PascalCase)
             </li>
             <li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
@@ -19,7 +19,9 @@ Provides actions for text manipulation:
             <li>To camelCase (or to words)</li>
             <li>To PascalCase (or to camelCase)</li>
             <li>Capitalize selected text</li>
+            <li>Swap case</li>
         </ul>
+        -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
     </p>
     <p>
         Un/Escape:
@@ -82,20 +84,19 @@ Provides actions for text manipulation:
             <li>Trim all spaces in selected text</li>
             <li>Remove all spaces in selected text</li>
             <li>Remove duplicate lines</li>
+            <li>Keep only duplicate lines</li>
             <li>Remove empty lines</li>
+            <li>Remove all newlines</li>
         </ul>
     </p>
     <p>
         Other:
         <ul>
-            <li>Swap characters at caret</li>
+            <li>Swap Characters/Selections/Lines/Tokens</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
         </ul>
     </p>
-    <p>Actions are available under Editor context menu, Edit menu, or via the shortcut "alt M" and "alt shift M".
+    <p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
         You can setup your own shortcuts for better usability.
-    </p>
-    <p>
-        When nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.
     </p>
 </p>
