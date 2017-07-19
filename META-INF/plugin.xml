@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.5.143.000.0</version>
+    <version>5.5.143.000.1</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="143.000"/>
 
@@ -179,8 +179,13 @@
 
             <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                    text="To camelCase (or to words)"
-                    description="To camelCase (or to words)">
+                    text="To camelCase (Or To Words)"
+                    description="To camelCase (Or To Words)">
+            </action>
+            <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
+                    text="To camelCase (or to lowercase words)"
+                    description="To camelCase (or to lowercase words)">
             </action>
             <action id="StringManipulation.ToPascalCaseOrCamelCase"
                     class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
@@ -372,7 +377,8 @@
 				<li>To dot.case (or to camelCase)</li>
 				<li>To hyphen-case (or to camelCase)</li>
 				<li>To hyphen-case (or to snake_case)</li>
-				<li>To camelCase (or to words)</li>
+				<li>To camelCase (Or To Words)</li>
+				<li>To camelCase (or to lowercase words)</li>
 				<li>To PascalCase (or to camelCase)</li>
 				<li>Capitalize selected text</li>
 				<li>Invert case</li>
@@ -469,6 +475,7 @@
                 <li>Removed action: Capitalize Fully</li>
                 <li>Added action: Keep only duplicates</li>
                 <li>Added action: Invert case</li>
+                <li>Added action: To camelCase (or to lowercase words)</li>
                 <li>Added action: Encode/Decode URL according to RFC 3986 (space character as %20 instead of +, using org.springframework.web.util.UriUtils 4.3.9.RELEASE) </li>
 			</ul>
 	    </div>

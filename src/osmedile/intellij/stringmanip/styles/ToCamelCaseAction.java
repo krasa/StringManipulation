@@ -1,11 +1,5 @@
 package osmedile.intellij.stringmanip.styles;
 
-/**
- * Action which trim selected text.
- *
- * @author Olivier Smedile
- * @version $Id: ToCamelCaseAction.java 31 2008-03-22 10:17:44Z osmedile $
- */
 public class ToCamelCaseAction extends AbstractCaseConvertingAction {
 	public ToCamelCaseAction() {
 	}
