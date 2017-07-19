@@ -127,6 +127,11 @@
                         text="Encode URL"
                         description="Encode URL">
                 </action>
+                <action id="osmedile.intellij.stringmanip.URLEncodeWithoutPlusAction"
+                        class="osmedile.intellij.stringmanip.encoding.URLEncodeWithoutPlusAction"
+                        text="Encode URL (space character as %20)"
+                        description="Encode URL (space character as %20 instead of +)">
+                </action>
                 <action id="osmedile.intellij.stringmanip.URLDecodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLDecodeAction"
                         text="Decode URL"
@@ -459,6 +464,7 @@
                 <li>Removed action: Capitalize Fully</li>
                 <li>Added action: Keep only duplicates</li>
                 <li>Added action: Swap Case</li>
+                <li>Added action: Encode URL (space character as %20)</li>
 			</ul>
 	    </div>
 	    <div>

@@ -4,9 +4,7 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import osmedile.intellij.stringmanip.utils.EncodingUtils;
 
 /**
  * @author Olivier Smedile
@@ -16,13 +14,9 @@ public class URLEncodeAction extends AbstractStringManipAction {
 
 	@Override
 	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
-
-        try {
-					return URLEncoder.encode(selectedText, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+		return EncodingUtils.encodeUrl(selectedText);
 	}
+
 
 	@Override
 	public String transformByLine(String s) {

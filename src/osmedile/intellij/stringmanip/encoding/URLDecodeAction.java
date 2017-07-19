@@ -4,19 +4,13 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import osmedile.intellij.stringmanip.utils.EncodingUtils;
 
 public class URLDecodeAction extends AbstractStringManipAction {
 
 	@Override
 	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
-		try {
-					return URLDecoder.decode(selectedText, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-					throw new RuntimeException(e);
-		}
+		return EncodingUtils.decodeUrl(selectedText);
 	}
 
 	@Override
