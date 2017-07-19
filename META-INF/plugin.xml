@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.4.143.000.0</version>
+    <version>5.5.143.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="143.000"/>
 
@@ -264,6 +264,11 @@
                         text="Remove duplicate lines"
                         description="Remove duplicate lines in selected text or lines within multiple selections">
                 </action>
+                <action id="StringManipulation.KeepOnlyDuplicateLines"
+                        class="osmedile.intellij.stringmanip.filter.KeepOnlyDuplicateLinesAction"
+                        text="Keep only duplicate lines"
+                        description="Remove non-duplicate lines in selected text or lines within multiple selections">
+                </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
                         text="Remove empty lines"
@@ -424,6 +429,7 @@
 				<li>Trim all spaces in selected text</li>
 				<li>Remove all spaces in selected text</li>
 				<li>Remove duplicate lines</li>
+				<li>Keep only duplicate lines</li>
 				<li>Remove empty lines</li>
 				<li>Remove all newlines</li>
 			</ul>
@@ -446,6 +452,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.5<h4>
+	        <ul>
+                <li>Added action: Keep only duplicates</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.4<h4>
 	        <ul>
