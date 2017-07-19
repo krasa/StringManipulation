@@ -183,11 +183,6 @@
                     text="Capitalize"
                     description="Capitalize">
             </action>
-            <action id="osmedile.intellij.stringmanip.WordsCapitalizeFullyAction"
-                    class="osmedile.intellij.stringmanip.styles.WordsCapitalizeFullyAction"
-                    text="Capitalize Fully"
-                    description="Capitalize Fully">
-            </action>
             <separator/>
 
             <group text="Increment/Decrement..."
@@ -455,6 +450,7 @@
 	    <div>
 	        <h4>Version 5.5<h4>
 	        <ul>
+                <li>Removed action: Capitalize Fully</li>
                 <li>Added action: Keep only duplicates</li>
 			</ul>
 	    </div>
