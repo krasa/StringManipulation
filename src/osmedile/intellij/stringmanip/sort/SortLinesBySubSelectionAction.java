@@ -118,13 +118,23 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 			int lineNumber = editor.getDocument().getLineNumber(
 					editor.logicalPositionToOffset(caretPosition));
 			if (lineNumber == previousLineNumber) {
-				Caret caret = editor.getCaretModel().getCaretAt(caretPosition.toVisualPosition());
+                Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
 				editor.getCaretModel().removeCaret(caret);
 				iterator.remove();
 			}
 			previousLineNumber = lineNumber;
 		}
 	}
+
+    protected Caret getCaretAt(Editor editor, LogicalPosition position) {
+        List<Caret> allCarets = editor.getCaretModel().getAllCarets();
+        for (Caret caret : allCarets) {
+            if (caret.getLogicalPosition().equals(position)) {
+                return caret;
+            }
+        }
+        throw new IllegalStateException("caret not found for " + position + "allCarets:" + allCarets);
+    }
 
 	private void processMultiCaret(Editor editor, @NotNull SortSettings sortSettings, List<CaretState> caretsAndSelections) {
 		List<SubSelectionSortLine> lines = new ArrayList<SubSelectionSortLine>();
@@ -141,9 +151,8 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 				if (selectionEndOffset == -1) {
 					selectionEndOffset = text.length();
 				}
-				Caret caret = editor.getCaretModel().getCaretAt(caretPosition.toVisualPosition());
+                Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
 				caret.setSelection(selectionStartOffset, selectionEndOffset);
-				caretPosition = caret.getLogicalPosition();
 			}
 
 			String selection = editor.getDocument().getText(
@@ -155,8 +164,8 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 			String line = editor.getDocument().getText(new TextRange(lineStartOffset, lineEndOffset));
 
 			lines.add(new SubSelectionSortLine(sortSettings, line, selection, lineStartOffset, lineEndOffset,
-					selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset,
-					caretPosition));
+                selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset
+            ));
 		}
 
 		List<SubSelectionSortLine> sortedLines = new ArrayList<SubSelectionSortLine>(lines);
@@ -166,14 +175,16 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 	}
 
 	private void write(Editor editor, List<SubSelectionSortLine> lines, List<SubSelectionSortLine> sortedLines) {
+        List<Caret> allCarets = editor.getCaretModel().getAllCarets();
 		for (int i = lines.size() - 1; i >= 0; i--) {
 			SubSelectionSortLine oldLine = lines.get(i);
 			SubSelectionSortLine newLine = sortedLines.get(i);
 			int lineStartOffset = oldLine.lineStartOffset;
-			Caret caret = editor.getCaretModel().getCaretAt(oldLine.caretPosition.toVisualPosition());
 			editor.getDocument().replaceString(lineStartOffset, oldLine.lineEndOffset, newLine.line);
 			int startColumn = newLine.selectionStartLineOffset;
 			int endColumn = newLine.selectionEndLineOffset;
+
+            Caret caret = allCarets.get(i);
 			caret.setSelection(lineStartOffset + startColumn, lineStartOffset + endColumn);
 			caret.moveToOffset(lineStartOffset + startColumn);
 		}
@@ -185,17 +196,15 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 		private final int lineEndOffset;
 		private final int selectionStartLineOffset;
 		private final int selectionEndLineOffset;
-		private final LogicalPosition caretPosition;
 
 		public SubSelectionSortLine(SortSettings sortSettings, String line, String selection, int lineStartOffset, int lineEndOffset,
-									int selectionStartLineOffset, int selectionEndLineOffset, LogicalPosition caretPosition) {
+                                    int selectionStartLineOffset, int selectionEndLineOffset) {
 			super(selection, sortSettings);
 			this.line = line;
 			this.lineStartOffset = lineStartOffset;
 			this.lineEndOffset = lineEndOffset;
 			this.selectionStartLineOffset = selectionStartLineOffset;
 			this.selectionEndLineOffset = selectionEndLineOffset;
-			this.caretPosition = caretPosition;
 		}
 	}
 
