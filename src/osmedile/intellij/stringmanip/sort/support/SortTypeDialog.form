@@ -100,7 +100,7 @@
         <properties>
           <focusCycleRoot value="false"/>
           <selected value="false"/>
-          <text value="&amp;Shuffle"/>
+          <text value="S&amp;huffle"/>
         </properties>
       </component>
       <component id="8680" class="javax.swing.JRadioButton" binding="removeBlank">
