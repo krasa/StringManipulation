@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.6.143.000.0</version>
+    <version>5.7.143.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="143.000"/>
 
@@ -469,6 +469,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.7<h4>
+	        <ul>
+                <li>Aligning to columns by multiple seperators</li>
+			</ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.6<h4>
 	        <ul>
