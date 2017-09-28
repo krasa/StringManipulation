@@ -77,18 +77,17 @@ public class ColumnAligner {
 		while (process) {
 			process = false;
 
-			int maxLength = 0;
 			for (ColumnAlignerLine line : lines) {
 				line.appendText();
 			}
 			for (ColumnAlignerLine line : lines) {
-				line.appendSpace(getMaxLength(lines, maxLength));
+                line.appendSpace(getMaxLength(lines));
 			}
 			for (ColumnAlignerLine line : lines) {
 				line.appendSpaceBeforeSeparator();
 			}                    
 			for (ColumnAlignerLine line : lines) {
-				line.appendSpace(getMaxLength(lines, maxLength));
+                line.appendSpace(getMaxLength(lines));
 			}
 			for (ColumnAlignerLine line : lines) {
 				line.appendSeparator();
@@ -97,7 +96,7 @@ public class ColumnAligner {
 				line.appendSpaceAfterSeparator();
 			}
 			for (ColumnAlignerLine line : lines) {
-				line.appendSpace(getMaxLength(lines, maxLength));
+                line.appendSpace(getMaxLength(lines));
 			}
 			for (ColumnAlignerLine line : lines) {
 				line.next();
@@ -115,7 +114,8 @@ public class ColumnAligner {
 		return strings;
 	}
 
-	protected int getMaxLength(List<ColumnAlignerLine> lines, int maxLength) {
+    protected int getMaxLength(List<ColumnAlignerLine> lines) {
+        int maxLength = 0;
 		for (ColumnAlignerLine line : lines) {
 			maxLength = Math.max(maxLength, line.resultLength());
 		}
