@@ -27,7 +27,8 @@ public class TextAlignmentForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textfields.removeAll();
-                addTextField(null);
+                JBTextField field = addTextField(null);
+                field.grabFocus();
                 textfields.revalidate();
                 textfields.repaint();
             }
@@ -58,7 +59,7 @@ public class TextAlignmentForm {
         }
     }
 
-    private void addTextField(final String lastSeparator) {
+    private JBTextField addTextField(final String lastSeparator) {
         final JBTextField comp = new JBTextField(lastSeparator);
         comp.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -99,6 +100,7 @@ public class TextAlignmentForm {
         textfields.add(comp);
         textfields.revalidate();
         textfields.repaint();
+        return comp;
     }
 
     private List<String> getSeparators() {
