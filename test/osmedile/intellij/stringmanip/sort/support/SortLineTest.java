@@ -185,7 +185,7 @@ public class SortLineTest {
 
 	private void printAlignedResult() {
 		System.out.println("----ALIGNED OUTPUT---");
-		System.out.println(new ColumnAligner().reformat(output.toString(), "|"));
+		System.out.println(new ColumnAligner("|").align(output.toString()));
 		output.setLength(0);
 		System.out.println("----ALIGNED OUTPUT END---");
 	}

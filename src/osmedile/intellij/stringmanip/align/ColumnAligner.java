@@ -3,20 +3,54 @@ package osmedile.intellij.stringmanip.align;
 import java.util.ArrayList;
 import java.util.List;
 
+import static osmedile.intellij.stringmanip.utils.StringUtils.isEmpty;
+
 public class ColumnAligner {
-	public String reformat(String separator, String text) {
-		List<ColumnAlignerLine> lines = toLines(separator, text);
-		process(lines);
-		return toString(lines);
+	private final ColumnAlignerModel model;
+
+	public ColumnAligner() {
+		model = new ColumnAlignerModel();
 	}
 
-	private String toString(List<ColumnAlignerLine> lines) {
-		StringBuilder sb = new StringBuilder();
-		for (ColumnAlignerLine s : lines) {
-			sb.append(s.sb.toString());
-			if (s.endsWithNextLine) {
-				sb.append("\n");
+	public ColumnAligner(ColumnAlignerModel model) {
+		this.model = model;
+	}
+
+	public ColumnAligner(String s) {
+		model = new ColumnAlignerModel(s);
+	}
+
+	public List<String> align(List<String> lines) {
+		for (String separator : model.getSeparators()) {
+			if (isEmpty(separator)) {
+				continue;
 			}
+			List<ColumnAlignerLine> columnAlignerLines = new ArrayList<ColumnAlignerLine>();
+			for (String line : lines) {
+				columnAlignerLines.add(new ColumnAlignerLine(model, separator, line, false));
+			}
+			lines = process(columnAlignerLines);
+		}
+		return lines;
+	}
+
+	public String align(String text) {
+		String reformat = text;
+		for (String separator : model.getSeparators()) {
+			if (isEmpty(separator)) {
+				continue;
+			}
+			reformat = reformat(separator, reformat);
+		}
+		return reformat;
+	}
+
+	public String reformat(String separator, String text) {
+		List<ColumnAlignerLine> lines = toLines(separator, text);
+		List<String> process = process(lines);
+		StringBuilder sb = new StringBuilder();
+		for (String line : process) {
+			sb.append(line);
 		}
 		return sb.toString();
 	}
@@ -28,13 +62,12 @@ public class ColumnAligner {
 		for (int i = 0; i < split.length; i++) {
 			String s = split[i];
 			boolean last = i == split.length - 1;
-			lines.add(new ColumnAlignerLine(separator, s, last ? lastTokenEndsWithNewLine : true));
+			lines.add(new ColumnAlignerLine(model, separator, s, last ? lastTokenEndsWithNewLine : true));
 		}
 		return lines;
 	}
 
-	public ArrayList<String> process(List<ColumnAlignerLine> lines) {
-		ArrayList<String> strings = new ArrayList<String>();
+	public List<String> process(List<ColumnAlignerLine> lines) {
 		int initialSeparatorPosition = initialSeparatorPosition(lines);
 		for (ColumnAlignerLine line : lines) {
 			line.appendInitialSpace(initialSeparatorPosition);
@@ -47,15 +80,25 @@ public class ColumnAligner {
 			int maxLength = 0;
 			for (ColumnAlignerLine line : lines) {
 				line.appendText();
-				maxLength = Math.max(maxLength, line.resultLength());
 			}
 			for (ColumnAlignerLine line : lines) {
-				line.appendSpace(maxLength);
+				line.appendSpace(getMaxLength(lines, maxLength));
+			}
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpaceBeforeSeparator();
+			}                    
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpace(getMaxLength(lines, maxLength));
 			}
 			for (ColumnAlignerLine line : lines) {
 				line.appendSeparator();
 			}
-
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpaceAfterSeparator();
+			}
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpace(getMaxLength(lines, maxLength));
+			}
 			for (ColumnAlignerLine line : lines) {
 				line.next();
 			}
@@ -65,11 +108,20 @@ public class ColumnAligner {
 			}
 		}
 
+		List<String> strings = new ArrayList<String>();
 		for (ColumnAlignerLine line : lines) {
-			strings.add(line.sb.toString().trim());
+			strings.add(line.getString());
 		}
 		return strings;
 	}
+
+	protected int getMaxLength(List<ColumnAlignerLine> lines, int maxLength) {
+		for (ColumnAlignerLine line : lines) {
+			maxLength = Math.max(maxLength, line.resultLength());
+		}
+		return maxLength;
+	}
+
 
 	private int initialSeparatorPosition(List<ColumnAlignerLine> lines) {
 		int i = 0;

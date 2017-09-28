@@ -10,14 +10,11 @@ import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
-
-import static osmedile.intellij.stringmanip.utils.StringUtils.isEmpty;
 
 public class AlignToColumnsAction extends EditorAction {
 
-    private List<String> lastSeparators;
+    private ColumnAlignerModel lastModel = new ColumnAlignerModel();
 
 	protected AlignToColumnsAction() {
 		this(true);
@@ -26,13 +23,12 @@ public class AlignToColumnsAction extends EditorAction {
 	protected AlignToColumnsAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-            this.setupHandler(new MultiCaretHandlerHandler<List<String>>() {
+            this.setupHandler(new MultiCaretHandlerHandler<ColumnAlignerModel>() {
 
 				@NotNull
 				@Override
-                protected Pair<Boolean, List<String>> beforeWriteAction(Editor editor, DataContext dataContext) {
-
-                    final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(lastSeparators);
+                protected Pair<Boolean, ColumnAlignerModel> beforeWriteAction(Editor editor, DataContext dataContext) {
+                    final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(lastModel);
                     DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
                         {
                             init();
@@ -68,38 +64,22 @@ public class AlignToColumnsAction extends EditorAction {
 						return stopExecution();
 					}
 
-                    List<String> separators = textAlignmentForm.getSeparators();
-                    lastSeparators = separators;
-                    return continueExecution(separators);
+                    ColumnAlignerModel model = textAlignmentForm.getModel();
+                    lastModel = model;
+                    return continueExecution(model);
 				}
 
 				@Override
-                protected String processSingleSelection(String text, List<String> separators) {
-                    String reformat = text;
-                    for (String separator : separators) {
-                        if (isEmpty(separator)) {
-                            continue;
-                        }
-                        reformat = new ColumnAligner().reformat(separator, reformat);
-                    }
-                    return reformat;
+                protected String processSingleSelection(String text, ColumnAlignerModel model) {
+                    return new ColumnAligner(model).align(text);
 				}
 
-				@Override
-                protected List<String> processMultiSelections(List<String> lines, List<String> separators) {
-                    for (String separator : separators) {
-                        if (isEmpty(separator)) {
-                            continue;
-                        }
-                        List<ColumnAlignerLine> columnAlignerLines = new ArrayList<ColumnAlignerLine>();
-                        for (String line : lines) {
-                            columnAlignerLines.add(new ColumnAlignerLine(separator, line, line.endsWith("\n")));
-                        }
-                        lines = new ColumnAligner().process(columnAlignerLines);
-					}
-                    return lines;
+                @Override
+                protected List<String> processMultiSelections(List<String> lines, ColumnAlignerModel model) {
+                    return new ColumnAligner(model).align(lines);
 				}
-			});
+
+            });
 		}
 
 	}
