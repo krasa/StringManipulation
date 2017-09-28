@@ -45,7 +45,7 @@ public class ColumnAligner {
 		return reformat;
 	}
 
-	public String reformat(String separator, String text) {
+	private String reformat(String separator, String text) {
 		List<ColumnAlignerLine> lines = toLines(separator, text);
 		List<String> process = process(lines);
 		StringBuilder sb = new StringBuilder();

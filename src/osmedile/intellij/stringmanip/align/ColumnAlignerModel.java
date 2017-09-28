@@ -1,10 +1,11 @@
 package osmedile.intellij.stringmanip.align;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ColumnAlignerModel {
-    private List<String> separators;
+    private List<String> separators = new ArrayList<String>();
     private boolean spaceBefore = true;
     private boolean spaceAfter = true;
     private boolean trimValues = true;

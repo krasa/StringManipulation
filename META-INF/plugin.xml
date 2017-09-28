@@ -364,6 +364,10 @@
 
     </actions>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="osmedile.intellij.stringmanip.PluginPersistentStateComponent"/>
+    </extensions>
+
     <description><![CDATA[
 	<p>
 		<p>

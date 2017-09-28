@@ -8,13 +8,13 @@ import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
+import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
 
 import javax.swing.*;
 import java.util.List;
 
 public class AlignToColumnsAction extends EditorAction {
 
-    private ColumnAlignerModel lastModel = new ColumnAlignerModel();
 
 	protected AlignToColumnsAction() {
 		this(true);
@@ -28,7 +28,8 @@ public class AlignToColumnsAction extends EditorAction {
 				@NotNull
 				@Override
                 protected Pair<Boolean, ColumnAlignerModel> beforeWriteAction(Editor editor, DataContext dataContext) {
-                    final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(lastModel);
+                    PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
+                    final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(stateComponent.getColumnAlignerModel());
                     DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
                         {
                             init();
@@ -65,7 +66,7 @@ public class AlignToColumnsAction extends EditorAction {
 					}
 
                     ColumnAlignerModel model = textAlignmentForm.getModel();
-                    lastModel = model;
+                    stateComponent.setColumnAlignerModel(textAlignmentForm.getModel());
                     return continueExecution(model);
 				}
 
