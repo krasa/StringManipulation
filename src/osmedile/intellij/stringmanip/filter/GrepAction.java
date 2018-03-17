@@ -33,13 +33,15 @@ public class GrepAction extends EditorAction {
 					if (!StringUtil.isEmptyOrSpaces(grepos)) {
 						return continueExecution(grepos);
 					}
+				} else {
+					Messages.showInfoMessage(editor.getProject(), "Please select text, before using grep", "Grep");
 				}
 				return stopExecution();
 			}
 
 			@Override
 			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String grepos) {
-				//Column mode not supported
+				// Column mode not supported
 				if (editor.isColumnMode()) {
 					return;
 				}
@@ -52,7 +54,6 @@ public class GrepAction extends EditorAction {
 					}
 					final String selectedText = selectionModel.getSelectedText();
 
-
 					String[] textParts = selectedText.split("\n");
 					Collection<String> result = new ArrayList<String>();
 
@@ -62,15 +63,10 @@ public class GrepAction extends EditorAction {
 						}
 					}
 
-
 					String[] res = result.toArray(new String[result.size()]);
 
 					final String s = StringUtils.join(res, '\n');
-					editor.getDocument().replaceString(selectionModel.getSelectionStart(),
-							selectionModel.getSelectionEnd(), s);
-				} else {
-					Messages.showInfoMessage(editor.getProject(), "Please select text, before using grep",
-							"Grep");
+					editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
 				}
 
 			}
