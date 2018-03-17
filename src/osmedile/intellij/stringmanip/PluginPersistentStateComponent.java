@@ -8,7 +8,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 
-@State(name = "StringManipulationState", storages = {@Storage(id = "StringManipulationState", file = "$APP_CONFIG$/stringManipulation.xml")})
+@State(name = "StringManipulationState", storages = {@Storage(file = "$APP_CONFIG$/stringManipulation.xml")})
 public class PluginPersistentStateComponent implements PersistentStateComponent<PluginPersistentStateComponent> {
 
     private ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel();
