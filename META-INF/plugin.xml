@@ -273,6 +273,11 @@
                         text="Grep"
                         description="Grep on selected text">
                 </action>
+                <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
+                        class="osmedile.intellij.stringmanip.filter.InvertedGrepAction"
+                        text="Inverted Grep"
+                        description="Inverted Grep on selected text">
+                </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
@@ -446,6 +451,7 @@
 				<li>Grep selected text, All lines not matching input text wil be removed.
 					(Does not work in column mode)
 				</li>
+				<li>Inverted Grep</li>
 				<li>Trim selected text</li>
 				<li>Trim all spaces in selected text</li>
 				<li>Remove all spaces in selected text</li>
@@ -476,6 +482,7 @@
 	    <div>
 	        <h4>Version 5.8<h4>
 	        <ul>
+                <li>Added 'Inverted Grep'</li>
                 <li>Fixed 'Switch Case' for "Foo"</li>
 			</ul>
 	    </div>

@@ -23,6 +23,19 @@ import java.util.Collection;
 public class GrepAction extends EditorAction {
 
 	public GrepAction() {
+		this(new GrepFilter() {
+			@Override
+			public boolean execute(String text, String grepos) {
+				return text.contains(grepos);
+			}
+		});
+	}
+
+	interface GrepFilter {
+		boolean execute(String text, String grepos);
+	}
+
+	public GrepAction(final GrepFilter shouldAdd) {
 		super(new MyEditorWriteActionHandler<String>() {
 			@NotNull
 			@Override
@@ -58,7 +71,7 @@ public class GrepAction extends EditorAction {
 					Collection<String> result = new ArrayList<String>();
 
 					for (String textPart : textParts) {
-						if (textPart.contains(grepos)) {
+						if (shouldAdd.execute(textPart, grepos)) {
 							result.add(textPart);
 						}
 					}
