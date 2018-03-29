@@ -198,6 +198,16 @@
                     text="Capitalize"
                     description="Capitalize">
             </action>
+            <action id="osmedile.intellij.stringmanip.ToLowerCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToLowerCaseAction"
+                    text="To lower case"
+                    description="To Lower Case">
+            </action>
+            <action id="osmedile.intellij.stringmanip.ToUpperCaseAction"
+                    class="osmedile.intellij.stringmanip.styles.ToUpperCaseAction"
+                    text="To UPPER CASE"
+                    description="To Upper Case">
+            </action>
             <action id="osmedile.intellij.stringmanip.SwapCaseAction"
                     class="osmedile.intellij.stringmanip.styles.InvertCaseAction"
                     text="Invert case"
@@ -381,6 +391,8 @@
 				<li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, Words Capitalized, PascalCase)
 				</li>
+				<li>To UPPER CASE</li>
+				<li>To lower case</li>
 				<li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
 				<li>To snake_case (or to camelCase)</li>
 				<li>To dot.case (or to camelCase)</li>
@@ -483,8 +495,10 @@
 	        <h4>Version 5.8<h4>
 	        <ul>
                 <li>Added 'Inverted Grep'</li>
+			    <li>Added 'To UPPER CASE'</li>
+				<li>Added 'To lower case'</li>	
                 <li>Fixed 'Switch Case' for "Foo"</li>
-			</ul>
+            </ul>
 	    </div>
 	    <div>
 	        <h4>Version 5.7<h4>
