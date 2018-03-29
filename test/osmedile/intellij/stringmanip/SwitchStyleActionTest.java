@@ -15,6 +15,7 @@ public class SwitchStyleActionTest {
 		String input = "foobar";
 		input = transform(input, "Foobar");
 		input = transform(input, "FOOBAR");
+		input = transform(input, "foobar");
 	}
 
 	@Test
