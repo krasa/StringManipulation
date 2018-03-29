@@ -102,7 +102,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_SINGLE_WORD_WORD_CAPITALIZED("Foobar") {
+	_SINGLE_WORD_CAPITALIZED("Foobar") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -176,7 +176,7 @@ public enum Style {
 
 		boolean startsWithUppercase = startsWithUppercase(s);
 		if (startsWithUppercase && containsOnlyLettersAndDigits && !containsUpperCase(s.substring(1, s.length()))) {
-			return _SINGLE_WORD_WORD_CAPITALIZED;
+			return _SINGLE_WORD_CAPITALIZED;
 		}
 		if (startsWithUppercase && containsOnlyLettersAndDigits) {
 			return PASCAL_CASE;

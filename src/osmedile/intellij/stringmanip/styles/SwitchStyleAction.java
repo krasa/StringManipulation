@@ -14,7 +14,7 @@ public class SwitchStyleAction extends AbstractCaseConvertingAction {
 		{Style.CAMEL_CASE, Style.HYPHEN_LOWERCASE},
 		{Style._UNKNOWN, Style.CAMEL_CASE},
 		{Style._ALL_UPPER_CASE, Style.WORD_LOWERCASE},
-		{Style._SINGLE_WORD_WORD_CAPITALIZED, Style.SCREAMING_SNAKE_CASE},
+		{Style._SINGLE_WORD_CAPITALIZED, Style.SCREAMING_SNAKE_CASE},
 	};
 
 	private boolean setupHandler;
