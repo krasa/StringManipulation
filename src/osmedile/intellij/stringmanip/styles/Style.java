@@ -15,8 +15,8 @@ public enum Style {
 			if (style == SCREAMING_SNAKE_CASE) {
 				s = s.toLowerCase();
 			}
-            if (style == CAMEL_CASE || style == PASCAL_CASE || style == UNKNOWN) {
-                s = camelToText(s);
+			if (style == CAMEL_CASE || style == PASCAL_CASE || style == _UNKNOWN) {
+				s = camelToText(s);
 			}
 			return StringUtil.wordsToHyphenCase(s);
 		}
@@ -24,7 +24,7 @@ public enum Style {
 	HYPHEN_UPPERCASE("FOO-BAR") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == ALL_UPPER_CASE) {
+			if (style == _ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
 			if (style == CAMEL_CASE || style == PASCAL_CASE) {
@@ -42,7 +42,7 @@ public enum Style {
 	SCREAMING_SNAKE_CASE("FOO_BAR") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == ALL_UPPER_CASE) {
+			if (style == _ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
 			return wordsAndHyphenAndCamelToConstantCase(s);
@@ -77,11 +77,11 @@ public enum Style {
 	WORD_LOWERCASE("foo bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == ALL_UPPER_CASE) {
+			if (style == _ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
 			if (style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE
-					|| style == SCREAMING_SNAKE_CASE) {
+				|| style == SCREAMING_SNAKE_CASE) {
 				s = CAMEL_CASE.transform(style, s);
 			}
 			return camelToText(s);
@@ -90,7 +90,7 @@ public enum Style {
 	WORD_CAPITALIZED("Foo Bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == ALL_UPPER_CASE) {
+			if (style == _ALL_UPPER_CASE) {
 				return CAMEL_CASE.transform(style, s);
 			}
 			if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
@@ -99,19 +99,33 @@ public enum Style {
 			return capitalize(s, Constants.DELIMITERS);
 		}
 	},
-	ALL_UPPER_CASE("FOOBAR") {
+	/**
+	 * never use that to transform
+	 */
+	_SINGLE_WORD_WORD_CAPITALIZED("Foobar") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
 		}
 	},
-	UNKNOWN() {
+	/**
+	 * never use that to transform
+	 */
+	_ALL_UPPER_CASE("FOOBAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
 		}
 	},
-	;
+	/**
+	 * never use that to transform
+	 */
+	_UNKNOWN() {
+		@Override
+		public String transform(Style style, String s) {
+			return s;
+		}
+	},;
 
 	/**
 	 * first one is how it should look after transformation, others are variations which follows the rule
@@ -135,7 +149,7 @@ public enum Style {
 		boolean noLowerCase = noLowerCase(s);
 		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
 		boolean containsUpperCase = containsUpperCase(s);
-		
+
 		if (underscore && noUpperCase) {
 			return UNDERSCORE_LOWERCASE;
 		}
@@ -147,7 +161,7 @@ public enum Style {
 		if (hyphen && noUpperCase) {
 			return HYPHEN_LOWERCASE;
 		}
-		if (hyphen  && noLowerCase) {
+		if (hyphen && noLowerCase) {
 			return HYPHEN_UPPERCASE;
 		}
 
@@ -157,10 +171,13 @@ public enum Style {
 		}
 
 		if (noLowerCase) {
-			return ALL_UPPER_CASE;
+			return _ALL_UPPER_CASE;
 		}
 
 		boolean startsWithUppercase = startsWithUppercase(s);
+		if (startsWithUppercase && containsOnlyLettersAndDigits && !containsUpperCase(s.substring(1, s.length()))) {
+			return _SINGLE_WORD_WORD_CAPITALIZED;
+		}
 		if (startsWithUppercase && containsOnlyLettersAndDigits) {
 			return PASCAL_CASE;
 		}
@@ -174,7 +191,7 @@ public enum Style {
 		if (startsWithUppercase) {
 			return WORD_CAPITALIZED;
 		}
-		return UNKNOWN;
+		return _UNKNOWN;
 	}
 
 	private static boolean containsOnlyLettersAndDigits(String s) {
@@ -204,7 +221,7 @@ public enum Style {
 
 	public static boolean isQuoted(String selectedText) {
 		return selectedText != null && selectedText.length() > 2
-				&& (Style.isBorderChar(selectedText, "\"") || Style.isBorderChar(selectedText, "\'"));
+			&& (Style.isBorderChar(selectedText, "\"") || Style.isBorderChar(selectedText, "\'"));
 	}
 
 	public static boolean isBorderChar(String s, String borderChar) {
@@ -238,6 +255,6 @@ public enum Style {
 	}
 
 	private static class Constants {
-		private static final char[] DELIMITERS = new char[] { '\'', '\"', ' ' };
+		private static final char[] DELIMITERS = new char[]{'\'', '\"', ' '};
 	}
 }
