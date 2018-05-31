@@ -8,14 +8,14 @@ Provides actions for text manipulation:
     <p>
         Switch case:
         <ul>
-            <li>Switch style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+            <li>Switch style (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
                 words lowercase, Words Capitalized, PascalCase)
             </li>
             <li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
             <li>To snake_case (or to camelCase)</li>
             <li>To dot.case (or to camelCase)</li>
-            <li>To hyphen-case (or to camelCase)</li>
-            <li>To hyphen-case (or to snake_case)</li>
+            <li>To kebab-case (or to camelCase)</li>
+            <li>To kebab-case (or to snake_case)</li>
             <li>To camelCase (or to words)</li>
             <li>To PascalCase (or to camelCase)</li>
             <li>Capitalize selected text</li>

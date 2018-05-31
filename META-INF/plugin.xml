@@ -152,7 +152,7 @@
             <action id="StringManipulation.SwitchStyleAction"
                     class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
                     text="Switch case"
-                    description="Switch/Toggle case (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
+                    description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
             </action>
             <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
@@ -166,13 +166,13 @@
             </action>
             <action id="StringManipulation.ToHyphenCaseAction"
                     class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                    text="To hyphen-case (or to snake__case)"
-                    description="To hyphen-case (or to snake_case)">
+                    text="To kebab-case (or to snake__case)"
+                    description="To kebab-case (or to snake_case)">
             </action>
             <action id="StringManipulation.ToHyphenCaseOrCamelCase"
                     class="osmedile.intellij.stringmanip.styles.CamelCaseToHyphenLowerCaseAction"
-                    text="To hyphen-case (or to camelCase)"
-                    description="To hyphen-case (or to camelCase)">
+                    text="To kebab-case (or to camelCase)"
+                    description="To kebab-case (or to camelCase)">
             </action>
             <action id="StringManipulation.ToDotStyleAction"
                     class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
@@ -392,7 +392,7 @@
 		<p>
 			Provides actions for text manipulation:
 			<ul>
-				<li>Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+				<li>Toggle style (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, Words Capitalized, PascalCase)
 				</li>
 				<li>To UPPER CASE</li>
@@ -400,8 +400,8 @@
 				<li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
 				<li>To snake_case (or to camelCase)</li>
 				<li>To dot.case (or to camelCase)</li>
-				<li>To hyphen-case (or to camelCase)</li>
-				<li>To hyphen-case (or to snake_case)</li>
+				<li>To kebab-case (or to camelCase)</li>
+				<li>To kebab-case (or to snake_case)</li>
 				<li>To camelCase (Or To Words)</li>
 				<li>To camelCase (or to lowercase words)</li>
 				<li>To PascalCase (or to camelCase)</li>
@@ -499,6 +499,7 @@
 	        <h4>Version 5.9<h4>
 	        <ul>
                 <li>Menu icons</li>
+                <li>Renamed hyphen-case to kebab-case according to current standards</li>
             </ul>
 	    </div>
 	    <div>

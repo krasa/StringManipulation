@@ -50,7 +50,7 @@ public class StringUtilTest extends TestCase {
 		assertEquals("THIS_IS_ATEXT", StringUtil.wordsAndHyphenAndCamelToConstantCase("ThisIsAText"));
 		assertEquals("WHOAH_ATEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("WhoahATest"));
 		assertEquals("WHOAH_ATEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah ATest"));
-        assertEquals("WHOAH_A_TEST_AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
+		assertEquals("WHOAH_A_TEST,_AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
         assertEquals("ANOTHER_T_EST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Another      t_Est"));
         assertEquals("TEST_AGAIN_TEST",
                 StringUtil.wordsAndHyphenAndCamelToConstantCase("test again     _    _    test"));
