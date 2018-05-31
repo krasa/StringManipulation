@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>5.8.143.000.0</version>
+    <version>5.9.143.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="143.000"/>
 
@@ -19,7 +19,8 @@
         <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String Manipulation ..."
-                description="Popup String Manipulation ...">
+                description="Popup String Manipulation ..."
+                icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
@@ -27,7 +28,9 @@
 
         <group id="osmedile.ManipulateStringGroup" text="String Manipulation"
                description="Group of String manipulation"
-               popup="true">
+               popup="true"
+               icon="/osmedile/intellij/stringmanip/edit.png"
+        >
             <add-to-group group-id="EditMenu" anchor="last"/>
             <group text="Escape/Unescape..."
                    description="Group of String manipulation escape actions"
@@ -370,7 +373,8 @@
 
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
                description="String Manipulation"
-               popup="false">
+               popup="false"
+               icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
@@ -491,6 +495,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 5.9<h4>
+	        <ul>
+                <li>Menu icons</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 5.8<h4>
 	        <ul>

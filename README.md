@@ -19,7 +19,9 @@ Provides actions for text manipulation:
             <li>To camelCase (or to words)</li>
             <li>To PascalCase (or to camelCase)</li>
             <li>Capitalize selected text</li>
-            <li>Swap case</li>
+            <li>To UPPER CASE</li>
+            <li>To lower case</li>
+            <li>Invert case</li>
         </ul>
         -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
     </p>
@@ -80,6 +82,7 @@ Provides actions for text manipulation:
             <li>Grep selected text, All lines not matching input text wil be removed.
                 (Does not work in column mode)
             </li>
+            <li>Inverted Grep</li>
             <li>Trim selected text</li>
             <li>Trim all spaces in selected text</li>
             <li>Remove all spaces in selected text</li>
