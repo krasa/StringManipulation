@@ -193,8 +193,8 @@ public class AlignToColumnsActionTest {
 
 
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel(",");
-		columnAlignerModel.setAlignSeparator(ColumnAlignerModel.Align.LEFT);
-		columnAlignerModel.setSpaceBefore(false);
+		columnAlignerModel.setAlignBy(ColumnAlignerModel.Align.VALUES);
+		columnAlignerModel.setSpaceBeforeSeparator(false);
 		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
 
 		System.out.println("INPUT >>>>>>>>>>>");

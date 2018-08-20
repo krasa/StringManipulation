@@ -82,7 +82,7 @@ public class ColumnAligner {
 			}
 
 
-			if (model.getAlignSeparator() == ColumnAlignerModel.Align.RIGHT) {
+			if (model.getAlignBy() == ColumnAlignerModel.Align.SEPARATORS) {
 				int maxLength = getMaxLength(lines);
 				for (ColumnAlignerLine line : lines) {
 					line.appendSpace(maxLength);
@@ -99,7 +99,7 @@ public class ColumnAligner {
 				line.appendSpaceAfterSeparator();
 			}
 
-			if (model.getAlignSeparator() == ColumnAlignerModel.Align.LEFT) {
+			if (model.getAlignBy() == ColumnAlignerModel.Align.VALUES) {
 				int maxLength = getMaxLength(lines);
 				for (ColumnAlignerLine line : lines) {
 					line.appendSpace(maxLength);

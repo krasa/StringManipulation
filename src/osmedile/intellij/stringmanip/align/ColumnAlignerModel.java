@@ -1,16 +1,21 @@
 package osmedile.intellij.stringmanip.align;
 
+import osmedile.intellij.stringmanip.utils.StringUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ColumnAlignerModel {
+	private Date added;
 	private List<String> separators = new ArrayList<String>();
-	private boolean spaceBefore = true;
-	private boolean spaceAfter = true;
+	private boolean spaceBeforeSeparator = true;
+	private boolean spaceAfterSeparator = true;
 	private boolean trimValues = true;
 	private boolean trimLines = false;
-	private Align alignSeparator = Align.RIGHT;
+	private Align alignBy = Align.SEPARATORS;
 
 	public ColumnAlignerModel() {
 	}
@@ -27,20 +32,20 @@ public class ColumnAlignerModel {
 		this.separators = separators;
 	}
 
-	public boolean isSpaceBefore() {
-		return spaceBefore;
+	public boolean isSpaceBeforeSeparator() {
+		return spaceBeforeSeparator;
 	}
 
-	public void setSpaceBefore(final boolean spaceBefore) {
-		this.spaceBefore = spaceBefore;
+	public void setSpaceBeforeSeparator(final boolean spaceBeforeSeparator) {
+		this.spaceBeforeSeparator = spaceBeforeSeparator;
 	}
 
-	public boolean isSpaceAfter() {
-		return spaceAfter;
+	public boolean isSpaceAfterSeparator() {
+		return spaceAfterSeparator;
 	}
 
-	public void setSpaceAfter(final boolean spaceAfter) {
-		this.spaceAfter = spaceAfter;
+	public void setSpaceAfterSeparator(final boolean spaceAfterSeparator) {
+		this.spaceAfterSeparator = spaceAfterSeparator;
 	}
 
 	public boolean isTrimValues() {
@@ -59,15 +64,66 @@ public class ColumnAlignerModel {
 		this.trimLines = trimLines;
 	}
 
-	public Align getAlignSeparator() {
-		return alignSeparator;
+	public Align getAlignBy() {
+		return alignBy;
 	}
 
-	public void setAlignSeparator(Align alignSeparator) {
-		this.alignSeparator = alignSeparator;
+	public void setAlignBy(Align alignBy) {
+		this.alignBy = alignBy;
+	}
+
+	public Date getAdded() {
+		return added;
+	}
+
+	public void setAdded(Date added) {
+		this.added = added;
 	}
 
 	enum Align {
-		LEFT, RIGHT
+		VALUES, SEPARATORS
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ColumnAlignerModel that = (ColumnAlignerModel) o;
+
+		if (spaceBeforeSeparator != that.spaceBeforeSeparator) return false;
+		if (spaceAfterSeparator != that.spaceAfterSeparator) return false;
+		if (trimValues != that.trimValues) return false;
+		if (trimLines != that.trimLines) return false;
+		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
+		return alignBy == that.alignBy;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = separators != null ? separators.hashCode() : 0;
+		result = 31 * result + (spaceBeforeSeparator ? 1 : 0);
+		result = 31 * result + (spaceAfterSeparator ? 1 : 0);
+		result = 31 * result + (trimValues ? 1 : 0);
+		result = 31 * result + (trimLines ? 1 : 0);
+		result = 31 * result + (alignBy != null ? alignBy.hashCode() : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		String format = "";
+		if (added != null) {
+			format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(added);
+		}
+
+
+		StringBuilder s = new StringBuilder();
+		for (String separator : separators) {
+			if (StringUtils.isNotEmpty(separator)) {
+				s.append(separator).append(" ");
+			}
+		}
+		return format + " - " + s.toString();
 	}
 }

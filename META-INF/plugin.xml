@@ -515,7 +515,7 @@
 	        <h4>Version 5.10<h4>
 	        <ul>
                 <li>Added: Repeat last action</li>
-                <li>Option to align into columns but make the separator stick to the left</li>
+                <li>Align by column: added history, option to align by separators or values</li>
                 <li>Fixed: Incrementing/decrementing long literals removes the 'L' after the number</li>
             </ul>
 	    </div>

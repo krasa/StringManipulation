@@ -29,8 +29,8 @@ public class ColumnAlignerLine {
 		}
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 
-		this.appendSpaceBeforeSeparator = model.isSpaceBefore();
-		this.appendSpaceAfterSeparator = model.isSpaceAfter();
+		this.appendSpaceBeforeSeparator = model.isSpaceBeforeSeparator();
+		this.appendSpaceAfterSeparator = model.isSpaceAfterSeparator();
 		this.trimValues = model.isTrimValues();
 		this.trimLines = model.isTrimLines();
 	}
