@@ -2,18 +2,18 @@ package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
 
 import javax.swing.*;
 import java.util.List;
 
-public class AlignToColumnsAction extends EditorAction {
+public class AlignToColumnsAction extends MyEditorAction {
 
 
 	protected AlignToColumnsAction() {
@@ -23,7 +23,7 @@ public class AlignToColumnsAction extends EditorAction {
 	protected AlignToColumnsAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-            this.setupHandler(new MultiCaretHandlerHandler<ColumnAlignerModel>() {
+			this.setupHandler(new MultiCaretHandlerHandler<ColumnAlignerModel>(getActionClass()) {
 
 				@NotNull
 				@Override

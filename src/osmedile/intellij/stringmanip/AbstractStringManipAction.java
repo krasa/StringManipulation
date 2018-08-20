@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +14,7 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  * @author Olivier Smedile
  * @version $Id: AbstractStringManipAction.java 62 2008-04-20 11:11:54Z osmedile $
  */
-public abstract class AbstractStringManipAction<T> extends EditorAction {
+public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 	protected AbstractStringManipAction() {
 		this(true);
@@ -24,7 +23,7 @@ public abstract class AbstractStringManipAction<T> extends EditorAction {
 	protected AbstractStringManipAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<T>() {
+			this.setupHandler(new MyEditorWriteActionHandler<T>(getActionClass()) {
 				@NotNull
 				@Override
 				protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {

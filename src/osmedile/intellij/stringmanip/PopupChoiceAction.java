@@ -26,7 +26,7 @@ public class PopupChoiceAction extends DumbAwareAction {
 	@Override
     public void actionPerformed(AnActionEvent e) {
         ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, actionGroup,
-                e.getDataContext(), JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, false);
+			e.getDataContext(), JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
 
         popup.showInBestPositionFor(e.getDataContext());
     }

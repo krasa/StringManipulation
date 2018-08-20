@@ -4,9 +4,9 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-
+import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import osmedile.intellij.stringmanip.utils.StringUtils;
@@ -15,7 +15,7 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  * @author Olivier Smedile
  * @author Vojtech Krasa
  */
-public class IncrementAction extends EditorAction {
+public class IncrementAction extends MyEditorAction {
 
 	public IncrementAction() {
 		super(null);
@@ -23,7 +23,8 @@ public class IncrementAction extends EditorAction {
 
 			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
-
+				MyApplicationComponent.setAction(getActionClass());
+			  
 				// Column mode not supported
 				if (editor.isColumnMode()) {
 					return;

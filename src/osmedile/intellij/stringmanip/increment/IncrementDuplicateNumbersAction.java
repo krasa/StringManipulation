@@ -1,20 +1,20 @@
 package osmedile.intellij.stringmanip.increment;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-
+import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
-public class IncrementDuplicateNumbersAction extends EditorAction {
+import java.util.HashSet;
+import java.util.Set;
+
+public class IncrementDuplicateNumbersAction extends MyEditorAction {
 
 	public IncrementDuplicateNumbersAction() {
 		this(true);
@@ -27,6 +27,8 @@ public class IncrementDuplicateNumbersAction extends EditorAction {
 
 				@Override
 				public void executeWriteAction(final Editor editor, DataContext dataContext) {
+					MyApplicationComponent.setAction(getActionClass());
+					
 					final HashSet<String> values = new HashSet<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {
 						@Override

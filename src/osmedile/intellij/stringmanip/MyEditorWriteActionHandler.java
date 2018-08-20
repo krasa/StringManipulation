@@ -11,12 +11,17 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler {
 
-	public MyEditorWriteActionHandler() {
+	private final Class actionClass;
+
+	public MyEditorWriteActionHandler(Class actionClass) {
 		super(false);
+		this.actionClass = actionClass;
 	}
 
 	@Override
 	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
+		MyApplicationComponent.setAction(actionClass);
+		
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
 			return;

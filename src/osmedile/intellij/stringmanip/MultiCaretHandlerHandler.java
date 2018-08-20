@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHandler<T> {
+
+	public MultiCaretHandlerHandler(Class aClass) {
+		super(aClass);
+	}
+
 	@Override
 	protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter) {
 		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();

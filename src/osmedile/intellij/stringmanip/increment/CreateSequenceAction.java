@@ -1,19 +1,19 @@
 package osmedile.intellij.stringmanip.increment;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-
+import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
-public class CreateSequenceAction extends EditorAction {
+import java.util.concurrent.atomic.AtomicReference;
+
+public class CreateSequenceAction extends MyEditorAction {
 
 	public CreateSequenceAction() {
 		this(true);
@@ -26,6 +26,8 @@ public class CreateSequenceAction extends EditorAction {
 
 				@Override
 				public void executeWriteAction(final Editor editor, DataContext dataContext) {
+					MyApplicationComponent.setAction(getActionClass());
+					
 					final AtomicReference<String> lastValue = new AtomicReference<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {
 						@Override

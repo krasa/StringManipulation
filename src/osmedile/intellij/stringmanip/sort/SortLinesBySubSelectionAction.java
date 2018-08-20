@@ -5,13 +5,13 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SortLinesBySubSelectionAction extends EditorAction {
+public class SortLinesBySubSelectionAction extends MyEditorAction {
 	public static final String STORE_KEY = "StringManipulation.SortLinesBySubSelectionAction.SortSettings";
 
 
@@ -34,7 +34,7 @@ public class SortLinesBySubSelectionAction extends EditorAction {
 	public SortLinesBySubSelectionAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>() {
+			this.setupHandler(new MyEditorWriteActionHandler<SortSettings>(getActionClass()) {
 				@NotNull
 				@Override
 				protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {

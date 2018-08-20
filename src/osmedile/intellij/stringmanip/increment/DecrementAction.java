@@ -4,9 +4,9 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-
+import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import osmedile.intellij.stringmanip.utils.StringUtils;
@@ -15,14 +15,15 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  * @author Olivier Smedile
  * @author Vojtech Krasa
  */
-public class DecrementAction extends EditorAction {
+public class DecrementAction extends MyEditorAction {
 
 	public DecrementAction() {
 		super(null);
 		this.setupHandler(new EditorWriteActionHandler(true) {
 			@Override
 			public void executeWriteAction(Editor editor, DataContext dataContext) {
-
+				MyApplicationComponent.setAction(getActionClass());
+				
 				// Column mode not supported
 				if (editor.isColumnMode()) {
 					return;
@@ -42,7 +43,7 @@ public class DecrementAction extends EditorAction {
 
 				if (selectedText != null) {
 					String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
-							DuplicatUtils.SIMPLE_NUMBER_REGEX);
+						DuplicatUtils.SIMPLE_NUMBER_REGEX);
 					for (int i = 0; i < textParts.length; i++) {
 						textParts[i] = DuplicatUtils.simpleDec(textParts[i]);
 					}
@@ -55,8 +56,8 @@ public class DecrementAction extends EditorAction {
 	}
 
 	protected void applyChanges(Editor editor, CaretModel caretModel, int line, int column,
-			SelectionModel selectionModel, boolean hasSelection, String newText, int caretOffset) {
+								SelectionModel selectionModel, boolean hasSelection, String newText, int caretOffset) {
 		editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(),
-				newText);
+			newText);
 	}
 }
