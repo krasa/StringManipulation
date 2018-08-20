@@ -21,6 +21,8 @@ public class TextAlignmentForm {
     private JCheckBox trimLines;
     private JCheckBox trimValues;
     private JCheckBox addSpaceAfterSeparatorCheckBox;
+	private JRadioButton alignSeparatorLeft;
+	private JRadioButton alignSeparatorRight;
 
     public TextAlignmentForm(ColumnAlignerModel lastSeparators) {
         resetButton.addActionListener(new ActionListener() {
@@ -123,6 +125,8 @@ public class TextAlignmentForm {
         addSpaceAfterSeparatorCheckBox.setSelected(data.isSpaceAfter());
         trimValues.setSelected(data.isTrimValues());
         trimLines.setSelected(data.isTrimLines());
+		alignSeparatorLeft.setSelected(data.getAlignSeparator() == ColumnAlignerModel.Align.LEFT);
+		alignSeparatorRight.setSelected(data.getAlignSeparator() == ColumnAlignerModel.Align.RIGHT);
     }
 
     public ColumnAlignerModel getModel() {
@@ -137,6 +141,11 @@ public class TextAlignmentForm {
         data.setSpaceAfter(addSpaceAfterSeparatorCheckBox.isSelected());
         data.setTrimValues(trimValues.isSelected());
         data.setTrimLines(trimLines.isSelected());
+		if (alignSeparatorLeft.isSelected()) {
+			data.setAlignSeparator(ColumnAlignerModel.Align.LEFT);
+		} else {
+			data.setAlignSeparator(ColumnAlignerModel.Align.RIGHT);
+		} 
     }
 
     public boolean isModified(ColumnAlignerModel data) {

@@ -57,12 +57,12 @@ public class AlignToColumnsActionTest {
 	public void test7() {
 		// @formatter:off
 		String notFormattedText =
-				  "   |foo 1|foooooooooo 2|   foo 3|foo 4 \n" 
+			"   |foo 1|foooooooooo 2|   foo 3|foo 4 \n"
 				+ "  |val 11   | val 12|val 13| val 14|val 15|\n"
 				+ " |foooooooooo| val 22|val 33|val34|fooooooooooooooo                       |";
 
-		String expectedText = 
-				  "| foo 1       | foooooooooo 2 | foo 3  | foo 4\n"
+		String expectedText =
+			"| foo 1       | foooooooooo 2 | foo 3  | foo 4\n"
 				+ "| val 11      | val 12        | val 13 | val 14 | val 15           |\n"
 				+ "| foooooooooo | val 22        | val 33 | val34  | fooooooooooooooo |";
 		// @formatter:on
@@ -70,22 +70,25 @@ public class AlignToColumnsActionTest {
 		String process = align("|", notFormattedText);
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
 		System.out.println("RESULT >>>>>>>>>>>");
 		System.out.println(process);
 
 		assertThat(process, is(expectedText));
 	}
 
+
 	@Test
 	public void test8() {
 		//  @formatter:off
 		String notFormattedText =
-				  "     foo 1|foooooooooo 2|   foo 3|foo 4 \n" 
+			"     foo 1|foooooooooo 2|   foo 3|foo 4 \n"
 				+ "     val 11| val 12|val 13| val 14|val 15|\n"
 				+ "     foooooooooo| val 22|val 33|val34|fooooooooooooooo                       |\n";
 
-		String expectedText = 
-				  "foo 1       | foooooooooo 2 | foo 3  | foo 4\n"
+		String expectedText =
+			"foo 1       | foooooooooo 2 | foo 3  | foo 4\n"
 				+ "val 11      | val 12        | val 13 | val 14 | val 15           |\n"
 				+ "foooooooooo | val 22        | val 33 | val34  | fooooooooooooooo |\n";
 		// @formatter:on
@@ -93,6 +96,8 @@ public class AlignToColumnsActionTest {
 		String process = align("|", notFormattedText);
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
 		System.out.println("RESULT >>>>>>>>>>>");
 		System.out.println(process);
 
@@ -103,17 +108,19 @@ public class AlignToColumnsActionTest {
 	public void test9() {
 		//  @formatter:off
 		String notFormattedText =
-"| foo   1 | foooooooooo 2 | foo    3 | foo            4 | val 11      | val\n" +
-"12 | val 13  | val 14        | val 15   |                		| foooooooooo | val   22 | val 33 | val34 | fooooooooooooooo |";
+			"| foo   1 | foooooooooo 2 | foo    3 | foo            4 | val 11      | val\n" +
+				"12 | val 13  | val 14        | val 15   |                		| foooooooooo | val   22 | val 33 | val34 | fooooooooooooooo |";
 
-		String expectedText = 
-				"   | foo   1 | foooooooooo 2 | foo    3 | foo            4 | val 11      | val\n" +
+		String expectedText =
+			"   | foo   1 | foooooooooo 2 | foo    3 | foo            4 | val 11      | val\n" +
 				"12 | val 13  | val 14        | val 15   |                  | foooooooooo | val   22 | val 33 | val34 | fooooooooooooooo |";
 		// @formatter:on
 
 		String process = align("|", notFormattedText);
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
 		System.out.println("RESULT >>>>>>>>>>>");
 		System.out.println(process);
 
@@ -124,17 +131,19 @@ public class AlignToColumnsActionTest {
 	public void test10() {
 		//  @formatter:off
 		String notFormattedText =
-"   1  2  345  67 89 \n" +
-"1 2 3  4  5 6  7 8  9     ";
+			"   1  2  345  67 89 \n" +
+				"1 2 3  4  5 6  7 8  9     ";
 
-		String expectedText = 
-"1 2 345 67 89 \n" +
-"1 2 3   4  5  6 7 8 9 ";
+		String expectedText =
+			"1 2 345 67 89 \n" +
+				"1 2 3   4  5  6 7 8 9 ";
 		// @formatter:on
 
 		String process = align(" ", notFormattedText);
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
 		System.out.println("RESULT >>>>>>>>>>>");
 		System.out.println(process);
 
@@ -145,18 +154,53 @@ public class AlignToColumnsActionTest {
 	public void test11() {
 		//  @formatter:off
 		String notFormattedText =
-"   1  2  345  67 89 \n" +
-"1 2 3  4  5 6  7 8  9 \n" +
-"     ";
+			"   1  2  345  67 89 \n" +
+				"1 2 3  4  5 6  7 8  9 \n" +
+				"     ";
 
-		String expectedText = 
-"1 2 345 67 89 \n" +
-"1 2 3   4  5  6 7 8 9 \n";
+		String expectedText =
+			"1 2 345 67 89 \n" +
+				"1 2 3   4  5  6 7 8 9 \n";
 		// @formatter:on
 
 		String process = align(" ", notFormattedText);
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
+
+
+	@Test
+	public void test12() {
+		// @formatter:off
+		String notFormattedText =
+			"$table->addColumn('field_01', 'boolean', ['default' => false]);\n" +
+				"$table->addColumn('field_02', 'boolean', ['default' => false]);\n" +
+				"$table->addColumn('field_03', 'datetime', ['notnull' => false]);\n" +
+				"$table->addColumn('field_long_name', 'datetime', ['notnull' => false]);";
+
+		String expectedText =
+			"$table->addColumn('field_01',        'boolean',  ['default' => false]);\n" +
+				"$table->addColumn('field_02',        'boolean',  ['default' => false]);\n" +
+				"$table->addColumn('field_03',        'datetime', ['notnull' => false]);\n" +
+				"$table->addColumn('field_long_name', 'datetime', ['notnull' => false]);";
+		// @formatter:on
+
+
+		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel(",");
+		columnAlignerModel.setAlignSeparator(ColumnAlignerModel.Align.LEFT);
+		columnAlignerModel.setSpaceBefore(false);
+		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
+
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
 		System.out.println("RESULT >>>>>>>>>>>");
 		System.out.println(process);
 

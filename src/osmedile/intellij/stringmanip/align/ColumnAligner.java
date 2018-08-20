@@ -80,14 +80,17 @@ public class ColumnAligner {
 			for (ColumnAlignerLine line : lines) {
 				line.appendText();
 			}
-			for (ColumnAlignerLine line : lines) {
-                line.appendSpace(getMaxLength(lines));
+
+
+			if (model.getAlignSeparator() == ColumnAlignerModel.Align.RIGHT) {
+				int maxLength = getMaxLength(lines);
+				for (ColumnAlignerLine line : lines) {
+					line.appendSpace(maxLength);
+				}
 			}
+	   
 			for (ColumnAlignerLine line : lines) {
 				line.appendSpaceBeforeSeparator();
-			}                    
-			for (ColumnAlignerLine line : lines) {
-                line.appendSpace(getMaxLength(lines));
 			}
 			for (ColumnAlignerLine line : lines) {
 				line.appendSeparator();
@@ -95,9 +98,14 @@ public class ColumnAligner {
 			for (ColumnAlignerLine line : lines) {
 				line.appendSpaceAfterSeparator();
 			}
-			for (ColumnAlignerLine line : lines) {
-                line.appendSpace(getMaxLength(lines));
+
+			if (model.getAlignSeparator() == ColumnAlignerModel.Align.LEFT) {
+				int maxLength = getMaxLength(lines);
+				for (ColumnAlignerLine line : lines) {
+					line.appendSpace(maxLength);
+				}
 			}
+
 			for (ColumnAlignerLine line : lines) {
 				line.next();
 			}
@@ -114,8 +122,15 @@ public class ColumnAligner {
 		return strings;
 	}
 
-    protected int getMaxLength(List<ColumnAlignerLine> lines) {
-        int maxLength = 0;
+	protected void debug(List<ColumnAlignerLine> lines) {
+		System.out.println("DEBUG >>>>>>>>>");
+		for (ColumnAlignerLine line : lines) {
+			System.out.println("'" + line.toString() + "'");
+		}
+	}
+
+	protected int getMaxLength(List<ColumnAlignerLine> lines) {
+		int maxLength = 0;
 		for (ColumnAlignerLine line : lines) {
 			maxLength = Math.max(maxLength, line.resultLength());
 		}

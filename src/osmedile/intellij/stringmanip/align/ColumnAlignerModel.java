@@ -5,56 +5,69 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ColumnAlignerModel {
-    private List<String> separators = new ArrayList<String>();
-    private boolean spaceBefore = true;
-    private boolean spaceAfter = true;
-    private boolean trimValues = true;
-    private boolean trimLines = false;
+	private List<String> separators = new ArrayList<String>();
+	private boolean spaceBefore = true;
+	private boolean spaceAfter = true;
+	private boolean trimValues = true;
+	private boolean trimLines = false;
+	private Align alignSeparator = Align.RIGHT;
 
-    public ColumnAlignerModel() {
-    }
+	public ColumnAlignerModel() {
+	}
 
-    public ColumnAlignerModel(String separator) {
-        this.separators = Arrays.asList(separator);
-    }
+	public ColumnAlignerModel(String separator) {
+		this.separators = Arrays.asList(separator);
+	}
 
-    public List<String> getSeparators() {
-        return separators;
-    }
+	public List<String> getSeparators() {
+		return separators;
+	}
 
-    public void setSeparators(List<String> separators) {
-        this.separators = separators;
-    }
+	public void setSeparators(List<String> separators) {
+		this.separators = separators;
+	}
 
-    public boolean isSpaceBefore() {
-        return spaceBefore;
-    }
+	public boolean isSpaceBefore() {
+		return spaceBefore;
+	}
 
-    public void setSpaceBefore(final boolean spaceBefore) {
-        this.spaceBefore = spaceBefore;
-    }
+	public void setSpaceBefore(final boolean spaceBefore) {
+		this.spaceBefore = spaceBefore;
+	}
 
-    public boolean isSpaceAfter() {
-        return spaceAfter;
-    }
+	public boolean isSpaceAfter() {
+		return spaceAfter;
+	}
 
-    public void setSpaceAfter(final boolean spaceAfter) {
-        this.spaceAfter = spaceAfter;
-    }
+	public void setSpaceAfter(final boolean spaceAfter) {
+		this.spaceAfter = spaceAfter;
+	}
 
-    public boolean isTrimValues() {
-        return trimValues;
-    }
+	public boolean isTrimValues() {
+		return trimValues;
+	}
 
-    public void setTrimValues(final boolean trimValues) {
-        this.trimValues = trimValues;
-    }
+	public void setTrimValues(final boolean trimValues) {
+		this.trimValues = trimValues;
+	}
 
-    public boolean isTrimLines() {
-        return trimLines;
-    }
+	public boolean isTrimLines() {
+		return trimLines;
+	}
 
-    public void setTrimLines(final boolean trimLines) {
-        this.trimLines = trimLines;
-    }
+	public void setTrimLines(final boolean trimLines) {
+		this.trimLines = trimLines;
+	}
+
+	public Align getAlignSeparator() {
+		return alignSeparator;
+	}
+
+	public void setAlignSeparator(Align alignSeparator) {
+		this.alignSeparator = alignSeparator;
+	}
+
+	enum Align {
+		LEFT, RIGHT
+	}
 }
