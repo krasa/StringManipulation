@@ -154,7 +154,7 @@
 
             <separator/>
 
-            <group text="Switch case"
+            <group text="Switch case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
                 <action id="StringManipulation.SwitchStyleAction"
