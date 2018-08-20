@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public class DuplicatUtils {
 
 
-    public static final String INT_ONLY_REGEX = "[-+]?[0-9]+[lLdDfF]?";
+    public static final String INT_ONLY_REGEX = "[-+]?[0-9]+";
 
     public static final String DECIMAL_ONLY_REGEX =
             "([-+]?[0-9]+\\.[0-9]+[dDfF]?)?([-+]?[0-9]+\\.[dDfF]?)?([-+]?\\.[0-9]+[dDfF]?)?";
