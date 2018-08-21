@@ -96,6 +96,7 @@ Provides actions for text manipulation:
         Other:
         <ul>
             <li>Swap Characters/Selections/Lines/Tokens</li>
+            <li>Swap single quote to double quote</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
         </ul>
     </p>

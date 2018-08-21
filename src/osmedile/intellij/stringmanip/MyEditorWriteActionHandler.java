@@ -9,6 +9,9 @@ import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * for showing dialogs before the action
+ */
 public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler {
 
 	private final Class actionClass;
@@ -21,7 +24,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	@Override
 	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
 		MyApplicationComponent.setAction(actionClass);
-		
+
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
 			return;
