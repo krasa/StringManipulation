@@ -16,52 +16,63 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  * @author Vojtech Krasa
  */
 public class IncrementAction extends MyEditorAction {
-
-	public IncrementAction() {
+	public IncrementAction(boolean setupHandler) {
 		super(null);
-		this.setupHandler(new EditorWriteActionHandler(true) {
+		if (setupHandler) {
+			this.setupHandler(new EditorWriteActionHandler(true) {
 
-			@Override
-			public void executeWriteAction(Editor editor, DataContext dataContext) {
-				MyApplicationComponent.setAction(getActionClass());
-			  
-				// Column mode not supported
-				if (editor.isColumnMode()) {
-					return;
-				}
-				final CaretModel caretModel = editor.getCaretModel();
+				@Override
+				public void executeWriteAction(Editor editor, DataContext dataContext) {
+					MyApplicationComponent.setAction(getActionClass());
 
-				final int line = caretModel.getLogicalPosition().line;
-				final int column = caretModel.getLogicalPosition().column;
-				int caretOffset = caretModel.getOffset();
-
-				final SelectionModel selectionModel = editor.getSelectionModel();
-				boolean hasSelection = selectionModel.hasSelection();
-				if (hasSelection == false) {
-					selectionModel.selectLineAtCaret();
-				}
-				final String selectedText = selectionModel.getSelectedText();
-
-				if (selectedText != null) {
-					String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
-							DuplicatUtils.SIMPLE_NUMBER_REGEX);
-					for (int i = 0; i < textParts.length; i++) {
-						textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
+					// Column mode not supported
+					if (editor.isColumnMode()) {
+						return;
 					}
+					final CaretModel caretModel = editor.getCaretModel();
 
-					final String newText = StringUtils.join(textParts);
-					applyChanges(editor, caretModel, line, column, selectionModel, hasSelection, selectedText, newText,
+					final int line = caretModel.getLogicalPosition().line;
+					final int column = caretModel.getLogicalPosition().column;
+					int caretOffset = caretModel.getOffset();
+
+					final SelectionModel selectionModel = editor.getSelectionModel();
+					boolean hasSelection = selectionModel.hasSelection();
+					if (hasSelection == false) {
+						selectionModel.selectLineAtCaret();
+					}
+					final String selectedText = selectionModel.getSelectedText();
+
+					if (selectedText != null) {
+						final String newText = processSelection(selectedText);
+						applyChanges(editor, caretModel, line, column, selectionModel, hasSelection, selectedText, newText,
 							caretOffset);
+					}
 				}
-			}
 
-		});
+			});
+
+		}
 	}
 
+	protected String processSelection(String selectedText) {
+		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
+			DuplicatUtils.SIMPLE_NUMBER_REGEX);
+		for (int i = 0; i < textParts.length; i++) {
+			textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
+		}
+
+		return StringUtils.join(textParts);
+	}
+
+	public IncrementAction() {
+		this(true);
+	}
+
+
 	protected void applyChanges(Editor editor, CaretModel caretModel, int line, int column,
-			SelectionModel selectionModel, boolean hasSelection, String selectedText, String newText, int caretOffset) {
+								SelectionModel selectionModel, boolean hasSelection, String selectedText, String newText, int caretOffset) {
 		editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(),
-				newText);
+			newText);
 	}
 
 }
