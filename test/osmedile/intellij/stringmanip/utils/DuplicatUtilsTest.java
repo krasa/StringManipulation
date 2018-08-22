@@ -1,11 +1,11 @@
 package osmedile.intellij.stringmanip.utils;
 
-import java.util.Arrays;
-
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.Arrays;
 
 /**
  * DuplicatUtils Tester.
@@ -67,12 +67,11 @@ public class DuplicatUtilsTest extends TestCase {
                 " 12 234titito1.23 et le héron22dfsfs", "0x1", ".23df");
         aTestSplitPreserveAllTokens("number bob1toto0x23 12 234titito1.23 et le héron22dfsfs0x1.23df",
                 DuplicatUtils.INT_ONLY_REGEX, "number bob", "1", "toto", "0", "x", "23", " ", "12", " ",
-                "234", "titito", "1", ".", "23", " et le héron", "22d", "fsfs", "0", "x", "1", ".", "23d",
-                "f");
+			"234", "titito", "1", ".", "23", " et le héron", "22", "dfsfs", "0", "x", "1", ".", "23", "df");
         aTestSplitPreserveAllTokens("number bob-1toto0x23 12 2-34titito1.23 et le héron22dfsfs0x1.-23df",
                 DuplicatUtils.INT_ONLY_REGEX, "number bob", "-1", "toto", "0", "x", "23", " ", "12", " ", "2",
-                "-34", "titito", "1", ".", "23", " et le héron", "22d", "fsfs", "0", "x", "1", ".", "-23d",
-                "f");
+			"-34", "titito", "1", ".", "23", " et le héron", "22", "dfsfs", "0", "x", "1", ".", "-23",
+			"df");
         aTestSplitPreserveAllTokens("decimal bob1toto0x23 12 234titito1.23 et le héron22dfsfs0x1.23df",
                 DuplicatUtils.DECIMAL_ONLY_REGEX, "decimal bob1toto0x23 12 234titito", "1.23",
                 " et le héron22dfsfs0x", "1.23d", "f");
@@ -89,7 +88,7 @@ public class DuplicatUtilsTest extends TestCase {
                 "-.29E30", "tito", "-1.23e-34", "et . le héron", "-22e20", "dfsfs", "0x1", ".23d", "f");
         aTestSplitPreserveAllTokens("nbTwo bob1.dto.to0x23 12 234ti-.29E30the1Ltito-1.23e-34et",
                 DuplicatUtils.NUMBER_REGEX, "nbTwo bob", "1.d", "to.to", "0x23", " ", "12", " ", "234", "ti",
-                "-.29E30", "the", "1L", "tito", "-1.23e-34", "et");
+			"-.29E30", "the", "1", "Ltito", "-1.23e-34", "et");
     }
 
     public void aTestSplitPreserveAllTokens(String input, String regex, String... expected) {
@@ -99,7 +98,7 @@ public class DuplicatUtilsTest extends TestCase {
     public void assertArraysEquals(Object[] array1, Object[] array2) {
         if (!Arrays.equals(array1, array2)) {
             throw new AssertionFailedError(
-                    "Expected " + Arrays.toString(array1) + " but was " + Arrays.toString(array2));
+				"Expected \n" + Arrays.toString(array1) + "\n but was \n" + Arrays.toString(array2));
         }
     }
 }
