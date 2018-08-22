@@ -519,6 +519,7 @@
 	    <div>
 	        <h4>Version 6.0<h4>
 	        <ul>
+                <li>Popup enabled in dialogs and other popups (only not for Alt+M - because it would conflict with mnemonics)</li>
                 <li>Added: Repeat last action</li>
                 <li>Added: Swap single quote to double quote</li>
                 <li>Align by column: added history, option to align by separators or values</li>

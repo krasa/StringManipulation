@@ -24,7 +24,9 @@ public class MyApplicationComponent implements ApplicationComponent {
 	}
 
 	public static void setAction(Class itsAction) {
-		getInstance().lastAction = itsAction;
+		if (itsAction != null) {
+			getInstance().lastAction = itsAction;
+		}
 	}
 
 	@NotNull
