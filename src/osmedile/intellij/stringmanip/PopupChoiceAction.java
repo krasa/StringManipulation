@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 
 public class PopupChoiceAction extends EditorAction {
 
@@ -48,7 +49,11 @@ public class PopupChoiceAction extends EditorAction {
 		}
 		Project project = getEventProject(e);
 		if (project != null) {
-			boolean onlyAltDown = e.getInputEvent().isAltDown() && !e.getInputEvent().isShiftDown() && !e.getInputEvent().isMetaDown() && !e.getInputEvent().isControlDown();
+			InputEvent inputEvent = e.getInputEvent();
+			boolean onlyAltDown = false;
+			if (inputEvent != null) {
+				onlyAltDown = inputEvent.isAltDown() && !inputEvent.isShiftDown() && !inputEvent.isMetaDown() && !inputEvent.isControlDown();
+			}
 			LookupEx activeLookup = LookupManager.getInstance(project).getActiveLookup();
 			boolean dialogOpen = isFromDialog(project);
 			boolean popupCheck = activeLookup == null || (activeLookup != null && !onlyAltDown);
