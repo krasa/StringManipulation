@@ -16,34 +16,6 @@
           <grid row="9" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="53392" class="javax.swing.JRadioButton" binding="sensitive">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <selected value="false"/>
-          <text value="Case &amp;Sensitive"/>
-        </properties>
-      </component>
-      <component id="cf3e5" class="javax.swing.JRadioButton" binding="insensitive">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <focusCycleRoot value="false"/>
-          <selected value="true"/>
-          <text value="&amp;Case InSensitive"/>
-        </properties>
-      </component>
-      <component id="6ad20" class="javax.swing.JRadioButton" binding="length">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <selected value="false"/>
-          <text value="By &amp;Length"/>
-        </properties>
-      </component>
       <component id="df5eb" class="javax.swing.JSeparator">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -82,27 +54,6 @@
         </constraints>
         <properties/>
       </component>
-      <component id="c54df" class="javax.swing.JRadioButton" binding="reverse">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <enabled value="true"/>
-          <focusCycleRoot value="false"/>
-          <selected value="false"/>
-          <text value="&amp;Reverse"/>
-        </properties>
-      </component>
-      <component id="b8161" class="javax.swing.JRadioButton" binding="shuffle">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <focusCycleRoot value="false"/>
-          <selected value="false"/>
-          <text value="S&amp;huffle"/>
-        </properties>
-      </component>
       <component id="8680" class="javax.swing.JRadioButton" binding="removeBlank">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -138,17 +89,58 @@
           <text value="&amp;Ascending"/>
         </properties>
       </component>
+      <component id="e9f4" class="javax.swing.JRadioButton" binding="insensitive">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <selected value="true"/>
+          <text value="&amp;Case InSensitive"/>
+        </properties>
+      </component>
+      <component id="a6f" class="javax.swing.JRadioButton" binding="sensitive">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <selected value="false"/>
+          <text value="Case &amp;Sensitive"/>
+        </properties>
+      </component>
+      <component id="36701" class="javax.swing.JRadioButton" binding="length">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <selected value="false"/>
+          <text value="By &amp;Length"/>
+        </properties>
+      </component>
+      <component id="b2a17" class="javax.swing.JRadioButton" binding="reverse">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <focusCycleRoot value="false"/>
+          <selected value="false"/>
+          <text value="&amp;Reverse"/>
+        </properties>
+      </component>
+      <component id="7f653" class="javax.swing.JRadioButton" binding="shuffle">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <focusCycleRoot value="false"/>
+          <selected value="false"/>
+          <text value="S&amp;huffle"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>
-    <group name="buttonGroup1">
-      <member id="6ad20"/>
-      <member id="53392"/>
-      <member id="cf3e5"/>
-      <member id="a2729"/>
-      <member id="c54df"/>
-      <member id="b8161"/>
-    </group>
     <group name="order">
       <member id="95de7"/>
       <member id="dd0cb"/>
@@ -156,6 +148,13 @@
     <group name="emptyLines">
       <member id="8680"/>
       <member id="ee9b0"/>
+    </group>
+    <group name="buttonGroup2">
+      <member id="e9f4"/>
+      <member id="a6f"/>
+      <member id="36701"/>
+      <member id="b2a17"/>
+      <member id="7f653"/>
     </group>
   </buttonGroups>
 </form>
