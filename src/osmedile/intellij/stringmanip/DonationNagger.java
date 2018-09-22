@@ -1,8 +1,11 @@
 package osmedile.intellij.stringmanip;
 
+import com.intellij.ide.plugins.IdeaPluginDescriptor;
+import com.intellij.ide.plugins.PluginManager;
 import com.intellij.notification.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.extensions.PluginId;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.event.HyperlinkEvent;
@@ -21,9 +24,10 @@ public class DonationNagger {
 	public static final String TITLE = "Thank you for using String Manipulation plugin.";
 
 	private long actionsExecuted;
-	private Date firstUsed;
+	private Date firstUsage;
 	private Date lastNaggingDate;
 	private Date lastDonationDate;
+	private String firstUsedVersion;
 
 	public long getActionsExecuted() {
 		return actionsExecuted;
@@ -52,10 +56,18 @@ public class DonationNagger {
 	public void actionExecuted() {
 		try {
 			actionsExecuted++;
-			if (firstUsed == null) {
-				firstUsed = new Date();
+
+			if (firstUsage == null) {
+				firstUsage = new Date();
 			}
 
+			if (firstUsedVersion == null) {
+				IdeaPluginDescriptor string_manipulation = PluginManager.getPlugin(PluginId.getId("String Manipulation"));
+				if (string_manipulation != null) {
+					firstUsedVersion = string_manipulation.getVersion();
+				}
+			}
+			
 			if (notDonatedRecently() && notNaggedRecently()) {
 				if (actionsExecuted == 10 && probablyNotNewUser()) {
 					nag(DONATE);
@@ -86,10 +98,10 @@ public class DonationNagger {
 
 	private boolean probablyNotNewUser() {
 		LocalDate monthAfterRelease = LocalDate.of(2018, 10, 22);
-		LocalDate firstUse = firstUsed.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate firstUse = firstUsage.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate today = LocalDate.now();
 
-		return firstUse.isBefore(monthAfterRelease) //probably upgraded
+		return firstUse.isBefore(monthAfterRelease) //probably upgraded   TODO to be deleted
 			|| today.isAfter(firstUse.plusMonths(1));   //have it for more than month
 
 	}
@@ -115,4 +127,5 @@ public class DonationNagger {
 	private void nagged() {
 		lastDonationDate = new Date();
 	}
+
 }
