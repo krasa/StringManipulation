@@ -63,6 +63,9 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 
 			if (lines.size() > i) {
 				String line = lines.get(i);
+				if (line == null) {
+					line = "";
+				}
 				editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
 						editor.logicalPositionToOffset(selectionEnd), line);
 			} else {
