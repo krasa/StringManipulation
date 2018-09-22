@@ -19,6 +19,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public static final int LIMIT = 20;
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
+	private DonationNagger donationNagger = new DonationNagger();
 
 	public List<ColumnAlignerModel> getHistory() {
 		return new ArrayList<ColumnAlignerModel>(history);
@@ -28,6 +29,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		this.history = history;
 	}
 
+	public DonationNagger getDonationNagger() {
+		return donationNagger;
+	}
+
+	public void setDonationNagger(DonationNagger donationNagger) {
+		this.donationNagger = donationNagger;
+	}
 	@NotNull
 	@Transient
 	public ColumnAlignerModel getLastModel() {
@@ -70,5 +78,4 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		XmlSerializerUtil.copyBean(o, this);
 
 	}
-
 }

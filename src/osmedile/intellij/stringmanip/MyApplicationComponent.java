@@ -26,6 +26,7 @@ public class MyApplicationComponent implements ApplicationComponent {
 	public static void setAction(Class itsAction) {
 		if (itsAction != null) {
 			getInstance().lastAction = itsAction;
+			PluginPersistentStateComponent.getInstance().getDonationNagger().actionExecuted();
 		}
 	}
 
