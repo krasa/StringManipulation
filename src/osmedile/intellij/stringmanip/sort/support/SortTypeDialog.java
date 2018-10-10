@@ -18,6 +18,7 @@ public class SortTypeDialog {
 	protected JRadioButton length;
 	private JRadioButton shuffle;
 	private JRadioButton reverse;
+	private JRadioButton hexa;
 
 	private JRadioButton asc;
 	private JRadioButton desc;
@@ -50,14 +51,17 @@ public class SortTypeDialog {
 				removeBlank.setSelected(true);
 				break;
 		}
-		
-		
+
+
 		switch (sortSettings.getSortType()) {
 			case SHUFFLE:
 				shuffle.setSelected(true);
 				break;
 			case REVERSE:
 				reverse.setSelected(true);
+				break;
+			case HEXA:
+				hexa.setSelected(true);
 				break;
 			case CASE_SENSITIVE_A_Z:
 				sensitive.setSelected(true);
@@ -95,6 +99,7 @@ public class SortTypeDialog {
 				jRadioButtons.add(length);
 				jRadioButtons.add(reverse);
 				jRadioButtons.add(shuffle);
+				jRadioButtons.add(hexa);
 				jRadioButtons.add(asc);
 				jRadioButtons.add(desc);
 				jRadioButtons.add(removeBlank);
@@ -126,11 +131,11 @@ public class SortTypeDialog {
 
 	public SortSettings getSettings() {
 		return new SortSettings(getResult())
-				.emptyLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE)
-				.ignoreLeadingSpaces(ignoreLeadingSpaces.isSelected())
-				.preserveLeadingSpaces(preserveLeadingSpaces.isSelected())
-				.preserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected())
-				.trailingChars(trailingCharacters.getText());
+			.emptyLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE)
+			.ignoreLeadingSpaces(ignoreLeadingSpaces.isSelected())
+			.preserveLeadingSpaces(preserveLeadingSpaces.isSelected())
+			.preserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected())
+			.trailingChars(trailingCharacters.getText());
 	}
 
 	public Sort getResult() {
@@ -156,6 +161,8 @@ public class SortTypeDialog {
 			return Sort.REVERSE;
 		} else if (shuffle.isSelected()) {
 			return Sort.SHUFFLE;
+		} else if (hexa.isSelected()) {
+			return Sort.HEXA;
 		}
 
 		throw new IllegalStateException();

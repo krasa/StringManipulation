@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,6 +54,21 @@ public enum Sort {
 		public int compare(SortLine o1, SortLine o2) {
 			return o2.getTextForComparison().length() - o1.getTextForComparison().length();
 
+		}
+	}),
+	HEXA(new Comparator<SortLine>() {   //TODO error handling?
+		@Override
+		public int compare(SortLine o1, SortLine o2) {
+			return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
+		}
+
+		protected BigInteger toHex(String textForComparison) {
+			if (textForComparison == null) {
+				return BigInteger.ZERO;
+			}
+			textForComparison = textForComparison.trim().replaceAll("^0x", "");
+
+			return new BigInteger(textForComparison, 16);
 		}
 	});
 

@@ -258,6 +258,22 @@ public class SortTest {
 		assertSort(new String[]{"a", "A", "b"}, Sort.CASE_INSENSITIVE_Z_A, "b", "a", "A");
 	}
 
+	@Test
+	public void testHexa() throws Exception {
+		assertSort(new String[]{"9", "A",}, Sort.HEXA, "A", "9");
+		assertSort(new String[]{"0x9", "A",}, Sort.HEXA, "A", "0x9");
+		assertSort(new String[]{"9", "0xA",}, Sort.HEXA, "0xA", "9");
+		assertSort(new String[]{"9", "a",}, Sort.HEXA, "a", "9");
+		assertSort(new String[]{"a", "f",}, Sort.HEXA, "f", "a");
+		try {
+			assertSort(new String[]{"a", "g",}, Sort.HEXA, "f", "a");
+			Assert.fail();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		assertSort(new String[]{"10", "a",}, Sort.HEXA, "10", "a");
+	}
+
 	@NotNull
 	private static String[] scramble(String[] input) {
 		List<String> inputList = Arrays.asList(input);
