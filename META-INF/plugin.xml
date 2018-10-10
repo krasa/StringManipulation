@@ -34,7 +34,7 @@
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
         </action>
 
-        <group id="osmedile.ManipulateStringGroup" text="String Manipulation"
+        <group id="StringManipulation.Group.Main" text="String Manipulation"
                description="Group of String manipulation"
                popup="true"
                icon="/osmedile/intellij/stringmanip/edit.png"
@@ -162,7 +162,7 @@
 
             <separator/>
 
-            <group id="StringManipulation.SwitchCaseGroup" text="Switch case..."
+            <group id="StringManipulation.Group.SwitchCase" text="Switch case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
                 <action id="StringManipulation.SwitchStyleAction"
@@ -307,7 +307,7 @@
                 <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
                         class="osmedile.intellij.stringmanip.filter.InvertedGrepAction"
                         text="Inverted Grep"
-                        description="Inverted Grep on selected text">
+                        description="invERTED_GREP_ON_SElected text">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
@@ -400,7 +400,7 @@
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
-            <reference ref="osmedile.ManipulateStringGroup"></reference>
+            <reference ref="StringManipulation.Group.Main"></reference>
         </group>
 
     </actions>

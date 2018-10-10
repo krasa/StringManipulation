@@ -19,7 +19,7 @@ public class SwitchCasePopupAction extends PopupChoiceAction {
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 				PluginPersistentStateComponent.getInstance().popup(editor.getProject());
 
-				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.SwitchCaseGroup"),
+				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.SwitchCase"),
 					dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
 
 				popup.showInBestPositionFor(dataContext);

@@ -36,7 +36,7 @@ public class PopupChoiceAction extends EditorAction {
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 				PluginPersistentStateComponent.getInstance().popup(editor.getProject());
 
-				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("osmedile.ManipulateStringGroup"),
+				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main"),
 					dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
 
 				popup.showInBestPositionFor(dataContext);
