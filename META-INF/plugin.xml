@@ -404,6 +404,8 @@
     </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
+        <customizableActionGroupProvider
+                implementation="osmedile.intellij.stringmanip.MyCustomizableActionGroupProvider"/>
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.PluginPersistentStateComponent"/>
     </extensions>
 
@@ -471,6 +473,7 @@
 				<li>Sort case-insensitive A-Z</li>
 				<li>Sort case-insensitive Z-A</li>
 				<li>Sort line length asc., desc.</li>
+				<li>Sort hexadecimally</li>
 				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
 			</ul>
 		</p>
@@ -506,7 +509,7 @@
 			</ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
-			You can setup your own shortcuts for better usability.
+			You can setup your own shortcuts for better usability or customize the popup in File | Settings | Appearance & Behavior | Menus and Toolbars.
 		</p>
         <br> <br>
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=75YN7U7H7D7XU&lc=CZ&item_name=String%20Manipulation%20%2d%20IntelliJ%20plugin%20%2d%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">Donations are welcomed.</a>
@@ -522,6 +525,8 @@
 	        <h4>Version 6.1<h4>
 	        <ul>
                 <li>'Remove duplicate lines' fixed for multi caret selection</li>
+                <li>Added hexadecimal sorting</li>
+                <li>Customizable popup via File | Settings | Appearance & Behavior | Menus and Toolbars</li>
             </ul>
 	    </div>
 	    <div>

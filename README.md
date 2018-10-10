@@ -68,6 +68,7 @@ Provides actions for text manipulation:
             <li>Sort case-insensitive A-Z</li>
             <li>Sort case-insensitive Z-A</li>
             <li>Sort line length asc., desc.</li>
+            <li>Sort hexadecimally</li>
             <li>Sort lines by subselection - only one selection/caret per line is handled</li>
         </ul>
     </p>
@@ -103,7 +104,7 @@ Provides actions for text manipulation:
         </ul>
     </p>
     <p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
-        You can setup your own shortcuts for better usability.
+        You can setup your own shortcuts for better usability or customize the popup in File | Settings | Appearance & Behavior | Menus and Toolbars.
     </p>
 </p>
 
