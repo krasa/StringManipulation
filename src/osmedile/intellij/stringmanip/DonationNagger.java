@@ -19,9 +19,9 @@ public class DonationNagger {
 	public static final NotificationGroup NOTIFICATION = new NotificationGroup("String Manipulation donation",
 		NotificationDisplayType.STICKY_BALLOON, true);
 
-	public static final String DONATE = "Click <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=75YN7U7H7D7XU&lc=CZ&item_name=String%20Manipulation%20%2d%20IntelliJ%20plugin%20%2d%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest\">" +
-		"here</a> if you would like to make a donation via PayPal.";
-	public static final String TITLE = "Thank you for using String Manipulation plugin.";
+	public static final String DONATE = "If you find this plugin helpful and would like to make a donation via PayPal, <a href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=75YN7U7H7D7XU&lc=CZ&item_name=String%20Manipulation%20%2d%20IntelliJ%20plugin%20%2d%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest\">" +
+		"click here</a>. Thank you.";
+	public static final String TITLE = "String Manipulation support";
 
 	private long actionsExecuted;
 	private Date firstUsage;
