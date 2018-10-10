@@ -10,6 +10,7 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
+import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -23,6 +24,10 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 
 public class PopupChoiceAction extends EditorAction {
+
+	public PopupChoiceAction(EditorActionHandler defaultHandler) {
+		super(defaultHandler);
+	}
 
 	public PopupChoiceAction() {
 		super(new MyEditorWriteActionHandler(null) {

@@ -16,6 +16,14 @@
 
 
     <actions>
+        <action id="osmedile.intellij.stringmanip.SwitchCasePopup"
+                class="osmedile.intellij.stringmanip.SwitchCasePopupAction"
+                text="Switch Case..."
+                description="Popup Switch Case String Manipulation ..."
+                icon="/osmedile/intellij/stringmanip/edit.png">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+        </action>
+
         <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String Manipulation ..."
@@ -154,7 +162,7 @@
 
             <separator/>
 
-            <group text="Switch case..."
+            <group id="StringManipulation.SwitchCaseGroup" text="Switch case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
                 <action id="StringManipulation.SwitchStyleAction"
@@ -405,7 +413,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <customizableActionGroupProvider
-                implementation="osmedile.intellij.stringmanip.MyCustomizableActionGroupProvider"/>
+                implementation="osmedile.intellij.stringmanip.MyCustomizableActionGroupProvider" order="first"/>
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.PluginPersistentStateComponent"/>
     </extensions>
 
@@ -526,6 +534,7 @@
 	        <ul>
                 <li>'Remove duplicate lines' fixed for multi caret selection</li>
                 <li>Added hexadecimal sorting</li>
+                <li>Added separate popup for switching cases</li>
                 <li>Customizable popup via File | Settings | Appearance & Behavior | Menus and Toolbars</li>
             </ul>
 	    </div>

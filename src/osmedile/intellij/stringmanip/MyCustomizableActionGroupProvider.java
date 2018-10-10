@@ -8,6 +8,7 @@ public class MyCustomizableActionGroupProvider extends CustomizableActionGroupPr
 
 	@Override
 	public void registerGroups(CustomizableActionGroupRegistrar registrar) {
-		registrar.addCustomizableActionGroup("osmedile.ManipulateStringGroup", "String Manipulation plugin popup");
+		registrar.addCustomizableActionGroup("osmedile.ManipulateStringGroup", "String Manipulation - Main popup");
+		registrar.addCustomizableActionGroup("StringManipulation.SwitchCaseGroup", "String Manipulation - Switch Case popup");
 	}
 }
