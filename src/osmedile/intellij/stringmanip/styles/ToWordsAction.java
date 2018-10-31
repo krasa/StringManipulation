@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.styles;
 
-public class ToCamelCaseAction extends AbstractCaseConvertingAction {
-	public ToCamelCaseAction() {
+public class ToWordsAction extends AbstractCaseConvertingAction {
+	public ToWordsAction() {
 	}
 
-	public ToCamelCaseAction(boolean setupHandler) {
+	public ToWordsAction(boolean setupHandler) {
 		super(setupHandler);
 	}
 
