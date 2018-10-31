@@ -201,6 +201,13 @@
                         text="To camelCase (Or To Words)"
                         description="To camelCase (Or To Words)">
                 </action>
+
+                <action id="osmedile.intellij.stringmanip.ToWordsAction"
+                        class="osmedile.intellij.stringmanip.styles.ToWordsAction"
+                        text="To Words"
+                        description="To Words">
+                </action>
+
                 <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
                         text="To camelCase (or to lowercase words)"
