@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Separators:"/>
+          <text value="分隔符:"/>
         </properties>
       </component>
       <grid id="787ed" binding="textfields" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -29,7 +29,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Add space before separator"/>
+          <text value="分隔符前加空格"/>
         </properties>
       </component>
       <component id="dcd21" class="javax.swing.JCheckBox" binding="addSpaceAfterSeparatorCheckBox">
@@ -37,7 +37,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Add space after separator"/>
+          <text value="分隔符后加空格"/>
         </properties>
       </component>
       <component id="c32eb" class="javax.swing.JCheckBox" binding="trimValues">
@@ -45,7 +45,7 @@
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Trim values"/>
+          <text value="修剪值"/>
         </properties>
       </component>
       <component id="2be38" class="javax.swing.JCheckBox" binding="trimLines">
@@ -53,7 +53,7 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Trim lines"/>
+          <text value="修剪行"/>
         </properties>
       </component>
       <component id="c6d65" class="javax.swing.JRadioButton" binding="alignSeparatorLeft">
@@ -61,7 +61,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Align only values"/>
+          <text value="值对齐"/>
         </properties>
       </component>
       <component id="786c6" class="javax.swing.JButton" binding="historyButton" default-binding="true">
@@ -69,7 +69,7 @@
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="History"/>
+          <text value="历史"/>
         </properties>
       </component>
       <component id="7e093" class="javax.swing.JButton" binding="resetButton" default-binding="true">
@@ -77,7 +77,7 @@
           <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Reset "/>
+          <text value="重置"/>
         </properties>
       </component>
       <component id="a9cb7" class="javax.swing.JRadioButton" binding="alignSeparatorRight">
@@ -85,7 +85,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Align seperators"/>
+          <text value="对齐分隔符"/>
         </properties>
       </component>
     </children>

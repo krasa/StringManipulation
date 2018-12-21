@@ -1,4 +1,10 @@
-String Manipulation [![Donate][badge-paypal-img]][badge-paypal]
+String Manipulation 汉化版 [![Donate][badge-paypal-img]][badge-paypal]
+
+如何使用:
+    
+    使用IDEA打开为 plugin 项目, 点击 "build" - "Prepare Plugin Module 'String Manipulation' For Deployment"
+    在项目根目录的'StringManipulation.zip'就是构建好的插件,卸载原先的String Manipulation,本地安装就可以了.
+
 ==================
 IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162 
 

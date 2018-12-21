@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text value="Default"/>
+          <text value="默认"/>
         </properties>
       </component>
       <vspacer id="a729c">
@@ -27,7 +27,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="URL safe"/>
+          <text value="URL 安全"/>
         </properties>
       </component>
       <component id="a2729" class="javax.swing.JRadioButton" binding="urlSafeChunked">
@@ -35,7 +35,7 @@
           <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="URL safe,  chunked"/>
+          <text value="URL 安全,  分块"/>
         </properties>
       </component>
       <component id="cf3e5" class="javax.swing.JRadioButton" binding="chunked">
@@ -43,14 +43,16 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Chunked"/>
+          <text value="分块"/>
         </properties>
       </component>
       <component id="fd02c" class="javax.swing.JComboBox" binding="myComboBox" custom-create="true" default-binding="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <model/>
+        </properties>
       </component>
     </children>
   </grid>

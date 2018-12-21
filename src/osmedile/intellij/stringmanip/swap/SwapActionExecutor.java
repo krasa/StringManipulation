@@ -36,7 +36,7 @@ public class SwapActionExecutor {
 	@NotNull
 	public String swapTokens(String separator, String selectedText) {
 		String[] split;
-		if (separator.equals(" ")) {
+		if (" ".equals(separator)) {
 			split = org.apache.commons.lang.StringUtils.splitByWholeSeparator(selectedText.trim(), separator);
 		} else {
 			split = org.apache.commons.lang.StringUtils.splitByWholeSeparatorPreserveAllTokens(selectedText, separator);
@@ -46,7 +46,7 @@ public class SwapActionExecutor {
 		result[0] = split[split.length - 1];
 		System.arraycopy(split, 0, result, 1, split.length - 1);
 
-		if (separator.equals(" ")) {
+		if (" ".equals(separator)) {
 			return org.apache.commons.lang.StringUtils.join(result, separator);
 		} else {
 			StringBuilder sb = new StringBuilder();
@@ -196,7 +196,7 @@ public class SwapActionExecutor {
 			}
 		}
 
-		String newSeparator = Messages.showInputDialog("Separator", "Split by separator and swap",
+		String newSeparator = Messages.showInputDialog("分隔符", "按分隔符分割和替换",
 				Messages.getQuestionIcon(), separator, null);
 		if (newSeparator != null) {
 			if (newSeparator.equals("")) {
@@ -224,15 +224,12 @@ public class SwapActionExecutor {
 	}
 
 	protected void selectLines_for_caretsWithoutSelection() {
-		editor.getCaretModel().runForEachCaret(new CaretAction() {
-			@Override
-			public void perform(Caret caret) {
-				if (!caret.hasSelection()) {
-					caret.selectLineAtCaret();
-					String selectedText = caret.getSelectedText();
-					if (selectedText != null && selectedText.endsWith("\n")) {
-						caret.setSelection(caret.getSelectionStart(), caret.getSelectionEnd() - 1);
-					}
+		editor.getCaretModel().runForEachCaret(caret -> {
+			if (!caret.hasSelection()) {
+				caret.selectLineAtCaret();
+				String selectedText = caret.getSelectedText();
+				if (selectedText != null && selectedText.endsWith("\n")) {
+					caret.setSelection(caret.getSelectionStart(), caret.getSelectionEnd() - 1);
 				}
 			}
 		}, true);

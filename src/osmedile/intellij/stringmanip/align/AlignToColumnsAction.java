@@ -33,9 +33,8 @@ public class AlignToColumnsAction extends MyEditorAction {
                     DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
                         {
                             init();
-                            setTitle("Separators");
+                            setTitle("分隔符");
                         }
-
                         @Nullable
                         @Override
                         public JComponent getPreferredFocusedComponent() {

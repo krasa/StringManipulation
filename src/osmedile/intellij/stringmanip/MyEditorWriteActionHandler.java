@@ -30,12 +30,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 			return;
 		}
 
-		final Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				executeWriteAction(editor, caret, dataContext, additionalParameter.second);
-			}
-		};
+		final Runnable runnable = () -> executeWriteAction(editor, caret, dataContext, additionalParameter.second);
 		new EditorWriteActionHandler(false) {
 			@Override
 			public void executeWriteAction(Editor editor1, @Nullable Caret caret1, DataContext dataContext1) {

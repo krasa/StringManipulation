@@ -42,7 +42,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 					if (editor.getCaretModel().getCaretCount() > 1) {
 						settings = getSortSettings(editor);
 					} else {
-						Messages.showInfoMessage(editor.getProject(), "You must have multiple selections/carets on multiple lines.", "Sort By Subselection");
+						Messages.showInfoMessage(editor.getProject(), "你必须使用列选择模式下选中多行", "列选择模式排序");
 					}
 
 					if (settings == null) return stopExecution();

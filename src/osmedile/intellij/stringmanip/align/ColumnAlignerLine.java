@@ -22,7 +22,7 @@ public class ColumnAlignerLine {
 	public ColumnAlignerLine(ColumnAlignerModel model, String separator, String textPart, boolean endsWithNextLine) {
 		this.endsWithNextLine = endsWithNextLine;
 		this.separator = separator;
-		if (separator.equals(" ")) {
+		if (" ".equals(separator)) {
 			split = StringUtils.splitByWholeSeparator(textPart, separator);
 		} else {
 			split = StringUtils.splitByWholeSeparatorPreserveAllTokens(textPart, separator);

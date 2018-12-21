@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
-import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.util.Pair;
@@ -41,7 +40,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 	@NotNull
 	public Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
-		return new Pair<Boolean, T>(true, null);
+		return new Pair<>(true, null);
 	}
 
 	protected final Pair<Boolean, T> stopExecution() {
@@ -57,12 +56,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	}
 
 	protected void executeMyWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
-		editor.getCaretModel().runForEachCaret(new CaretAction() {
-			@Override
-			public void perform(Caret caret) {
-				executeMyWriteActionPerCaret(caret.getEditor(), caret, dataContext, additionalParam);
-			}
-		});
+		editor.getCaretModel().runForEachCaret(caret -> executeMyWriteActionPerCaret(caret.getEditor(), caret, dataContext, additionalParam));
 	}
 
 	protected void executeMyWriteActionPerCaret(Editor editor, Caret caret, DataContext dataContext, T additionalParam) {

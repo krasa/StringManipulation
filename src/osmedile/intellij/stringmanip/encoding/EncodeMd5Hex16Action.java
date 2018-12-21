@@ -5,7 +5,7 @@ import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -19,10 +19,10 @@ public class EncodeMd5Hex16Action extends AbstractStringManipAction {
 	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
 		try {
 
-					byte[] hash = MessageDigest.getInstance("md5").digest(selectedText.getBytes("UTF-8"));
+					byte[] hash = MessageDigest.getInstance("md5").digest(selectedText.getBytes(StandardCharsets.UTF_8));
 
 
-            StringBuffer hashString = new StringBuffer();
+            StringBuilder hashString = new StringBuilder();
 
             for (byte aHash : hash) {
                 String hex = Integer.toHexString(aHash);
@@ -39,10 +39,8 @@ public class EncodeMd5Hex16Action extends AbstractStringManipAction {
             return hashString.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
         }
-	}
+    }
 
 	@Override
 	public String transformByLine(String s) {

@@ -10,6 +10,7 @@ public class ShuffleLinesAction extends SortAction {
 		super(STORE_KEY);
 	}
 
+	@Override
 	protected SortSettings getSortSettings(String storeKey) {
 		SortSettings sortSettings = super.getSortSettings(storeKey);
 		sortSettings.sortType(Sort.SHUFFLE);

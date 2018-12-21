@@ -24,7 +24,7 @@ import java.util.List;
 
 import static osmedile.intellij.stringmanip.DonationNagger.NOTIFICATION;
 
-@State(name = "StringManipulationState", storages = {@Storage(id = "StringManipulationState", file = "$APP_CONFIG$/stringManipulation.xml")})
+@State(name = "StringManipulationState", storages = {@Storage(value = "StringManipulationState", file = "$APP_CONFIG$/stringManipulation.xml")})
 public class PluginPersistentStateComponent implements PersistentStateComponent<PluginPersistentStateComponent> {
 
 	public static final int LIMIT = 20;

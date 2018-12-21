@@ -28,7 +28,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Charset> {
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Choose Charset");
+				setTitle("选择字符集");
 			}
 
 			@Nullable
@@ -64,7 +64,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Charset> {
 			Charset charset = Charset.forName(base64EncodingDialog.getCharset());
 			return continueExecution(charset);
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "无效的字符集");
 			return stopExecution();
 		}
 	}

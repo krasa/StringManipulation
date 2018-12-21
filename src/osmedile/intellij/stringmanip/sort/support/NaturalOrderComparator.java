@@ -164,12 +164,12 @@ public class NaturalOrderComparator implements Comparator {
 
 		System.out.println("Original: " + orig);
 
-		List scrambled = Arrays.asList(strings);
+		List<String> scrambled = Arrays.asList(strings);
 		Collections.shuffle(scrambled);
 
 		System.out.println("Scrambled: " + scrambled);
 
-		Collections.sort(scrambled, new NaturalOrderComparator());
+		scrambled.sort(new NaturalOrderComparator());
 
 		System.out.println("Sorted: " + scrambled);
 	}

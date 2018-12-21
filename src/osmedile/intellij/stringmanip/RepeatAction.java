@@ -36,9 +36,9 @@ public class RepeatAction extends EditorAction {
 		AnAction anAction = MyApplicationComponent.getInstance().getAnAction();
 		if (anAction != null) {
 			e.getPresentation().setEnabled(true);
-			e.getPresentation().setText("Repeat - " + anAction.getTemplatePresentation().getText());
+			e.getPresentation().setText("重复 - " + anAction.getTemplatePresentation().getText());
 		} else {
-			e.getPresentation().setText("Repeat Last Action");
+			e.getPresentation().setText("重复最后的操作");
 			e.getPresentation().setEnabled(false);
 		}
 	}

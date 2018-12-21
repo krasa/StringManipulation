@@ -23,12 +23,7 @@ import java.util.Collection;
 public class GrepAction extends MyEditorAction {
 
 	public GrepAction() {
-		this(new GrepFilter() {
-			@Override
-			public boolean execute(String text, String grepos) {
-				return text.contains(grepos);
-			}
-		});
+		this(String::contains);
 	}
 
 	interface GrepFilter {
@@ -43,12 +38,12 @@ public class GrepAction extends MyEditorAction {
 			protected Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
-					String grepos = Messages.showInputDialog(editor.getProject(), "Grep text", "Grep", null);
+					String grepos = Messages.showInputDialog(editor.getProject(), "过滤文本", "过滤", null);
 					if (!StringUtil.isEmptyOrSpaces(grepos)) {
 						return continueExecution(grepos);
 					}
 				} else {
-					Messages.showInfoMessage(editor.getProject(), "Please select text, before using grep", "Grep");
+					Messages.showInfoMessage(editor.getProject(), "请先选定要过滤的文本", "过滤");
 				}
 				return stopExecution();
 			}

@@ -8,7 +8,7 @@ public class MyCustomizableActionGroupProvider extends CustomizableActionGroupPr
 
 	@Override
 	public void registerGroups(CustomizableActionGroupRegistrar registrar) {
-		registrar.addCustomizableActionGroup("StringManipulation.Group.Main", "String Manipulation - Main popup");
-		registrar.addCustomizableActionGroup("StringManipulation.Group.SwitchCase", "String Manipulation - Switch Case popup");
+		registrar.addCustomizableActionGroup("StringManipulation.Group.Main", "String Manipulation - 弹出主窗口...");
+		registrar.addCustomizableActionGroup("StringManipulation.Group.SwitchCase", "String Manipulation - 弹出转换...");
 	}
 }

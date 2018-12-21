@@ -27,7 +27,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Base64 Encoding Options");
+				setTitle("Base64编码选项");
 			}
 
 			@Nullable
@@ -63,7 +63,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		try {
 			Charset.forName(base64EncodingDialog.getCharset());
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "无效的字符集");
 			return stopExecution();
 		}
 		return continueExecution(base64EncodingDialog);

@@ -18,383 +18,383 @@
     <actions>
         <action id="osmedile.intellij.stringmanip.SwitchCasePopup"
                 class="osmedile.intellij.stringmanip.SwitchCasePopupAction"
-                text="Switch Case..."
-                description="Popup Switch Case String Manipulation ..."
+                text="转换..."
+                description="弹出 String Manipulation 转换操作 ..."
                 icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditMenu" anchor="last"/>
         </action>
 
         <action id="osmedile.intellij.stringmanip.PopupChoiceAction"
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
-                text="Popup String Manipulation ..."
-                description="Popup String Manipulation ..."
+                text="弹出 String Manipulation ..."
+                description="弹出 String Manipulation ..."
                 icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
         </action>
 
+
         <group id="StringManipulation.Group.Main" text="String Manipulation"
-               description="Group of String manipulation"
+               description="String Manipulation Main"
                popup="true"
-               icon="/osmedile/intellij/stringmanip/edit.png"
-        >
+               icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditMenu" anchor="last"/>
 
             <action id="osmedile.intellij.stringmanip.RepeatAction" class="osmedile.intellij.stringmanip.RepeatAction"
-                    text="Repeat Last Action"/>
+                    text="重复最后的操作"/>
             <separator/>
 
-            <group text="Escape/Unescape..."
-                   description="Group of String manipulation escape actions"
+            <group text="转义/反转义..."
+                   description="String Manipulation 转义操作"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaAction"
-                        text="Escape Java"
+                        text="转义 Java"
                         description="Call StringEscapeUtils.escapeJava(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavaAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaAction"
-                        text="Unescape Java"
+                        text="反转义 Java"
                         description="Call StringEscapeUtils.unescapeJava(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
-                        text="Escape Javascript"
+                        text="转义 Javascript"
                         description="Call StringEscapeUtils.escapeJavaScript(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaScriptAction"
-                        text="Unescape Javascript"
+                        text="反转义 Javascript"
                         description="Call StringEscapeUtils.unescapeJavaScript(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeHtmlAction"
-                        text="Escape HTML"
+                        text="转义 HTML"
                         description="Call StringEscapeUtils.escapeHtml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeHtmlAction"
-                        text="Unescape HTML"
+                        text="反转义 HTML"
                         description="Call StringEscapeUtils.unescapeHtml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeSQLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeSQLAction"
-                        text="Escape SQL"
+                        text="转义 SQL"
                         description="Call StringEscapeUtils.escapeSql(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeXMLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeXMLAction"
-                        text="Escape XML"
+                        text="转义 XML"
                         description="Call StringEscapeUtils.escapeXml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeXMLAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeXMLAction"
-                        text="Unescape XML"
+                        text="反转义 XML"
                         description="Call StringEscapeUtils.unescapeXml(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapePHPAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapePHPAction"
-                        text="Escape PHP"
+                        text="转义 PHP"
                         description="Call StringEscapeUtils.escapePHP(selectedText)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapePHPAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapePHPAction"
-                        text="Unescape PHP"
+                        text="反转义 PHP"
                         description="Call StringEscapeUtils.unescapePHP(selectedText)">
                 </action>
                 <action id="StringManipulation.DiacriticsToAsciiAction"
                         class="osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction"
-                        text="Convert diacritics(accents) to ASCII"
-                        description="Convert diacritics(accents) to ASCII">
+                        text="转换读音符号 为 ASCII"
+                        description="转换读音符号 为 ASCII">
                 </action>
                 <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
                         class="osmedile.intellij.stringmanip.escaping.NonAsciiToUnicodeEscapedAction"
-                        text="Escape non ascii to Unicode"
-                        description="Escape non ascii to Unicode">
+                        text="转义 非ascii 为 Unicode"
+                        description="转义 非ascii 为 Unicode">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
                         class="osmedile.intellij.stringmanip.escaping.UnicodeEscapedToStringAction"
-                        text="Escaped Unicode to String"
-                        description="Escaped Unicode to String">
+                        text="转义Unicode 为 字符"
+                        description="转义Unicode 为 字符">
                 </action>
             </group>
 
-            <group text="Encode/Decode..."
-                   description="Group of String manipulation encode/decode actions"
+            <group text="编码/解码..."
+                   description="String Manipulation 编码/解密 操作"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
                         class="osmedile.intellij.stringmanip.encoding.EncodeMd5Hex16Action"
-                        text="Encode to MD5 Hex16"
-                        description="Encode to MD5 Hex16">
+                        text="编码为 MD5 Hex16"
+                        description="编码为 MD5 Hex16">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.EncodeBase64Action"
-                        text="Encode to Base64"
-                        description="Encode to Base 64">
+                        text="编码为 Base64"
+                        description="编码为 Base64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.DecodeBase64Action"
-                        text="Decode to Base64"
-                        description="Decode Base 64">
+                        text="解码为 Base64"
+                        description="解码为 Base 64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeAction"
-                        text="Encode URL"
-                        description="Encode URL (by java.net.URLEncoder)">
+                        text="编码 URL"
+                        description="编码 URL (java.net.URLEncoder)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLDecodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLDecodeAction"
-                        text="Decode URL"
-                        description="Decode URL (by java.net.URLDecoder)">
+                        text="解码 URL"
+                        description="解码 URL (java.net.URLDecoder)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986Action"
-                        text="Encode URL (RFC 3986)"
-                        description="Encode URL (RFC 3986 - space character as %20 instead of +)">
+                        text="编码 URL (RFC 3986)"
+                        description="编码 URL (RFC 3986 - 空格字符为％20而不是+)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.encoding.URLDecodeRFC3986"
                         class="osmedile.intellij.stringmanip.encoding.URLDecodeRFC3986Action"
-                        text="Decode URL (RFC 3986)"
-                        description="Decode URL (RFC 3986 - space character as %20 instead of +)">
+                        text="解码 URL (RFC 3986)"
+                        description="解码 URL (RFC 3986 - 空格字符为％20而不是+)">
                 </action>
             </group>
 
             <separator/>
 
-            <group id="StringManipulation.Group.SwitchCase" text="Switch case..."
-                   description="Group of String manipulation Switch case actions"
+            <group id="StringManipulation.Group.SwitchCase" text="转换..."
+                   description="String Manipulation 转换操作"
                    popup="true">
                 <action id="StringManipulation.SwitchStyleAction"
                         class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-                        text="Switch case"
-                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
+                        text="转换"
+                        description="转换/切换样式 (大小驼峰命名, 大小短横线命名, 大小蛇形命名, 点命名, 大小写单词)">
                 </action>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
-                        text="To SCREAMING__SNAKE__CASE (or to camelCase)"
-                        description="To SCREAMING_SNAKE_CASE (or to camelCase)">
+                        text="转换为大蛇形命名 (或 驼峰命名)"
+                        description="SCREAMING_SNAKE_CASE &lt;-&gt; screamingSnakeCase">
                 </action>
                 <action id="StringManipulation.ToSnakeCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
-                        text="To snake__case (or to camelCase)"
-                        description="To snake_case (or to camelCase)">
+                        text="转换为小蛇形命名 (或 驼峰命名)"
+                        description="snake_case &lt;-&gt; snakeCase">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                        text="To kebab-case (or to snake__case)"
-                        description="To kebab-case (or to snake_case)">
+                        text="转换为短横线命名 (或 小蛇形命名)"
+                        description="kebab-case &lt;-&gt; kebab-case">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.CamelCaseToHyphenLowerCaseAction"
-                        text="To kebab-case (or to camelCase)"
-                        description="To kebab-case (or to camelCase)">
+                        text="转换为短横线命名 (或 驼峰命名)"
+                        description="kebab-case &lt;-&gt; kebabCase">
                 </action>
                 <action id="StringManipulation.ToDotStyleAction"
                         class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
-                        text="To dot.case (or to camelCase)"
-                        description="To dot.case (or to camelCase)">
+                        text="转换为点命名 (或 驼峰命名)"
+                        description="dot.case &lt;-&gt; dotCase">
                 </action>
 
                 <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                        text="To camelCase (Or To Words)"
-                        description="To camelCase (Or To Words)">
+                        text="转换为驼峰命名 (或 单词)"
+                        description="camelCase &lt;-&gt; Camel Case">
                 </action>
                 <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
-                        text="To camelCase (or to lowercase words)"
-                        description="To camelCase (or to lowercase words)">
+                        text="转换为驼峰命名 (或 全小写单词)"
+                        description="camelCase &lt;-&gt; camel case">
                 </action>
                 <action id="StringManipulation.ToPascalCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
-                        text="To PascalCase (or to camelCase)"
-                        description="To PascalCase (or to camelCase)">
+                        text="转换为帕斯卡命名 (或 驼峰命名)"
+                        description="PascalCase &lt;-&gt; pascalCase">
                 </action>
 
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                         class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
-                        text="Capitalize"
-                        description="Capitalize">
+                        text="选定文本大写"
+                        description="capitalize -&gt; Capitalize">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToLowerCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToLowerCaseAction"
-                        text="To lower case"
-                        description="To Lower Case">
+                        text="转换为小写"
+                        description="A -&gt; a">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToUpperCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToUpperCaseAction"
-                        text="To UPPER CASE"
-                        description="To Upper Case">
+                        text="转换为大写"
+                        description="a -&gt; A">
                 </action>
                 <action id="osmedile.intellij.stringmanip.SwapCaseAction"
                         class="osmedile.intellij.stringmanip.styles.InvertCaseAction"
-                        text="Invert case"
-                        description="Invert Case -> iNVERT cASE">
+                        text="样式反转"
+                        description="Invert Case &lt;-&gt; iNVERT cASE">
                 </action>
             </group>
 
             <separator/>
 
-            <group text="Increment/Decrement..."
-                   description="Increment, decrement, create sequence, unique numbers"
+            <group text="递增/递减..."
+                   description="递增, 递减, 创建序列, 唯一数字"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.DecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DecrementAction"
-                        text="Decrement"
-                        description="Decrement numbers inside selected text">
+                        text="递减"
+                        description="选定文本内的数字递减">
                 </action>
                 <action id="osmedile.intellij.stringmanip.IncrementAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementAction"
-                        text="Increment"
-                        description="Increment numbers inside selected text">
+                        text="递增"
+                        description="选定文本内的数字递增">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
-                        text="Duplicate and decrement"
-                        description="Duplicate and decrement numbers inside selected text">
+                        text="递减并复制"
+                        description="选定文本内的数字递减并复制">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndIncrementAction"
-                        text="Duplicate and increment"
-                        description="Duplicate and increment numbers inside selected text">
+                        text="递增并复制"
+                        description="选定文本内的数字递增并复制">
                 </action>
                 <action id="StringManipulation.CreateSequenceAction"
                         class="osmedile.intellij.stringmanip.increment.CreateSequenceAction"
-                        text="Create sequence"
-                        description="Keep first number, replace all other by incrementing">
+                        text="创建序列"
+                        description="跳过第一个数字,递增其他数字 0a0b0c0 -&gt; 0a1b2c3">
                 </action>
                 <action id="StringManipulation.IncrementDuplicateNumbersAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementDuplicateNumbersAction"
-                        text="Increment duplicates"
-                        description="Increment duplicate numbers">
+                        text="递增重复"
+                        description="递增重复的数字 123 123 123 -&gt; 123 124 125">
                 </action>
             </group>
 
-            <group text="Sort..."
-                   description="Sort lines, delimited text"
+            <group text="排序..."
+                   description="行排序, 分割文本"
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
-                        text="Sort lines..."
-                        description="Universal lines sort with all kinds of features">
+                        text="行排序..."
+                        description="具有各种特点的通用行排序">
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort lines by subselection"
-                        description="Sort lines by subselection - only for multi carets">
+                        text="列排序..."
+                        description="列排序 - 仅支持列选择模式">
                 </action>
                 <action id="StringManipulation.ReverseAction"
                         class="osmedile.intellij.stringmanip.sort.ReverseLinesAction"
-                        text="Reverse lines"
-                        description="Reverse order of lines">
+                        text="反转行"
+                        description="行倒序">
                 </action>
                 <action id="StringManipulation.ShuffleLinesAction"
                         class="osmedile.intellij.stringmanip.sort.ShuffleLinesAction"
-                        text="Shuffle lines"
-                        description="Shuffle lines">
+                        text="随机排序行"
+                        description="随机排序行">
                 </action>
             </group>
 
-            <group text="Filter/Remove/Trim..."
-                   description="Filter/Remove/Trim..."
+            <group text="过滤/删除/修剪..."
+                   description="过滤/删除/修剪..."
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
                         class="osmedile.intellij.stringmanip.filter.GrepAction"
-                        text="Grep"
-                        description="Grep on selected text">
+                        text="过滤"
+                        description="搜索过滤选定文本">
                 </action>
                 <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
                         class="osmedile.intellij.stringmanip.filter.InvertedGrepAction"
-                        text="Inverted Grep"
-                        description="invERTED_GREP_ON_SElected text">
+                        text="反向过滤"
+                        description="反向搜索过滤选定文本">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
-                        text="Remove duplicate lines"
-                        description="Remove duplicate lines in selected text or lines within multiple selections">
+                        text="删除重复行"
+                        description="删除选定文本中的重复行或多个选择中的重复行">
                 </action>
                 <action id="StringManipulation.KeepOnlyDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.KeepOnlyDuplicateLinesAction"
-                        text="Keep only duplicate lines"
-                        description="Remove non-duplicate lines in selected text or lines within multiple selections">
+                        text="仅保留重复的行"
+                        description="删除选定文本中的非重复行或多个选择中的行">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
-                        text="Remove empty lines"
-                        description="Remove empty lines in selected text">
+                        text="删除空行"
+                        description="删除选定文本中的空行">
                 </action>
                 <action id="StringManipulation.RemoveNewLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
-                        text="Remove all newlines"
-                        description="Remove all line breaks in selected text">
+                        text="删除所有换行"
+                        description="删除选定文本中的所有换行符">
                 </action>
                 <separator/>
 
                 <action id="osmedile.intellij.stringmanip.TrimAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAction"
-                        text="Trim"
-                        description="Trim selected text">
+                        text="修剪"
+                        description="修剪选择的文本">
                 </action>
                 <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAllSpacesAction"
-                        text="Trim all spaces"
-                        description="Trim all spaces selected text">
+                        text="修剪所有空格"
+                        description="修剪选定文本中的所有空格">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveAllSpacesAction"
-                        text="Remove all spaces"
-                        description="Remove all spaces in selected text">
+                        text="删除所有空格"
+                        description="删除选定文本中的所有空格">
                 </action>
             </group>
 
-            <group text="Align..."
-                   description="Text and columns alignment"
+            <group text="对齐..."
+                   description="文本和列对齐..."
                    popup="true">
                 <action id="StringManipulation.AlignToColumns"
                         class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align to Columns"
-                        description="Format selected text to columns/table by a chosen separator/delimiter">
+                        text="列对齐"
+                        description="使用选定的 分隔符/分隔符 将选定的文本格式化为 列/表">
                     <add-to-group group-id="CodeMenu" anchor="last"/>
                 </action>
                 <action id="StringManipulation.AlignLeftAction"
                         class="osmedile.intellij.stringmanip.align.AlignLeftAction"
-                        text="Align Left"
-                        description="Align Left">
+                        text="左对齐"
+                        description="左对齐">
                 </action>
                 <action id="StringManipulation.AlignCenterAction"
                         class="osmedile.intellij.stringmanip.align.AlignCenterAction"
-                        text="Align Center"
-                        description="Align Center">
+                        text="居中"
+                        description="居中">
                 </action>
                 <action id="StringManipulation.AlignRightAction"
                         class="osmedile.intellij.stringmanip.align.AlignRightAction"
-                        text="Align Right"
-                        description="Align Right">
+                        text="右对齐"
+                        description="右对齐">
                 </action>
             </group>
 
 
             <separator/>
             <action id="osmedile.intellij.stringmanip.swap.SwapAction"
-                    class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
-                    description="Depending on what is selected or how many carets there are">
+                    class="osmedile.intellij.stringmanip.swap.SwapAction" text="替换 字符/选择/行/标记"
+                    description="取决于选择了什么或者有多少种插入符号">
             </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
-                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction" text="Swap between &quot; and '"
+                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction" text="替换 &quot;和' 之间"
                     description="Swap single quote to double quote">
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
-                    text="Switch file path separators: Windows&lt;-&gt;UNIX"
-                    description="Switch file path separators: Windows&lt;-&gt;UNIX">
+                    text="切换文件路径分隔符: Windows&lt;-&gt;UNIX"
+                    description="切换文件路径分隔符: Windows&lt;-&gt;UNIX">
             </action>
         </group>
 
 
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
-               description="String Manipulation"
+               description="String Manipulation 弹出菜单"
                popup="false"
                icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
@@ -529,6 +529,16 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>关于汉化...<h4>
+	        <ul>
+                <li>汉化作者：<a href="https://github.com/nanusl">nanusl<a/></li>
+                <li>E文不好,有些地方翻译的不到位</li>
+                <li>欢迎 pull、issue</li>
+                <li>感谢：谷歌翻译、有道翻译、微信翻译...</li>
+            </ul>
+	    </div>
+	    <div>
 	    <div>
 	        <h4>Version 6.1<h4>
 	        <ul>
