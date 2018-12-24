@@ -24,7 +24,7 @@ import java.util.List;
 
 import static osmedile.intellij.stringmanip.DonationNagger.NOTIFICATION;
 
-@State(name = "StringManipulationState", storages = {@Storage(value = "StringManipulationState", file = "$APP_CONFIG$/stringManipulation.xml")})
+@State(name = "StringManipulationState", storages = {@Storage(file = "$APP_CONFIG$/stringManipulation.xml")})
 public class PluginPersistentStateComponent implements PersistentStateComponent<PluginPersistentStateComponent> {
 
 	public static final int LIMIT = 20;
@@ -56,14 +56,11 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		if (version < 1) {
 			version = 1;
 			ApplicationManager.getApplication().invokeLater(() -> {
-				Notification notification = NOTIFICATION.createNotification("String Manipulation popup", "You can now customize actions in the popup via <a href=\"#\">Settings | Appearance & Behavior | Menus and Toolbars</a>", NotificationType.INFORMATION,
+				Notification notification = NOTIFICATION.createNotification("String Manipulation 菜单", "您可以通过弹出窗口自定义操作 <a href=\"#\">设置 | 外观 & 行为 | 菜单和工具栏</a>", NotificationType.INFORMATION,
 					new NotificationListener.UrlOpeningListener(true) {
 						@Override
 						protected void hyperlinkActivated(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
-							ApplicationManager.getApplication().invokeLater(() -> {
-								ShowSettingsUtil.getInstance().showSettingsDialog(project, "Menus and Toolbars");
-
-							});
+							ApplicationManager.getApplication().invokeLater(() -> ShowSettingsUtil.getInstance().showSettingsDialog(project, "Menus and Toolbars"));
 						}
 					});
 

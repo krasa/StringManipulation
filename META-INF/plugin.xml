@@ -382,8 +382,8 @@
                     description="取决于选择了什么或者有多少种插入符号">
             </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
-                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction" text="替换 &quot;和' 之间"
-                    description="Swap single quote to double quote">
+                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction" text="替换 &quot;和'"
+                    description="替换 &quot;为'">
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
@@ -400,7 +400,7 @@
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
-            <reference ref="StringManipulation.Group.Main"></reference>
+            <reference ref="StringManipulation.Group.Main"/>
         </group>
 
     </actions>
