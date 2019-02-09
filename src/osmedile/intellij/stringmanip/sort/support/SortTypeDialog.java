@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,29 @@ public class SortTypeDialog {
 	private JRadioButton comparatorNaturalOrder;
 	private JRadioButton comparatorCollator;
 
+	private void updateComponents() {
+		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorCollator}, insensitive, sensitive);
+	}
+
+	private void enabledBy(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
+		boolean b = true;
+		for (JToggleButton jToggleButton : control) {
+			b = b && (jToggleButton.isEnabled() && jToggleButton.isSelected());
+		}
+		for (JComponent target : targets) {
+			target.setEnabled(b);
+		}
+	}
+
+	private void enabledByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
+		boolean b = false;
+		for (JToggleButton jToggleButton : control) {
+			b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
+		}
+		for (JComponent target : targets) {
+			target.setEnabled(b);
+		}
+	}
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
@@ -43,6 +69,33 @@ public class SortTypeDialog {
 		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
 		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
+
+		for (Field field : SortTypeDialog.class.getDeclaredFields()) {
+			try {
+				Object o = field.get(this);
+				if (o instanceof JToggleButton) {
+					JToggleButton button = (JToggleButton) o;
+					button.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							updateComponents();
+						}
+
+					});
+				}
+//				if (o instanceof JTextField) {
+//					JTextField jTextField = (JTextField) o;
+//					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
+//						@Override
+//						protected void textChanged(DocumentEvent e) {
+//							updateComponents();
+//						}
+//					});
+//				}
+			} catch (Throwable e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 		switch (sortSettings.getComparatorEnum()) {
 
@@ -141,6 +194,7 @@ public class SortTypeDialog {
 				}
 			}
 		});
+		updateComponents();
 	}
 
 	public SortSettings getSettings() {
