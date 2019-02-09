@@ -7,12 +7,15 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.text.Collator;
+import java.util.Comparator;
 import java.util.List;
 
 public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
 
 	private String trailingChars = ",;";
+	private ComparatorEnum comparatorEnum = ComparatorEnum.NATURAL;
 	private BlankLines blankLines = BlankLines.REMOVE;
 	private Sort sortType = Sort.CASE_INSENSITIVE_A_Z;
 	private boolean ignoreLeadingSpaces = true;
@@ -60,6 +63,15 @@ public class SortSettings {
 		return this;
 	}
 
+	public SortSettings comparator(ComparatorEnum comparatorEnum) {
+		this.comparatorEnum = comparatorEnum;
+		return this;
+	}
+
+	public ComparatorEnum getComparatorEnum() {
+		return comparatorEnum;
+	}
+
 	public String getTrailingChars() {
 		return trailingChars;
 	}
@@ -93,21 +105,30 @@ public class SortSettings {
 
 	protected String asString() {
 		return new StringBuilder()
-				.append(sortType).append("|")
-				.append(blankLines).append("|")
-				.append(ignoreLeadingSpaces).append("|")
-				.append(preserveLeadingSpaces).append("|")
-				.append(preserveTrailingSpecialCharacters).append("|")
-				.append(trailingChars)
-				.toString();
+			.append(comparatorEnum).append("|")
+			.append(sortType).append("|")
+			.append(blankLines).append("|")
+			.append(ignoreLeadingSpaces).append("|")
+			.append(preserveLeadingSpaces).append("|")
+			.append(preserveTrailingSpecialCharacters).append("|")
+			.append(trailingChars)
+			.toString();
 	}
 
 	protected static SortSettings fromString(String s) {
-		List<String> strings = Splitter.on("|").limit(6).splitToList(s);
+		List<String> strings = Splitter.on("|").limit(7).splitToList(s);
 		SortSettings sortSettings = new SortSettings();
 		int i = 0;
 		if (strings.size() >= 6) {
-			sortSettings.sortType(Sort.valueOf(strings.get(i++)));
+			String sort = strings.get(i++);
+			sortSettings.comparator(valueOfComparator(sort));
+			if (!sortSettings.getComparatorEnum().name().equals(sort)) {
+				//old format
+				i = 0;
+				strings = Splitter.on("|").limit(6).splitToList(s);
+			}
+
+			sortSettings.sortType(valueOfSort(strings.get(i++)));
 			sortSettings.setBlankLines(strings.get(i++));
 			sortSettings.ignoreLeadingSpaces(Boolean.parseBoolean(strings.get(i++)));
 			sortSettings.preserveLeadingSpaces(Boolean.parseBoolean(strings.get(i++)));
@@ -115,6 +136,22 @@ public class SortSettings {
 			sortSettings.trailingChars(strings.get(i++));
 		}
 		return sortSettings;
+	}
+
+	private static Sort valueOfSort(String s) {
+		try {
+			return Sort.valueOf(s);
+		} catch (IllegalArgumentException e) {
+			return Sort.CASE_INSENSITIVE_A_Z;
+		}
+	}
+
+	private static ComparatorEnum valueOfComparator(String s) {
+		try {
+			return ComparatorEnum.valueOf(s);
+		} catch (IllegalArgumentException e) {
+			return ComparatorEnum.NATURAL;
+		}
 	}
 
 	public void store(String key) {
@@ -145,40 +182,55 @@ public class SortSettings {
 		SortSettings that = (SortSettings) o;
 
 		return new EqualsBuilder()
-				.append(ignoreLeadingSpaces, that.ignoreLeadingSpaces)
-				.append(preserveLeadingSpaces, that.preserveLeadingSpaces)
-				.append(preserveTrailingSpecialCharacters, that.preserveTrailingSpecialCharacters)
-				.append(trailingChars, that.trailingChars)
-				.append(sortType, that.sortType)
-				.append(blankLines, that.blankLines)
-				.isEquals();
+			.append(comparatorEnum, that.comparatorEnum)
+			.append(ignoreLeadingSpaces, that.ignoreLeadingSpaces)
+			.append(preserveLeadingSpaces, that.preserveLeadingSpaces)
+			.append(preserveTrailingSpecialCharacters, that.preserveTrailingSpecialCharacters)
+			.append(trailingChars, that.trailingChars)
+			.append(sortType, that.sortType)
+			.append(blankLines, that.blankLines)
+			.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37)
-				.append(trailingChars)
-				.append(sortType)
-				.append(ignoreLeadingSpaces)
-				.append(preserveLeadingSpaces)
-				.append(preserveTrailingSpecialCharacters)
-				.append(blankLines)
-				.toHashCode();
+			.append(comparatorEnum)
+			.append(trailingChars)
+			.append(sortType)
+			.append(ignoreLeadingSpaces)
+			.append(preserveLeadingSpaces)
+			.append(preserveTrailingSpecialCharacters)
+			.append(blankLines)
+			.toHashCode();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
-				.append("trailingChars", trailingChars)
-				.append("sortType", sortType)
-				.append("ignoreLeadingSpaces", ignoreLeadingSpaces)
-				.append("preserveLeadingSpaces", preserveLeadingSpaces)
-				.append("preserveTrailingSpecialCharacters", preserveTrailingSpecialCharacters)
-				.append("emptyLines", blankLines)
-				.toString();
+			.append("comparator", comparatorEnum)
+			.append("trailingChars", trailingChars)
+			.append("sortType", sortType)
+			.append("ignoreLeadingSpaces", ignoreLeadingSpaces)
+			.append("preserveLeadingSpaces", preserveLeadingSpaces)
+			.append("preserveTrailingSpecialCharacters", preserveTrailingSpecialCharacters)
+			.append("emptyLines", blankLines)
+			.toString();
 	}
 
 	public static enum BlankLines {
 		PRESERVE, REMOVE
+	}
+
+	public static enum ComparatorEnum {
+		NATURAL(NaturalOrderComparator.COMPARATOR),
+		LOCALE_COLLATOR(Collator.getInstance());
+
+		public Comparator comparator;
+
+		ComparatorEnum(Comparator comparator) {
+			this.comparator = comparator;
+		}
+
 	}
 }

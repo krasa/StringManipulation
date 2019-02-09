@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class NaturalOrderComparatorTest {
+public class NaturalOrderComparatorEnumTest {
 	private static final NaturalOrderComparator C = new NaturalOrderComparator();
 
 	@Test

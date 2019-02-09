@@ -29,6 +29,8 @@ public class SortTypeDialog {
 	private JTextField trailingCharacters;
 	private JRadioButton removeBlank;
 	private JRadioButton preserveBlank;
+	private JRadioButton comparatorNaturalOrder;
+	private JRadioButton comparatorCollator;
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		preserveLeadingSpaces.setVisible(additionaloptions);
@@ -41,6 +43,16 @@ public class SortTypeDialog {
 		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
 		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
+
+		switch (sortSettings.getComparatorEnum()) {
+
+			case NATURAL:
+				comparatorNaturalOrder.setSelected(true);
+				break;
+			case LOCALE_COLLATOR:
+				comparatorCollator.setSelected(true);
+				break;
+		}
 
 		switch (sortSettings.emptyLines()) {
 
@@ -108,6 +120,8 @@ public class SortTypeDialog {
 				jRadioButtons.add(preserveLeadingSpaces);
 				jRadioButtons.add(preserveTrailingSpecialCharacters);
 				jRadioButtons.add(trailingCharacters);
+				jRadioButtons.add(comparatorNaturalOrder);
+				jRadioButtons.add(comparatorCollator);
 				return jRadioButtons;
 			}
 		});
@@ -134,6 +148,7 @@ public class SortTypeDialog {
 			.emptyLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE)
 			.ignoreLeadingSpaces(ignoreLeadingSpaces.isSelected())
 			.preserveLeadingSpaces(preserveLeadingSpaces.isSelected())
+			.comparator(comparatorNaturalOrder.isSelected() ? SortSettings.ComparatorEnum.NATURAL : SortSettings.ComparatorEnum.LOCALE_COLLATOR)
 			.preserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected())
 			.trailingChars(trailingCharacters.getText());
 	}

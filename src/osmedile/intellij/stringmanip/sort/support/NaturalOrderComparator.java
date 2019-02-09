@@ -27,6 +27,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class NaturalOrderComparator implements Comparator {
+	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();
+
 	int compareRight(String a, String b) {
 		int bias = 0;
 		int ia = 0;

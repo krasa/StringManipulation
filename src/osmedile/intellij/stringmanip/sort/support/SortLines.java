@@ -50,7 +50,7 @@ public class SortLines {
 
 	public List<String> sortLines() {
 		Sort sortType = sortSettings.getSortType();
-		List<SortLine> lines = sortType.sortLines(new ArrayList<SortLine>(this.lines));
+		List<SortLine> lines = sortType.sortLines(new ArrayList<SortLine>(this.lines), sortSettings.getComparatorEnum());
 
 		List<String> result = new ArrayList<String>();
 		for (int i = 0; i < lines.size(); i++) {
