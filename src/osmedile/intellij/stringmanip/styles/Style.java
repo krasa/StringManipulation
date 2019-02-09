@@ -25,7 +25,8 @@ public enum Style {
 		@Override
 		public String transform(Style style, String s) {
 			if (style == _ALL_UPPER_CASE) {
-				return CAMEL_CASE.transform(style, s);
+				s = CAMEL_CASE.transform(style, s);
+				style = CAMEL_CASE;
 			}
 			if (style == CAMEL_CASE || style == PASCAL_CASE) {
 				s = camelToText(s);
@@ -42,9 +43,6 @@ public enum Style {
 	SCREAMING_SNAKE_CASE("FOO_BAR") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == _ALL_UPPER_CASE) {
-				return CAMEL_CASE.transform(style, s);
-			}
 			return wordsAndHyphenAndCamelToConstantCase(s);
 		}
 	},
@@ -77,10 +75,7 @@ public enum Style {
 	WORD_LOWERCASE("foo bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == _ALL_UPPER_CASE) {
-				return CAMEL_CASE.transform(style, s);
-			}
-			if (style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE
+			if (style == _ALL_UPPER_CASE || style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE
 				|| style == SCREAMING_SNAKE_CASE) {
 				s = CAMEL_CASE.transform(style, s);
 			}
@@ -90,9 +85,6 @@ public enum Style {
 	WORD_CAPITALIZED("Foo Bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == _ALL_UPPER_CASE) {
-				return CAMEL_CASE.transform(style, s);
-			}
 			if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
 				s = WORD_LOWERCASE.transform(style, s);
 			}
@@ -228,7 +220,7 @@ public enum Style {
 		return s.startsWith(borderChar) && s.endsWith(borderChar);
 	}
 
-	private static boolean noLowerCase(String s) {
+	public static boolean noLowerCase(String s) {
 		for (char c : s.toCharArray()) {
 			if (Character.isLowerCase(c)) {
 				return false;

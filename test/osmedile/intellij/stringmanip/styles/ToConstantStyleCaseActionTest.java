@@ -13,6 +13,7 @@ public class ToConstantStyleCaseActionTest {
         action = new ToConstantStyleCaseAction(false);
 		assertEquals("11_FOO22_FOO_BAR33_BAR44_FOO55_X6_Y7_Z",
 				action.transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
+		assertEquals("!@#$%^&*)(*&|+!!!!!FOO!!!!", action.transformByLine("!@#$%^&*)(*&|+!!!!!foo!!!!"));
 		assertEquals("!@#$%^&*)(*&|+!!!!!foo!!!!", action.transformByLine("!@#$%^&*)(*&|+!!!!!FOO!!!!"));
 		assertEquals("public", action.transformByLine("PUBLIC"));
 		assertEquals("PUBLIC", action.transformByLine("public"));

@@ -11,6 +11,8 @@ public class WordsCapitalizeActionTest {
 	@Test
 	public void transformByLine() {
 		action = new WordsCapitalizeAction(false);
+		assertEquals("I Am.fine", action.transformByLine("i aM.fine"));
+		
 		assertEquals("Foo", action.transformByLine("foo"));
 		assertEquals("Foo", action.transformByLine("FOO"));
 
