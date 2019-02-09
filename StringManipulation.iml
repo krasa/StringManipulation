@@ -9,6 +9,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jars (4)" level="project" />
+    <orderEntry type="module-library">
+      <library name="jars">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/jars" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/jars" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
