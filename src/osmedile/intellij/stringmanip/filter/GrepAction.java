@@ -4,17 +4,22 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.ui.InputValidatorEx;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * @author Olivier Smedile
@@ -22,30 +27,79 @@ import java.util.Collection;
  */
 public class GrepAction extends MyEditorAction {
 
-	public GrepAction() {
-		this(new GrepFilter() {
-			@Override
-			public boolean execute(String text, String grepos) {
-				return text.contains(grepos);
+	protected static final GrepFilter GREP_FILTER = new GrepFilter() {
+		@Override
+		public boolean execute(String text, Pair<String, Boolean> grepos) {
+			if (grepos.second) {
+				return Pattern.compile(grepos.first).matcher(text).find();
+			} else {
+				return text.contains(grepos.first);
 			}
-		});
+		}
+	};
+
+	public GrepAction() {
+		this(GREP_FILTER);
 	}
 
 	interface GrepFilter {
-		boolean execute(String text, String grepos);
+		boolean execute(String text, Pair<String, Boolean> grepos);
 	}
 
 	public GrepAction(final GrepFilter shouldAdd) {
 		super(null);
-		setupHandler(new MyEditorWriteActionHandler<String>(getActionClass()) {
+		setupHandler(new MyEditorWriteActionHandler<Pair<String, Boolean>>(getActionClass()) {
 			@NotNull
 			@Override
-			protected Pair<Boolean, String> beforeWriteAction(Editor editor, DataContext dataContext) {
+			protected Pair<Boolean, Pair<String, Boolean>> beforeWriteAction(Editor editor, DataContext dataContext) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
-					String grepos = Messages.showInputDialog(editor.getProject(), "Grep text", "Grep", null);
+					InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, "", new MyInputValidator() {
+						@Nullable
+						@Override
+						public String getErrorText(String inputString) {
+							if (isChecked()) {
+								try {
+									Pattern.compile(inputString);
+									return null;
+								} catch (Exception e) {
+									return "Incorrect regular expression";
+								}
+							}
+
+							return null;
+						}
+
+						@Override
+						public boolean checkInput(String inputString) {
+							return check(inputString);
+						}
+
+						@Override
+						public boolean canClose(String inputString) {
+							return check(inputString);
+						}
+
+						protected boolean check(String inputString) {
+							if (isChecked()) {
+								try {
+									Pattern.compile(inputString);
+									return true;
+								} catch (Exception e) {
+									return false;
+								}
+							} else {
+								return !StringUtil.isEmptyOrSpaces(inputString);
+							}
+						}
+
+					});
+
+					dialog.show();
+					Pair<String, Boolean> stringBooleanPair = Pair.create(dialog.getInputString(), dialog.isChecked());
+					String grepos = stringBooleanPair.first;
 					if (!StringUtil.isEmptyOrSpaces(grepos)) {
-						return continueExecution(grepos);
+						return continueExecution(stringBooleanPair);
 					}
 				} else {
 					Messages.showInfoMessage(editor.getProject(), "Please select text, before using grep", "Grep");
@@ -54,7 +108,7 @@ public class GrepAction extends MyEditorAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, String grepos) {
+			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, Pair<String, Boolean> grepos) {
 				// Column mode not supported
 				if (editor.isColumnMode()) {
 					return;
@@ -63,7 +117,7 @@ public class GrepAction extends MyEditorAction {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				if (selectionModel.hasSelection()) {
 
-					if (StringUtil.isEmptyOrSpaces(grepos)) {
+					if (StringUtil.isEmptyOrSpaces(grepos.first)) {
 						return;
 					}
 					final String selectedText = selectionModel.getSelectedText();
@@ -85,5 +139,61 @@ public class GrepAction extends MyEditorAction {
 
 			}
 		});
+	}
+
+
+	class InputDialogWithCheckbox extends Messages.InputDialog {
+		private JCheckBox myCheckBox;
+
+		InputDialogWithCheckbox(String message,
+								@Nls(capitalization = Nls.Capitalization.Title) String title,
+								String checkboxText,
+								boolean checked,
+								boolean checkboxEnabled,
+								@Nullable Icon icon,
+								@Nullable String initialValue,
+								@Nullable MyInputValidator validator) {
+			super(message, title, icon, initialValue, validator);
+			myCheckBox.setText(checkboxText);
+			myCheckBox.setSelected(checked);
+			myCheckBox.setEnabled(checkboxEnabled);
+			if (validator != null) {
+				validator.setCheckBox(myCheckBox);
+			}
+		}
+
+		@NotNull
+		@Override
+		protected JPanel createMessagePanel() {
+			JPanel messagePanel = new JPanel(new BorderLayout());
+			if (myMessage != null) {
+				JComponent textComponent = createTextComponent();
+				messagePanel.add(textComponent, BorderLayout.NORTH);
+			}
+
+			myField = createTextFieldComponent();
+			messagePanel.add(createScrollableTextComponent(), BorderLayout.CENTER);
+
+			myCheckBox = new JCheckBox();
+			messagePanel.add(myCheckBox, BorderLayout.SOUTH);
+
+			return messagePanel;
+		}
+
+		public Boolean isChecked() {
+			return myCheckBox.isSelected();
+		}
+	}
+
+	abstract class MyInputValidator implements InputValidatorEx {
+		private JCheckBox myCheckBox;
+
+		public void setCheckBox(JCheckBox myCheckBox) {
+			this.myCheckBox = myCheckBox;
+		}
+
+		public boolean isChecked() {
+			return myCheckBox != null && myCheckBox.isSelected();
+		}
 	}
 }

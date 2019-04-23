@@ -533,6 +533,7 @@
 	        <h4>Version 6.2<h4>
 	        <ul>
                 <li>Sort with Collator/li>
+                <li>Grep support for regular expressions/li>
             </ul>
 	    </div>
 	    <div>
