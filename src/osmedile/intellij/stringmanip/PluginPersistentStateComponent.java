@@ -16,6 +16,7 @@ import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
+import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 import javax.swing.event.HyperlinkEvent;
 import java.util.ArrayList;
@@ -31,7 +32,15 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
 	private DonationNagger donationNagger = new DonationNagger();
 	private int version = 0;
+	SortSettings sortSettings = new SortSettings();
 
+	public SortSettings getSortSettings() {
+		return sortSettings;
+	}
+
+	public void setSortSettings(SortSettings sortSettings) {
+		this.sortSettings = sortSettings;
+	}
 	public List<ColumnAlignerModel> getHistory() {
 		return new ArrayList<ColumnAlignerModel>(history);
 	}

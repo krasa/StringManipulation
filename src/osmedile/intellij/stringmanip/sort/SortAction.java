@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -93,12 +94,12 @@ public class SortAction extends MyEditorAction {
 			return null;
 		}
 		SortSettings settings = dialog.getSettings();
-		settings.store(storeKey);
+		PluginPersistentStateComponent.getInstance().setSortSettings(settings);
 		return settings;
 	}
 
 	protected SortSettings getSortSettings(String storeKey) {
-		return SortSettings.readFromStore(storeKey);
+		return PluginPersistentStateComponent.getInstance().getSortSettings();	
 	}
 
 }

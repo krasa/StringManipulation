@@ -1,17 +1,22 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.JBColor;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
+import org.apache.commons.lang3.LocaleUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SortTypeDialog {
 	public JPanel contentPane;
@@ -34,9 +39,13 @@ public class SortTypeDialog {
 	private JRadioButton preserveBlank;
 	private JRadioButton comparatorNaturalOrder;
 	private JRadioButton comparatorCollator;
+	private JTextField languageTag;
+	private JLabel languageTagLabel;
+	private JLabel valid;
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorCollator}, insensitive, sensitive);
+		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 	}
 
 	private void enabledBy(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
@@ -58,6 +67,18 @@ public class SortTypeDialog {
 			target.setEnabled(b);
 		}
 	}
+
+	private void visibleByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
+		boolean b = false;
+		for (JToggleButton jToggleButton : control) {
+			b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
+		}
+		for (JComponent target : targets) {
+			target.setVisible(b);
+		}
+	}
+
+
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
@@ -69,6 +90,14 @@ public class SortTypeDialog {
 		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
 		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
+		languageTag.setText(sortSettings.getCollatorLanguageTag());
+		languageTag.getDocument().addDocumentListener(new DocumentAdapter() {
+			@Override
+			protected void textChanged(@NotNull final DocumentEvent e) {
+				validateLocale();
+			}
+		});
+		validateLocale();
 
 		for (Field field : SortTypeDialog.class.getDeclaredFields()) {
 			try {
@@ -175,6 +204,7 @@ public class SortTypeDialog {
 				jRadioButtons.add(trailingCharacters);
 				jRadioButtons.add(comparatorNaturalOrder);
 				jRadioButtons.add(comparatorCollator);
+				jRadioButtons.add(languageTag);
 				return jRadioButtons;
 			}
 		});
@@ -197,14 +227,29 @@ public class SortTypeDialog {
 		updateComponents();
 	}
 
+	private void validateLocale() {
+		Locale locale = Locale.forLanguageTag(languageTag.getText());
+		boolean availableLocale = LocaleUtils.isAvailableLocale(locale);
+		if (availableLocale) {
+			valid.setText("valid");
+			valid.setForeground(JBColor.GREEN);
+		} else {
+			valid.setText("invalid");
+			valid.setForeground(JBColor.RED);
+		}
+	}
+
+
 	public SortSettings getSettings() {
-		return new SortSettings(getResult())
-			.emptyLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE)
-			.ignoreLeadingSpaces(ignoreLeadingSpaces.isSelected())
-			.preserveLeadingSpaces(preserveLeadingSpaces.isSelected())
-			.comparator(comparatorNaturalOrder.isSelected() ? SortSettings.ComparatorEnum.NATURAL : SortSettings.ComparatorEnum.LOCALE_COLLATOR)
-			.preserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected())
-			.trailingChars(trailingCharacters.getText());
+		SortSettings sortSettings = new SortSettings(getResult());
+		sortSettings.setBlankLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE);
+		sortSettings.setIgnoreLeadingSpaces(ignoreLeadingSpaces.isSelected());
+		sortSettings.setPreserveLeadingSpaces(preserveLeadingSpaces.isSelected());
+		sortSettings.setComparatorEnum(comparatorNaturalOrder.isSelected() ? SortSettings.ComparatorEnum.NATURAL : SortSettings.ComparatorEnum.LOCALE_COLLATOR);
+		sortSettings.setPreserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected());
+		sortSettings.setTrailingChars(trailingCharacters.getText());
+		sortSettings.setCollatorLanguageTag(languageTag.getText());
+		return sortSettings;
 	}
 
 	public Sort getResult() {

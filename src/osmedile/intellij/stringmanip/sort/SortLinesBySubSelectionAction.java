@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
+import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -68,7 +69,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(SortSettings.readFromStore(STORE_KEY), false);
+		final SortTypeDialog dialog = new SortTypeDialog(PluginPersistentStateComponent.getInstance().getSortSettings(), false);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
@@ -105,7 +106,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			return null;
 		}
 		SortSettings sortSettings = dialog.getSettings().preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
-		sortSettings.store(STORE_KEY);
+		PluginPersistentStateComponent.getInstance().setSortSettings(sortSettings);
 		return sortSettings;
 	}
 
@@ -169,7 +170,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		}
 
 		List<SubSelectionSortLine> sortedLines = new ArrayList<SubSelectionSortLine>(lines);
-		sortSettings.getSortType().sortLines(sortedLines, sortSettings.getComparatorEnum());
+		sortSettings.getSortType().sortLines(sortedLines, sortSettings.getComparatorEnum(), sortSettings.getCollatorLanguageTag());
 
 		write(editor, lines, sortedLines);
 	}
