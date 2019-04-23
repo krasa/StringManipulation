@@ -97,12 +97,10 @@ public class DonationNagger {
 	}
 
 	private boolean probablyNotNewUser() {
-		LocalDate monthAfterRelease = LocalDate.of(2018, 10, 22);
 		LocalDate firstUse = firstUsage.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate today = LocalDate.now();
 
-		return firstUse.isBefore(monthAfterRelease) //probably upgraded   TODO to be deleted
-			|| today.isAfter(firstUse.plusMonths(1));   //have it for more than month
+		return today.isAfter(firstUse.plusMonths(1));   //have it for more than month
 
 	}
 
