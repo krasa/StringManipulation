@@ -135,7 +135,7 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.DecodeBase64Action"
-                        text="Decode to Base64"
+                        text="Decode Base64"
                         description="Decode Base 64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
