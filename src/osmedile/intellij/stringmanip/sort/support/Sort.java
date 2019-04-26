@@ -119,7 +119,7 @@ public enum Sort {
 		if (factory != null) {
 			return factory.prototype(baseComparator);
 		} else {
-			return baseComparator;
+			return comparator;
 		}
 	}
 
