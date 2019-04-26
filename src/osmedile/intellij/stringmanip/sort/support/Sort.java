@@ -100,7 +100,7 @@ public enum Sort {
 		this.factory = factory;
 	}
 
-	public <T extends SortLine> List<T> sortLines(List<T> lines, SortSettings.ComparatorEnum comparatorEnum, String languageTag) {
+	public <T extends SortLine> List<T> sortLines(List<T> lines, SortSettings.BaseComparator baseComparator, String languageTag) {
 		switch (this) {
 			case SHUFFLE:
 				Collections.shuffle(lines);
@@ -109,13 +109,13 @@ public enum Sort {
 				Collections.reverse(lines);
 				break;
 			default:
-				Collections.sort(lines, getComparator(comparatorEnum, languageTag));
+				Collections.sort(lines, getComparator(baseComparator, languageTag));
 		}
 		return lines;
 	}
 
-	protected Comparator getComparator(SortSettings.ComparatorEnum comparatorEnum, String languageTag) {
-		Comparator baseComparator = SortSettings.ComparatorEnum.getComparator(comparatorEnum, languageTag);
+	protected Comparator getComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
+		Comparator baseComparator = SortSettings.BaseComparator.getComparator(baseComparatorEnum, languageTag);
 		if (factory != null) {
 			return factory.prototype(baseComparator);
 		} else {

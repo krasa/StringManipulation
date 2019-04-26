@@ -11,7 +11,7 @@ public class SortSettings {
 
 	private String trailingChars = ",;";
 	private String collatorLanguageTag = Locale.getDefault().toString();
-	private ComparatorEnum comparatorEnum = ComparatorEnum.NATURAL;
+	private BaseComparator baseComparator = BaseComparator.NATURAL;
 	private BlankLines blankLines = BlankLines.REMOVE;
 	private Sort sortType = Sort.CASE_INSENSITIVE_A_Z;
 	private boolean ignoreLeadingSpaces = true;
@@ -59,13 +59,13 @@ public class SortSettings {
 		return this;
 	}
 
-	public SortSettings comparator(ComparatorEnum comparatorEnum) {
-		this.comparatorEnum = comparatorEnum;
+	public SortSettings comparator(BaseComparator baseComparator) {
+		this.baseComparator = baseComparator;
 		return this;
 	}
 
-	public ComparatorEnum getComparatorEnum() {
-		return comparatorEnum;
+	public BaseComparator getBaseComparator() {
+		return baseComparator;
 	}
 
 	public String getTrailingChars() {
@@ -111,8 +111,8 @@ public class SortSettings {
 		this.collatorLanguageTag = collatorLanguageTag;
 	}
 
-	public void setComparatorEnum(ComparatorEnum comparatorEnum) {
-		this.comparatorEnum = comparatorEnum;
+	public void setBaseComparator(BaseComparator baseComparator) {
+		this.baseComparator = baseComparator;
 	}
 
 	public BlankLines getBlankLines() {
@@ -143,21 +143,21 @@ public class SortSettings {
 		PRESERVE, REMOVE
 	}
 
-	public static enum ComparatorEnum {
+	public static enum BaseComparator {
 		NATURAL(NaturalOrderComparator.COMPARATOR),
 		LOCALE_COLLATOR(Collator.getInstance());
 
 		private Comparator comparator;
 
-		ComparatorEnum(Comparator comparator) {
+		BaseComparator(Comparator comparator) {
 			this.comparator = comparator;
 		}
 
-		public static Comparator getComparator(ComparatorEnum comparatorEnum, String languageTag) {
+		public static Comparator getComparator(BaseComparator baseComparator, String languageTag) {
 			Comparator comparator;
-			switch (comparatorEnum) {
+			switch (baseComparator) {
 				case NATURAL:
-					comparator = comparatorEnum.comparator;
+					comparator = baseComparator.comparator;
 					break;
 				case LOCALE_COLLATOR:
 					comparator = Collator.getInstance(Locale.forLanguageTag(languageTag));

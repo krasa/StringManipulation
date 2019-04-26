@@ -170,7 +170,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		}
 
 		List<SubSelectionSortLine> sortedLines = new ArrayList<SubSelectionSortLine>(lines);
-		sortSettings.getSortType().sortLines(sortedLines, sortSettings.getComparatorEnum(), sortSettings.getCollatorLanguageTag());
+		sortSettings.getSortType().sortLines(sortedLines, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
 
 		write(editor, lines, sortedLines);
 	}

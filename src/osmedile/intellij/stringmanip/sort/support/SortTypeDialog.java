@@ -126,7 +126,7 @@ public class SortTypeDialog {
 			}
 		}
 
-		switch (sortSettings.getComparatorEnum()) {
+		switch (sortSettings.getBaseComparator()) {
 
 			case NATURAL:
 				comparatorNaturalOrder.setSelected(true);
@@ -245,7 +245,7 @@ public class SortTypeDialog {
 		sortSettings.setBlankLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE);
 		sortSettings.setIgnoreLeadingSpaces(ignoreLeadingSpaces.isSelected());
 		sortSettings.setPreserveLeadingSpaces(preserveLeadingSpaces.isSelected());
-		sortSettings.setComparatorEnum(comparatorNaturalOrder.isSelected() ? SortSettings.ComparatorEnum.NATURAL : SortSettings.ComparatorEnum.LOCALE_COLLATOR);
+		sortSettings.setBaseComparator(comparatorNaturalOrder.isSelected() ? SortSettings.BaseComparator.NATURAL : SortSettings.BaseComparator.LOCALE_COLLATOR);
 		sortSettings.setPreserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected());
 		sortSettings.setTrailingChars(trailingCharacters.getText());
 		sortSettings.setCollatorLanguageTag(languageTag.getText());
