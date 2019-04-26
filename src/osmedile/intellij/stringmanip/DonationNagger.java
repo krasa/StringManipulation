@@ -119,7 +119,7 @@ public class DonationNagger {
 		}
 		LocalDate today = LocalDate.now();
 		LocalDate lastNag = lastNaggingDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		return lastNag.isBefore(today.minusMonths(3));
+		return lastNag.isBefore(today.minusMonths(6));
 	}
 
 	private void nagged() {
