@@ -16,11 +16,12 @@ public class ColumnAlignerModel {
 	private boolean trimValues = true;
 	private boolean trimLines = false;
 	private Align alignBy = Align.SEPARATORS;
+	private boolean sequentialProcessing;
 
 	public ColumnAlignerModel() {
 	}
 
-	public ColumnAlignerModel(String separator) {
+	public ColumnAlignerModel(String... separator) {
 		this.separators = Arrays.asList(separator);
 	}
 
@@ -80,7 +81,15 @@ public class ColumnAlignerModel {
 		this.added = added;
 	}
 
-	enum Align {
+	public boolean isSequentialProcessing() {
+		return sequentialProcessing;
+	}
+
+	public void setSequentialProcessing(final boolean sequentialProcessing) {
+		this.sequentialProcessing = sequentialProcessing;
+	}
+
+	public enum Align {
 		VALUES, SEPARATORS
 	}
 
@@ -95,18 +104,23 @@ public class ColumnAlignerModel {
 		if (spaceAfterSeparator != that.spaceAfterSeparator) return false;
 		if (trimValues != that.trimValues) return false;
 		if (trimLines != that.trimLines) return false;
+		if (sequentialProcessing != that.sequentialProcessing) return false;
+		if (added != null ? !added.equals(that.added) : that.added != null) return false;
 		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
 		return alignBy == that.alignBy;
+
 	}
 
 	@Override
 	public int hashCode() {
-		int result = separators != null ? separators.hashCode() : 0;
+		int result = added != null ? added.hashCode() : 0;
+		result = 31 * result + (separators != null ? separators.hashCode() : 0);
 		result = 31 * result + (spaceBeforeSeparator ? 1 : 0);
 		result = 31 * result + (spaceAfterSeparator ? 1 : 0);
 		result = 31 * result + (trimValues ? 1 : 0);
 		result = 31 * result + (trimLines ? 1 : 0);
 		result = 31 * result + (alignBy != null ? alignBy.hashCode() : 0);
+		result = 31 * result + (sequentialProcessing ? 1 : 0);
 		return result;
 	}
 

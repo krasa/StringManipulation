@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip.align;
 
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("Duplicates")
@@ -11,7 +10,6 @@ public class ColumnAlignerLine {
 	private int index = 0;
 	protected boolean endsWithNextLine;
 	private boolean hasSeparatorBeforeFirstToken = false;
-	private String separator;
 
 	private boolean appendSpaceBeforeSeparator = false;
 	private boolean appendSpaceAfterSeparator = false;
@@ -19,14 +17,9 @@ public class ColumnAlignerLine {
 	private boolean trimLines = false;
 
 
-	public ColumnAlignerLine(ColumnAlignerModel model, String separator, String textPart, boolean endsWithNextLine) {
+	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
 		this.endsWithNextLine = endsWithNextLine;
-		this.separator = separator;
-		if (separator.equals(" ")) {
-			split = StringUtils.splitByWholeSeparator(textPart, separator);
-		} else {
-			split = StringUtils.splitByWholeSeparatorPreserveAllTokens(textPart, separator);
-		}
+		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, separator).toArray(new String[0]);
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 
 		this.appendSpaceBeforeSeparator = model.isSpaceBeforeSeparator();
@@ -34,6 +27,7 @@ public class ColumnAlignerLine {
 		this.trimValues = model.isTrimValues();
 		this.trimLines = model.isTrimLines();
 	}
+
 
 	public void appendInitialSpace(int initialSeparatorPosition) {
 		if (hasToken() && hasSeparatorBeforeFirstToken) {
@@ -54,8 +48,9 @@ public class ColumnAlignerLine {
 		}
 	}
 
+
 	public void appendSpace(int maxLength) {
-		if (hasNextToken()) {
+		if (hasToken()) {
 			int appendSpaces = Math.max(0, maxLength - sb.length());
 			for (int j = 0; j < appendSpaces; j++) {
 				sb.append(" ");
@@ -64,29 +59,29 @@ public class ColumnAlignerLine {
 	}
 
 	public void appendSpaceBeforeSeparator() {
-		if (hasNextToken()) {
-			if (appendSpaceBeforeSeparator && !separator.equals(" ") && sb.length() > 0) {
+		if (hasToken()) {
+			if (appendSpaceBeforeSeparator && !split[index].equals(" ") && sb.length() > 0) {
 				sb.append(" ");
 			}
 		}
 	}
 
 	public void appendSpaceAfterSeparator() {
-		if (hasNextToken()) {
-			if (appendSpaceAfterSeparator && !separator.equals(" ") && hasNextNotEmptyToken() && !nextTokenIsStartingWithSpace()) {
+		if (hasToken()) {
+			if (appendSpaceAfterSeparator && !split[index - 1].equals(" ") && hasNotEmptyToken() && !tokenIsStartingWithSpace()) {
 				sb.append(" ");
 			}
 		}
 	}
 
 	public void appendSeparator() {
-		if (hasNextToken()) {
-			sb.append(separator);
+		if (hasToken()) {
+			sb.append(split[index]);
 		}
 	}
 
-	protected boolean nextTokenIsStartingWithSpace() {
-		return !trimValues && split[index + 1].startsWith(" ");
+	protected boolean tokenIsStartingWithSpace() {
+		return !trimValues && split[index].startsWith(" ");
 	}
 
 	public int resultLength() {
@@ -101,8 +96,8 @@ public class ColumnAlignerLine {
 		return hasToken() && index + 1 < split.length;
 	}
 
-	public boolean hasNextNotEmptyToken() {
-		return hasToken() && index + 1 < split.length && split[index + 1].length() > 0;
+	public boolean hasNotEmptyToken() {
+		return hasToken() && index < split.length && split[index].length() > 0;
 	}
 
 	public void next() {

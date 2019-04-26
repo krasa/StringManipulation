@@ -26,6 +26,7 @@ public class TextAlignmentForm {
 	private JRadioButton alignSeparatorLeft;
 	private JRadioButton alignSeparatorRight;
 	private JButton historyButton;
+	private JCheckBox sequentially;
 
 	public TextAlignmentForm(ColumnAlignerModel lastModel) {
 		resetButton.addActionListener(new ActionListener() {
@@ -80,9 +81,10 @@ public class TextAlignmentForm {
 	}
 
 	protected void init(ColumnAlignerModel lastSeparators) {
-		setData(lastSeparators);
+		_setData(lastSeparators);
 		init(lastSeparators.getSeparators());
 	}
+
 
 	private void createUIComponents() {
 		textfields = new JPanel();
@@ -166,32 +168,48 @@ public class TextAlignmentForm {
 
 	}
 
-	public void setData(ColumnAlignerModel data) {
-		addSpaceBeforeSeparatorCheckBox.setSelected(data.isSpaceBeforeSeparator());
-		addSpaceAfterSeparatorCheckBox.setSelected(data.isSpaceAfterSeparator());
-		trimValues.setSelected(data.isTrimValues());
-		trimLines.setSelected(data.isTrimLines());
-		alignSeparatorLeft.setSelected(data.getAlignBy() == ColumnAlignerModel.Align.VALUES);
-		alignSeparatorRight.setSelected(data.getAlignBy() == ColumnAlignerModel.Align.SEPARATORS);
-	}
-
 	public ColumnAlignerModel getModel() {
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel();
-		getData(columnAlignerModel);
+		_getData(columnAlignerModel);
 		columnAlignerModel.setSeparators(getSeparators());
 		return columnAlignerModel;
 	}
 
-	public void getData(ColumnAlignerModel data) {
-		data.setSpaceBeforeSeparator(addSpaceBeforeSeparatorCheckBox.isSelected());
-		data.setSpaceAfterSeparator(addSpaceAfterSeparatorCheckBox.isSelected());
-		data.setTrimValues(trimValues.isSelected());
-		data.setTrimLines(trimLines.isSelected());
+	public void disableControls() {
+		resetButton.setVisible(false);
+		historyButton.setVisible(false);
+	}
+
+	public void _setData(ColumnAlignerModel data) {
+		alignSeparatorLeft.setSelected(data.getAlignBy() == ColumnAlignerModel.Align.VALUES);
+		alignSeparatorRight.setSelected(data.getAlignBy() == ColumnAlignerModel.Align.SEPARATORS);
+
+		setData(data);
+	}
+
+	public void _getData(ColumnAlignerModel data) {
 		if (alignSeparatorLeft.isSelected()) {
 			data.setAlignBy(ColumnAlignerModel.Align.VALUES);
 		} else {
 			data.setAlignBy(ColumnAlignerModel.Align.SEPARATORS);
 		}
+		getData(data);
+	}
+
+	public void setData(ColumnAlignerModel data) {
+		addSpaceBeforeSeparatorCheckBox.setSelected(data.isSpaceBeforeSeparator());
+		addSpaceAfterSeparatorCheckBox.setSelected(data.isSpaceAfterSeparator());
+		trimValues.setSelected(data.isTrimValues());
+		trimLines.setSelected(data.isTrimLines());
+		sequentially.setSelected(data.isSequentialProcessing());
+	}
+	                      
+	public void getData(ColumnAlignerModel data) {
+		data.setSpaceBeforeSeparator(addSpaceBeforeSeparatorCheckBox.isSelected());
+		data.setSpaceAfterSeparator(addSpaceAfterSeparatorCheckBox.isSelected());
+		data.setTrimValues(trimValues.isSelected());
+		data.setTrimLines(trimLines.isSelected());
+		data.setSequentialProcessing(sequentially.isSelected());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
@@ -199,11 +217,7 @@ public class TextAlignmentForm {
 		if (addSpaceAfterSeparatorCheckBox.isSelected() != data.isSpaceAfterSeparator()) return true;
 		if (trimValues.isSelected() != data.isTrimValues()) return true;
 		if (trimLines.isSelected() != data.isTrimLines()) return true;
+		if (sequentially.isSelected() != data.isSequentialProcessing()) return true;
 		return false;
-	}
-
-	public void disableControls() {
-		resetButton.setVisible(false);
-		historyButton.setVisible(false);
 	}
 }
