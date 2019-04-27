@@ -138,6 +138,15 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
     }
 
 	private void processMultiCaret(Editor editor, @NotNull SortSettings sortSettings, List<CaretState> caretsAndSelections) {
+		List<SubSelectionSortLine> lines = getLines(editor, sortSettings, caretsAndSelections);
+
+		List<SubSelectionSortLine> sortedLines = sortSettings.getSortType().sortLines(lines, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+
+		write(editor, lines, sortedLines);
+	}
+
+	@NotNull
+	private List<SubSelectionSortLine> getLines(Editor editor, @NotNull SortSettings sortSettings, List<CaretState> caretsAndSelections) {
 		List<SubSelectionSortLine> lines = new ArrayList<SubSelectionSortLine>();
 		for (CaretState caretsAndSelection : caretsAndSelections) {
 			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
@@ -152,12 +161,12 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 				if (selectionEndOffset == -1) {
 					selectionEndOffset = text.length();
 				}
-                Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
+				Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
 				caret.setSelection(selectionStartOffset, selectionEndOffset);
 			}
 
 			String selection = editor.getDocument().getText(
-					new TextRange(selectionStartOffset, selectionEndOffset));
+				new TextRange(selectionStartOffset, selectionEndOffset));
 
 			int lineNumber = editor.getDocument().getLineNumber(selectionStartOffset);
 			int lineStartOffset = editor.getDocument().getLineStartOffset(lineNumber);
@@ -165,14 +174,10 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			String line = editor.getDocument().getText(new TextRange(lineStartOffset, lineEndOffset));
 
 			lines.add(new SubSelectionSortLine(sortSettings, line, selection, lineStartOffset, lineEndOffset,
-                selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset
-            ));
+				selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset
+			));
 		}
-
-		List<SubSelectionSortLine> sortedLines = new ArrayList<SubSelectionSortLine>(lines);
-		sortSettings.getSortType().sortLines(sortedLines, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
-
-		write(editor, lines, sortedLines);
+		return lines;
 	}
 
 	private void write(Editor editor, List<SubSelectionSortLine> lines, List<SubSelectionSortLine> sortedLines) {

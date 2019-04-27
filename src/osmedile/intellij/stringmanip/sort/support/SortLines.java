@@ -50,7 +50,7 @@ public class SortLines {
 
 	public List<String> sortLines() {
 		Sort sortType = sortSettings.getSortType();
-		List<SortLine> lines = sortType.sortLines(new ArrayList<>(this.lines), sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+		List<SortLine> lines = sortType.sortLines(this.lines, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
 
 		List<String> result = new ArrayList<>();
 		for (int i = 0; i < lines.size(); i++) {
