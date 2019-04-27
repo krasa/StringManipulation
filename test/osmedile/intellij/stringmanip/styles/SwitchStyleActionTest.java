@@ -1,13 +1,11 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.styles;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
-import osmedile.intellij.stringmanip.styles.CaseSwitchingTest;
-import osmedile.intellij.stringmanip.styles.Style;
-import osmedile.intellij.stringmanip.styles.SwitchStyleAction;
 
 import java.io.File;
 import java.io.IOException;

@@ -209,8 +209,8 @@
                 </action>
                 <action id="StringManipulation.ToSentenceCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToSentenceCaseOrCamelCaseAction"
-                        text="Normal sentence / camelCase"
-                        description="Toggle: Normal sentence / camelCase">
+                        text="First word capitalized / camelCase"
+                        description="Toggle: First word capitalized / camelCase">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToWordCapitalizedOrCamelCaseAction"
@@ -437,21 +437,22 @@
 		<p>
 			Provides actions for text manipulation:
 			<ul>
-				<li>Toggle style (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
-					words lowercase, Words Capitalized, PascalCase)
+				<li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+					words lowercase, First word capitalized, Words Capitalized, PascalCase)
 				</li>
-				<li>To UPPER CASE</li>
-				<li>To lower case</li>
-				<li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
-				<li>To snake_case (or to camelCase)</li>
-				<li>To dot.case (or to camelCase)</li>
-				<li>To kebab-case (or to camelCase)</li>
-				<li>To kebab-case (or to snake_case)</li>
-				<li>To camelCase (Or To Words)</li>
-				<li>To camelCase (or to lowercase words)</li>
-				<li>To PascalCase (or to camelCase)</li>
-				<li>Capitalize selected text</li>
-				<li>Invert case</li>
+               <li>Toggle: SCREAMING__SNAKE__CASE / camelCase</li>
+               <li>Toggle: snake__case / camelCase</li>
+               <li>Toggle: kebab-case / snake__case</li>
+               <li>Toggle: kebab-case / camelCase</li>
+               <li>Toggle: dot.case / camelCase</li>
+               <li>Toggle: PascalCase / camelCase</li>
+               <li>Toggle: lowercase words / camelCase</li>
+               <li>Toggle: First word capitalized / camelCase</li>
+               <li>Toggle: Capitalized Words / camelCase</li>
+               <li>Capitalize</li>
+               <li>To lower case</li>
+               <li>To UPPER CASE</li>
+               <li>Invert case</li>
 			</ul>
             -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
 		</p>
@@ -527,7 +528,7 @@
             Other:
 			<ul>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
-				<li>Wrap or swap double quotes to single quote to backtick</li>
+				<li>Wrap or swap double quotes to single quotes to backticks</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
 			</ul>
 		</p>
@@ -547,8 +548,11 @@
 	    <div>
 	        <h4>Version 6.2<h4>
 	        <ul>
-                <li>Sort with Collator/li>
-                <li>Grep support for regular expressions/li>
+                <li>Improved: Align to column</li>
+                <li>Sort with collator</li>
+                <li>Grep support for regular expressions</li>
+                <li>Case switching overhaul</li>
+                <li>Swap quotes action: added swapping to backticks and wrapping</li>
             </ul>
 	    </div>
 	    <div>
