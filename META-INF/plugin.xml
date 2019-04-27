@@ -168,54 +168,61 @@
                 <action id="StringManipulation.SwitchStyleAction"
                         class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
                         text="Switch case"
-                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)">
+                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase,  Normal sentence, Words Capitalized)">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToConstantStyleCaseAction"
-                        text="To SCREAMING__SNAKE__CASE (or to camelCase)"
-                        description="To SCREAMING_SNAKE_CASE (or to camelCase)">
+                        class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
+                        text="SCREAMING__SNAKE__CASE / camelCase"
+                        description="Toggle: SCREAMING_SNAKE_CASE / camelCase">
                 </action>
                 <action id="StringManipulation.ToSnakeCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
-                        text="To snake__case (or to camelCase)"
-                        description="To snake_case (or to camelCase)">
+                        text="snake__case / camelCase"
+                        description="Toggle: snake_case / camelCase">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
-                        text="To kebab-case (or to snake__case)"
-                        description="To kebab-case (or to snake_case)">
+                        text="kebab-case / snake__case"
+                        description="Toggle: kebab-case / snake_case">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.CamelCaseToHyphenLowerCaseAction"
-                        text="To kebab-case (or to camelCase)"
-                        description="To kebab-case (or to camelCase)">
+                        text="kebab-case / camelCase"
+                        description="Toggle: kebab-case / camelCase">
                 </action>
                 <action id="StringManipulation.ToDotStyleAction"
                         class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
-                        text="To dot.case (or to camelCase)"
-                        description="To dot.case (or to camelCase)">
-                </action>
-
-                <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
-                        text="To camelCase (Or To Words)"
-                        description="To camelCase (Or To Words)">
-                </action>
-                <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
-                        text="To camelCase (or to lowercase words)"
-                        description="To camelCase (or to lowercase words)">
+                        text="dot.case / camelCase"
+                        description="Toggle: dot.case / camelCase">
                 </action>
                 <action id="StringManipulation.ToPascalCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
-                        text="To PascalCase (or to camelCase)"
-                        description="To PascalCase (or to camelCase)">
+                        text="PascalCase / camelCase"
+                        description="Toggle: PascalCase / camelCase">
                 </action>
+                <separator/>
+                <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
+                        class="osmedile.intellij.stringmanip.styles.ToWordLowercaseOrToCamelCaseAction"
+                        text="lowercase words / camelCase"
+                        description="Toggle: lowercase words / camelCase">
+                </action>
+                <action id="StringManipulation.ToSentenceCaseOrCamelCase"
+                        class="osmedile.intellij.stringmanip.styles.ToSentenceCaseOrCamelCaseAction"
+                        text="Normal sentence / camelCase"
+                        description="Toggle: Normal sentence / camelCase">
+                </action>
+                <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.ToWordCapitalizedOrCamelCaseAction"
+                        text="Capitalized Words / camelCase"
+                        description="Toggle: Capitalized Words / camelCase">
+                </action>
+                <separator/>
 
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                         class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
                         text="Capitalize"
-                        description="Capitalize">
+                        description="Capitalize using apache-commons WordUtils#capitalizeFully">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToLowerCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToLowerCaseAction"
@@ -232,6 +239,11 @@
                         text="Invert case"
                         description="Invert Case -> iNVERT cASE">
                 </action>
+
+                <separator/>
+                <action id="StringManipulation.OpenSettingsAction"
+                        class="osmedile.intellij.stringmanip.OpenSettingsAction"
+                        text="Open settings..."/>
             </group>
 
             <separator/>
@@ -307,7 +319,7 @@
                 <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
                         class="osmedile.intellij.stringmanip.filter.InvertedGrepAction"
                         text="Inverted Grep"
-                        description="invERTED_GREP_ON_SElected text">
+                        description="Inverted Grep on selected text">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
@@ -415,6 +427,8 @@
         <customizableActionGroupProvider
                 implementation="osmedile.intellij.stringmanip.MyCustomizableActionGroupProvider" order="first"/>
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.PluginPersistentStateComponent"/>
+        <applicationConfigurable instance="osmedile.intellij.stringmanip.MyConfigurable" id="StringManipulation"
+                                 displayName="String Manipulation"/>
     </extensions>
 
     <description><![CDATA[

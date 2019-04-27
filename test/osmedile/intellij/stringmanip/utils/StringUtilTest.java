@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.utils;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
 
 /**
  * StringUtil Tester.
@@ -44,6 +45,14 @@ public class StringUtilTest extends TestCase {
     }
 
     public void testWordsAndCamelToConstantCase() {
+        PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorAfterDigit(true);
+        PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorBeforeDigit(true);
+        assertEquals("V_2_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v2Counter"));
+        assertEquals("V_22_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter"));
+        assertEquals("V_22_COUNTER_22", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter22"));
+
+        PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorAfterDigit(true);
+        PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorBeforeDigit(false);
         assertEquals("V2_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v2Counter"));
         assertEquals("V22_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter"));
         assertEquals("V22_COUNTER22", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter22"));

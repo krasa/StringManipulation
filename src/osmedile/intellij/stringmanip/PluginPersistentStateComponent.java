@@ -32,7 +32,16 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
 	private DonationNagger donationNagger = new DonationNagger();
 	private int version = 0;
-	SortSettings sortSettings = new SortSettings();
+	private SortSettings sortSettings = new SortSettings();
+	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
+
+	public CaseSwitchingSettings getCaseSwitchingSettings() {
+		return caseSwitchingSettings;
+	}
+
+	public void setCaseSwitchingSettings(CaseSwitchingSettings caseSwitchingSettings) {
+		this.caseSwitchingSettings = caseSwitchingSettings;
+	}
 
 	public SortSettings getSortSettings() {
 		return sortSettings;
@@ -116,7 +125,14 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		history = newList;
 	}
 
+	private static PluginPersistentStateComponent unitTestComponent;
 	public static PluginPersistentStateComponent getInstance() {
+		if (ApplicationManager.getApplication() == null) {
+			if (unitTestComponent == null) {
+				unitTestComponent = new PluginPersistentStateComponent();
+			}
+			return unitTestComponent;
+		}
 		return ServiceManager.getService(PluginPersistentStateComponent.class);
 	}
 

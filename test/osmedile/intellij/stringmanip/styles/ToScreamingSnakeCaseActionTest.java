@@ -1,18 +1,45 @@
 package osmedile.intellij.stringmanip.styles;
 
+import org.junit.Before;
 import org.junit.Test;
+import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 
 import static org.junit.Assert.assertEquals;
 
-public class ToConstantStyleCaseActionTest {
+public class ToScreamingSnakeCaseActionTest extends CaseSwitchingTest {
 
-    protected ToConstantStyleCaseAction action;
+	protected ToScreamingSnakeCaseAction action;
 
-    @Test
-    public void testTransform() throws Exception {
-        action = new ToConstantStyleCaseAction(false);
+	@Override
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+		action = new ToScreamingSnakeCaseAction(false);
+	}
+
+	@Test
+	public void testTransformNumbers() throws Exception {
+		CaseSwitchingSettings.getInstance().setSeparatorBeforeDigit(true);
+		CaseSwitchingSettings.getInstance().setSeparatorAfterDigit(false);
+
+		assertEquals("DARK_BORDER_350A", action.transformByLine("dark border350A"));
+		assertEquals("DARK_BORDER_350_00", action.transformByLine("darkBorder350_00"));
+		assertEquals("DARK_BORDER_350_00", action.transformByLine("darkBorder350.00"));
+
+		CaseSwitchingSettings.getInstance().setSeparatorBeforeDigit(false);
+		CaseSwitchingSettings.getInstance().setSeparatorAfterDigit(true);
+
+
+	}
+
+	@Test
+	public void testTransform() throws Exception {
+		CaseSwitchingSettings.getInstance().setSeparatorBeforeDigit(false);
+		CaseSwitchingSettings.getInstance().setSeparatorAfterDigit(true);
+
+
 		assertEquals("11_FOO22_FOO_BAR33_BAR44_FOO55_X6_Y7_Z",
-				action.transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
+			action.transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
 		assertEquals("!@#$%^&*)(*&|+!!!!!FOO!!!!", action.transformByLine("!@#$%^&*)(*&|+!!!!!foo!!!!"));
 		assertEquals("!@#$%^&*)(*&|+!!!!!foo!!!!", action.transformByLine("!@#$%^&*)(*&|+!!!!!FOO!!!!"));
 		assertEquals("public", action.transformByLine("PUBLIC"));

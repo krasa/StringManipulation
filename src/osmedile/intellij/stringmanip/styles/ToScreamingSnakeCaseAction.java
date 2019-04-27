@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.styles;
 
-public class ToConstantStyleCaseAction extends AbstractCaseConvertingAction {
-	public ToConstantStyleCaseAction() {
+public class ToScreamingSnakeCaseAction extends AbstractCaseConvertingAction {
+	public ToScreamingSnakeCaseAction() {
 	}
 
-	public ToConstantStyleCaseAction(boolean setupHandler) {
+	public ToScreamingSnakeCaseAction(boolean setupHandler) {
 		super(setupHandler);
 	}
 

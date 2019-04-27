@@ -1,6 +1,10 @@
 package osmedile.intellij.stringmanip.utils;
 
+import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,10 +16,7 @@ import static java.lang.Character.*;
  * @version $Id: StringUtil.java 62 2008-04-20 11:11:54Z osmedile $
  */
 public class StringUtil {
-	/* V_2V */
-	static boolean separatorBeforeDigit = false;
-	/* V2_V */
-	static boolean separatorAfterDigit = true; // false might not work totally fine e.g. ToHyphenCaseActionTest
+	private static PluginPersistentStateComponent persistentStateComponent;
 
 	public static String removeAllSpace(String s) {
 		return StringUtils.join(s.split("\\s"), "").trim();
@@ -30,13 +31,11 @@ public class StringUtil {
 		char lastChar = ' ';
 		for (char c : s.toCharArray()) {
 			char nc = c;
-			if (isUpperCase(nc) && !isUpperCase(lastChar)) {
-				if (lastChar != ' ' && isLetterOrDigit(lastChar)) {
-					buf.append(" ");
-				}
+			if (isUpperCase(nc) && isLowerCase(lastChar)) {
+				buf.append(" ");
 				nc = Character.toLowerCase(c);
-			} else if ((separatorAfterDigit && isDigit(lastChar) && !isDigit(c))
-					|| (separatorBeforeDigit && isDigit(c) && !isDigit(lastChar))) {
+			} else if ((isSeparatorAfterDigit() && isDigit(lastChar) && isLetter(c))
+				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
 				if (lastChar != ' ') {
 					buf.append(" ");
 				}
@@ -49,6 +48,88 @@ public class StringUtil {
 			lastChar = c;
 		}
 		return buf.toString();
+	}
+
+	/**
+	 * inspired by org.apache.commons.text.WordUtils#capitalize
+	 */
+	public static String capitalizeFirstWord(String str, char[] delimiters) {
+		if (org.apache.commons.lang3.StringUtils.isEmpty(str)) {
+			return str;
+		} else {
+			boolean done = false;
+			Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
+			int strLen = str.length();
+			int[] newCodePoints = new int[strLen];
+			int outOffset = 0;
+			boolean capitalizeNext = true;
+			int index = 0;
+
+			while (index < strLen) {
+				int codePoint = str.codePointAt(index);
+				if (delimiterSet.contains(codePoint)) {
+					capitalizeNext = true;
+					newCodePoints[outOffset++] = codePoint;
+					index += Character.charCount(codePoint);
+				} else if (!done && capitalizeNext && isLowerCase(codePoint)) {
+					int titleCaseCodePoint = Character.toTitleCase(codePoint);
+					newCodePoints[outOffset++] = titleCaseCodePoint;
+					index += Character.charCount(titleCaseCodePoint);
+					capitalizeNext = false;
+					done = true;
+				} else {
+					newCodePoints[outOffset++] = codePoint;
+					index += Character.charCount(codePoint);
+				}
+			}
+
+			return new String(newCodePoints, 0, outOffset);
+		}
+	}
+
+	public static String capitalizeFirstWord2(String str) {
+		if (org.apache.commons.lang3.StringUtils.isEmpty(str)) {
+			return str;
+		} else {
+			StringBuilder buf = new StringBuilder();
+			boolean upperNext = true;
+			char[] chars = str.toCharArray();
+			for (int i = 0; i < chars.length; i++) {
+				char c = chars[i];
+				if (isLetter(c) && upperNext) {
+					buf.append(toUpperCase(c));
+					upperNext = false;
+				} else {
+					if (!isLetterOrDigit(c)) {
+						upperNext = true;
+					}
+					buf.append(c);
+				}
+
+			}
+
+			return buf.toString();
+		}
+	}
+
+	/**
+	 * org.apache.commons.text.WordUtils.generateDelimiterSet
+	 */
+	public static Set<Integer> generateDelimiterSet(char[] delimiters) {
+		Set<Integer> delimiterHashSet = new HashSet();
+		if (delimiters != null && delimiters.length != 0) {
+			for (int index = 0; index < delimiters.length; ++index) {
+				delimiterHashSet.add(Character.codePointAt(delimiters, index));
+			}
+
+			return delimiterHashSet;
+		} else {
+			if (delimiters == null) {
+				delimiterHashSet.add(Character.codePointAt(new char[]{' '}, 0));
+			}
+
+			return delimiterHashSet;
+		}
 	}
 
 	public static String toSoftCamelCase(String s) {
@@ -94,7 +175,7 @@ public class StringUtil {
 		char lastChar = 'a';
 		for (char c : s.toCharArray()) {
 			if (isWhitespace(lastChar) && (!isWhitespace(c) && '_' != c) &&
-					buf.length() > 0 && buf.charAt(buf.length() - 1) != '_') {
+				buf.length() > 0 && buf.charAt(buf.length() - 1) != '_') {
 				buf.append("_");
 			}
 			if (!isWhitespace(c)) {
@@ -135,8 +216,8 @@ public class StringUtil {
 			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace
 				|| (_betweenUpperCases && containsLowerCase && isUpperCaseAndPreviousIsUpperCase))) {
 				buf.append("_");
-			} else if ((separatorAfterDigit && isDigit(previousChar) && isLetter(c))
-				|| (separatorBeforeDigit && isDigit(c) && isLetter(previousChar))) { // extra _ after number
+			} else if ((isSeparatorAfterDigit() && isDigit(previousChar) && isLetter(c))
+				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(previousChar))) { // extra _ after number
 				buf.append('_');
 			}
 
@@ -190,8 +271,8 @@ public class StringUtil {
 			boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '.';
 			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
 				buf.append(".");
-			} else if ((separatorAfterDigit && isDigit(lastChar) && isLetter(c))
-					|| (separatorBeforeDigit && isDigit(c) && isLetter(lastChar))) {
+			} else if ((isSeparatorAfterDigit() && isDigit(lastChar) && isLetter(c))
+				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
 				buf.append(".");
 			}
 
@@ -301,7 +382,7 @@ public class StringUtil {
 		char lastChar = 'a';
 		for (char c : s.toCharArray()) {
 			if (isWhitespace(lastChar) && (!isWhitespace(c) && '-' != c) && buf.length() > 0
-					&& buf.charAt(buf.length() - 1) != '-') {
+				&& buf.charAt(buf.length() - 1) != '-') {
 				buf.append("-");
 			}
 			if ('_' == c) {
@@ -342,4 +423,19 @@ public class StringUtil {
 		}
 		return cs.length();
 	}
+
+	protected static boolean isSeparatorBeforeDigit() {
+		if (persistentStateComponent == null) {
+			persistentStateComponent = PluginPersistentStateComponent.getInstance();
+		}
+		return persistentStateComponent.getCaseSwitchingSettings().isSeparatorBeforeDigit();
+	}
+
+	protected static boolean isSeparatorAfterDigit() {
+		if (persistentStateComponent == null) {
+			persistentStateComponent = PluginPersistentStateComponent.getInstance();
+		}
+		return persistentStateComponent.getCaseSwitchingSettings().isSeparatorAfterDigit();
+	}
+
 }

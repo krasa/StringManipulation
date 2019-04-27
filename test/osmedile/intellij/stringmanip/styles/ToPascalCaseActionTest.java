@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.styles;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
-public class ToPascalCaseActionTest {
+import static org.junit.Assert.assertEquals;
+
+public class ToPascalCaseActionTest extends CaseSwitchingTest {
     protected ToPascalCaseAction action;
 
     @Test

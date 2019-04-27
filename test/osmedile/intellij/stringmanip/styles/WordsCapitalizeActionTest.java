@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class WordsCapitalizeActionTest {
+public class WordsCapitalizeActionTest extends CaseSwitchingTest {
 	WordsCapitalizeAction action;
 
 

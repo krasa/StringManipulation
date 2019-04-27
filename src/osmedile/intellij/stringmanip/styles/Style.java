@@ -1,40 +1,25 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.utils.StringUtil;
+import java.util.Set;
 
-import static org.apache.commons.lang.WordUtils.capitalize;
+import static java.lang.Character.isLowerCase;
+import static java.lang.Character.isUpperCase;
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
 	HYPHEN_LOWERCASE("foo-bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == HYPHEN_UPPERCASE) {
-				return s.toLowerCase();
-			}
-			if (style == SCREAMING_SNAKE_CASE) {
-				s = s.toLowerCase();
-			}
-			if (style == CAMEL_CASE || style == PASCAL_CASE || style == _UNKNOWN) {
-				s = camelToText(s);
-			}
-			return StringUtil.wordsToHyphenCase(s);
+			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", "-");
 		}
 	},
 	HYPHEN_UPPERCASE("FOO-BAR") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == _ALL_UPPER_CASE) {
-				s = CAMEL_CASE.transform(style, s);
-				style = CAMEL_CASE;
-			}
-			if (style == CAMEL_CASE || style == PASCAL_CASE) {
-				s = camelToText(s);
-			}
-			return StringUtil.wordsToHyphenCase(s).toUpperCase();
+			return wordsAndHyphenAndCamelToConstantCase(s).replace("_", "-");
 		}
 	},
-	UNDERSCORE_LOWERCASE("foo_bar") {
+	SNAKE_CASE("foo_bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
@@ -52,7 +37,7 @@ public enum Style {
 			if (style != CAMEL_CASE) {
 				s = CAMEL_CASE.transform(s);
 			}
-			return s.substring(0, 1).toUpperCase() + s.substring(1);
+			return capitalizeFirstWord2(s);
 		}
 	},
 	CAMEL_CASE("fooBar", "fooBar") {
@@ -69,17 +54,23 @@ public enum Style {
 	DOT("foo.bar", "foo.Bar") {
 		@Override
 		public String transform(Style style, String s) {
-			return StringUtil.toDotCase(s);
+			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", ".");
 		}
 	},
 	WORD_LOWERCASE("foo bar") {
 		@Override
 		public String transform(Style style, String s) {
-			if (style == _ALL_UPPER_CASE || style == DOT || style == HYPHEN_LOWERCASE || style == HYPHEN_UPPERCASE || style == UNDERSCORE_LOWERCASE
-				|| style == SCREAMING_SNAKE_CASE) {
-				s = CAMEL_CASE.transform(style, s);
+			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", " ");
+		}
+	},
+	SENTENCE_CASE("Foo bar") {
+		@Override
+		public String transform(Style style, String s) {
+			if (style != WORD_LOWERCASE) {
+				s = WORD_LOWERCASE.transform(style, s);
 			}
-			return camelToText(s);
+
+			return capitalizeFirstWord(s, Constants.DELIMITERS);
 		}
 	},
 	WORD_CAPITALIZED("Foo Bar") {
@@ -88,7 +79,8 @@ public enum Style {
 			if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
 				s = WORD_LOWERCASE.transform(style, s);
 			}
-			return capitalize(s, Constants.DELIMITERS);
+//			return WordUtils.capitalize(s, Constants.DELIMITERS);
+			return capitalizeFirstWord2(s);
 		}
 	},
 	/**
@@ -117,7 +109,8 @@ public enum Style {
 		public String transform(Style style, String s) {
 			return s;
 		}
-	},;
+	},
+	;
 
 	/**
 	 * first one is how it should look after transformation, others are variations which follows the rule
@@ -131,34 +124,39 @@ public enum Style {
 	public abstract String transform(Style style, String s);
 
 	public String transform(String s) {
-		return this.transform(from(s), s);
+		Style from = from(s);
+		String transform = this.transform(from, s);
+		return transform;
 	}
 
 	public static Style from(String s) {
-		s = removeBorderQuotes(s);
+		s = removeBorderQuotes(s).trim();
 		boolean underscore = s.contains("_");
 		boolean noUpperCase = noUpperCase(s);
 		boolean noLowerCase = noLowerCase(s);
-		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
+//		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
+		boolean noSeparators = noSeparators(s, '.', '-', '_', ' ');
+		boolean noSpecialSeparators = noSeparators(s, '.', '-', '_');
 		boolean containsUpperCase = containsUpperCase(s);
+		boolean noSpace = !s.contains(" ");
 
-		if (underscore && noUpperCase) {
-			return UNDERSCORE_LOWERCASE;
+		if (underscore && noUpperCase && noSpace) {
+			return SNAKE_CASE;
 		}
-		if (underscore && noLowerCase) {
+		if (underscore && noLowerCase && noSpace) {
 			return SCREAMING_SNAKE_CASE;
 		}
 
 		boolean hyphen = s.contains("-");
-		if (hyphen && noUpperCase) {
+		if (hyphen && noUpperCase && noSpace) {
 			return HYPHEN_LOWERCASE;
 		}
-		if (hyphen && noLowerCase) {
+		if (hyphen && noLowerCase && noSpace) {
 			return HYPHEN_UPPERCASE;
 		}
 
 		boolean containsDot = s.contains(".");
-		if (containsDot) {
+		if (containsDot && noSpace) {
 			return DOT;
 		}
 
@@ -167,20 +165,23 @@ public enum Style {
 		}
 
 		boolean startsWithUppercase = startsWithUppercase(s);
-		if (startsWithUppercase && containsOnlyLettersAndDigits && !containsUpperCase(s.substring(1, s.length()))) {
+		if (startsWithUppercase && noSeparators && !containsUpperCase(s.substring(1, s.length()))) {
 			return _SINGLE_WORD_CAPITALIZED;
 		}
-		if (startsWithUppercase && containsOnlyLettersAndDigits) {
+		if (startsWithUppercase && noSeparators) {
 			return PASCAL_CASE;
 		}
-		if (containsUpperCase && containsOnlyLettersAndDigits) {
+		if (containsUpperCase && noSeparators) {
 			return CAMEL_CASE;
 		}
 
-		if (noUpperCase) {
+		if (noUpperCase && noSpecialSeparators) {
 			return WORD_LOWERCASE;
 		}
-		if (startsWithUppercase) {
+		if (isCapitalizedFirstButNotAll(s) && !noSpace) {
+			return SENTENCE_CASE;
+		}
+		if (startsWithUppercase && !noSpace) {
 			return WORD_CAPITALIZED;
 		}
 		return _UNKNOWN;
@@ -191,6 +192,25 @@ public enum Style {
 			if (!Character.isLetterOrDigit(c)) {
 				return false;
 			}
+		}
+		return true;
+	}
+
+
+	private static boolean noSeparators(String str, char... delimiters) {
+		if (str.length() == 0) {
+			return false;
+		}
+		Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
+		int strLen = str.length();
+		int index = 0;
+
+		while (index < strLen) {
+			int codePoint = str.codePointAt(index);
+			if (delimiterSet.contains(codePoint)) {
+				return false;
+			}
+			index += Character.charCount(codePoint);
 		}
 		return true;
 	}
@@ -239,11 +259,58 @@ public enum Style {
 	}
 
 
-	private static boolean startsWithUppercase(String s) {
-		if (s.length() == 0) {
+	static boolean isCapitalizedFirstButNotAll(String str) {
+		if (str.length() == 0) {
 			return false;
 		}
-		return Character.isUpperCase(s.charAt(0));
+		Set<Integer> delimiterSet = generateDelimiterSet(new char[]{' '});
+		int strLen = str.length();
+		int index = 0;
+
+		int firstCapitalizedIndex = -1;
+		boolean someUncapitalized = false;
+		boolean afterSeparatorOrFirst = true;
+		while (index < strLen) {
+			int codePoint = str.codePointAt(index);
+//			char c = str.charAt(index);
+			if (delimiterSet.contains(codePoint)) {
+				afterSeparatorOrFirst = true;
+			} else {
+				if (isLowerCase(codePoint) && afterSeparatorOrFirst) {
+					if (firstCapitalizedIndex == -1) {
+						return false;
+					}
+					someUncapitalized = true;
+					afterSeparatorOrFirst = false;
+				} else if (isUpperCase(codePoint) && afterSeparatorOrFirst) {
+					if (firstCapitalizedIndex == -1) {
+						firstCapitalizedIndex = index;
+					}
+					afterSeparatorOrFirst = false;
+				}
+			}
+			index += Character.charCount(codePoint);
+		}
+		return firstCapitalizedIndex != -1 && someUncapitalized;
+	}
+
+	private static boolean startsWithUppercase(String str) {
+		if (str.length() == 0) {
+			return false;
+		}
+		int strLen = str.length();
+		int index = 0;
+		while (index < strLen) {
+			int codePoint = str.codePointAt(index);
+			if (isLowerCase(codePoint)) {
+				return false;
+			}
+			if (isUpperCase(codePoint)) {
+				return true;
+			}
+			index += Character.charCount(codePoint);
+		}
+		return false;
 	}
 
 	private static class Constants {
