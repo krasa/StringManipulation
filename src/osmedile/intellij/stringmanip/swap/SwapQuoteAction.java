@@ -9,7 +9,15 @@ public class SwapQuoteAction extends AbstractStringManipAction {
 
 	@Override
 	protected String transformSelection(Editor editor, DataContext dataContext, String s, Object additionalParam) {
-		return s.contains("'") ? s.replace("'", "\"") : s.replace("\"", "'");
+		if (s.contains("\"")) {
+			return s.replace("\"", "'");
+		} else if (s.contains("'")) {
+			return s.replace("'", "`");
+		} else if (s.contains("`")) {
+			return s.replace("`", "\"");
+		} else {
+			return "\"" + s + "\"";
+		}
 	}
 
 	@Override

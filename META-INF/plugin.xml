@@ -394,8 +394,9 @@
                     description="Depending on what is selected or how many carets there are">
             </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
-                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction" text="Swap between &quot; and '"
-                    description="Swap single quote to double quote">
+                    class="osmedile.intellij.stringmanip.swap.SwapQuoteAction"
+                    text="Wrap or swap between &quot; and ' and `"
+                    description="Swap double quote, single quote, backtick (or wrap if none present)">
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
@@ -526,7 +527,7 @@
             Other:
 			<ul>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
-				<li>Swap single quote to double quotes</li>
+				<li>Wrap or swap double quotes to single quote to backtick</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
 			</ul>
 		</p>
