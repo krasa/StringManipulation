@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 public class StringUtilTest extends CaseSwitchingTest {
     @Test
     public void testToCamelCase() {
+        assertEquals("fooBarBar1_1", StringUtil.toCamelCase(" fooBar bar 1_1 "));
+        assertEquals("fooBar11", StringUtil.toCamelCase(" foo bar 1 1 "));
         assertEquals("thisIsAText", StringUtil.toCamelCase("This is a text"));
         //this is ugly but nothing can be done about that.
         assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh a TeSt"));
@@ -72,5 +74,11 @@ public class StringUtilTest extends CaseSwitchingTest {
         assertEquals("TEST_AGAIN", StringUtil.wordsToConstantCase(" test agaIN"));
         assertEquals("_TEST_AGAIN", StringUtil.wordsToConstantCase("_  test agaIN"));
         assertEquals("_TEST_AGAIN", StringUtil.wordsToConstantCase("   _  test agaIN"));
+    }
+
+    @Test
+    public void replaceSeparator_keepBetweenDigits() {
+        assertEquals(" foo bar 1_1 ", StringUtil.replaceSeparator_keepBetweenDigits("_foo_bar_1_1_", '_', ' '));
+
     }
 }

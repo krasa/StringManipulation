@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.utils;
 
+import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import static java.lang.Character.*;
  */
 public class StringUtil {
 	private static PluginPersistentStateComponent persistentStateComponent;
+	public static final char EMPTY_CHAR = 0;
 
 	public static String removeAllSpace(String s) {
 		return StringUtils.join(s.split("\\s"), "").trim();
@@ -145,7 +147,7 @@ public class StringUtil {
 
 
 	public static String toCamelCase(String s) {
-		String[] words = org.apache.commons.lang.StringUtils.splitByCharacterTypeCamelCase(s);
+		String[] words = org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase(s);
 
 		boolean firstWordNotFound = true;
 		for (int i = 0; i < words.length; i++) {
@@ -157,8 +159,11 @@ public class StringUtil {
 				words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(word.toLowerCase());
 			}
 		}
-
-		return StringUtils.join(words).replaceAll("[\\s_]", "");
+		String join = StringUtils.join(words);
+		join = replaceSeparator_keepBetweenDigits(join, '_', EMPTY_CHAR);
+		join = replaceSeparator_keepBetweenDigits(join, '-', EMPTY_CHAR);
+		join = replaceSeparator_keepBetweenDigits(join, '.', EMPTY_CHAR);
+		return join.replaceAll("[\\s]", "");
 	}
 
 	private static boolean startsWithLetter(String word) {
@@ -294,6 +299,44 @@ public class StringUtil {
 
 
 		return buf.toString();
+	}
+
+	@NotNull
+	public static String replaceSeparator(String s1, char s, char s2) {
+		return s1.replace(s, s2);
+	}
+
+	@NotNull
+	public static String replaceSeparator_keepBetweenDigits(String s, char from, char to) {
+		StringBuilder buf = new StringBuilder();
+		char lastChar = ' ';
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			boolean lastDigit = isDigit(lastChar);
+			boolean nextDigit = nextIsDigit(s, i);
+
+			if (c == from && lastDigit && nextDigit) {
+				buf.append(c);
+			} else if (c == from) {
+				if (to != EMPTY_CHAR) {
+					buf.append(to);
+				}
+			} else {
+				buf.append(c);
+			}
+			lastChar = c;
+		}
+
+		return buf.toString();
+	}
+
+	private static boolean nextIsDigit(String s, int i) {
+		if (i + 1 >= s.length()) {
+			return false;
+		} else {
+			return Character.isDigit(s.charAt(i + 1));
+		}
 	}
 
 	/**

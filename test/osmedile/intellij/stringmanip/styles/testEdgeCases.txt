@@ -83,15 +83,15 @@
 87 WORD_LOWERCASE             -> PASCAL_CASE                                       : foo , bar                                        -> Foo,Bar
 88 SNAKE_CASE                 -> PASCAL_CASE                                       : foo.,_bar                                        -> Foo,Bar
 89 _UNKNOWN                   -> PASCAL_CASE                                       : dark border350A                                  -> DarkBorder350A
-90 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35.0A                                 -> DarkBorder350A
+90F _UNKNOWN                  -> PASCAL_CASE(actual DOT)                           : dark border35.0A                                 -> DarkBorder35.0A
 91 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35,0A                                 -> DarkBorder35,0A
-92 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35_0A                                 -> DarkBorder350A
-93 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35-0A                                 -> DarkBorder350A
+92F _UNKNOWN                  -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35_0A                                 -> DarkBorder35_0A
+93F _UNKNOWN                  -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35-0A                                 -> DarkBorder35-0A
 94 WORD_LOWERCASE             -> PASCAL_CASE                                       : dark border350a                                  -> DarkBorder350A
-95 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35.0a                                 -> DarkBorder350A
+95F _UNKNOWN                  -> PASCAL_CASE(actual DOT)                           : dark border35.0a                                 -> DarkBorder35.0A
 96 WORD_LOWERCASE             -> PASCAL_CASE                                       : dark border35,0a                                 -> DarkBorder35,0A
-97 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35_0a                                 -> DarkBorder350A
-98 _UNKNOWN                   -> PASCAL_CASE                                       : dark border35-0a                                 -> DarkBorder350A
+97F _UNKNOWN                  -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35_0a                                 -> DarkBorder35_0A
+98F _UNKNOWN                  -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35-0a                                 -> DarkBorder35-0A
 99 PASCAL_CASE                -> PASCAL_CASE                                       : DarkBorder350A                                   -> DarkBorder350A
 100 PASCAL_CASE               -> PASCAL_CASE                                       : DarkBorder350a                                   -> DarkBorder350A
 101 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo350a                                          -> Foo350A
@@ -103,15 +103,15 @@
 108 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo , bar                                        -> foo,Bar
 109 SNAKE_CASE                -> CAMEL_CASE                                        : foo.,_bar                                        -> foo,Bar
 110 _UNKNOWN                  -> CAMEL_CASE                                        : dark border350A                                  -> darkBorder350A
-111 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35.0A                                 -> darkBorder350A
+111F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0A                                 -> darkBorder35.0A
 112 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35,0A                                 -> darkBorder35,0A
-113 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35_0A                                 -> darkBorder350A
-114 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35-0A                                 -> darkBorder350A
+113F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0A                                 -> darkBorder35_0A
+114F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0A                                 -> darkBorder35-0A
 115 WORD_LOWERCASE            -> CAMEL_CASE                                        : dark border350a                                  -> darkBorder350A
-116 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35.0a                                 -> darkBorder350A
+116F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0a                                 -> darkBorder35.0A
 117 WORD_LOWERCASE            -> CAMEL_CASE                                        : dark border35,0a                                 -> darkBorder35,0A
-118 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35_0a                                 -> darkBorder350A
-119 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35-0a                                 -> darkBorder350A
+118F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0a                                 -> darkBorder35_0A
+119F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0a                                 -> darkBorder35-0A
 120 PASCAL_CASE               -> CAMEL_CASE                                        : DarkBorder350A                                   -> darkBorder350A
 121 PASCAL_CASE               -> CAMEL_CASE                                        : DarkBorder350a                                   -> darkBorder350A
 122 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo350a                                          -> foo350A

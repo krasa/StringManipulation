@@ -10,13 +10,15 @@ public enum Style {
 	KEBAB_LOWERCASE("kebab-case", "foo-bar") {
 		@Override
 		public String transform(Style style, String s) {
-			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", "-");
+			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
+			return replaceSeparator(s1, '_', '-');
 		}
 	},
 	KEBAB_UPPERCASE("KEBAB-UPPERCASE", "FOO-BAR") {
 		@Override
 		public String transform(Style style, String s) {
-			return wordsAndHyphenAndCamelToConstantCase(s).replace("_", "-");
+			String s1 = wordsAndHyphenAndCamelToConstantCase(s);
+			return replaceSeparator(s1, '_', '-');
 		}
 	},
 	SNAKE_CASE("snake_case", "foo_bar") {
@@ -46,21 +48,21 @@ public enum Style {
 			if (style == CAMEL_CASE) {
 				return s.trim();
 			}
-			s = s.replace("-", "_");
-			s = s.replace(".", "_");
 			return toCamelCase(s);
 		}
 	},
 	DOT("dot.case", "foo.bar", "foo.Bar") {
 		@Override
 		public String transform(Style style, String s) {
-			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", ".");
+			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
+			return replaceSeparator(s1, '_', '.');
 		}
 	},
 	WORD_LOWERCASE("words lowercase", "foo bar") {
 		@Override
 		public String transform(Style style, String s) {
-			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", " ");
+			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
+			return replaceSeparator(s1, '_', ' ');
 		}
 	},
 	SENTENCE_CASE("First word capitalized", "Foo bar") {
@@ -111,6 +113,7 @@ public enum Style {
 		}
 	},
 	;
+
 
 	/**
 	 * first one is how it should look after transformation, others are variations which follows the rule
