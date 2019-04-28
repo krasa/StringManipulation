@@ -4,10 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.utils.Cloner;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static osmedile.intellij.stringmanip.styles.Style.*;
 
@@ -16,6 +13,13 @@ public class DefaultActions {
 	public static final String SWITCH_STYLE_ACTION = "StringManipulation.SwitchStyleAction";
 	public static final List<StyleStep> DEFAULT = Helper.getStyleSteps();
 	public static final Map<Style, Boolean> DEFAULT_AS_MAP = Helper.getStyleBooleanHashMap(DEFAULT);
+
+	@NotNull
+	public static List<StyleActionModel> defaultActions() {
+		List<StyleActionModel> styleActionModels = new ArrayList<>();
+		styleActionModels.add(defaultSwitchCase());
+		return styleActionModels;
+	}
 
 
 	private static class Helper {

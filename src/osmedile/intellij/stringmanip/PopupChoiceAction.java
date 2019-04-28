@@ -19,7 +19,6 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.wm.IdeFocusManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -35,7 +34,7 @@ public class PopupChoiceAction extends EditorAction {
 			@NotNull
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
-				PluginPersistentStateComponent.getInstance().popup(editor.getProject());
+				WhatsNewPopup.whatsNewCheck(editor);
 
 				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main"),
 					dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);

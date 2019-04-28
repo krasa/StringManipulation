@@ -10,7 +10,6 @@ public class OpenSettingsAction extends DumbAwareAction {
 
 	@Override
 	public void actionPerformed(AnActionEvent e) {
-		MyConfigurable instance = new MyConfigurable();
-		ShowSettingsUtil.getInstance().editConfigurable(e.getProject(), "StringManipulation.MyConfigurable", instance, true);
+		ShowSettingsUtil.getInstance().showSettingsDialog(e.getProject(), "StringManipulation.MyConfigurable");
 	}
 }

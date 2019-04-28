@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.actionSystem.ex.ActionManagerEx;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyApplicationComponent implements ApplicationComponent {
+	private static final Logger LOG = Logger.getInstance(MyApplicationComponent.class);
 
 	private Class lastAction;
 	private Map<Class, AnAction> classToActionMap;
@@ -68,12 +70,17 @@ public class MyApplicationComponent implements ApplicationComponent {
 
 		for (int i = styleActionModels.size() - 1; i >= 0; i--) {
 			StyleActionModel styleActionModel = styleActionModels.get(i);
-			String actionId = styleActionModel.getId();
-			if (StringUtils.isNotBlank(actionId) && StringUtils.isNotBlank(styleActionModel.getName())) {
-				CustomStyleAction action = new CustomStyleAction(styleActionModel);
-				instance.registerAction(actionId, action, PluginId.getId("String Manipulation"));
-				group.add(action, Constraints.FIRST);
-			}
+			registerAction(instance, group, styleActionModel);
+		}
+	}
+
+	protected void registerAction(ActionManager instance, DefaultActionGroup group, StyleActionModel styleActionModel) {
+		String actionId = styleActionModel.getId();
+		if (StringUtils.isNotBlank(actionId) && StringUtils.isNotBlank(styleActionModel.getName())) {
+			CustomStyleAction action = new CustomStyleAction(styleActionModel);
+			LOG.info("Registering " + action + " id:" + actionId);
+			instance.registerAction(actionId, action, PluginId.getId("String Manipulation"));
+			group.add(action, Constraints.FIRST);
 		}
 	}
 
@@ -91,6 +98,7 @@ public class MyApplicationComponent implements ApplicationComponent {
 	private void unRegisterAction(ActionManager instance, String actionId, DefaultActionGroup group) {
 		AnAction action = instance.getActionOrStub(actionId);
 		if (action != null) {
+			LOG.info("Unregistering " + action + " id:" + actionId);
 			group.remove(action);
 			instance.unregisterAction(actionId);
 		}

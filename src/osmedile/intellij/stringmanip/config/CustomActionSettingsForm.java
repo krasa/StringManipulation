@@ -1,7 +1,11 @@
 package osmedile.intellij.stringmanip.config;
 
 import com.intellij.application.options.colors.ColorAndFontOptions;
+import com.intellij.ide.DataManager;
+import com.intellij.ide.ui.customization.CustomActionsSchema;
+import com.intellij.ide.ui.customization.CustomisedActionGroup;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
@@ -12,11 +16,15 @@ import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.options.ex.Settings;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.CheckBoxList;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.JBList;
+import com.intellij.ui.components.labels.LinkLabel;
+import com.intellij.ui.components.labels.LinkListener;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
@@ -61,20 +69,38 @@ public class CustomActionSettingsForm implements Disposable {
 	StyleActionModel selectedItem;
 	private EditorImpl myEditor;
 	private JPanel myPreviewPanel;
+	private LinkLabel link;
+	private JPanel warningPanel;
+	private LinkLabel link2;
 
 	public CustomActionSettingsForm() {
 		testField.setText("Foo Bar 1");
 
+		updateWarningVisibility();
+		LinkListener linkListener = new LinkListener() {
+			@Override
+			public void linkSelected(LinkLabel aSource, Object aLinkData) {
 
+				Settings allSettings = Settings.KEY.getData(DataManager.getInstance().getDataContext(root));
+				if (allSettings != null) {
+					final Configurable configurable = allSettings.find("preferences.customizations");
+					if (configurable != null) {
+						allSettings.select(configurable);
+					}
+				}
+			}
+		};
+		link.setListener(linkListener, null);
+		link2.setListener(linkListener, null);
 		help.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String s = "How it works:" +
-					"\n1) the current style of the text is detected" +
+				String s =
+					"1) the current style of the text is detected" +
 					"\n2) the text is then switched to the next enabled style" +
 					"\n3) some <styles> cannot be enabled, they are here only for edge cases" +
 					"\n\nFeel free to report any issues.";
-				Messages.showInfoMessage(root, s, "Help");
+				Messages.showInfoMessage(root, s, "How it works");
 			}
 		});
 		initializeModel();
@@ -88,6 +114,7 @@ public class CustomActionSettingsForm implements Disposable {
 				element.setName("New action");
 				model.addElement(element);
 				actionsList.setSelectedValue(element, true);
+				updateWarningVisibility();
 			}
 		});
 		upStep.addActionListener(new ActionListener() {
@@ -197,6 +224,12 @@ public class CustomActionSettingsForm implements Disposable {
 				}
 			}
 		});
+	}
+
+	protected void updateWarningVisibility() {
+		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main");
+		AnAction group2 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.SwitchCase");
+		warningPanel.setVisible(group1 instanceof CustomisedActionGroup || group2 instanceof CustomisedActionGroup);
 	}
 
 	@NotNull

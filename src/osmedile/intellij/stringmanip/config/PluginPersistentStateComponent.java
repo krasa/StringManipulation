@@ -1,16 +1,11 @@
 package osmedile.intellij.stringmanip.config;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationListener;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.options.ShowSettingsUtil;
-import com.intellij.openapi.project.Project;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
@@ -24,17 +19,16 @@ import osmedile.intellij.stringmanip.styles.action.DefaultActions;
 import osmedile.intellij.stringmanip.styles.action.StyleActionModel;
 import osmedile.intellij.stringmanip.styles.action.StyleStep;
 
-import javax.swing.event.HyperlinkEvent;
 import java.util.*;
-
-import static osmedile.intellij.stringmanip.DonationNagger.NOTIFICATION;
 
 @State(name = "StringManipulationState", storages = {@Storage("stringManipulation.xml")})
 public class PluginPersistentStateComponent implements PersistentStateComponent<PluginPersistentStateComponent> {
+	private static final Logger LOG = Logger.getInstance(PluginPersistentStateComponent.class);
 
 	public static final int LIMIT = 20;
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
-	private List<StyleActionModel> styleActionModels = new ArrayList<>();
+	private List<StyleActionModel> styleActionModels = DefaultActions.defaultActions();
+
 	private int lastSelectedAction = 0;
 	private DonationNagger donationNagger = new DonationNagger();
 	private int version = 0;
@@ -91,26 +85,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void actionExecuted() {
 		getDonationNagger().actionExecuted();
-	}
-
-	public void popup(final Project project) {
-		if (version < 1) {
-			version = 1;
-			ApplicationManager.getApplication().invokeLater(() -> {
-				Notification notification = NOTIFICATION.createNotification("String Manipulation popup", "You can now customize actions in the popup via <a href=\"#\">Settings | Appearance & Behavior | Menus and Toolbars</a>", NotificationType.INFORMATION,
-					new NotificationListener.UrlOpeningListener(true) {
-						@Override
-						protected void hyperlinkActivated(@NotNull Notification notification, @NotNull HyperlinkEvent event) {
-							ApplicationManager.getApplication().invokeLater(() -> {
-								ShowSettingsUtil.getInstance().showSettingsDialog(project, "Menus and Toolbars");
-
-							});
-						}
-					});
-
-				Notifications.Bus.notify(notification);
-			});
-		}
 	}
 
 	public int getVersion() {
@@ -174,7 +148,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	private void fixSteps() {
 		for (StyleActionModel styleActionModel : styleActionModels) {
-
 			Set<Style> styles = new HashSet<>();
 			styles.addAll(Arrays.asList(Style.values()));
 
