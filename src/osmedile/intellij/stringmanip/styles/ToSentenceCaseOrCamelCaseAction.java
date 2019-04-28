@@ -11,10 +11,10 @@ public class ToSentenceCaseOrCamelCaseAction extends AbstractCaseConvertingActio
 	@Override
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
-		if (from != Style.SENTENCE_CASE && from != Style._SINGLE_WORD_CAPITALIZED) {
-			return Style.SENTENCE_CASE.transform(from, s);
-		} else {
+		if (from == Style.SENTENCE_CASE || from == Style._SINGLE_WORD_CAPITALIZED) {
 			return Style.CAMEL_CASE.transform(from, s);
+		} else {
+			return Style.SENTENCE_CASE.transform(from, s);
 		}
 	}
 }

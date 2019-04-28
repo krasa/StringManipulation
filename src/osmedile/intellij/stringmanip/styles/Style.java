@@ -7,31 +7,31 @@ import static java.lang.Character.isUpperCase;
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
-	HYPHEN_LOWERCASE("foo-bar") {
+	KEBAB_LOWERCASE("kebab-case", "foo-bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", "-");
 		}
 	},
-	HYPHEN_UPPERCASE("FOO-BAR") {
+	KEBAB_UPPERCASE("KEBAB-UPPERCASE", "FOO-BAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).replace("_", "-");
 		}
 	},
-	SNAKE_CASE("foo_bar") {
+	SNAKE_CASE("snake_case", "foo_bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 		}
 	},
-	SCREAMING_SNAKE_CASE("FOO_BAR") {
+	SCREAMING_SNAKE_CASE("SCREAMING_SNAKE_CASE", "FOO_BAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s);
 		}
 	},
-	PASCAL_CASE("FooBar", "FooBar") {
+	PASCAL_CASE("PascalCase", "FooBar", "FooBar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != CAMEL_CASE) {
@@ -40,7 +40,7 @@ public enum Style {
 			return capitalizeFirstWord2(s);
 		}
 	},
-	CAMEL_CASE("fooBar", "fooBar") {
+	CAMEL_CASE("camelCase", "fooBar", "fooBar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style == CAMEL_CASE) {
@@ -51,19 +51,19 @@ public enum Style {
 			return toCamelCase(s);
 		}
 	},
-	DOT("foo.bar", "foo.Bar") {
+	DOT("dot.case", "foo.bar", "foo.Bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", ".");
 		}
 	},
-	WORD_LOWERCASE("foo bar") {
+	WORD_LOWERCASE("words lowercase", "foo bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase().replace("_", " ");
 		}
 	},
-	SENTENCE_CASE("Foo bar") {
+	SENTENCE_CASE("First word capitalized", "Foo bar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != WORD_LOWERCASE) {
@@ -73,7 +73,7 @@ public enum Style {
 			return capitalizeFirstWord(s, Constants.DELIMITERS);
 		}
 	},
-	WORD_CAPITALIZED("Foo Bar") {
+	WORD_CAPITALIZED("Words Capitalized", "Foo Bar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
@@ -86,7 +86,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_SINGLE_WORD_CAPITALIZED("Foobar") {
+	_SINGLE_WORD_CAPITALIZED("<Singlewordcapitalized>", "Foobar") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -95,7 +95,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_ALL_UPPER_CASE("FOOBAR") {
+	_ALL_UPPER_CASE("<ALLUPPERCASE>", "FOOBAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -104,7 +104,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_UNKNOWN() {
+	_UNKNOWN("<unknown>") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -116,9 +116,15 @@ public enum Style {
 	 * first one is how it should look after transformation, others are variations which follows the rule
 	 */
 	public String[] example;
+	private String presentableName;
 
-	Style(String... example) {
+	Style(String presentableName, String... example) {
+		this.presentableName = presentableName;
 		this.example = example;
+	}
+
+	public String getPresentableName() {
+		return presentableName;
 	}
 
 	public abstract String transform(Style style, String s);
@@ -149,10 +155,10 @@ public enum Style {
 
 		boolean hyphen = s.contains("-");
 		if (hyphen && noUpperCase && noSpace) {
-			return HYPHEN_LOWERCASE;
+			return KEBAB_LOWERCASE;
 		}
 		if (hyphen && noLowerCase && noSpace) {
-			return HYPHEN_UPPERCASE;
+			return KEBAB_UPPERCASE;
 		}
 
 		boolean containsDot = s.contains(".");

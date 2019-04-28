@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
-import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;

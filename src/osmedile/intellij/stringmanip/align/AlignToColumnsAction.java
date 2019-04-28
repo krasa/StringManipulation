@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
-import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import javax.swing.*;
 import java.util.List;

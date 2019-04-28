@@ -1,43 +1,43 @@
-1F WORD_LOWERCASE             -> HYPHEN_LOWERCASE(actual WORD_LOWERCASE)           : foo,bar                                          -> foo,bar
-2 WORD_LOWERCASE              -> HYPHEN_LOWERCASE                                  : foo, bar                                         -> foo,-bar
-3 WORD_LOWERCASE              -> HYPHEN_LOWERCASE                                  : foo , bar                                        -> foo-,-bar
-4 SNAKE_CASE                  -> HYPHEN_LOWERCASE                                  : foo.,_bar                                        -> foo-,-bar
-5 _UNKNOWN                    -> HYPHEN_LOWERCASE                                  : dark border350A                                  -> dark-border-350-a
-6 _UNKNOWN                    -> HYPHEN_LOWERCASE                                  : dark border35.0A                                 -> dark-border-35-0-a
-7 _UNKNOWN                    -> HYPHEN_LOWERCASE                                  : dark border35,0A                                 -> dark-border-35,0-a
-8 _UNKNOWN                    -> HYPHEN_LOWERCASE                                  : dark border35_0A                                 -> dark-border-35-0-a
-9 _UNKNOWN                    -> HYPHEN_LOWERCASE                                  : dark border35-0A                                 -> dark-border-35-0-a
-10 WORD_LOWERCASE             -> HYPHEN_LOWERCASE                                  : dark border350a                                  -> dark-border-350-a
-11 _UNKNOWN                   -> HYPHEN_LOWERCASE                                  : dark border35.0a                                 -> dark-border-35-0-a
-12 WORD_LOWERCASE             -> HYPHEN_LOWERCASE                                  : dark border35,0a                                 -> dark-border-35,0-a
-13 _UNKNOWN                   -> HYPHEN_LOWERCASE                                  : dark border35_0a                                 -> dark-border-35-0-a
-14 _UNKNOWN                   -> HYPHEN_LOWERCASE                                  : dark border35-0a                                 -> dark-border-35-0-a
-15 PASCAL_CASE                -> HYPHEN_LOWERCASE                                  : DarkBorder350A                                   -> dark-border-350-a
-16 PASCAL_CASE                -> HYPHEN_LOWERCASE                                  : DarkBorder350a                                   -> dark-border-350-a
-17 WORD_LOWERCASE             -> HYPHEN_LOWERCASE                                  : foo350a                                          -> foo-350-a
-18 WORD_LOWERCASE             -> HYPHEN_LOWERCASE                                  : foo350                                           -> foo-350
-19 _SINGLE_WORD_CAPITALIZED   -> HYPHEN_LOWERCASE                                  : Foo350                                           -> foo-350
-20 PASCAL_CASE                -> HYPHEN_LOWERCASE                                  : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \my\app-bundle\app\twig\google-tag-manager-data-layer
-22F WORD_LOWERCASE            -> HYPHEN_UPPERCASE(actual _ALL_UPPER_CASE)          : foo,bar                                          -> FOO,BAR
-23 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : foo, bar                                         -> FOO,-BAR
-24 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : foo , bar                                        -> FOO-,-BAR
-25 SNAKE_CASE                 -> HYPHEN_UPPERCASE                                  : foo.,_bar                                        -> FOO-,-BAR
-26 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border350A                                  -> DARK-BORDER-350-A
-27 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35.0A                                 -> DARK-BORDER-35-0-A
-28 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35,0A                                 -> DARK-BORDER-35,0-A
-29 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35_0A                                 -> DARK-BORDER-35-0-A
-30 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35-0A                                 -> DARK-BORDER-35-0-A
-31 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : dark border350a                                  -> DARK-BORDER-350-A
-32 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35.0a                                 -> DARK-BORDER-35-0-A
-33 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : dark border35,0a                                 -> DARK-BORDER-35,0-A
-34 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35_0a                                 -> DARK-BORDER-35-0-A
-35 _UNKNOWN                   -> HYPHEN_UPPERCASE                                  : dark border35-0a                                 -> DARK-BORDER-35-0-A
-36 PASCAL_CASE                -> HYPHEN_UPPERCASE                                  : DarkBorder350A                                   -> DARK-BORDER-350-A
-37 PASCAL_CASE                -> HYPHEN_UPPERCASE                                  : DarkBorder350a                                   -> DARK-BORDER-350-A
-38 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : foo350a                                          -> FOO-350-A
-39 WORD_LOWERCASE             -> HYPHEN_UPPERCASE                                  : foo350                                           -> FOO-350
-40 _SINGLE_WORD_CAPITALIZED   -> HYPHEN_UPPERCASE                                  : Foo350                                           -> FOO-350
-41 PASCAL_CASE                -> HYPHEN_UPPERCASE                                  : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \MY\APP-BUNDLE\APP\TWIG\GOOGLE-TAG-MANAGER-DATA-LAYER
+1F WORD_LOWERCASE             -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo,bar                                          -> foo,bar
+2 WORD_LOWERCASE              -> KEBAB_LOWERCASE                                   : foo, bar                                         -> foo,-bar
+3 WORD_LOWERCASE              -> KEBAB_LOWERCASE                                   : foo , bar                                        -> foo-,-bar
+4 SNAKE_CASE                  -> KEBAB_LOWERCASE                                   : foo.,_bar                                        -> foo-,-bar
+5 _UNKNOWN                    -> KEBAB_LOWERCASE                                   : dark border350A                                  -> dark-border-350-a
+6 _UNKNOWN                    -> KEBAB_LOWERCASE                                   : dark border35.0A                                 -> dark-border-35-0-a
+7 _UNKNOWN                    -> KEBAB_LOWERCASE                                   : dark border35,0A                                 -> dark-border-35,0-a
+8 _UNKNOWN                    -> KEBAB_LOWERCASE                                   : dark border35_0A                                 -> dark-border-35-0-a
+9 _UNKNOWN                    -> KEBAB_LOWERCASE                                   : dark border35-0A                                 -> dark-border-35-0-a
+10 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : dark border350a                                  -> dark-border-350-a
+11 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border35.0a                                 -> dark-border-35-0-a
+12 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : dark border35,0a                                 -> dark-border-35,0-a
+13 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border35_0a                                 -> dark-border-35-0-a
+14 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border35-0a                                 -> dark-border-35-0-a
+15 PASCAL_CASE                -> KEBAB_LOWERCASE                                   : DarkBorder350A                                   -> dark-border-350-a
+16 PASCAL_CASE                -> KEBAB_LOWERCASE                                   : DarkBorder350a                                   -> dark-border-350-a
+17 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : foo350a                                          -> foo-350-a
+18 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : foo350                                           -> foo-350
+19 _SINGLE_WORD_CAPITALIZED   -> KEBAB_LOWERCASE                                   : Foo350                                           -> foo-350
+20 PASCAL_CASE                -> KEBAB_LOWERCASE                                   : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \my\app-bundle\app\twig\google-tag-manager-data-layer
+22F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo,bar                                          -> FOO,BAR
+23 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo, bar                                         -> FOO,-BAR
+24 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo , bar                                        -> FOO-,-BAR
+25 SNAKE_CASE                 -> KEBAB_UPPERCASE                                   : foo.,_bar                                        -> FOO-,-BAR
+26 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border350A                                  -> DARK-BORDER-350-A
+27 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35.0A                                 -> DARK-BORDER-35-0-A
+28 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35,0A                                 -> DARK-BORDER-35,0-A
+29 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35_0A                                 -> DARK-BORDER-35-0-A
+30 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35-0A                                 -> DARK-BORDER-35-0-A
+31 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : dark border350a                                  -> DARK-BORDER-350-A
+32 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35.0a                                 -> DARK-BORDER-35-0-A
+33 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : dark border35,0a                                 -> DARK-BORDER-35,0-A
+34 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35_0a                                 -> DARK-BORDER-35-0-A
+35 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35-0a                                 -> DARK-BORDER-35-0-A
+36 PASCAL_CASE                -> KEBAB_UPPERCASE                                   : DarkBorder350A                                   -> DARK-BORDER-350-A
+37 PASCAL_CASE                -> KEBAB_UPPERCASE                                   : DarkBorder350a                                   -> DARK-BORDER-350-A
+38 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo350a                                          -> FOO-350-A
+39 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo350                                           -> FOO-350
+40 _SINGLE_WORD_CAPITALIZED   -> KEBAB_UPPERCASE                                   : Foo350                                           -> FOO-350
+41 PASCAL_CASE                -> KEBAB_UPPERCASE                                   : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \MY\APP-BUNDLE\APP\TWIG\GOOGLE-TAG-MANAGER-DATA-LAYER
 43F WORD_LOWERCASE            -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
 44 WORD_LOWERCASE             -> SNAKE_CASE                                        : foo, bar                                         -> foo,_bar
 45 WORD_LOWERCASE             -> SNAKE_CASE                                        : foo , bar                                        -> foo_,_bar

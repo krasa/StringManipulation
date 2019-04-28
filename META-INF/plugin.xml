@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>6.2.163.000.0</version>
+    <version>7.0.163.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="163.000"/>
 
@@ -204,8 +204,8 @@
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToWordLowercaseOrToCamelCaseAction"
-                        text="lowercase words / camelCase"
-                        description="Toggle: lowercase words / camelCase">
+                        text="lower case words / camelCase"
+                        description="Toggle: lower case words / camelCase">
                 </action>
                 <action id="StringManipulation.ToSentenceCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.ToSentenceCaseOrCamelCaseAction"
@@ -242,7 +242,7 @@
 
                 <separator/>
                 <action id="StringManipulation.OpenSettingsAction"
-                        class="osmedile.intellij.stringmanip.OpenSettingsAction"
+                        class="osmedile.intellij.stringmanip.config.OpenSettingsAction"
                         text="Open settings..."/>
             </group>
 
@@ -427,8 +427,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <customizableActionGroupProvider
                 implementation="osmedile.intellij.stringmanip.MyCustomizableActionGroupProvider" order="first"/>
-        <applicationService serviceImplementation="osmedile.intellij.stringmanip.PluginPersistentStateComponent"/>
-        <applicationConfigurable instance="osmedile.intellij.stringmanip.MyConfigurable" id="StringManipulation"
+        <applicationService
+                serviceImplementation="osmedile.intellij.stringmanip.config.PluginPersistentStateComponent"/>
+        <applicationConfigurable instance="osmedile.intellij.stringmanip.config.MyConfigurable" id="StringManipulation"
                                  displayName="String Manipulation"/>
     </extensions>
 
@@ -546,8 +547,9 @@
         <![CDATA[
 	<p>
 	    <div>
-	        <h4>Version 6.2<h4>
+	        <h4>Version 7.0<h4>
 	        <ul>
+                <li>Customizable case switching actions</li>
                 <li>Improved: Align to column</li>
                 <li>Sort with collator</li>
                 <li>Grep support for regular expressions</li>

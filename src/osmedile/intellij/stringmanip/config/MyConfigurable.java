@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.ConfigurationException;
@@ -6,6 +6,7 @@ import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyApplicationComponent;
 
 import javax.swing.*;
 
@@ -29,6 +30,9 @@ public class MyConfigurable implements SearchableConfigurable {
 
 	@Override
 	public void disposeUIResources() {
+		if (gui != null) {
+			gui.dispose();
+		}
 		gui = null;
 	}
 
@@ -58,16 +62,20 @@ public class MyConfigurable implements SearchableConfigurable {
 
 	@Override
 	public boolean isModified() {
-		return gui.isModified(instance.getCaseSwitchingSettings());
+		return gui != null && gui.isModified(instance);
 	}
 
 	@Override
 	public void apply() throws ConfigurationException {
-		gui.getData(instance.getCaseSwitchingSettings());
+		MyApplicationComponent.getInstance().unRegisterActions(instance.getStyleActionModels());
+
+		gui.getData(instance);
+
+		MyApplicationComponent.getInstance().registerActions();
 	}
 
 	@Override
 	public void reset() {
-		gui.setData(instance.getCaseSwitchingSettings());
+		gui.setData(instance);
 	}
 }

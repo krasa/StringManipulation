@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.config;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationListener;
@@ -15,13 +15,17 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.CaseSwitchingSettings;
+import osmedile.intellij.stringmanip.DonationNagger;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
+import osmedile.intellij.stringmanip.styles.Style;
+import osmedile.intellij.stringmanip.styles.action.DefaultActions;
+import osmedile.intellij.stringmanip.styles.action.StyleActionModel;
+import osmedile.intellij.stringmanip.styles.action.StyleStep;
 
 import javax.swing.event.HyperlinkEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static osmedile.intellij.stringmanip.DonationNagger.NOTIFICATION;
 
@@ -30,10 +34,28 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public static final int LIMIT = 20;
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
+	private List<StyleActionModel> styleActionModels = new ArrayList<>();
+	private int lastSelectedAction = 0;
 	private DonationNagger donationNagger = new DonationNagger();
 	private int version = 0;
 	private SortSettings sortSettings = new SortSettings();
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
+
+	public int getLastSelectedAction() {
+		return lastSelectedAction;
+	}
+
+	public void setLastSelectedAction(int lastSelectedAction) {
+		this.lastSelectedAction = lastSelectedAction;
+	}
+
+	public List<StyleActionModel> getStyleActionModels() {
+		return styleActionModels;
+	}
+
+	public void setStyleActionModels(List<StyleActionModel> styleActionModels) {
+		this.styleActionModels = styleActionModels;
+	}
 
 	public CaseSwitchingSettings getCaseSwitchingSettings() {
 		return caseSwitchingSettings;
@@ -50,6 +72,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	public void setSortSettings(SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
 	}
+
 	public List<ColumnAlignerModel> getHistory() {
 		return new ArrayList<ColumnAlignerModel>(history);
 	}
@@ -126,6 +149,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	}
 
 	private static PluginPersistentStateComponent unitTestComponent;
+
 	public static PluginPersistentStateComponent getInstance() {
 		if (ApplicationManager.getApplication() == null) {
 			if (unitTestComponent == null) {
@@ -145,7 +169,52 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	@Override
 	public void loadState(PluginPersistentStateComponent o) {
 		XmlSerializerUtil.copyBean(o, this);
+		fixSteps();
+	}
 
+	private void fixSteps() {
+		for (StyleActionModel styleActionModel : styleActionModels) {
+
+			Set<Style> styles = new HashSet<>();
+			styles.addAll(Arrays.asList(Style.values()));
+
+			List<StyleStep> steps = styleActionModel.getSteps();
+			for (StyleStep step : steps) {
+				Style stepStyle = step.getStyleAsEnum();
+				styles.remove(stepStyle);
+			}
+
+			if (!styles.isEmpty()) {
+				Iterator<StyleStep> stepIterator = steps.iterator();
+				while (stepIterator.hasNext()) {
+					StyleStep next = stepIterator.next();
+					Style stepStyle = next.getStyleAsEnum();
+					if (stepStyle == null) {
+						stepIterator.remove();
+					}
+				}
+				for (Style style : styles) {
+					Boolean enabled = DefaultActions.DEFAULT_AS_MAP.get(style);
+					if (enabled == null) {
+						enabled = true;
+					}
+					steps.add(new StyleStep(enabled, style));
+				}
+			}
+		}
+	}
+
+	public void resetDefaultActions() {
+		boolean exists = false;
+		for (StyleActionModel styleActionModel : styleActionModels) {
+			if (DefaultActions.SWITCH_STYLE_ACTION.equals(styleActionModel.getId())) {
+				exists = true;
+				DefaultActions.resetDefaultSwitchCase(styleActionModel);
+			}
+		}
+		if (!exists) {
+			styleActionModels.add(DefaultActions.defaultSwitchCase());
+		}
 	}
 
 }

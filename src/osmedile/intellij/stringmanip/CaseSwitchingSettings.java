@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip;
 
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+
 public class CaseSwitchingSettings {
 	private boolean separatorBeforeDigit = true;
 	private boolean separatorAfterDigit = true;

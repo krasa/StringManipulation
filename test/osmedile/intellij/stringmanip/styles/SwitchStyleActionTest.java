@@ -2,10 +2,13 @@ package osmedile.intellij.stringmanip.styles;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
+import osmedile.intellij.stringmanip.styles.action.CustomStyleAction;
+import osmedile.intellij.stringmanip.styles.action.DefaultActions;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +17,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SwitchStyleActionTest extends CaseSwitchingTest {
+
+	protected static final String TEST_TRANSFORM_VARIATIONS_TXT = "testTransformVariations.txt";
+	AbstractCaseConvertingAction switchStyleAction;
+
+	@Before
+	public void setUp() throws Exception {
+//		switchStyleAction = new SwitchStyleAction(false);
+		switchStyleAction = new CustomStyleAction(false, DefaultActions.defaultSwitchCase());
+	}
 
 	@Test
 	public void testTransform5() throws Exception {
@@ -133,7 +145,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		failed = allUpperCaseException(failed);
 		String text = toText(ok, failed);
 		print(text);
-		writeToFile("testTransformVariations.txt", text);
+		writeToFile(TEST_TRANSFORM_VARIATIONS_TXT, text);
 		//from _ALL_UPPER_CASE and _SINGLE_WORD_CAPITALIZED will always fail, is showing them as fail anyway ok? 
 		Assert.assertTrue(failed.isEmpty());
 	}
@@ -264,7 +276,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 
 	private String transform(String fooBar, final String expected) {
 		String input = fooBar;
-		String result = new SwitchStyleAction(false).transformByLine(input);
+		String result = switchStyleAction.transformByLine(input);
 		System.out.println(input + " -> " + result);
 		Assert.assertEquals(input + " -> " + result, expected, result);
 		return result;

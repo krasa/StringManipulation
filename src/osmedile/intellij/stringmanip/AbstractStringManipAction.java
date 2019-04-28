@@ -16,6 +16,8 @@ import osmedile.intellij.stringmanip.utils.StringUtils;
  */
 public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
+	protected final boolean setupHandler;
+	
 	protected AbstractStringManipAction() {
 		this(true);
 	}
@@ -37,6 +39,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 			});
 		}
+		this.setupHandler = setupHandler;
 	}
 
 	@NotNull

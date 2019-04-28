@@ -1,11 +1,12 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.diagnostic.Logger;
+import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 
 import javax.swing.*;
 
-public class SettingsForm {
-	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(SettingsForm.class);
+public class CaseSwitchingSettingsForm {
+	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CaseSwitchingSettingsForm.class);
 
 	private JCheckBox separatorBefore;
 	private JCheckBox separatorAfter;
@@ -17,6 +18,7 @@ public class SettingsForm {
 	}
 
 	public void getData(CaseSwitchingSettings data) {
+
 		data.setSeparatorBeforeDigit(separatorBefore.isSelected());
 		data.setSeparatorAfterDigit(separatorAfter.isSelected());
 	}
@@ -30,4 +32,5 @@ public class SettingsForm {
 	public JPanel getRoot() {
 		return root;
 	}
+
 }

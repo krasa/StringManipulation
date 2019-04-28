@@ -1,10 +1,11 @@
 package osmedile.intellij.stringmanip.styles;
 
+@Deprecated
 public class SwitchStyleAction extends AbstractCaseConvertingAction {
 
 	public static Style[][] transformation = new Style[][]{
-		{Style.HYPHEN_LOWERCASE, Style.HYPHEN_UPPERCASE},
-		{Style.HYPHEN_UPPERCASE, Style.SNAKE_CASE},
+		{Style.KEBAB_LOWERCASE, Style.KEBAB_UPPERCASE},
+		{Style.KEBAB_UPPERCASE, Style.SNAKE_CASE},
 		{Style.SNAKE_CASE, Style.SCREAMING_SNAKE_CASE},
 		{Style.SCREAMING_SNAKE_CASE, Style.DOT},
 		{Style.DOT, Style.WORD_LOWERCASE},
@@ -12,7 +13,7 @@ public class SwitchStyleAction extends AbstractCaseConvertingAction {
 		{Style.SENTENCE_CASE, Style.WORD_CAPITALIZED},
 		{Style.WORD_CAPITALIZED, Style.PASCAL_CASE},
 		{Style.PASCAL_CASE, Style.CAMEL_CASE},
-		{Style.CAMEL_CASE, Style.HYPHEN_LOWERCASE},
+		{Style.CAMEL_CASE, Style.KEBAB_LOWERCASE},
 		{Style._UNKNOWN, Style.CAMEL_CASE},
 		{Style._ALL_UPPER_CASE, Style.WORD_LOWERCASE},
 		{Style._SINGLE_WORD_CAPITALIZED, Style.SCREAMING_SNAKE_CASE},

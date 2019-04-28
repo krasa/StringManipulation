@@ -11,10 +11,10 @@ public class ToWordCapitalizedOrCamelCaseAction extends AbstractCaseConvertingAc
 	@Override
 	public String transformByLine(String s) {
 		Style from = Style.from(s);
-		if (from != Style.WORD_CAPITALIZED && from != Style._SINGLE_WORD_CAPITALIZED) {
-			return Style.WORD_CAPITALIZED.transform(from, s);
-		} else {
+		if (from == Style.WORD_CAPITALIZED || from == Style._SINGLE_WORD_CAPITALIZED) {
 			return Style.CAMEL_CASE.transform(from, s);
+		} else {
+			return Style.WORD_CAPITALIZED.transform(from, s);
 		}
 	}
 }

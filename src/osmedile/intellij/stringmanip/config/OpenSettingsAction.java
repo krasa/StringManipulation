@@ -1,4 +1,4 @@
-package osmedile.intellij.stringmanip;
+package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;

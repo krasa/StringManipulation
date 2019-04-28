@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.utils;
 
-import osmedile.intellij.stringmanip.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -230,9 +230,9 @@ public class StringUtil {
 
 			previousChar = c;
 		}
-		if (isWhitespace(previousChar)) {
-			buf.append("_");
-		}
+//		if (isWhitespace(previousChar)) {
+//			buf.append("_");
+//		}
 
 
 		return buf.toString();

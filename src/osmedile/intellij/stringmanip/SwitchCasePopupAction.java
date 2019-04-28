@@ -10,6 +10,7 @@ import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 public class SwitchCasePopupAction extends PopupChoiceAction {
 	public SwitchCasePopupAction() {
