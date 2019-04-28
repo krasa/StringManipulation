@@ -160,37 +160,37 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 				continue;
 			}
 			List<String> inputs = Arrays.asList(
-//				"foo bar 1 1",
-//				"foo bar 1.1",
-//				"foo bar 1_1",
-//				"foo bar 1,1",
-//				
-//				"foo_bar 1 1",
-//				"foo_bar 1.1",
-//				"foo_bar 1_1",
-//				"foo_bar 1,1",
-//				
-//				"foo.bar 1 1",
-//				"foo.bar 1.1",
-//				"foo.bar 1_1",
-//				"foo.bar 1,1",
-//				
-//				"foo,bar 1 1",
-//				"foo,bar 1.1",
-//				"foo,bar 1_1",
-//				"foo,bar 1,1",
-//				
-//				"FooBar1 1",
-//				"FooBar1.1",
-//				"FooBar1_1",
-//				"FooBar1,1",
-//				
-//				"Foo Bar1 1",
-//				"Foo Bar1.1",
-//				"Foo Bar1_1",
-//				"Foo Bar1,1",
+				"foo bar 1 1",
+				"foo bar 1.1",
+				"foo bar 1_1",
+				"foo bar 1,1",
 
-//				"foobar",
+				"foo_bar 1 1",
+				"foo_bar 1.1",
+				"foo_bar 1_1",
+				"foo_bar 1,1",
+
+				"foo.bar 1 1",
+				"foo.bar 1.1",
+				"foo.bar 1_1",
+				"foo.bar 1,1",
+
+				"foo,bar 1 1",
+				"foo,bar 1.1",
+				"foo,bar 1_1",
+				"foo,bar 1,1",
+
+				"FooBar1 1",
+				"FooBar1.1",
+				"FooBar1_1",
+				"FooBar1,1",
+
+				"Foo Bar1 1",
+				"Foo Bar1.1",
+				"Foo Bar1_1",
+				"Foo Bar1,1",
+
+				"foobar",
 
 				"foo,bar",
 				"foo, bar",
