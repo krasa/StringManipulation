@@ -10,22 +10,25 @@ Provides actions for text manipulation:
     <p>
         Switch case:
         <ul>
-            <li>Switch style (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
-                words lowercase, Words Capitalized, PascalCase)
+            <li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+					words lowercase, First word capitalized, Words Capitalized, PascalCase)
             </li>
-            <li>To SCREAMING_SNAKE_CASE (or to camelCase)</li>
-            <li>To snake_case (or to camelCase)</li>
-            <li>To dot.case (or to camelCase)</li>
-            <li>To kebab-case (or to camelCase)</li>
-            <li>To kebab-case (or to snake_case)</li>
-            <li>To camelCase (or to words)</li>
-            <li>To PascalCase (or to camelCase)</li>
-            <li>Capitalize selected text</li>
+               <li>Toggle: SCREAMING__SNAKE__CASE / camelCase</li>
+               <li>Toggle: snake__case / camelCase</li>
+               <li>Toggle: kebab-case / snake__case</li>
+               <li>Toggle: kebab-case / camelCase</li>
+               <li>Toggle: dot.case / camelCase</li>
+               <li>Toggle: PascalCase / camelCase</li>
+               <li>Toggle: lowercase words / camelCase</li>
+               <li>Toggle: First word capitalized / camelCase</li>
+               <li>Toggle: Capitalized Words / camelCase</li>
+               <li>Capitalize</li>
+               <li>To lower case</li>
             <li>To UPPER CASE</li>
-            <li>To lower case</li>
             <li>Invert case</li>
         </ul>
-        -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
+			-'Switch case' action can be customized, or new ones can be added in settings 
+            -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
     </p>
     <p>
         Un/Escape:
@@ -59,7 +62,7 @@ Provides actions for text manipulation:
         </ul>
     </p>
     <p>
-        Sort with natural order:
+        Sort with natural order or Collator:
         <ul>
             <li>Reversing order of lines</li>
             <li>Shuffle lines</li>
@@ -99,12 +102,13 @@ Provides actions for text manipulation:
         Other:
         <ul>
             <li>Swap Characters/Selections/Lines/Tokens</li>
-            <li>Swap single quote to double quote</li>
+				<li>Wrap or swap double quotes to single quotes to backticks</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
         </ul>
     </p>
     <p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
-        You can setup your own shortcuts for better usability or customize the popup in File | Settings | Appearance & Behavior | Menus and Toolbars.
+			<br>You can setup your own shortcuts for better usability.
+			<br>Popup can be customized in File | Settings | Appearance & Behavior | Menus and Toolbars.
     </p>
 </p>
 

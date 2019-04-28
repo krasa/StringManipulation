@@ -456,7 +456,8 @@
                <li>To UPPER CASE</li>
                <li>Invert case</li>
 			</ul>
-            -when nothing is selected, then either nothing or whole line or a particular element is selected - report an issue if you find something to improve, each file type needs its own implementation to work flawlessly.</li>
+			-'Switch case' action can be customized, or new ones can be added in settings 
+            -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
 		</p>
 		<p>
             Un/Escape:
@@ -535,7 +536,8 @@
 			</ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
-			You can setup your own shortcuts for better usability or customize the popup in File | Settings | Appearance & Behavior | Menus and Toolbars.
+			<br>You can setup your own shortcuts for better usability.
+			<br>Popup can be customized in File | Settings | Appearance & Behavior | Menus and Toolbars.
 		</p>
         <br> <br>
         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=75YN7U7H7D7XU&lc=CZ&item_name=String%20Manipulation%20%2d%20IntelliJ%20plugin%20%2d%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest">Donations are welcomed.</a>
@@ -551,10 +553,10 @@
 	        <h4>Version 7.0<h4>
 	        <ul>
                 <li>Customizable case switching actions</li>
-                <li>Improved: Align to column</li>
+                <li>Improved: Align to column - aligning by multiple separators at once</li>
                 <li>Sort with collator</li>
                 <li>Grep support for regular expressions</li>
-                <li>Case switching overhaul</li>
+                <li>Case switching - settings for adding a separator before or after a number</li>
                 <li>Swap quotes action: added swapping to backticks and wrapping</li>
             </ul>
 	    </div>
