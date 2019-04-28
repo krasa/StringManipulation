@@ -26,7 +26,7 @@
       </grid>
       <component id="239c8" class="javax.swing.JCheckBox" binding="addSpaceBeforeSeparatorCheckBox" default-binding="true">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Add space before separator"/>
@@ -34,7 +34,7 @@
       </component>
       <component id="dcd21" class="javax.swing.JCheckBox" binding="addSpaceAfterSeparatorCheckBox">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Add space after separator"/>
@@ -42,7 +42,7 @@
       </component>
       <component id="c32eb" class="javax.swing.JCheckBox" binding="trimValues">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Trim values"/>
@@ -50,7 +50,7 @@
       </component>
       <component id="2be38" class="javax.swing.JCheckBox" binding="trimLines">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Trim lines"/>
@@ -58,7 +58,7 @@
       </component>
       <component id="c6d65" class="javax.swing.JRadioButton" binding="alignSeparatorLeft">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Align only values"/>
@@ -82,7 +82,7 @@
       </component>
       <component id="a9cb7" class="javax.swing.JRadioButton" binding="alignSeparatorRight">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Align seperators"/>
@@ -90,10 +90,10 @@
       </component>
       <component id="bbfaf" class="javax.swing.JCheckBox" binding="sequentially">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Process separators sequentially, one after another (old behaviour)"/>
+          <text value="Process separators sequentially (old behaviour)"/>
           <toolTipText value="Otherwise process all at once"/>
         </properties>
       </component>
