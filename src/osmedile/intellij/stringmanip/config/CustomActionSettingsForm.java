@@ -226,6 +226,7 @@ public class CustomActionSettingsForm implements Disposable {
 	}
 
 	protected void updateWarningVisibility() {
+		//not reliable
 		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main");
 		AnAction group2 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.SwitchCase");
 		warningPanel.setVisible(group1 instanceof CustomisedActionGroup || group2 instanceof CustomisedActionGroup);
