@@ -67,7 +67,7 @@ public class MyConfigurable implements SearchableConfigurable {
 
 	@Override
 	public void apply() throws ConfigurationException {
-		MyApplicationComponent.getInstance().unRegisterActions(instance.getStyleActionModels());
+		MyApplicationComponent.getInstance().unRegisterActions(instance.getCustomActionModels());
 
 		gui.getData(instance);
 

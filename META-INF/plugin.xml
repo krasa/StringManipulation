@@ -165,11 +165,12 @@
             <group id="StringManipulation.Group.SwitchCase" text="Switch case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
-                <action id="StringManipulation.SwitchStyleAction"
-                        class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"
-                        text="Switch case"
-                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase,  Normal sentence, Words Capitalized)">
-                </action>
+                <!--                dynamically registered-->
+                <!--                <action id="StringManipulation.SwitchStyleAction"-->
+                <!--                        class="osmedile.intellij.stringmanip.styles.SwitchStyleAction"-->
+                <!--                        text="Switch case"-->
+                <!--                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase,  Normal sentence, Words Capitalized)">-->
+                <!--                </action>-->
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"

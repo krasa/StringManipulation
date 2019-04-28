@@ -7,8 +7,8 @@ import org.junit.Test;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
-import osmedile.intellij.stringmanip.styles.action.CustomStyleAction;
-import osmedile.intellij.stringmanip.styles.action.DefaultActions;
+import osmedile.intellij.stringmanip.styles.custom.CustomAction;
+import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 	@Before
 	public void setUp() throws Exception {
 //		switchStyleAction = new SwitchStyleAction(false);
-		switchStyleAction = new CustomStyleAction(false, DefaultActions.defaultSwitchCase());
+		switchStyleAction = new CustomAction(false, DefaultActions.defaultSwitchCase());
 	}
 
 	@Test

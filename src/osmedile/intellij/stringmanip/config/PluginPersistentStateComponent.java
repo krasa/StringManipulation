@@ -15,9 +15,8 @@ import osmedile.intellij.stringmanip.DonationNagger;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.styles.Style;
-import osmedile.intellij.stringmanip.styles.action.DefaultActions;
-import osmedile.intellij.stringmanip.styles.action.StyleActionModel;
-import osmedile.intellij.stringmanip.styles.action.StyleStep;
+import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
+import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
 import java.util.*;
 
@@ -27,7 +26,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public static final int LIMIT = 20;
 	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
-	private List<StyleActionModel> styleActionModels = DefaultActions.defaultActions();
+	private List<CustomActionModel> customActionModels = DefaultActions.defaultActions();
 
 	private int lastSelectedAction = 0;
 	private DonationNagger donationNagger = new DonationNagger();
@@ -43,12 +42,12 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		this.lastSelectedAction = lastSelectedAction;
 	}
 
-	public List<StyleActionModel> getStyleActionModels() {
-		return styleActionModels;
+	public List<CustomActionModel> getCustomActionModels() {
+		return customActionModels;
 	}
 
-	public void setStyleActionModels(List<StyleActionModel> styleActionModels) {
-		this.styleActionModels = styleActionModels;
+	public void setCustomActionModels(List<CustomActionModel> customActionModels) {
+		this.customActionModels = customActionModels;
 	}
 
 	public CaseSwitchingSettings getCaseSwitchingSettings() {
@@ -143,24 +142,24 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	@Override
 	public void loadState(PluginPersistentStateComponent o) {
 		XmlSerializerUtil.copyBean(o, this);
-		fixSteps();
+		fixActions();
 	}
 
-	private void fixSteps() {
-		for (StyleActionModel styleActionModel : styleActionModels) {
+	private void fixActions() {
+		for (CustomActionModel customActionModel : customActionModels) {
 			Set<Style> styles = new HashSet<>();
 			styles.addAll(Arrays.asList(Style.values()));
 
-			List<StyleStep> steps = styleActionModel.getSteps();
-			for (StyleStep step : steps) {
+			List<CustomActionModel.Step> steps = customActionModel.getSteps();
+			for (CustomActionModel.Step step : steps) {
 				Style stepStyle = step.getStyleAsEnum();
 				styles.remove(stepStyle);
 			}
 
 			if (!styles.isEmpty()) {
-				Iterator<StyleStep> stepIterator = steps.iterator();
+				Iterator<CustomActionModel.Step> stepIterator = steps.iterator();
 				while (stepIterator.hasNext()) {
-					StyleStep next = stepIterator.next();
+					CustomActionModel.Step next = stepIterator.next();
 					Style stepStyle = next.getStyleAsEnum();
 					if (stepStyle == null) {
 						stepIterator.remove();
@@ -169,9 +168,9 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 				for (Style style : styles) {
 					Boolean enabled = DefaultActions.DEFAULT_AS_MAP.get(style);
 					if (enabled == null) {
-						enabled = true;
+						enabled = !style.name().startsWith("_");
 					}
-					steps.add(new StyleStep(enabled, style));
+					steps.add(new CustomActionModel.Step(enabled, style));
 				}
 			}
 		}
@@ -179,14 +178,14 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void resetDefaultActions() {
 		boolean exists = false;
-		for (StyleActionModel styleActionModel : styleActionModels) {
-			if (DefaultActions.SWITCH_STYLE_ACTION.equals(styleActionModel.getId())) {
+		for (CustomActionModel customActionModel : customActionModels) {
+			if (DefaultActions.SWITCH_STYLE_ACTION.equals(customActionModel.getId())) {
 				exists = true;
-				DefaultActions.resetDefaultSwitchCase(styleActionModel);
+				DefaultActions.resetDefaultSwitchCase(customActionModel);
 			}
 		}
 		if (!exists) {
-			styleActionModels.add(DefaultActions.defaultSwitchCase());
+			customActionModels.add(DefaultActions.defaultSwitchCase());
 		}
 	}
 

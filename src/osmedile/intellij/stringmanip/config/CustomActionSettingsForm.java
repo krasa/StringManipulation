@@ -29,10 +29,9 @@ import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.styles.Style;
-import osmedile.intellij.stringmanip.styles.action.CustomStyleAction;
-import osmedile.intellij.stringmanip.styles.action.DefaultActions;
-import osmedile.intellij.stringmanip.styles.action.StyleActionModel;
-import osmedile.intellij.stringmanip.styles.action.StyleStep;
+import osmedile.intellij.stringmanip.styles.custom.CustomAction;
+import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
+import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 import osmedile.intellij.stringmanip.utils.Cloner;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
@@ -52,7 +51,7 @@ public class CustomActionSettingsForm implements Disposable {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomActionSettingsForm.class);
 
 	private JBList actionsList;
-	private CheckBoxList<StyleStep> stepList;
+	private CheckBoxList<CustomActionModel.Step> stepList;
 	private JPanel root;
 	private JTextField testField;
 	private JButton testButton;
@@ -66,7 +65,7 @@ public class CustomActionSettingsForm implements Disposable {
 	private JButton resetSteps;
 	DefaultListModel model;
 	JScrollPane scrollPane;
-	StyleActionModel selectedItem;
+	CustomActionModel selectedItem;
 	private EditorImpl myEditor;
 	private JPanel myPreviewPanel;
 	private LinkLabel link;
@@ -110,7 +109,7 @@ public class CustomActionSettingsForm implements Disposable {
 		add.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				StyleActionModel element = StyleActionModel.create();
+				CustomActionModel element = CustomActionModel.create();
 				element.setName("New action");
 				model.addElement(element);
 				actionsList.setSelectedValue(element, true);
@@ -120,7 +119,7 @@ public class CustomActionSettingsForm implements Disposable {
 		upStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<StyleStep> steps = selectedItem.getSteps();
+				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				int selectedIndex = stepList.getSelectedIndex();
 				if (selectedIndex > 0) {
 					Collections.swap(steps, selectedIndex, selectedIndex - 1);
@@ -132,7 +131,7 @@ public class CustomActionSettingsForm implements Disposable {
 		downStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<StyleStep> steps = selectedItem.getSteps();
+				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				int selectedIndex = stepList.getSelectedIndex();
 				if (selectedIndex + 1 < steps.size()) {
 					Collections.swap(steps, selectedIndex, selectedIndex + 1);
@@ -155,7 +154,7 @@ public class CustomActionSettingsForm implements Disposable {
 				String text = testField.getText();
 				if (StringUtils.isNotBlank(text)) {
 					StringBuilder sb = new StringBuilder();
-					for (StyleStep step : selectedItem.getSteps()) {
+					for (CustomActionModel.Step step : selectedItem.getSteps()) {
 						if (step.isEnabled()) {
 							text = transform(text, sb);
 						}
@@ -183,10 +182,10 @@ public class CustomActionSettingsForm implements Disposable {
 			}
 
 			protected String transform(String text, StringBuilder sb) {
-				CustomStyleAction customStyleAction = new CustomStyleAction(selectedItem);
+				CustomAction customAction = new CustomAction(selectedItem);
 				Style from = Style.from(text);
 
-				String result = customStyleAction.transformByLine(text);
+				String result = customAction.transformByLine(text);
 				Style to = Style.from(result);
 
 				sb.append(text).append(" $$$-> ").append(result).append(" $$$: (").append(from.getPresentableName()).append(" $$$-> ").append(to.getPresentableName()).append(")\n");
@@ -208,7 +207,7 @@ public class CustomActionSettingsForm implements Disposable {
 			public void valueChanged(ListSelectionEvent e) {
 				JList sourceList = (JList) e.getSource();
 
-				selectedItem = (StyleActionModel) sourceList.getSelectedValue();
+				selectedItem = (CustomActionModel) sourceList.getSelectedValue();
 				if (selectedItem != null) {
 					PluginPersistentStateComponent.getInstance().setLastSelectedAction(actionsList.getSelectedIndex());
 					name.setText(selectedItem.getName());
@@ -298,7 +297,7 @@ public class CustomActionSettingsForm implements Disposable {
 
 
 	public boolean isModified() {
-		return !getStyleActions().equals(PluginPersistentStateComponent.getInstance().getStyleActionModels());
+		return !getStyleActions().equals(PluginPersistentStateComponent.getInstance().getCustomActionModels());
 	}
 
 	public void setData() {
@@ -306,20 +305,20 @@ public class CustomActionSettingsForm implements Disposable {
 	}
 
 	public void getData() {
-		List<StyleActionModel> styleActionModels = getStyleActions();
+		List<CustomActionModel> customActionModels = getStyleActions();
 
-		PluginPersistentStateComponent.getInstance().setStyleActionModels(styleActionModels);
+		PluginPersistentStateComponent.getInstance().setCustomActionModels(customActionModels);
 	}
 
 	@NotNull
-	public List<StyleActionModel> getStyleActions() {
-		List<StyleActionModel> styleActionModels = new ArrayList<>();
+	public List<CustomActionModel> getStyleActions() {
+		List<CustomActionModel> customActionModels = new ArrayList<>();
 		Enumeration elements = model.elements();
 		while (elements.hasMoreElements()) {
 			Object o = elements.nextElement();
-			styleActionModels.add((StyleActionModel) o);
+			customActionModels.add((CustomActionModel) o);
 		}
-		return styleActionModels;
+		return customActionModels;
 	}
 
 
@@ -334,12 +333,12 @@ public class CustomActionSettingsForm implements Disposable {
 
 	}
 
-	private CheckBoxList<StyleStep> createStepList() {
-		CheckBoxList<StyleStep> list = new CheckBoxList<>();
+	private CheckBoxList<CustomActionModel.Step> createStepList() {
+		CheckBoxList<CustomActionModel.Step> list = new CheckBoxList<>();
 		scrollPane = ScrollPaneFactory.createScrollPane(list);
 		scrollPane.setMinimumSize(new Dimension(300, -1));
 		list.setCheckBoxListListener((int index, boolean value) -> {
-			StyleStep itemAt = list.getItemAt(index);
+			CustomActionModel.Step itemAt = list.getItemAt(index);
 			if (itemAt != null) {
 				boolean b = !itemAt.getStyleAsEnum().name().startsWith("_");
 				itemAt.setEnabled(value && b);
@@ -354,7 +353,7 @@ public class CustomActionSettingsForm implements Disposable {
 		list.setTransferHandler(new MyListDropHandler(list) {
 			@Override
 			protected void swap(int index, int dropTargetIndex) {
-				List<StyleStep> steps = selectedItem.getSteps();
+				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				if (index < dropTargetIndex) {//moving down
 					Collections.rotate(steps.subList(index, dropTargetIndex), -1);
 					--dropTargetIndex;
@@ -373,7 +372,7 @@ public class CustomActionSettingsForm implements Disposable {
 	public void initStepList() {
 		stepList.clear();
 
-		for (StyleStep style : selectedItem.getSteps()) {
+		for (CustomActionModel.Step style : selectedItem.getSteps()) {
 			Style style1 = style.getStyleAsEnum();
 			String presentableName = "<null>";
 			if (style1 != null) {
@@ -387,9 +386,9 @@ public class CustomActionSettingsForm implements Disposable {
 	private void initializeModel() {
 		model.clear();
 		PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
-		List<StyleActionModel> styleActionModels = stateComponent.getStyleActionModels();
-		for (StyleActionModel styleActionModel : styleActionModels) {
-			model.addElement(Cloner.deepClone(styleActionModel));
+		List<CustomActionModel> customActionModels = stateComponent.getCustomActionModels();
+		for (CustomActionModel customActionModel : customActionModels) {
+			model.addElement(Cloner.deepClone(customActionModel));
 		}
 		if (model.size() > 0) {
 			int lastSelectedAction = stateComponent.getLastSelectedAction();
@@ -407,7 +406,7 @@ public class CustomActionSettingsForm implements Disposable {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 														  boolean cellHasFocus) {
 				final Component comp = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-				StyleActionModel goal = (StyleActionModel) value;
+				CustomActionModel goal = (CustomActionModel) value;
 				setText(goal.getName());
 				return comp;
 			}

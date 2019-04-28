@@ -11,8 +11,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
-import osmedile.intellij.stringmanip.styles.action.CustomStyleAction;
-import osmedile.intellij.stringmanip.styles.action.StyleActionModel;
+import osmedile.intellij.stringmanip.styles.custom.CustomAction;
+import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import java.util.HashMap;
@@ -64,30 +64,30 @@ public class MyApplicationComponent implements ApplicationComponent {
 	public void registerActions() {
 		ActionManager instance = ActionManager.getInstance();
 		DefaultActionGroup group = (DefaultActionGroup) instance.getAction("StringManipulation.Group.SwitchCase");
-		List<StyleActionModel> styleActionModels = PluginPersistentStateComponent.getInstance().getStyleActionModels();
+		List<CustomActionModel> customActionModels = PluginPersistentStateComponent.getInstance().getCustomActionModels();
 
-		unRegisterActions(styleActionModels);
+		unRegisterActions(customActionModels);
 
-		for (int i = styleActionModels.size() - 1; i >= 0; i--) {
-			StyleActionModel styleActionModel = styleActionModels.get(i);
-			registerAction(instance, group, styleActionModel);
+		for (int i = customActionModels.size() - 1; i >= 0; i--) {
+			CustomActionModel customActionModel = customActionModels.get(i);
+			registerAction(instance, group, customActionModel);
 		}
 	}
 
-	protected void registerAction(ActionManager instance, DefaultActionGroup group, StyleActionModel styleActionModel) {
-		String actionId = styleActionModel.getId();
-		if (StringUtils.isNotBlank(actionId) && StringUtils.isNotBlank(styleActionModel.getName())) {
-			CustomStyleAction action = new CustomStyleAction(styleActionModel);
+	protected void registerAction(ActionManager instance, DefaultActionGroup group, CustomActionModel customActionModel) {
+		String actionId = customActionModel.getId();
+		if (StringUtils.isNotBlank(actionId) && StringUtils.isNotBlank(customActionModel.getName())) {
+			CustomAction action = new CustomAction(customActionModel);
 			LOG.info("Registering " + action + " id:" + actionId);
 			instance.registerAction(actionId, action, PluginId.getId("String Manipulation"));
 			group.add(action, Constraints.FIRST);
 		}
 	}
 
-	public void unRegisterActions(List<StyleActionModel> styleActionModels) {
+	public void unRegisterActions(List<CustomActionModel> customActionModels) {
 		ActionManager instance = ActionManager.getInstance();
 		DefaultActionGroup group = (DefaultActionGroup) instance.getAction("StringManipulation.Group.SwitchCase");
-		for (StyleActionModel actionModel : styleActionModels) {
+		for (CustomActionModel actionModel : customActionModels) {
 			String id = actionModel.getId();
 			if (StringUtils.isNotBlank(id)) {
 				unRegisterAction(instance, id, group);
