@@ -4,7 +4,6 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.annotations.Transient;
 import osmedile.intellij.stringmanip.styles.Style;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,7 +12,7 @@ import static osmedile.intellij.stringmanip.styles.Style.valueOf;
 public class CustomActionModel {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomActionModel.class);
 
-	private List<Step> steps = new ArrayList<>(DefaultActions.DEFAULT);
+	private List<Step> steps = DefaultActions.getDefaultSteps();
 	private String id;
 	private String name;
 

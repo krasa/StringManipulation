@@ -196,9 +196,8 @@ public class CustomActionSettingsForm implements Disposable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (selectedItem != null) {
-					selectedItem.setSteps(Cloner.deepClone(DefaultActions.DEFAULT));
+					selectedItem.setSteps(DefaultActions.getDefaultSteps());
 				}
-				;
 				initStepList();
 			}
 		});
@@ -332,7 +331,7 @@ public class CustomActionSettingsForm implements Disposable {
 
 
 	private void createUIComponents() {
-		model = new DefaultListModel();
+		model = new DefaultListModel();                                                   
 		actionsList = createJBList(model);
 		stepList = createStepList();
 
