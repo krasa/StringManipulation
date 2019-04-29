@@ -16,14 +16,17 @@ public class CustomAction extends AbstractCaseConvertingAction {
 		this(true, customActionModel);
 	}
 
-	public CustomAction(boolean b, CustomActionModel model) {
-		super(b);
+	public CustomAction(boolean setupHandler, CustomActionModel model) {
+		super(setupHandler);
 		this.customActionModel = model;
 		getTemplatePresentation().setText(customActionModel.getName());
 		String description = makeDescription();
 		getTemplatePresentation().setDescription(description);
-		MyEditorWriteActionHandler handler = (MyEditorWriteActionHandler) getHandler();
-		handler.setCustomActionModel(model);
+
+		if (setupHandler) {
+			MyEditorWriteActionHandler handler = (MyEditorWriteActionHandler) getHandler();
+			handler.setCustomActionModel(model);
+		}
 	}
 
 	@NotNull

@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.styles;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class InvertCaseAction extends AbstractCaseConvertingAction {
     public InvertCaseAction() {

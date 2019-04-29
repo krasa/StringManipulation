@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collections;

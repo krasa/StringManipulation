@@ -6,7 +6,6 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
@@ -94,6 +93,6 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 
 	@Override
 	public String transformByLine(String s) {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

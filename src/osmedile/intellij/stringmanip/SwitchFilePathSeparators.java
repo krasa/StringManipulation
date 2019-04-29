@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import org.apache.commons.lang.NotImplementedException;
 
 public class SwitchFilePathSeparators extends AbstractStringManipAction {
 
@@ -19,6 +18,6 @@ public class SwitchFilePathSeparators extends AbstractStringManipAction {
 
 	@Override
 	public String transformByLine(String s) {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

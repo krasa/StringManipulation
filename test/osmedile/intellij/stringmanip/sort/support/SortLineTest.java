@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 

@@ -25,6 +25,7 @@ import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.ui.components.labels.LinkListener;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
@@ -33,7 +34,6 @@ import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 import osmedile.intellij.stringmanip.utils.Cloner;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip.encoding;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import org.apache.commons.lang.NotImplementedException;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import java.io.UnsupportedEncodingException;
@@ -46,6 +45,6 @@ public class EncodeMd5Hex16Action extends AbstractStringManipAction {
 
 	@Override
 	public String transformByLine(String s) {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 }

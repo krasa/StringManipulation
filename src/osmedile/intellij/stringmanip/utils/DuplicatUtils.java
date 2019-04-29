@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.utils;
 
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.Nullable;
 
 /**

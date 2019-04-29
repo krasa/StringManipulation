@@ -1,7 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.jgoodies.common.collect.ArrayListModel;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import javax.swing.*;

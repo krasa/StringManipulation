@@ -9,11 +9,11 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;

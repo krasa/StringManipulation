@@ -6,9 +6,9 @@ import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.util.Pair;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
 /**
  * @author Olivier Smedile

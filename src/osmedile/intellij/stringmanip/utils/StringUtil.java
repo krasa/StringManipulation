@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.utils;
 
+import org.apache.commons.lang3.CharUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
@@ -453,7 +455,7 @@ public class StringUtil {
 	}
 
 	public static int indexOfAnyButWhitespace(String cs) {
-		if (org.apache.commons.lang.StringUtils.isEmpty(cs)) {
+		if (org.apache.commons.lang3.StringUtils.isEmpty(cs)) {
 			return cs.length();
 		}
 		final int csLen = cs.length();

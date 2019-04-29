@@ -4,9 +4,9 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.MyApplicationComponent;
 import osmedile.intellij.stringmanip.MyEditorAction;
-import osmedile.intellij.stringmanip.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
