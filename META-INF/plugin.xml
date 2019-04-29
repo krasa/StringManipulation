@@ -1,9 +1,9 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.0.163.000.1</version>
+    <version>7.0.182.000.1</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
-    <idea-version since-build="163.000"/>
+    <idea-version since-build="182.000"/>
 
     <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
     <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
@@ -442,9 +442,9 @@
 				<li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, First word capitalized, Words Capitalized, PascalCase)
 				</li>
-               <li>Toggle: SCREAMING__SNAKE__CASE / camelCase</li>
-               <li>Toggle: snake__case / camelCase</li>
-               <li>Toggle: kebab-case / snake__case</li>
+               <li>Toggle: SCREAMING_SNAKE_CASE / camelCase</li>
+               <li>Toggle: snake_case / camelCase</li>
+               <li>Toggle: kebab-case / snake_case</li>
                <li>Toggle: kebab-case / camelCase</li>
                <li>Toggle: dot.case / camelCase</li>
                <li>Toggle: PascalCase / camelCase</li>
@@ -456,7 +456,7 @@
                <li>To UPPER CASE</li>
                <li>Invert case</li>
 			</ul>
-			-'Switch case' action can be customized, or new ones can be added in settings 
+			-'Switch case' action can be customized, or new ones can be added in settings<br> 
             -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
 		</p>
 		<p>
