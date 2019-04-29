@@ -30,6 +30,7 @@ package osmedile.intellij.stringmanip.utils;
  * @see java.util.HashMap
  * @since 2.0
  */
+@Deprecated
 class IntHashMap {
 
     /**

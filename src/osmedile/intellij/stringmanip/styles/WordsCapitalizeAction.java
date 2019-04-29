@@ -1,7 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
 
-import org.apache.commons.text.WordUtils;
+import shaded.org.apache.commons.text.WordUtils;
 
 public class WordsCapitalizeAction extends AbstractCaseConvertingAction {
 	public WordsCapitalizeAction() {

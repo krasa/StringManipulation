@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class TextAlignmentForm {
 	public JPanel root;

@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import org.apache.commons.lang3.StringUtils;
+import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class SortLines {
 	protected void initLines(SortSettings sortSettings, List<String> list) {
 		for (int i = 0; i < list.size(); i++) {
 			String s = list.get(i);
-			if (org.apache.commons.lang3.StringUtils.isBlank(s)) {
+			if (shaded.org.apache.commons.lang3.StringUtils.isBlank(s)) {
 				if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE) {
 					emptyLines.put(i, s);
 				}

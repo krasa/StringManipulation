@@ -1,7 +1,7 @@
 package osmedile.intellij.stringmanip.escaping;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import shaded.org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * @author Olivier Smedile

@@ -1,9 +1,8 @@
 package osmedile.intellij.stringmanip.utils;
 
-import org.apache.commons.lang3.CharUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import shaded.org.apache.commons.lang3.CharUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +10,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Character.isWhitespace;
 import static java.lang.Character.*;
+import static shaded.org.apache.commons.lang3.StringUtils.*;
 
 
 /**
@@ -23,11 +24,11 @@ public class StringUtil {
 	public static final char EMPTY_CHAR = 0;
 
 	public static String removeAllSpace(String s) {
-		return StringUtils.join(s.split("\\s"), "").trim();
+		return join(s.split("\\s"), "").trim();
 	}
 
 	public static String trimAllSpace(String s) {
-		return StringUtils.join(s.split("\\s+"), " ");
+		return join(s.split("\\s+"), " ");
 	}
 
 	public static String camelToText(String s) {
@@ -58,7 +59,7 @@ public class StringUtil {
 	 * inspired by org.apache.commons.text.WordUtils#capitalize
 	 */
 	public static String capitalizeFirstWord(String str, char[] delimiters) {
-		if (org.apache.commons.lang3.StringUtils.isEmpty(str)) {
+		if (isEmpty(str)) {
 			return str;
 		} else {
 			boolean done = false;
@@ -92,7 +93,7 @@ public class StringUtil {
 	}
 
 	public static String capitalizeFirstWord2(String str) {
-		if (org.apache.commons.lang3.StringUtils.isEmpty(str)) {
+		if (isEmpty(str)) {
 			return str;
 		} else {
 			StringBuilder buf = new StringBuilder();
@@ -144,12 +145,12 @@ public class StringUtil {
 			words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(words[i]);
 		}
 
-		return StringUtils.join(words);
+		return join(words);
 	}
 
 
 	public static String toCamelCase(String s) {
-		String[] words = org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase(s);
+		String[] words = splitByCharacterTypeCamelCase(s);
 
 		boolean firstWordNotFound = true;
 		for (int i = 0; i < words.length; i++) {
@@ -161,7 +162,7 @@ public class StringUtil {
 				words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(word.toLowerCase());
 			}
 		}
-		String join = StringUtils.join(words);
+		String join = join(words);
 		join = replaceSeparator_keepBetweenDigits(join, '_', EMPTY_CHAR);
 		join = replaceSeparator_keepBetweenDigits(join, '-', EMPTY_CHAR);
 		join = replaceSeparator_keepBetweenDigits(join, '.', EMPTY_CHAR);
@@ -368,9 +369,9 @@ public class StringUtil {
 		// Add segments before each match found
 		int lastBeforeIdx = 0;
 		while (m.find()) {
-			if (StringUtils.isNotEmpty(m.group())) {
+			if (isNotEmpty(m.group())) {
 				String match = input.subSequence(index, m.start()).toString();
-				if (StringUtils.isNotEmpty(match)) {
+				if (isNotEmpty(match)) {
 					result.add(match);
 				}
 				result.add(input.subSequence(m.start(), m.end()).toString());
@@ -385,7 +386,7 @@ public class StringUtil {
 
 
 		final String remaining = input.subSequence(index, input.length()).toString();
-		if (StringUtils.isNotEmpty(remaining)) {
+		if (isNotEmpty(remaining)) {
 			result.add(remaining);
 		}
 
@@ -419,7 +420,7 @@ public class StringUtil {
 		}
 
 
-		return StringUtils.join(parts);
+		return join(parts);
 	}
 
 	public static String wordsToHyphenCase(String s) {
@@ -455,7 +456,7 @@ public class StringUtil {
 	}
 
 	public static int indexOfAnyButWhitespace(String cs) {
-		if (org.apache.commons.lang3.StringUtils.isEmpty(cs)) {
+		if (isEmpty(cs)) {
 			return cs.length();
 		}
 		final int csLen = cs.length();

@@ -17,7 +17,7 @@
 package osmedile.intellij.stringmanip.utils;
 
 
-import org.apache.commons.lang3.StringUtils;
+import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -40,6 +40,7 @@ import java.io.Writer;
  * @version $Id: StringEscapeUtil.java 16 2008-03-20 19:21:43Z osmedile $
  * @since 2.0
  */
+@Deprecated
 public class StringEscapeUtil {
 
     /**

@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
-import org.apache.commons.lang3.StringUtils;
+import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

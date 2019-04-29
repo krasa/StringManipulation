@@ -5,11 +5,11 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.MyApplicationComponent;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
+import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;

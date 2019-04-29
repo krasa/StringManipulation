@@ -1,7 +1,6 @@
 package osmedile.intellij.stringmanip.escaping;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
 
 /**
  * @author Olivier Smedile
@@ -11,6 +10,6 @@ public class EscapeHtmlAction extends AbstractStringManipAction {
 
 	@Override
 	public String transformByLine(String s) {
-        return StringEscapeUtil.escapeHtml(s);
+		return shaded.org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(s);
     }
 }

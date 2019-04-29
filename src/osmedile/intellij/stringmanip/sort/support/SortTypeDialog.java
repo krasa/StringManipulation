@@ -3,8 +3,8 @@ package osmedile.intellij.stringmanip.sort.support;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
-import org.apache.commons.lang3.LocaleUtils;
 import org.jetbrains.annotations.NotNull;
+import shaded.org.apache.commons.lang3.LocaleUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
