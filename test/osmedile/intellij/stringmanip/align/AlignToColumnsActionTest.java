@@ -17,7 +17,6 @@ public class AlignToColumnsActionTest {
 			, " ");
 		assertThat(process, is("foo bar"));
 	}
-
 	@Test
 	public void test() {
 		String process = align("foo 1     | foo 2"
@@ -319,12 +318,19 @@ public class AlignToColumnsActionTest {
 	public void test16() {
 		String process = align("foo  ->    bar   <-    foo\n" +
 				" foo<-bar->foo \n",
-			"->", "<-");
+			"->", "<-", "");
 		assertThat(process, is(
 			"foo -> bar <- foo\n" +
 				"foo <- bar -> foo\n"
 		));
 	}
 
+	@Test
+	public void testSpace17() {
+		String process = align("zm9vig-jhcg=="
+			, ",", "");
+		assertThat(process, is("zm9vig-jhcg=="));
+	}
+	     
 
 }

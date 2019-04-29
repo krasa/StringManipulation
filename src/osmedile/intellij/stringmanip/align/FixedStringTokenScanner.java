@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.align;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,9 @@ public final class FixedStringTokenScanner {
 		 */
 		private int matchFixedStringOrAppendToOther() {
 			for (String separator : fixedStringTokens) {
+				if (StringUtils.isEmpty(separator)) {
+					continue;
+				}
 				if (input.regionMatches(scanIx, separator, 0, separator.length())) {
 					storeOtherToken(separator);
 					if (result.size() == 0 && separator.equals(" ")) {
