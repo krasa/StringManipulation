@@ -2,6 +2,10 @@ package osmedile.intellij.stringmanip.align;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 @SuppressWarnings("Duplicates")
 public class ColumnAlignerLine {
 
@@ -15,10 +19,12 @@ public class ColumnAlignerLine {
 	private boolean appendSpaceAfterSeparator = false;
 	private boolean trimValues = false;
 	private boolean trimLines = false;
+	private Set<String> separators;
 
 
 	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
 		this.endsWithNextLine = endsWithNextLine;
+		separators = new HashSet<String>(Arrays.asList(separator));
 		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, separator).toArray(new String[0]);
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 
@@ -76,8 +82,18 @@ public class ColumnAlignerLine {
 
 	public void appendSeparator() {
 		if (hasToken()) {
-			sb.append(split[index]);
+			String str = split[index];
+			if (isSeparator(str)) {
+				sb.append(str);
+			} else {
+//bad workaround for incorrect spliting when a space separator ' ' is next to non space separator  AlignToColumnsActionTest.test19
+				index--;
+			} 
 		}
+	}
+
+	private boolean isSeparator(String str) {
+		return separators.contains(str);
 	}
 
 	protected boolean tokenIsStartingWithSpace() {
@@ -114,7 +130,7 @@ public class ColumnAlignerLine {
 
 	@Override
 	public String toString() {
-		return sb.toString();
+		return sb.toString() + " [" + sb.length() + "]";
 	}
 
 	@NotNull

@@ -17,6 +17,7 @@ public class AlignToColumnsActionTest {
 			, " ");
 		assertThat(process, is("foo bar"));
 	}
+
 	@Test
 	public void test() {
 		String process = align("foo 1     | foo 2"
@@ -270,6 +271,7 @@ public class AlignToColumnsActionTest {
 		assertThat(process, is(expectedText));
 	}
 
+
 	@Test
 	public void test13_sequentially_ugly() {
 		// @formatter:off
@@ -331,6 +333,58 @@ public class AlignToColumnsActionTest {
 			, ",", "");
 		assertThat(process, is("zm9vig-jhcg=="));
 	}
-	     
 
+	@Test
+	public void test18() {
+		// @formatter:off
+		String notFormattedText =
+"            <li>Convert diacritics(accents) to ASCII</li>\n" +
+"            <li>Convert non ASCII to escaped Unicode</li>";
+
+		String expectedText =
+			"< li > Convert diacritics(accents) to    ASCII < /li     >\n" +
+			"< li > Convert non                 ASCII to      escaped  Unicode < /li >";
+		// @formatter:on
+
+
+		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel("<", ">", " ");
+		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
+
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
+
+	@Test
+	public void test19() {
+		// @formatter:off
+		String notFormattedText =
+"1|2---3 4-5---6---\n" +
+"1|2123| ---3 4-445||\n" +
+"1|25---3 4-5 |66";
+
+		String expectedText =
+"1 | 2    --- 3 4-5 --- 6 ---\n" +
+"1 | 2123 |         --- 3    4-445 | |\n" +
+"1 | 25   --- 3 4-5       |  66";
+		// @formatter:on
+
+
+		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel("---", "|", " ");
+		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
+
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
 }

@@ -80,7 +80,6 @@ public class ColumnAligner {
 		boolean process = true;
 		while (process) {
 			process = false;
-
 			for (ColumnAlignerLine line : lines) {
 				line.appendText();
 			}
@@ -108,12 +107,10 @@ public class ColumnAligner {
 				line.appendSpaceAfterSeparator();
 			}
 
-			if (model.getAlignBy() == ColumnAlignerModel.Align.VALUES) {
 				int maxLength = getMaxLength(lines);
 				for (ColumnAlignerLine line : lines) {
 					line.appendSpace(maxLength);
 				}
-			}
 
 
 			for (ColumnAlignerLine line : lines) {
