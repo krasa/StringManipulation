@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 
 /**
  * for showing dialogs before the action
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler {
 
 	private final Class actionClass;
+	private CustomActionModel customActionModel;
 
 	public MyEditorWriteActionHandler(Class actionClass) {
 		super(false);
@@ -23,7 +25,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 
 	@Override
 	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
-		MyApplicationComponent.setAction(actionClass);
+		MyApplicationComponent.setAction(actionClass, customActionModel);
 
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
@@ -62,6 +64,10 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 
 	protected final Pair<Boolean, T> continueExecution() {
 		return new Pair<Boolean, T>(true, null);
+	}
+
+	public void setCustomActionModel(CustomActionModel customActionModel) {
+		this.customActionModel = customActionModel;
 	}
 
 }

@@ -226,10 +226,18 @@ public class CustomActionSettingsForm implements Disposable {
 	}
 
 	protected void updateWarningVisibility() {
-		//not reliable
-		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main");
-		AnAction group2 = CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.SwitchCase");
-		warningPanel.setVisible(group1 instanceof CustomisedActionGroup || group2 instanceof CustomisedActionGroup);
+		warningPanel.setVisible(isGroupCustomized("StringManipulation.Group.Main") || isGroupCustomized("StringManipulation.Group.SwitchCase"));
+	}
+
+	private boolean isGroupCustomized(String id) {
+		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction(id);
+		if (group1 instanceof CustomisedActionGroup) {
+			CustomisedActionGroup customisedActionGroup = (CustomisedActionGroup) group1;
+			AnAction[] children = customisedActionGroup.getChildren(null);
+			AnAction[] originalChildren = customisedActionGroup.getOrigin().getChildren(null);
+			return !Arrays.equals(children, originalChildren);
+		}
+		return false;
 	}
 
 	@NotNull

@@ -23,6 +23,7 @@ public class MyApplicationComponent implements ApplicationComponent {
 	private static final Logger LOG = Logger.getInstance(MyApplicationComponent.class);
 
 	private Class lastAction;
+	private CustomActionModel lastCustomActionModel;
 	private Map<Class, AnAction> classToActionMap;
 
 	public static MyApplicationComponent getInstance() {
@@ -30,14 +31,23 @@ public class MyApplicationComponent implements ApplicationComponent {
 	}
 
 	public AnAction getAnAction() {
+		if (lastCustomActionModel != null) {
+			return ActionManagerEx.getInstanceEx().getAction(lastCustomActionModel.getId());
+		}
 		return getActionMap().get(lastAction);
 	}
 
-	public static void setAction(Class itsAction) {
-		if (itsAction != null) {
-			getInstance().lastAction = itsAction;
+	public static void setAction(Class aClass, CustomActionModel customActionModel) {
+		if (aClass != null) {
+			MyApplicationComponent instance = getInstance();
+			instance.lastAction = aClass;
+			instance.lastCustomActionModel = customActionModel;
 			PluginPersistentStateComponent.getInstance().actionExecuted();
 		}
+	}
+
+	public static void setAction(Class aClass) {
+		setAction(aClass, null);
 	}
 
 	@NotNull
