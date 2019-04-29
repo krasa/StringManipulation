@@ -68,7 +68,11 @@ public class MyApplicationComponent implements ApplicationComponent {
 
 	@Override
 	public void initComponent() {
-		registerActions();
+		try {
+			registerActions();
+		} catch (Exception e) {
+			LOG.error(e);
+		}
 	}
 
 	public void registerActions() {
