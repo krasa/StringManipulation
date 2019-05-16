@@ -387,4 +387,23 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
+
+	@Test
+	public void test20() {
+		// @formatter:off
+		String notFormattedText =
+"foo bar\n" +
+"foo bar" ;
+
+String expectedText =
+"foo bar\n" +
+"foo bar" ;
+
+		// @formatter:on
+
+
+		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel("");
+		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
+		assertThat(process, is(expectedText));
+	}
 }
