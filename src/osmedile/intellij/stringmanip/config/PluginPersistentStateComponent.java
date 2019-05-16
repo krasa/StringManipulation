@@ -11,7 +11,6 @@ import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
-import osmedile.intellij.stringmanip.DonationNagger;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.styles.Style;
@@ -29,7 +28,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private List<CustomActionModel> customActionModels = DefaultActions.defaultActions();
 
 	private int lastSelectedAction = 0;
-	private DonationNagger donationNagger = new DonationNagger();
 	private int version = 0;
 	private SortSettings sortSettings = new SortSettings();
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
@@ -74,17 +72,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		this.history = history;
 	}
 
-	public DonationNagger getDonationNagger() {
-		return donationNagger;
-	}
-
-	public void setDonationNagger(DonationNagger donationNagger) {
-		this.donationNagger = donationNagger;
-	}
-
-	public void actionExecuted() {
-		getDonationNagger().actionExecuted();
-	}
 
 	public int getVersion() {
 		return version;

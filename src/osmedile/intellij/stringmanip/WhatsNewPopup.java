@@ -1,9 +1,6 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationListener;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
+import com.intellij.notification.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
@@ -14,9 +11,11 @@ import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import javax.swing.event.HyperlinkEvent;
 
-import static osmedile.intellij.stringmanip.DonationNagger.NOTIFICATION;
 
 public class WhatsNewPopup {
+	public static final NotificationGroup NOTIFICATION = new NotificationGroup("String Manipulation",
+		NotificationDisplayType.STICKY_BALLOON, true);
+	
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(WhatsNewPopup.class);
 	protected static final int CURRENT_VERSION = 2;
 

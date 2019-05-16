@@ -42,7 +42,6 @@ public class MyApplicationComponent implements ApplicationComponent {
 			MyApplicationComponent instance = getInstance();
 			instance.lastAction = aClass;
 			instance.lastCustomActionModel = customActionModel;
-			PluginPersistentStateComponent.getInstance().actionExecuted();
 		}
 	}
 
