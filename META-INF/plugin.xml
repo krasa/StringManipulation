@@ -60,12 +60,12 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
-                        text="Escape Javascript"
+                        text="Escape JavaScript"
                         description="Call StringEscapeUtils.escapeEcmaScript">
                 </action>
-                <action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
+                <action id="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaScriptAction"
-                        text="Unescape Javascript"
+                        text="Unescape JavaScript"
                         description="Call StringEscapeUtils.unescapeEcmaScript">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
