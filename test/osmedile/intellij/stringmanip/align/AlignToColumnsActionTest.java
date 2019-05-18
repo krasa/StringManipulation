@@ -338,12 +338,12 @@ public class AlignToColumnsActionTest {
 	public void test18() {
 		// @formatter:off
 		String notFormattedText =
-"            <li>Convert diacritics(accents) to ASCII</li>\n" +
-"            <li>Convert non ASCII to escaped Unicode</li>";
+"            <li>Convert diacritics (accents) to ASCII</li>\n" +
+"            <li>Convert non-ASCII to escaped Unicode</li>";
 
 		String expectedText =
-			"< li > Convert diacritics(accents) to    ASCII < /li     >\n" +
-			"< li > Convert non                 ASCII to      escaped  Unicode < /li >";
+			"< li > Convert diacritics (accents) to      ASCII   < /li >\n" +
+			"< li > Convert non-ASCII  to        escaped Unicode < /li >";
 		// @formatter:on
 
 

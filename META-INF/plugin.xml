@@ -60,12 +60,12 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
-                        text="Escape Javascript"
+                        text="Escape JavaScript"
                         description="Call StringEscapeUtils.escapeEcmaScript">
                 </action>
-                <action id="osmedile.intellij.stringmanip.UnescapeJavascriptAction"
+                <action id="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaScriptAction"
-                        text="Unescape Javascript"
+                        text="Unescape JavaScript"
                         description="Call StringEscapeUtils.unescapeEcmaScript">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
@@ -105,13 +105,13 @@
                 </action>
                 <action id="StringManipulation.DiacriticsToAsciiAction"
                         class="osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction"
-                        text="Convert diacritics(accents) to ASCII"
-                        description="Convert diacritics(accents) to ASCII">
+                        text="Convert diacritics (accents) to ASCII"
+                        description="Convert diacritics (accents) to ASCII">
                 </action>
                 <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
                         class="osmedile.intellij.stringmanip.escaping.NonAsciiToUnicodeEscapedAction"
-                        text="Escape non ascii to Unicode"
-                        description="Escape non ascii to Unicode">
+                        text="Escape non-ASCII to Unicode"
+                        description="Escape non-ASCII to Unicode">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
                         class="osmedile.intellij.stringmanip.escaping.UnicodeEscapedToStringAction"
@@ -468,8 +468,8 @@
 				<li>Un/Escape selected XML text</li>
 				<li>Un/Escape selected SQL text</li>
 				<li>Un/Escape selected PHP text</li>
-                <li>Convert diacritics(accents) to ASCII</li>
-                <li>Convert non ASCII to escaped Unicode</li>
+                <li>Convert diacritics (accents) to ASCII</li>
+                <li>Convert non-ASCII to escaped Unicode</li>
                 <li>Convert escaped Unicode to String</li>
 			</ul>
 		</p>
@@ -705,7 +705,7 @@
 	        <h4>Version 4.3</h4>
 	        <ul>
 	            <li>added action: Align to left/center/right</li>
-	            <li>added action: Convert diacritics(accents) to ASCII</li>
+	            <li>added action: Convert diacritics (accents) to ASCII</li>
 	            <li>added action: Sorting with natural ordering</li>
 			</ul>
 	    </div>
