@@ -36,6 +36,7 @@ Provides actions for text manipulation:
             <li>Un/Escape selected Java text</li>
             <li>Un/Escape selected JavaScript text</li>
             <li>Un/Escape selected HTML text</li>
+            <li>Un/Escape selected JSON text</li>
             <li>Un/Escape selected XML text</li>
             <li>Un/Escape selected SQL text</li>
             <li>Un/Escape selected PHP text</li>

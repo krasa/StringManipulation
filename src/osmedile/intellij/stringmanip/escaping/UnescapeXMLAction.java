@@ -8,7 +8,7 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
  */
 public class UnescapeXMLAction extends AbstractStringManipAction {
 
-	@Override
+	@Override                                                                                                 
 	public String transformByLine(String s) {
 		return shaded.org.apache.commons.text.StringEscapeUtils.unescapeXml(s);
     }

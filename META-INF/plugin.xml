@@ -51,57 +51,68 @@
                 <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaAction"
                         text="Escape Java"
-                        description="Call StringEscapeUtils.escapeJava">
+                        description="org.apache.commons.text.StringEscapeUtils#escapeJava">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavaAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaAction"
                         text="Unescape Java"
-                        description="Call StringEscapeUtils.unescapeJava">
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeJava">
                 </action>
+
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
                         text="Escape JavaScript"
-                        description="Call StringEscapeUtils.escapeEcmaScript">
+                        description="org.apache.commons.text.StringEscapeUtils#escapeEcmaScript">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeJavaScriptAction"
                         text="Unescape JavaScript"
-                        description="Call StringEscapeUtils.unescapeEcmaScript">
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeEcmaScript">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeHtmlAction"
                         text="Escape HTML"
-                        description="Call StringEscapeUtils.escapeHtml4">
+                        description="org.apache.commons.text.StringEscapeUtils#escapeHtml4">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeHtmlAction"
                         text="Unescape HTML"
-                        description="Call StringEscapeUtils.unescapeHtml">
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeHtml4">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeSQLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeSQLAction"
                         text="Escape SQL"
-                        description="Call StringEscapeUtils.escapeSql">
+                >
+                </action>
+                <action id="osmedile.intellij.stringmanip.EscapeJsonAction"
+                        class="osmedile.intellij.stringmanip.escaping.EscapeJsonAction"
+                        text="Escape JSON"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeJson">
+                </action>
+                <action id="osmedile.intellij.stringmanip.UnescapeJsonAction"
+                        class="osmedile.intellij.stringmanip.escaping.UnescapeJsonAction"
+                        text="Unescape JSON"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeJson">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapeXMLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeXMLAction"
                         text="Escape XML"
-                        description="Call StringEscapeUtils.escapeXml11">
+                        description="org.apache.commons.text.StringEscapeUtils#escapeXml11">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapeXMLAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapeXMLAction"
                         text="Unescape XML"
-                        description="Call StringEscapeUtils.unescapeXml">
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeXml">
                 </action>
                 <action id="osmedile.intellij.stringmanip.EscapePHPAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapePHPAction"
                         text="Escape PHP"
-                        description="Call StringEscapeUtils.escapePHP">
+                >
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnescapePHPAction"
                         class="osmedile.intellij.stringmanip.escaping.UnescapePHPAction"
                         text="Unescape PHP"
-                        description="Call StringEscapeUtils.unescapePHP">
+                >
                 </action>
                 <action id="StringManipulation.DiacriticsToAsciiAction"
                         class="osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction"
@@ -465,6 +476,7 @@
 				<li>Un/Escape selected Java text</li>
 				<li>Un/Escape selected JavaScript text</li>
 				<li>Un/Escape selected HTML text</li>
+				<li>Un/Escape selected JSON text</li>
 				<li>Un/Escape selected XML text</li>
 				<li>Un/Escape selected SQL text</li>
 				<li>Un/Escape selected PHP text</li>
@@ -553,6 +565,7 @@
 	        <h4>Version 7.2</h4>
 	        <ul>
                 <li>Column align: added preview</li>
+                <li>Added: Un/Escape JSON</li>
             </ul>
 	    </div>
 	    <div>
