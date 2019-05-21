@@ -4,6 +4,7 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
 import org.jetbrains.annotations.NotNull;
+import osmedile.intellij.stringmanip.Donate;
 import shaded.org.apache.commons.lang3.LocaleUtils;
 
 import javax.swing.*;
@@ -42,6 +43,7 @@ public class SortTypeDialog {
 	private JTextField languageTag;
 	private JLabel languageTagLabel;
 	private JLabel valid;
+	private JPanel donatePanel;
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorCollator}, insensitive, sensitive);
@@ -225,6 +227,7 @@ public class SortTypeDialog {
 			}
 		});
 		updateComponents();
+		donatePanel.add(Donate.newDonateButton(donatePanel));
 	}
 
 	private void validateLocale() {

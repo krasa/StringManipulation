@@ -21,13 +21,22 @@ public class ColumnAligner {
 	}
 
 	public List<String> align(List<String> lines) {
-		for (String separator : model.getSeparators()) {
-			if (isEmpty(separator)) {
-				continue;
+		if (model.isSequentialProcessing()) {
+			for (String separator : model.getSeparators()) {
+				if (isEmpty(separator)) {
+					continue;
+				}
+				List<ColumnAlignerLine> columnAlignerLines = new ArrayList<ColumnAlignerLine>();
+				for (String line : lines) {
+					columnAlignerLines.add(new ColumnAlignerLine(model, line, false, separator));
+				}
+				lines = process(columnAlignerLines);
 			}
+		} else {
+			String[] separators = model.getSeparators().toArray(new String[0]);
 			List<ColumnAlignerLine> columnAlignerLines = new ArrayList<ColumnAlignerLine>();
 			for (String line : lines) {
-				columnAlignerLines.add(new ColumnAlignerLine(model, line, false, separator));
+				columnAlignerLines.add(new ColumnAlignerLine(model, line, false, separators));
 			}
 			lines = process(columnAlignerLines);
 		}

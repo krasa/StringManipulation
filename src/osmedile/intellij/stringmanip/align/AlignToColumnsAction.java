@@ -29,7 +29,7 @@ public class AlignToColumnsAction extends MyEditorAction {
 				@Override
                 protected Pair<Boolean, ColumnAlignerModel> beforeWriteAction(Editor editor, DataContext dataContext) {
                     PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
-					final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(stateComponent.getLastModel());
+					final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(stateComponent.getLastModel(), editor);
                     DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
                         {
                             init();

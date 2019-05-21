@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import javax.swing.*;
@@ -11,13 +12,15 @@ import java.util.List;
 
 public class TextAlignmentHistoryForm {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(TextAlignmentHistoryForm.class);
+	private final Editor editor;
 
 	private JList list;
-	private JPanel preview;
+	private JPanel detail;
 	protected JPanel root;
 	private TextAlignmentForm textAlignmentForm;
 
-	public TextAlignmentHistoryForm() {
+	public TextAlignmentHistoryForm(Editor editor) {
+		this.editor = editor;
 		List<ColumnAlignerModel> history = PluginPersistentStateComponent.getInstance().getHistory();
 		Collections.reverse(history);
 		list.setModel(new ArrayListModel<ColumnAlignerModel>(history));
@@ -25,7 +28,7 @@ public class TextAlignmentHistoryForm {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				textAlignmentForm.init((ColumnAlignerModel) list.getSelectedValue());
-				preview.revalidate();
+				detail.revalidate();
 			}
 		});
 		list.setSelectedIndex(0);
@@ -33,9 +36,9 @@ public class TextAlignmentHistoryForm {
 
 	private void createUIComponents() {
 		ColumnAlignerModel lastSeparators = new ColumnAlignerModel();
-		textAlignmentForm = new TextAlignmentForm(lastSeparators);
+		textAlignmentForm = new TextAlignmentForm(lastSeparators, editor);
 		textAlignmentForm.disableControls();
-		preview = textAlignmentForm.root;
+		detail = textAlignmentForm.root;
 	}
 
 	public ColumnAlignerModel getModel() {

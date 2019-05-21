@@ -24,14 +24,17 @@ public class ColumnAlignerLine {
 
 	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
 		this.endsWithNextLine = endsWithNextLine;
-		separators = new HashSet<String>(Arrays.asList(separator));
-		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, separator).toArray(new String[0]);
-		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
-
+		separators = new HashSet<String>(Arrays.asList(separator));       
 		this.appendSpaceBeforeSeparator = model.isSpaceBeforeSeparator();
 		this.appendSpaceAfterSeparator = model.isSpaceAfterSeparator();
 		this.trimValues = model.isTrimValues();
 		this.trimLines = model.isTrimLines();
+
+		if (trimLines) {
+			textPart = textPart.trim();
+		}
+		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, separator).toArray(new String[0]);
+		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 	}
 
 
