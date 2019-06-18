@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment :**
- - use a copy button in Help | About dialog
+Could be very important! Use a copy button in Help | About dialog
 
 **Additional context**
 Add any other context about the problem here.
