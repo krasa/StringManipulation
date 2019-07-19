@@ -1,16 +1,5 @@
 package osmedile.intellij.stringmanip.transform;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.util.regex.Pattern;
-
-import javax.swing.JComponent;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
@@ -19,12 +8,22 @@ import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyApplicationComponent;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * @author Philipp Menke
  */
 public class DelimitedListAction extends EditorAction {
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]*$");
 
     public DelimitedListAction() {
         super(null);
@@ -39,6 +38,7 @@ public class DelimitedListAction extends EditorAction {
                 new EditorWriteActionHandler() {
                     @Override
                     public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+                        MyApplicationComponent.setAction(DelimitedListAction.class);
                         DelimitedListAction.this.execute(editor, caret, dataContext, dialogResult.second);
                     }
                 }.doExecute(editor, caret, dataContext);
@@ -133,7 +133,7 @@ public class DelimitedListAction extends EditorAction {
 
             @Override
             public JComponent getPreferredFocusedComponent() {
-                return dialog.tfDestDelimiter;
+                return dialog.destDelimiter;
             }
 
             @Override
