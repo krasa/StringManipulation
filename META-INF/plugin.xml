@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.2.182.000.3</version>
+    <version>7.3.182.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="182.000"/>
 
@@ -116,18 +116,18 @@
                 </action>
                 <action id="StringManipulation.DiacriticsToAsciiAction"
                         class="osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction"
-                        text="Convert diacritics (accents) to ASCII"
+                        text="Convert Diacritics (Accents) to ASCII"
                         description="Convert diacritics (accents) to ASCII">
                 </action>
                 <action id="osmedile.intellij.stringmanip.NonAsciiToUnicodeEscapedAction"
                         class="osmedile.intellij.stringmanip.escaping.NonAsciiToUnicodeEscapedAction"
-                        text="Escape non-ASCII to Unicode"
+                        text="Escape Non-ASCII to Unicode"
                         description="Escape non-ASCII to Unicode">
                 </action>
                 <action id="osmedile.intellij.stringmanip.UnicodeEscapedToStringAction"
                         class="osmedile.intellij.stringmanip.escaping.UnicodeEscapedToStringAction"
                         text="Escaped Unicode to String"
-                        description="Escaped Unicode to String">
+                        description="Escaped unicode to string">
                 </action>
             </group>
 
@@ -157,7 +157,7 @@
                 <action id="osmedile.intellij.stringmanip.DecodeHexAction"
                         class="osmedile.intellij.stringmanip.encoding.DecodeHexAction"
                         text="Decode Hex"
-                        description="Decode Hex">
+                        description="Decode hex">
                 </action>
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeAction"
@@ -183,7 +183,7 @@
 
             <separator/>
 
-            <group id="StringManipulation.Group.SwitchCase" text="Switch case..."
+            <group id="StringManipulation.Group.SwitchCase" text="Switch Case..."
                    description="Group of String manipulation Switch case actions"
                    popup="true">
                 <!--                dynamically registered-->
@@ -265,19 +265,7 @@
                 <separator/>
                 <action id="StringManipulation.OpenSettingsAction"
                         class="osmedile.intellij.stringmanip.config.OpenSettingsAction"
-                        text="Open settings..."/>
-            </group>
-
-            <separator/>
-
-            <group text="Transform..."
-                   description="Group of String manipulation transform actions"
-                   popup="true">
-                <action id="osmedile.intellij.stringmanip.transform.DelimitedListAction"
-                        class="osmedile.intellij.stringmanip.transform.DelimitedListAction"
-                        text="Delimited list"
-                        description="Delimited list">
-                </action>
+                        text="Open Settings..."/>
             </group>
 
             <separator/>
@@ -297,22 +285,22 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
-                        text="Duplicate and decrement"
+                        text="Duplicate and Decrement"
                         description="Duplicate and decrement numbers inside selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndIncrementAction"
-                        text="Duplicate and increment"
+                        text="Duplicate and Increment"
                         description="Duplicate and increment numbers inside selected text">
                 </action>
                 <action id="StringManipulation.CreateSequenceAction"
                         class="osmedile.intellij.stringmanip.increment.CreateSequenceAction"
-                        text="Create sequence"
+                        text="Create Sequence"
                         description="Keep first number, replace all other by incrementing">
                 </action>
                 <action id="StringManipulation.IncrementDuplicateNumbersAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementDuplicateNumbersAction"
-                        text="Increment duplicates"
+                        text="Increment Duplicates"
                         description="Increment duplicate numbers">
                 </action>
             </group>
@@ -322,22 +310,22 @@
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
-                        text="Sort lines..."
+                        text="Sort Lines..."
                         description="Universal lines sort with all kinds of features">
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort lines by subselection"
+                        text="Sort Lines by Subselection"
                         description="Sort lines by subselection - only for multi carets">
                 </action>
                 <action id="StringManipulation.ReverseAction"
                         class="osmedile.intellij.stringmanip.sort.ReverseLinesAction"
-                        text="Reverse lines"
+                        text="Reverse Lines"
                         description="Reverse order of lines">
                 </action>
                 <action id="StringManipulation.ShuffleLinesAction"
                         class="osmedile.intellij.stringmanip.sort.ShuffleLinesAction"
-                        text="Shuffle lines"
+                        text="Shuffle Lines"
                         description="Shuffle lines">
                 </action>
             </group>
@@ -358,22 +346,22 @@
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
-                        text="Remove duplicate lines"
+                        text="Remove Duplicate Lines"
                         description="Remove duplicate lines in selected text or lines within multiple selections">
                 </action>
                 <action id="StringManipulation.KeepOnlyDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.KeepOnlyDuplicateLinesAction"
-                        text="Keep only duplicate lines"
+                        text="Keep Only Duplicate Lines"
                         description="Remove non-duplicate lines in selected text or lines within multiple selections">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
-                        text="Remove empty lines"
+                        text="Remove Empty Lines"
                         description="Remove empty lines in selected text">
                 </action>
                 <action id="StringManipulation.RemoveNewLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
-                        text="Remove all newlines"
+                        text="Remove All Newlines"
                         description="Remove all line breaks in selected text">
                 </action>
                 <separator/>
@@ -385,12 +373,12 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAllSpacesAction"
-                        text="Trim all spaces"
+                        text="Trim All Spaces"
                         description="Trim all spaces selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveAllSpacesAction"
-                        text="Remove all spaces"
+                        text="Remove All Spaces"
                         description="Remove all spaces in selected text">
                 </action>
             </group>
@@ -407,41 +395,51 @@
                 <action id="StringManipulation.AlignLeftAction"
                         class="osmedile.intellij.stringmanip.align.AlignLeftAction"
                         text="Align Left"
-                        description="Align Left">
+                        description="Align left">
                 </action>
                 <action id="StringManipulation.AlignCenterAction"
                         class="osmedile.intellij.stringmanip.align.AlignCenterAction"
                         text="Align Center"
-                        description="Align Center">
+                        description="Align center">
                 </action>
                 <action id="StringManipulation.AlignRightAction"
                         class="osmedile.intellij.stringmanip.align.AlignRightAction"
                         text="Align Right"
-                        description="Align Right">
+                        description="Align right">
                 </action>
             </group>
 
-
             <separator/>
+            <!--                       TODO uncomment when we get more actions  -->
+            <!--            <group text="Transform..."-->
+            <!--                   description="Group of String manipulation transform actions"-->
+            <!--                   popup="true">  -->
             <action id="osmedile.intellij.stringmanip.swap.SwapAction"
                     class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
                     description="Depending on what is selected or how many carets there are">
             </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
                     class="osmedile.intellij.stringmanip.swap.SwapQuoteAction"
-                    text="Wrap or swap between &quot; and ' and `"
+                    text="Wrap or Swap Between &quot; and ' and `"
                     description="Swap double quote, single quote, backtick (or wrap if none present)">
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
-                    text="Switch file path separators: Windows&lt;-&gt;UNIX"
+                    text="Switch File Path Separators: Windows&lt;-&gt;UNIX"
                     description="Switch file path separators: Windows&lt;-&gt;UNIX">
             </action>
+            <action id="osmedile.intellij.stringmanip.transform.DelimitedListAction"
+                    class="osmedile.intellij.stringmanip.transform.DelimitedListAction"
+                    text="Transform Delimited List"
+                    description="Delimited list - e.g between CSV and array">
+            </action>
+            <!--            </group>-->
+
         </group>
 
 
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
-               description="String Manipulation"
+               description="String manipulation plugin"
                popup="false"
                icon="/osmedile/intellij/stringmanip/edit.png">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
@@ -583,7 +581,15 @@
 
     <change-notes>
         <![CDATA[
-	<p>
+	<p>                   
+	    <div>
+	        <h4>Version 7.3</h4>
+	        <ul>
+                <li>Improved: Switch File Path Separators</li>
+                <li>Added: Encode/Decode Hex</li>
+                <li>Added: Transform Delimited List</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 7.2</h4>
 	        <ul>
