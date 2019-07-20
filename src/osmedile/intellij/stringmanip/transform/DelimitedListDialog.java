@@ -5,6 +5,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.util.Computable;
 import com.intellij.ui.DocumentAdapter;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +92,7 @@ class DelimitedListDialog implements Disposable {
 
 		executor.submit(() -> {
 			//Reads of large clipboards can take a second to complete
-			String sourceText = limitLength(action.getSourceText(editor.getCaretModel().getPrimaryCaret(), settings));
+			String sourceText = limitLength(getSourceText(settings));
 
 			if (sourceText.isEmpty()) {
 				setPreviewTextOnEDT("Clipboard doesn't contain usable data");
@@ -99,6 +100,12 @@ class DelimitedListDialog implements Disposable {
 				String previewText = computePreviewText(sourceText, settings);
 				setPreviewTextOnEDT(previewText);
 			}
+		});
+	}
+
+	private String getSourceText(DelimitedListAction.Settings settings) {
+		return ApplicationManager.getApplication().runReadAction((Computable<String>) () -> {
+			return action.getSourceText(editor.getCaretModel().getPrimaryCaret(), settings);
 		});
 	}
 
