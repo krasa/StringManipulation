@@ -96,10 +96,11 @@ class DelimitedListDialog implements Disposable {
 
 			if (settings.isClipboard() && sourceText.isEmpty()) {
 				setPreviewTextOnEDT("Clipboard doesn't contain usable data");
-			} else {
-				String previewText = computePreviewText(sourceText, settings);
-				setPreviewTextOnEDT(previewText);
+				return;
 			}
+
+			String previewText = computePreviewText(sourceText, settings);
+			setPreviewTextOnEDT(previewText);
 		});
 	}
 
