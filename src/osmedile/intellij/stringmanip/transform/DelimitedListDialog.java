@@ -104,9 +104,13 @@ class DelimitedListDialog implements Disposable {
 	}
 
 	private String getSourceText(DelimitedListAction.Settings settings) {
-		return ApplicationManager.getApplication().runReadAction((Computable<String>) () -> {
-			return action.getSourceText(editor.getCaretModel().getPrimaryCaret(), settings);
-		});
+		if (settings.source.equals("CLIP")) {
+			return action.getClipBoardText();
+		} else {
+			return ApplicationManager.getApplication().runReadAction((Computable<String>) () -> {
+				return action.getSelectedText(editor.getCaretModel().getPrimaryCaret());
+			});
+		}
 	}
 
 	private String computePreviewText(String sourceText, DelimitedListAction.Settings settings) {

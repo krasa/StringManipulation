@@ -97,7 +97,7 @@ public class DelimitedListAction extends EditorAction {
 		return result.toString();
 	}
 
-	String getSourceText(Caret caret, Settings settings) {
+	private String getSourceText(Caret caret, Settings settings) {
 		if (settings.source.equals("CLIP")) {
 			return getClipBoardText();
 		} else {
@@ -105,7 +105,7 @@ public class DelimitedListAction extends EditorAction {
 		}
 	}
 
-	private String getSelectedText(Caret caret) {
+	protected String getSelectedText(Caret caret) {
 		final String originalText;
 		if (caret.hasSelection()) {
 			originalText = caret.getSelectedText() + "";//avoid null value
@@ -115,7 +115,7 @@ public class DelimitedListAction extends EditorAction {
 		return originalText;
 	}
 
-	private String getClipBoardText() {
+	protected String getClipBoardText() {
 		try {
 			return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (UnsupportedFlavorException | IOException ignored) {
