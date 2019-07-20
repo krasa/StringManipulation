@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip.config;
 
-import com.intellij.application.options.colors.ColorAndFontOptions;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.ui.customization.CustomActionsSchema;
 import com.intellij.ide.ui.customization.CustomisedActionGroup;
@@ -8,13 +7,7 @@ import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
-import com.intellij.openapi.editor.EditorSettings;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ex.Settings;
@@ -33,6 +26,7 @@ import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 import osmedile.intellij.stringmanip.utils.Cloner;
+import osmedile.intellij.stringmanip.utils.IdeUtils;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -239,33 +233,6 @@ public class CustomActionSettingsForm implements Disposable {
 		return false;
 	}
 
-	@NotNull
-	private static Editor createEditorPreview() {
-		EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-		ColorAndFontOptions options = new ColorAndFontOptions();
-		options.reset();
-		options.selectScheme(scheme.getName());
-		return createPreviewEditor("", scheme, false);
-	}
-
-	static Editor createPreviewEditor(String text, EditorColorsScheme scheme, boolean editable) {
-		EditorFactory editorFactory = EditorFactory.getInstance();
-		Document editorDocument = editorFactory.createDocument(text);
-		EditorEx editor = (EditorEx) (editable ? editorFactory.createEditor(editorDocument) : editorFactory.createViewer(editorDocument));
-		editor.setColorsScheme(scheme);
-		EditorSettings settings = editor.getSettings();
-		settings.setLineNumbersShown(true);
-		settings.setWhitespacesShown(false);
-		settings.setLineMarkerAreaShown(false);
-		settings.setIndentGuidesShown(false);
-		settings.setFoldingOutlineShown(false);
-		settings.setAdditionalColumnsCount(0);
-		settings.setAdditionalLinesCount(0);
-		settings.setRightMarginShown(false);
-
-		return editor;
-	}
-
 	private ActionListener deleteListener() {
 		return new ActionListener() {
 			@Override
@@ -335,7 +302,7 @@ public class CustomActionSettingsForm implements Disposable {
 		actionsList = createJBList(model);
 		stepList = createStepList();
 
-		myEditor = (EditorImpl) createEditorPreview();
+		myEditor = IdeUtils.createEditorPreview("", false);
 		myPreviewPanel = (JPanel) myEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 

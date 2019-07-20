@@ -270,6 +270,18 @@
 
             <separator/>
 
+            <group text="Transform..."
+                   description="Group of String manipulation transform actions"
+                   popup="true">
+                <action id="osmedile.intellij.stringmanip.transform.DelimitedListAction"
+                        class="osmedile.intellij.stringmanip.transform.DelimitedListAction"
+                        text="Delimited list"
+                        description="Delimited list">
+                </action>
+            </group>
+
+            <separator/>
+
             <group text="Increment/Decrement..."
                    description="Increment, decrement, create sequence, unique numbers"
                    popup="true">

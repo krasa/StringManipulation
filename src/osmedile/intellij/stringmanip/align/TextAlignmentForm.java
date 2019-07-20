@@ -1,18 +1,15 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.google.common.base.Joiner;
-import com.intellij.application.options.colors.ColorAndFontOptions;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.*;
-import com.intellij.openapi.editor.colors.EditorColorsManager;
-import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.ex.EditorEx;
+import com.intellij.openapi.editor.CaretState;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
@@ -168,36 +165,9 @@ public class TextAlignmentForm {
 
 	private void createUIComponents() {
 		textfields = new JPanel();
-		myEditor = (EditorImpl) createEditorPreview();
+		myEditor = IdeUtils.createEditorPreview("", false);
 		myPreviewPanel = (JPanel) myEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
-	}
-
-	@NotNull
-	private static Editor createEditorPreview() {
-		EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-		ColorAndFontOptions options = new ColorAndFontOptions();
-		options.reset();
-		options.selectScheme(scheme.getName());
-		return createPreviewEditor("", scheme, false);
-	}
-
-	static Editor createPreviewEditor(String text, EditorColorsScheme scheme, boolean editable) {
-		EditorFactory editorFactory = EditorFactory.getInstance();
-		Document editorDocument = editorFactory.createDocument(text);
-		EditorEx editor = (EditorEx) (editable ? editorFactory.createEditor(editorDocument) : editorFactory.createViewer(editorDocument));
-		editor.setColorsScheme(scheme);
-		EditorSettings settings = editor.getSettings();
-		settings.setLineNumbersShown(true);
-		settings.setWhitespacesShown(false);
-		settings.setLineMarkerAreaShown(false);
-		settings.setIndentGuidesShown(false);
-		settings.setFoldingOutlineShown(false);
-		settings.setAdditionalColumnsCount(0);
-		settings.setAdditionalLinesCount(0);
-		settings.setRightMarginShown(false);
-
-		return editor;
 	}
 
 	private void init(List<String> lastSeparators) {
