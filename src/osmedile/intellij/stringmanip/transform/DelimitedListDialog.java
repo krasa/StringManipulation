@@ -115,7 +115,7 @@ class DelimitedListDialog implements Disposable {
 	}
 
 	private void setPreviewTextOnEDT(String s) {
-		ApplicationManager.getApplication().invokeLater(() -> setPreviewText(s), ModalityState.stateForComponent(previewPanel));
+		ApplicationManager.getApplication().invokeLater(() -> setPreviewText(s), ModalityState.any());
 	}
 
 	private void setPreviewText(String previewText) {
