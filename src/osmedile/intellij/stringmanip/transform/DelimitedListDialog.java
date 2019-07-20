@@ -94,7 +94,7 @@ class DelimitedListDialog implements Disposable {
 			//Reads of large clipboards can take a second to complete
 			String sourceText = limitLength(getSourceText(settings));
 
-			if (sourceText.isEmpty()) {
+			if (settings.isClipboard() && sourceText.isEmpty()) {
 				setPreviewTextOnEDT("Clipboard doesn't contain usable data");
 			} else {
 				String previewText = computePreviewText(sourceText, settings);
@@ -104,7 +104,7 @@ class DelimitedListDialog implements Disposable {
 	}
 
 	private String getSourceText(DelimitedListAction.Settings settings) {
-		if (settings.source.equals("CLIP")) {
+		if (settings.isClipboard()) {
 			return action.getClipBoardText();
 		} else {
 			return ApplicationManager.getApplication().runReadAction((Computable<String>) () -> {
@@ -134,7 +134,7 @@ class DelimitedListDialog implements Disposable {
 		DelimitedListAction.Settings settings = new DelimitedListAction.Settings();
 		settings.sourceDelimiter = StringEscapeUtils.unescapeJava(sourceDelimiter.getText());
 		settings.destinationDelimiter = StringEscapeUtils.unescapeJava(destDelimiter.getText());
-		settings.source = sourceClipboard.isSelected() ? "CLIP" : "CARET";
+		settings.source = sourceClipboard.isSelected() ? DelimitedListAction.Settings.CLIPBOARD : DelimitedListAction.Settings.CARET;
 		settings.unquote = StringEscapeUtils.unescapeJava(unquote.getText());
 		settings.quote = autoQuote.isSelected() ? DelimitedListAction.Settings.QUOTE_AUTO : StringEscapeUtils.unescapeJava(quote.getText());
 		return settings;

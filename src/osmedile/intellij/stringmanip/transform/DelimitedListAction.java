@@ -47,13 +47,21 @@ public class DelimitedListAction extends EditorAction {
 	}
 
 	static class Settings {
+		static final String CLIPBOARD = "CLIP";
+		static final String CARET = "CARET";
+		                            
 		//sentinel value for auto-quoting
 		static final String QUOTE_AUTO = "\ue123AUTO\ue321";
+
 		String unquote;
 		String quote;
 		String sourceDelimiter;
 		String destinationDelimiter;
 		String source;
+
+		boolean isClipboard() {
+			return source.equals(CLIPBOARD);
+		}
 	}
 
 	private void execute(Editor editor, Caret mainCaret, DataContext dataContext, Settings settings) {
@@ -98,7 +106,7 @@ public class DelimitedListAction extends EditorAction {
 	}
 
 	private String getSourceText(Caret caret, Settings settings) {
-		if (settings.source.equals("CLIP")) {
+		if (settings.isClipboard()) {
 			return getClipBoardText();
 		} else {
 			return getSelectedText(caret);
