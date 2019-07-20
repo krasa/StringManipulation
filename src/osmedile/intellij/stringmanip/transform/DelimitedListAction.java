@@ -30,6 +30,7 @@ public class DelimitedListAction extends EditorAction {
 		setupHandler(new EditorActionHandler() {
 			@Override
 			protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
+				MyApplicationComponent.setAction(DelimitedListAction.class);
 				final Pair<Boolean, Settings> dialogResult = DelimitedListAction.this.showDialog(editor);
 				if (!dialogResult.first) {
 					return;
@@ -38,7 +39,6 @@ public class DelimitedListAction extends EditorAction {
 				new EditorWriteActionHandler() {
 					@Override
 					public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
-						MyApplicationComponent.setAction(DelimitedListAction.class);
 						DelimitedListAction.this.execute(editor, caret, dataContext, dialogResult.second);
 					}
 				}.doExecute(editor, caret, dataContext);
@@ -129,6 +129,12 @@ public class DelimitedListAction extends EditorAction {
 			{
 				init();
 				setTitle("Delimited List Options");
+			}
+
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
 			}
 
 			@Override
