@@ -115,7 +115,7 @@ class DelimitedListDialog implements Disposable {
 	}
 
 	private String computePreviewText(String sourceText, DelimitedListAction.Settings settings) {
-		return action.getTransformedText(sourceText, settings)
+		return action.transformText(sourceText, settings)
 			.replace("\r", "");//remove all \r, which are not allowed in the Editor
 	}
 

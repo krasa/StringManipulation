@@ -26,24 +26,31 @@ public class DelimitedListAction extends EditorAction {
 	private static final Pattern NUMBER_PATTERN = Pattern.compile("^[0-9]*$");
 
 	public DelimitedListAction() {
-		super(null);
-		setupHandler(new EditorActionHandler() {
-			@Override
-			protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
-				MyApplicationComponent.setAction(DelimitedListAction.class);
-				final Pair<Boolean, Settings> dialogResult = DelimitedListAction.this.showDialog(editor);
-				if (!dialogResult.first) {
-					return;
-				}
+		this(true);
+	}
 
-				new EditorWriteActionHandler() {
-					@Override
-					public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
-						DelimitedListAction.this.execute(editor, caret, dataContext, dialogResult.second);
+	public DelimitedListAction(boolean setupHandler) {
+		super(null);
+		if (setupHandler) {
+			setupHandler(new EditorActionHandler() {
+				@Override
+				protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
+					MyApplicationComponent.setAction(DelimitedListAction.class);
+					final Pair<Boolean, Settings> dialogResult = DelimitedListAction.this.showDialog(editor);
+					if (!dialogResult.first) {
+						return;
 					}
-				}.doExecute(editor, caret, dataContext);
-			}
-		});
+
+					new EditorWriteActionHandler() {
+						@Override
+						public void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext) {
+							DelimitedListAction.this.execute(editor, caret, dataContext, dialogResult.second);
+						}
+					}.doExecute(editor, caret, dataContext);
+				}
+			});
+
+		}
 	}
 
 	static class Settings {
@@ -67,7 +74,7 @@ public class DelimitedListAction extends EditorAction {
 	private void execute(Editor editor, Caret mainCaret, DataContext dataContext, Settings settings) {
 		editor.getCaretModel().runForEachCaret(caret -> {
 			final String sourceText = getSourceText(caret, settings);
-			final String transformedText = getTransformedText(sourceText, settings);
+			final String transformedText = transformText(sourceText, settings);
 			editor.getDocument().replaceString(caret.getSelectionStart(), caret.getSelectionEnd(), transformedText);
 			//if no text was selected, move the care past the inserted
 			//text, as it would be during a normal Ctrl-V paste
@@ -77,31 +84,50 @@ public class DelimitedListAction extends EditorAction {
 		});
 	}
 
-	String getTransformedText(String sourceText, Settings settings) {
-		final String[] elements = sourceText.split(Pattern.quote(settings.sourceDelimiter));
+	String transformText(String sourceText, Settings settings) {
 		final StringBuilder result = new StringBuilder(sourceText.length() + 512);
-		for (int i = 0; i < elements.length; i++) {
-			if (i > 0) {
-				result.append(settings.destinationDelimiter);
-			}
-			final String sourceElement = elements[i];
-			final String unquotedElement;
-			if (!settings.unquote.isEmpty()) {
-				unquotedElement = sourceElement.substring(
-					sourceElement.startsWith(settings.unquote) ? settings.unquote.length() : 0,
-					sourceElement.endsWith(settings.unquote) ? sourceElement.length() - settings.unquote.length() : sourceElement.length()
-				);
-			} else {
-				unquotedElement = sourceElement;
-			}
-			final String quote = Settings.QUOTE_AUTO.equals(settings.quote) ?
-				!NUMBER_PATTERN.matcher(unquotedElement).matches() ?
-					"'" :
-					"" : settings.quote;
-			result.append(quote);
-			result.append(unquotedElement);
-			result.append(quote);
+		String[] lines;
+		if (!settings.sourceDelimiter.contains("\n")) {
+			lines = sourceText.split("\n");
+		} else {
+			lines = new String[]{sourceText};
 		}
+
+		for (int lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+			String line = lines[lineIndex];
+			final String[] elements = line.split(Pattern.quote(settings.sourceDelimiter));
+			for (int i = 0; i < elements.length; i++) {
+				if (i > 0) {
+					result.append(settings.destinationDelimiter);
+				}
+				final String sourceElement = elements[i];
+				final String unquotedElement;
+				if (!settings.unquote.isEmpty()) {
+					unquotedElement = sourceElement.substring(
+						sourceElement.startsWith(settings.unquote) ? settings.unquote.length() : 0,
+						sourceElement.endsWith(settings.unquote) ? sourceElement.length() - settings.unquote.length() : sourceElement.length()
+					);
+				} else {
+					unquotedElement = sourceElement;
+				}
+				final String quote = Settings.QUOTE_AUTO.equals(settings.quote) ?
+					!NUMBER_PATTERN.matcher(unquotedElement).matches() ?
+						"'" :
+						"" : settings.quote;
+				result.append(quote);
+				result.append(unquotedElement);
+				result.append(quote);
+			}
+
+
+			if (lineIndex < lines.length - 1) {
+				result.append("\n");
+			} else if (lineIndex == lines.length - 1 && sourceText.endsWith("\n")) {
+				result.append("\n");
+			}
+
+		}
+	
 		return result.toString();
 	}
 
