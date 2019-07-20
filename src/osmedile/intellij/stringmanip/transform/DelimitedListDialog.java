@@ -49,7 +49,7 @@ class DelimitedListDialog implements Disposable {
 			60, TimeUnit.SECONDS,
 			new ArrayBlockingQueue<Runnable>(1),
 			new DefaultThreadFactory("StringManipulation.DelimitedListDialog", true),
-			new ThreadPoolExecutor.DiscardPolicy());
+			new ThreadPoolExecutor.DiscardOldestPolicy());
 
 
 		this.previewEditor = IdeUtils.createEditorPreview("", false);
