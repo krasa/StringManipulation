@@ -19,6 +19,7 @@ import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.ui.components.labels.LinkListener;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.styles.Style;
@@ -59,6 +60,7 @@ public class CustomActionSettingsForm implements Disposable {
 	private JButton resetSteps;
 	DefaultListModel model;
 	JScrollPane scrollPane;
+	@Nullable
 	CustomActionModel selectedItem;
 	private EditorImpl myEditor;
 	private JPanel myPreviewPanel;
@@ -113,8 +115,14 @@ public class CustomActionSettingsForm implements Disposable {
 		upStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (selectedItem == null) {
+					return;
+				}
 				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				int selectedIndex = stepList.getSelectedIndex();
+				if (selectedIndex == -1) {
+					return;
+				}
 				if (selectedIndex > 0) {
 					Collections.swap(steps, selectedIndex, selectedIndex - 1);
 					initStepList();
@@ -125,8 +133,14 @@ public class CustomActionSettingsForm implements Disposable {
 		downStep.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (selectedItem == null) {
+					return;
+				}
 				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				int selectedIndex = stepList.getSelectedIndex();
+				if (selectedIndex == -1) {
+					return;
+				}
 				if (selectedIndex + 1 < steps.size()) {
 					Collections.swap(steps, selectedIndex, selectedIndex + 1);
 					initStepList();
@@ -144,6 +158,9 @@ public class CustomActionSettingsForm implements Disposable {
 		testButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (selectedItem == null) {
+					return;
+				}
 				JTextField testField = CustomActionSettingsForm.this.testField;
 				String text = testField.getText();
 				if (StringUtils.isNotBlank(text)) {
@@ -255,6 +272,9 @@ public class CustomActionSettingsForm implements Disposable {
 
 	private void delete() {
 		int selectedIndex = actionsList.getSelectedIndex();
+		if (selectedIndex == -1) {
+			return;
+		}
 		Object[] selectedValues = actionsList.getSelectedValues();
 		for (Object goal : selectedValues) {
 			model.removeElement(goal);
@@ -264,6 +284,7 @@ public class CustomActionSettingsForm implements Disposable {
 		} else {
 			actionsList.setSelectedIndex(selectedIndex);
 		}
+		initStepList();
 	}
 
 	public JPanel getRoot() {
@@ -328,6 +349,9 @@ public class CustomActionSettingsForm implements Disposable {
 		list.setTransferHandler(new MyListDropHandler(list) {
 			@Override
 			protected void swap(int index, int dropTargetIndex) {
+				if (selectedItem == null) {
+					return;
+				}
 				List<CustomActionModel.Step> steps = selectedItem.getSteps();
 				if (index < dropTargetIndex) {//moving down
 					Collections.rotate(steps.subList(index, dropTargetIndex), -1);
@@ -347,6 +371,9 @@ public class CustomActionSettingsForm implements Disposable {
 	public void initStepList() {
 		stepList.clear();
 
+		if (selectedItem == null) {
+			return;
+		}
 		for (CustomActionModel.Step style : selectedItem.getSteps()) {
 			Style style1 = style.getStyleAsEnum();
 			String presentableName = "<null>";
