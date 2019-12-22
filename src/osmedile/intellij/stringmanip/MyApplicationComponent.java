@@ -67,23 +67,25 @@ public class MyApplicationComponent implements ApplicationComponent {
 
 	@Override
 	public void initComponent() {
-		try {
-			registerActions();
-		} catch (Exception e) {
-			LOG.error(e);
-		}
+		ApplicationManager.getApplication().invokeLater(() -> {
+			ApplicationManager.getApplication().executeOnPooledThread(this::registerActions);
+		});
 	}
 
 	public void registerActions() {
-		ActionManager instance = ActionManager.getInstance();
-		DefaultActionGroup group = (DefaultActionGroup) instance.getAction("StringManipulation.Group.SwitchCase");
-		List<CustomActionModel> customActionModels = PluginPersistentStateComponent.getInstance().getCustomActionModels();
+		try {
+			ActionManager instance = ActionManager.getInstance();
+			DefaultActionGroup group = (DefaultActionGroup) instance.getAction("StringManipulation.Group.SwitchCase");
+			List<CustomActionModel> customActionModels = PluginPersistentStateComponent.getInstance().getCustomActionModels();
 
-		unRegisterActions(customActionModels);
+			unRegisterActions(customActionModels);
 
-		for (int i = customActionModels.size() - 1; i >= 0; i--) {
-			CustomActionModel customActionModel = customActionModels.get(i);
-			registerAction(instance, group, customActionModel);
+			for (int i = customActionModels.size() - 1; i >= 0; i--) {
+				CustomActionModel customActionModel = customActionModels.get(i);
+				registerAction(instance, group, customActionModel);
+			}
+		} catch (Throwable e) {
+			LOG.error(e);
 		}
 	}
 

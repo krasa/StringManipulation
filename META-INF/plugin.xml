@@ -588,6 +588,7 @@
                 <li>Improved: Switch File Path Separators</li>
                 <li>Added: Encode/Decode Hex</li>
                 <li>Added: Transform Delimited List</li>
+                <li>IntelliJ 2020 compatibility</li>
             </ul>
 	    </div>
 	    <div>
