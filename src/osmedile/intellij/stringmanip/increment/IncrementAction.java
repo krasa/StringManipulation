@@ -5,7 +5,7 @@ import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
@@ -23,7 +23,7 @@ public class IncrementAction extends MyEditorAction {
 
 				@Override
 				public void executeWriteAction(Editor editor, DataContext dataContext) {
-					MyApplicationComponent.setAction(getActionClass());
+					MyApplicationService.setAction(getActionClass());
 
 					// Column mode not supported
 					if (editor.isColumnMode()) {

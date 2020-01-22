@@ -16,7 +16,7 @@ public class RepeatAction extends EditorAction {
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 
-				AnAction anAction = MyApplicationComponent.getInstance().getAnAction();
+				AnAction anAction = MyApplicationService.getInstance().getAnAction();
 				if (anAction != null) {
 					anAction.actionPerformed(new AnActionEvent(null, dataContext, ActionPlaces.UNKNOWN, new Presentation(), ActionManager.getInstance(), 0));
 				}
@@ -33,7 +33,7 @@ public class RepeatAction extends EditorAction {
 	@Override
 	public void update(AnActionEvent e) {
 		super.update(e);
-		AnAction anAction = MyApplicationComponent.getInstance().getAnAction();
+		AnAction anAction = MyApplicationService.getInstance().getAnAction();
 		if (anAction != null) {
 			e.getPresentation().setEnabled(true);
 			e.getPresentation().setText("Repeat - " + anAction.getTemplatePresentation().getText());

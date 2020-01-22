@@ -6,7 +6,7 @@ import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.ShortcutStartupActivity;
 
 import javax.swing.*;
 
@@ -67,11 +67,11 @@ public class MyConfigurable implements SearchableConfigurable {
 
 	@Override
 	public void apply() throws ConfigurationException {
-		MyApplicationComponent.getInstance().unRegisterActions(instance.getCustomActionModels());
+		ShortcutStartupActivity.unRegisterActions(instance.getCustomActionModels());
 
 		gui.getData(instance);
 
-		MyApplicationComponent.getInstance().registerActions();
+		ShortcutStartupActivity.registerActions();
 	}
 
 	@Override

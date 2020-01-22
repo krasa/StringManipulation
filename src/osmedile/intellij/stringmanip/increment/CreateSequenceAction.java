@@ -5,7 +5,7 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
-import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
@@ -26,8 +26,8 @@ public class CreateSequenceAction extends MyEditorAction {
 
 				@Override
 				public void executeWriteAction(final Editor editor, DataContext dataContext) {
-					MyApplicationComponent.setAction(getActionClass());
-					
+					MyApplicationService.setAction(getActionClass());
+
 					final AtomicReference<String> lastValue = new AtomicReference<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {
 						@Override

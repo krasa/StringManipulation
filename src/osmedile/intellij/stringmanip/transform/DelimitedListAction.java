@@ -10,7 +10,7 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.MyApplicationComponent;
+import osmedile.intellij.stringmanip.MyApplicationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class DelimitedListAction extends EditorAction {
 			setupHandler(new EditorActionHandler() {
 				@Override
 				protected void doExecute(@NotNull Editor editor, @Nullable Caret caret, DataContext dataContext) {
-					MyApplicationComponent.setAction(DelimitedListAction.class);
+					MyApplicationService.setAction(DelimitedListAction.class);
 					final Pair<Boolean, Settings> dialogResult = DelimitedListAction.this.showDialog(editor);
 					if (!dialogResult.first) {
 						return;

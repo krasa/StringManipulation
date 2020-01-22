@@ -25,7 +25,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 
 	@Override
 	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
-		MyApplicationComponent.setAction(actionClass, customActionModel);
+		MyApplicationService.setAction(actionClass, customActionModel);
 
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
