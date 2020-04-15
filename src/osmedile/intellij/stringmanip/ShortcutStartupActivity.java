@@ -46,12 +46,18 @@ public class ShortcutStartupActivity implements StartupActivity {
 	}
 
 	protected static void registerAction(ActionManager actionManager, DefaultActionGroup group, CustomActionModel customActionModel) {
-		String actionId = customActionModel.getId();
-		if (StringUtils.isNotBlank(actionId) && StringUtils.isNotBlank(customActionModel.getName())) {
+		if (StringUtils.isNotBlank(customActionModel.getId()) && StringUtils.isNotBlank(customActionModel.getName())) {
 			CustomAction action = new CustomAction(customActionModel);
-			LOG.info("Registering " + action + " id:" + actionId);
-			actionManager.registerAction(actionId, action, PluginId.getId("String Manipulation"));
+			LOG.info("Registering " + action + " id:" + customActionModel.getId());
+			actionManager.registerAction(customActionModel.getId(), action, PluginId.getId("String Manipulation"));
 			group.add(action, Constraints.FIRST);
+
+
+			CustomActionModel reverse = customActionModel.reverse();
+			CustomAction reverseAction = new CustomAction(reverse);
+			LOG.info("Registering " + reverseAction + " id:" + reverse.getId());
+			actionManager.registerAction(reverse.getId(), reverseAction, PluginId.getId("String Manipulation"));
+//			group.add(reverseAction, Constraints.FIRST);
 		}
 	}
 
@@ -62,6 +68,7 @@ public class ShortcutStartupActivity implements StartupActivity {
 			String id = actionModel.getId();
 			if (StringUtils.isNotBlank(id)) {
 				unRegisterAction(instance, id, group);
+				unRegisterAction(instance, id + CustomActionModel.REVERSE, group);
 			}
 		}
 	}

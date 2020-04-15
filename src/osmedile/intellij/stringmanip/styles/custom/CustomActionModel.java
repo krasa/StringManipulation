@@ -4,6 +4,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.annotations.Transient;
 import osmedile.intellij.stringmanip.styles.Style;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,12 +13,23 @@ import static osmedile.intellij.stringmanip.styles.Style.valueOf;
 
 public class CustomActionModel {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomActionModel.class);
+	public static final String REVERSE = ".Reverse";
 
 	private List<Step> steps = DefaultActions.getDefaultSteps();
 	private String id;
 	private String name;
 
 	protected CustomActionModel() {
+	}
+
+	public CustomActionModel reverse() {
+		CustomActionModel customActionModel = new CustomActionModel();
+		customActionModel.setId(this.getId() + REVERSE);
+		customActionModel.setName(this.getName() + " - Reverse");
+		ArrayList<Step> steps = new ArrayList<>(this.steps);
+		Collections.reverse(steps);
+		customActionModel.setSteps(steps);
+		return customActionModel;
 	}
 
 	public static CustomActionModel create() {
@@ -82,6 +95,7 @@ public class CustomActionModel {
 			", name='" + name + '\'' +
 			'}';
 	}
+
 
 	public static class Step {
 
