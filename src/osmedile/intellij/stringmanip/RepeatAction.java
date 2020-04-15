@@ -40,7 +40,7 @@ public class RepeatAction extends EditorAction {
 			e.getPresentation().setDescription(anAction.getTemplatePresentation().getDescription());
 		} else {
 			e.getPresentation().setText("Repeat Last Action");
-			e.getPresentation().setDescription(null);
+			e.getPresentation().setDescription((String) null);
 			e.getPresentation().setEnabled(false);
 		}
 	}
