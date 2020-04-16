@@ -103,9 +103,12 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 					editor.logicalPositionToOffset(selectionEnd)));
 
 			sb.append(text);
+			if (sb.length() > 10000) {
+				break;
+			}
 		}
 		String s = sb.toString();
-
+		s = s.substring(0, Math.min(10000, s.length()));
 
 		if (columnAlignerHistory.size() > 0) {
 			for (int i = columnAlignerHistory.size() - 1; i >= 0; i--) {
@@ -126,7 +129,8 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		addSeparator(s, columnAlignerModel, ";", false);
 		addSeparator(s, columnAlignerModel, "->", false);
 		addSeparator(s, columnAlignerModel, "<-", false);
-		addSeparator(s, columnAlignerModel, "-", false);
+		addSeparator(s, columnAlignerModel, "-", true);
+		addSeparator(s, columnAlignerModel, ":", true);
 		addSeparator(s, columnAlignerModel, ",", true);
 		return columnAlignerModel;
 	}

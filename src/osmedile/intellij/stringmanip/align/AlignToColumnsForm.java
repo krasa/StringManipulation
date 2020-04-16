@@ -219,7 +219,7 @@ public class AlignToColumnsForm {
 			}
 			addTextField(null);
 		} else {
-			addTextField(",");
+			addTextField("|");
 			addTextField(null);
 		}
 	}
