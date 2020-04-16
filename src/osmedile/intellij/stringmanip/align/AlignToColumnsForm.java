@@ -12,6 +12,7 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import javax.swing.*;
@@ -25,9 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
 
-public class TextAlignmentForm {
+public class AlignToColumnsForm {
 	private final Editor editor;
 	public JPanel root;
 	private JPanel textfields;
@@ -42,9 +44,16 @@ public class TextAlignmentForm {
 	private JCheckBox sequentially;
 	private JPanel myPreviewPanel;
 	private JPanel donatePanel;
+	private JPanel sortSubPanel;
+	private JTextField sortColumnsOrder;
+	private JCheckBox skipFirstRow;
+	private JPanel debugValues;
+	private JCheckBox sortOnly;
+	private JTextField maxSeparators;
 	private EditorImpl myEditor;
+	private SortTypeDialog sortTypeForm;
 
-	public TextAlignmentForm(ColumnAlignerModel lastModel, Editor editor) {
+	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
 		this.editor = editor;
 		donatePanel.add(Donate.newDonateButton(donatePanel));
 		resetButton.addActionListener(new ActionListener() {
@@ -55,13 +64,19 @@ public class TextAlignmentForm {
 				textfields.repaint();
 			}
 		});
+
+		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
+		sortTypeForm.donatePanel.setVisible(false);
+		sortTypeForm.reverse.setVisible(false);
+		sortTypeForm.shuffle.setVisible(false);
+		sortSubPanel.add(sortTypeForm.contentPane);
 		init(lastModel);
 		historyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				final TextAlignmentHistoryForm textAlignmentHistoryForm = new TextAlignmentHistoryForm(editor);
+				final AlignToColumnsHistoryForm alignToColumnsHistoryForm = new AlignToColumnsHistoryForm(editor);
 
-				DialogWrapper dialogWrapper = new DialogWrapper(TextAlignmentForm.this.root, false) {
+				DialogWrapper dialogWrapper = new DialogWrapper(AlignToColumnsForm.this.root, false) {
 					{
 						init();
 						setTitle("History");
@@ -76,7 +91,7 @@ public class TextAlignmentForm {
 					@Nullable
 					@Override
 					protected JComponent createCenterPanel() {
-						return textAlignmentHistoryForm.root;
+						return alignToColumnsHistoryForm.root;
 					}
 
 					@Override
@@ -87,7 +102,7 @@ public class TextAlignmentForm {
 
 				boolean b = dialogWrapper.showAndGet();
 				if (b) {
-					ColumnAlignerModel model = textAlignmentHistoryForm.getModel();
+					ColumnAlignerModel model = alignToColumnsHistoryForm.getModel();
 					if (model != null) {
 						init(model);
 					}
@@ -96,9 +111,15 @@ public class TextAlignmentForm {
 			}
 		});
 
-		for (Field field : this.getClass().getDeclaredFields()) {
+		addPreviewListeners(this);
+		addPreviewListeners(sortTypeForm);
+	}
+
+	private void addPreviewListeners(Object object) {
+		for (Field field : object.getClass().getDeclaredFields()) {
 			try {
-				Object o = field.get(this);
+				field.setAccessible(true);
+				Object o = field.get(object);
 				if (o instanceof JToggleButton) {
 					JToggleButton button = (JToggleButton) o;
 					button.addActionListener(new ActionListener() {
@@ -122,12 +143,11 @@ public class TextAlignmentForm {
 				throw new RuntimeException(e);
 			}
 		}
-
-
 	}
 
 	private void updateComponents() {
 		preview();
+		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines}, sortOnly);
 	}
 
 
@@ -146,7 +166,16 @@ public class TextAlignmentForm {
 			lines.addAll(Arrays.asList(split));
 		}
 
-		List<String> result = new ColumnAligner(getModel()).align(lines);
+		ColumnAligner columnAligner = new ColumnAligner(getModel());
+		List<String> result = columnAligner.align(lines);
+
+		debugValues.removeAll();
+		List<String> debug = columnAligner.getDebugValues();
+		for (String s : debug) {
+			debugValues.add(new JLabel(s));
+		}
+		debugValues.revalidate();
+		debugValues.repaint();
 
 
 		ApplicationManager.getApplication().runWriteAction(() -> {
@@ -159,12 +188,21 @@ public class TextAlignmentForm {
 	protected void init(ColumnAlignerModel lastSeparators) {
 		_setData(lastSeparators);
 		init(lastSeparators.getSeparators());
+		sortTypeForm.init(lastSeparators.getSortSettings());
 		preview();
 	}
 
 
 	private void createUIComponents() {
 		textfields = new JPanel();
+		textfields.setLayout(new BoxLayout(textfields, BoxLayout.Y_AXIS));
+		textfields.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		debugValues = new JPanel();
+		debugValues.removeAll();
+		debugValues.setLayout(new BoxLayout(debugValues, BoxLayout.Y_AXIS));
+		debugValues.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 		myEditor = IdeUtils.createEditorPreview("", false);
 		myPreviewPanel = (JPanel) myEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
@@ -172,9 +210,6 @@ public class TextAlignmentForm {
 
 	private void init(List<String> lastSeparators) {
 		textfields.removeAll();
-		BoxLayout boxLayout = new BoxLayout(textfields, BoxLayout.Y_AXIS);
-		textfields.setLayout(boxLayout);
-		textfields.setAlignmentX(Component.LEFT_ALIGNMENT);
 		if (lastSeparators != null && !lastSeparators.isEmpty()) {
 			for (String lastSeparator : lastSeparators) {
 				if (isEmpty(lastSeparator)) {
@@ -279,31 +314,47 @@ public class TextAlignmentForm {
 		} else {
 			data.setAlignBy(ColumnAlignerModel.Align.SEPARATORS);
 		}
+
+		data.setSortSettings(sortTypeForm.getSettings());
 		getData(data);
 	}
 
 	public void setData(ColumnAlignerModel data) {
+		sortColumnsOrder.setText(data.getColumnSortOrder());
+		skipFirstRow.setSelected(data.isSkipFirstRow());
 		addSpaceBeforeSeparatorCheckBox.setSelected(data.isSpaceBeforeSeparator());
 		addSpaceAfterSeparatorCheckBox.setSelected(data.isSpaceAfterSeparator());
 		trimValues.setSelected(data.isTrimValues());
 		trimLines.setSelected(data.isTrimLines());
 		sequentially.setSelected(data.isSequentialProcessing());
+		sortOnly.setSelected(data.isSortOnly());
+		maxSeparators.setText(data.getMaxSeparatorsPerLine());
 	}
 
 	public void getData(ColumnAlignerModel data) {
+		data.setColumnSortOrder(sortColumnsOrder.getText());
+		data.setSkipFirstRow(skipFirstRow.isSelected());
 		data.setSpaceBeforeSeparator(addSpaceBeforeSeparatorCheckBox.isSelected());
 		data.setSpaceAfterSeparator(addSpaceAfterSeparatorCheckBox.isSelected());
 		data.setTrimValues(trimValues.isSelected());
 		data.setTrimLines(trimLines.isSelected());
 		data.setSequentialProcessing(sequentially.isSelected());
+		data.setSortOnly(sortOnly.isSelected());
+		data.setMaxSeparatorsPerLine(maxSeparators.getText());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
+		if (sortColumnsOrder.getText() != null ? !sortColumnsOrder.getText().equals(data.getColumnSortOrder()) : data.getColumnSortOrder() != null)
+			return true;
+		if (skipFirstRow.isSelected() != data.isSkipFirstRow()) return true;
 		if (addSpaceBeforeSeparatorCheckBox.isSelected() != data.isSpaceBeforeSeparator()) return true;
 		if (addSpaceAfterSeparatorCheckBox.isSelected() != data.isSpaceAfterSeparator()) return true;
 		if (trimValues.isSelected() != data.isTrimValues()) return true;
 		if (trimLines.isSelected() != data.isTrimLines()) return true;
 		if (sequentially.isSelected() != data.isSequentialProcessing()) return true;
+		if (sortOnly.isSelected() != data.isSortOnly()) return true;
+		if (maxSeparators.getText() != null ? !maxSeparators.getText().equals(data.getMaxSeparatorsPerLine()) : data.getMaxSeparatorsPerLine() != null)
+			return true;
 		return false;
 	}
 }

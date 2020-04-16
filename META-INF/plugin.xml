@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.3.191.000.0</version>
+    <version>7.4.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -388,7 +388,7 @@
                    popup="true">
                 <action id="StringManipulation.AlignToColumns"
                         class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align to Columns"
+                        text="Align and Sort by Columns"
                         description="Format selected text to columns/table by a chosen separator/delimiter">
                     <add-to-group group-id="CodeMenu" anchor="last"/>
                 </action>
@@ -543,7 +543,7 @@
 		<p>
             Align:
 			<ul>
-				<li>Format selected text to columns/table by a chosen separator/delimiter</li>
+				<li>Format selected text to columns/table by a chosen separator/delimiter and sort by columns</li>
 				<li>Align text to left/center/right</li>
 			</ul>
 		</p>
@@ -585,6 +585,13 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 7.4</h4>
+	        <ul>
+                <li>Improved: Align by column - added sorting</li>
+                <li>Added: Reversed custom switch action - for a shortcut use</li>
+            </ul>
+	    </div>          
 	    <div>
 	        <h4>Version 7.3</h4>
 	        <ul>

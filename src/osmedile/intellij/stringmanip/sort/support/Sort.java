@@ -111,12 +111,12 @@ public enum Sort {
 				Collections.reverse(sortedLines);
 				break;
 			default:
-				Collections.sort(sortedLines, getComparator(baseComparator, languageTag));
+				sortedLines.sort(getComparator(baseComparator, languageTag));
 		}
 		return sortedLines;
 	}
 
-	protected Comparator getComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
+	public Comparator<SortLine> getComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
 		Comparator baseComparator = SortSettings.BaseComparator.getComparator(baseComparatorEnum, languageTag);
 		if (factory != null) {
 			return factory.prototype(baseComparator);

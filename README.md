@@ -79,7 +79,7 @@ Provides actions for text manipulation:
     <p>
         Align:
         <ul>
-            <li>Format selected text to columns/table by a chosen separator/delimiter</li>
+            <li>Format selected text to columns/table by a chosen separator/delimiter and sort by columns</li>
             <li>Align text to left/center/right</li>
         </ul>
     </p>

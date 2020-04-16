@@ -5,10 +5,67 @@ import org.junit.Test;
 
 public class FixedStringTokenScannerTest {
 
+
+	@Test
+	public void limit() {
+
+		Assert.assertArrayEquals(new String[]{
+			"foo",
+			" ",
+			"bar   "
+		}, FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("   foo     bar   ", 1, " ").toArray());
+
+
+		Assert.assertArrayEquals(new String[]{
+				"  ",
+				",",
+				" foo ",
+				",",
+				" bar ,  "
+			},
+			FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("  , foo , bar ,  ", 2, ",").toArray());
+
+		Assert.assertArrayEquals(new String[]{
+				"  ",
+				"|",
+				" foo ",
+				"|",
+				"",
+				"|",
+				"||  "
+			},
+			FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("  | foo ||||  ", 3, "|").toArray());
+
+	}
+
 	@Test
 	public void splitToFixedStringTokensAndOtherTokens() {
-		Assert.assertEquals("[foo,  , bar]", FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("foo  bar", " ").toString());
-		Assert.assertEquals("[foo,  , bar,  , ]", FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("   foo  bar   ", " ").toString());
-		Assert.assertEquals("[  , ,,  foo , ,,  bar , ,,   ]", FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("  , foo , bar ,  ", ",").toString());
+		Assert.assertArrayEquals(new String[]{
+				"foo",
+				" ",
+				"bar"
+			},
+			FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("foo           bar", -1, " ").toArray());
+
+
+		Assert.assertArrayEquals(new String[]{
+			"foo",
+			" ",
+			"bar",
+			" ",
+			""
+		}, FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("   foo  bar       ", -1, " ").toArray());
+
+		Assert.assertArrayEquals(new String[]{
+				"  ",
+				",",
+				" foo ",
+				",",
+				" bar ",
+				",",
+				"  "
+			},
+			FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens("  , foo , bar ,  ", -1, ",").toArray());
+
 	}
 }

@@ -28,18 +28,18 @@ public class AlignToColumnsAction extends MyEditorAction {
 				@NotNull
 				@Override
                 protected Pair<Boolean, ColumnAlignerModel> beforeWriteAction(Editor editor, DataContext dataContext) {
-                    PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
-					final TextAlignmentForm textAlignmentForm = new TextAlignmentForm(stateComponent.getLastModel(), editor);
-                    DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
-                        {
-                            init();
-                            setTitle("Separators");
-                        }
+					PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
+					final AlignToColumnsForm alignToColumnsForm = new AlignToColumnsForm(stateComponent.guessModel(editor), editor);
+					DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
+						{
+							init();
+							setTitle("Align to Columns");
+						}
 
-                        @Nullable
-                        @Override
-                        public JComponent getPreferredFocusedComponent() {
-                            return textAlignmentForm.getPreferredFocusedComponent();
+						@Nullable
+						@Override
+						public JComponent getPreferredFocusedComponent() {
+							return alignToColumnsForm.getPreferredFocusedComponent();
                         }
 
                         @Nullable
@@ -52,22 +52,22 @@ public class AlignToColumnsAction extends MyEditorAction {
                         @Nullable
                         @Override
                         protected JComponent createCenterPanel() {
-                            return textAlignmentForm.root;
+							return alignToColumnsForm.root;
                         }
 
-                        @Override
-                        protected void doOKAction() {
-                            super.doOKAction();
-                        }
-                    };
+						@Override
+						protected void doOKAction() {
+							super.doOKAction();
+						}
+					};
 
-                    if (!dialogWrapper.showAndGet()) {
+					if (!dialogWrapper.showAndGet()) {
 						return stopExecution();
 					}
 
-                    ColumnAlignerModel model = textAlignmentForm.getModel();
-					stateComponent.addToHistory(textAlignmentForm.getModel());
-                    return continueExecution(model);
+					ColumnAlignerModel model = alignToColumnsForm.getModel();
+					stateComponent.addToHistory(alignToColumnsForm.getModel());
+					return continueExecution(model);
 				}
 
 				@Override

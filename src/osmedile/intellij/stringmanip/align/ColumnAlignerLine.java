@@ -2,9 +2,7 @@ package osmedile.intellij.stringmanip.align;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("Duplicates")
 public class ColumnAlignerLine {
@@ -12,6 +10,7 @@ public class ColumnAlignerLine {
 	private final String[] split;
 	protected StringBuilder sb = new StringBuilder();
 	private int index = 0;
+	private final String originalText;
 	protected boolean endsWithNextLine;
 	private boolean hasSeparatorBeforeFirstToken = false;
 
@@ -23,8 +22,9 @@ public class ColumnAlignerLine {
 
 
 	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
+		originalText = textPart;
 		this.endsWithNextLine = endsWithNextLine;
-		separators = new HashSet<String>(Arrays.asList(separator));       
+		separators = new HashSet<String>(Arrays.asList(separator));
 		this.appendSpaceBeforeSeparator = model.isSpaceBeforeSeparator();
 		this.appendSpaceAfterSeparator = model.isSpaceAfterSeparator();
 		this.trimValues = model.isTrimValues();
@@ -33,7 +33,7 @@ public class ColumnAlignerLine {
 		if (trimLines) {
 			textPart = textPart.trim();
 		}
-		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, separator).toArray(new String[0]);
+		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, model.getMaxSeparatorsPerLineAsInt(), separator).toArray(new String[0]);
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 	}
 
@@ -91,11 +91,11 @@ public class ColumnAlignerLine {
 			} else {
 //bad workaround for incorrect spliting when a space separator ' ' is next to non space separator  AlignToColumnsActionTest.test19
 				index--;
-			} 
+			}
 		}
 	}
 
-	private boolean isSeparator(String str) {
+	public boolean isSeparator(String str) {
 		return separators.contains(str);
 	}
 
@@ -146,5 +146,44 @@ public class ColumnAlignerLine {
 			return e + "\n";
 		}
 		return e;
+	}
+
+	@NotNull
+	String getOriginalString() {
+		String e = originalText;
+		if (endsWithNextLine) {
+			return e + "\n";
+		}
+		return e;
+	}
+
+	public String getToken(int index) {
+		int currentIndex = 0;
+		for (int i = 0; i < split.length; i++) {
+			String s = split[i];
+			if (isSeparator(s)) {
+				continue;
+			}
+
+			if (currentIndex == index) {
+				return s;
+			}
+			currentIndex++;
+		}
+		return "";
+	}
+
+	public List<String> debugTokens() {
+		int currentIndex = 1;
+		List<String> strings = new ArrayList<>();
+		for (int i = 0; i < split.length; i++) {
+			String s = split[i];
+			if (isSeparator(s)) {
+				continue;
+			}
+			strings.add(currentIndex + "=" + s);
+			currentIndex++;
+		}
+		return strings;
 	}
 }

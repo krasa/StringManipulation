@@ -144,7 +144,7 @@ public class SortSettings {
 	}
 
 	public static enum BaseComparator {
-		NATURAL(NaturalOrderComparator.COMPARATOR),
+		NATURAL(new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator()),
 		LOCALE_COLLATOR(Collator.getInstance());
 
 		private Comparator comparator;
@@ -168,5 +168,37 @@ public class SortSettings {
 
 			return comparator;
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		SortSettings that = (SortSettings) o;
+
+		if (ignoreLeadingSpaces != that.ignoreLeadingSpaces) return false;
+		if (preserveLeadingSpaces != that.preserveLeadingSpaces) return false;
+		if (preserveTrailingSpecialCharacters != that.preserveTrailingSpecialCharacters) return false;
+		if (trailingChars != null ? !trailingChars.equals(that.trailingChars) : that.trailingChars != null)
+			return false;
+		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
+			return false;
+		if (baseComparator != that.baseComparator) return false;
+		if (blankLines != that.blankLines) return false;
+		return sortType == that.sortType;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = trailingChars != null ? trailingChars.hashCode() : 0;
+		result = 31 * result + (collatorLanguageTag != null ? collatorLanguageTag.hashCode() : 0);
+		result = 31 * result + (baseComparator != null ? baseComparator.hashCode() : 0);
+		result = 31 * result + (blankLines != null ? blankLines.hashCode() : 0);
+		result = 31 * result + (sortType != null ? sortType.hashCode() : 0);
+		result = 31 * result + (ignoreLeadingSpaces ? 1 : 0);
+		result = 31 * result + (preserveLeadingSpaces ? 1 : 0);
+		result = 31 * result + (preserveTrailingSpecialCharacters ? 1 : 0);
+		return result;
 	}
 }

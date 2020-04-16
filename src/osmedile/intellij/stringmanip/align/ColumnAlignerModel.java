@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.align;
 
+import com.intellij.util.xmlb.annotations.Transient;
+import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -17,8 +19,14 @@ public class ColumnAlignerModel {
 	private boolean trimLines = false;
 	private Align alignBy = Align.SEPARATORS;
 	private boolean sequentialProcessing;
+	private SortSettings sortSettings = new SortSettings();
+	private String columnSortOrder;
+	private boolean skipFirstRow;
+	private boolean sortOnly;
+	private String maxSeparatorsPerLine;
 
 	public ColumnAlignerModel() {
+		System.err.println();
 	}
 
 	public ColumnAlignerModel(String... separator) {
@@ -89,6 +97,57 @@ public class ColumnAlignerModel {
 		this.sequentialProcessing = sequentialProcessing;
 	}
 
+	public SortSettings getSortSettings() {
+		return sortSettings;
+	}
+
+	public void setSortSettings(SortSettings sortSettings) {
+		this.sortSettings = sortSettings;
+	}
+
+	public String getColumnSortOrder() {
+		return columnSortOrder;
+	}
+
+	public void setColumnSortOrder(final String columnSortOrder) {
+		this.columnSortOrder = columnSortOrder;
+	}
+
+	public boolean isSkipFirstRow() {
+		return skipFirstRow;
+	}
+
+	public void setSkipFirstRow(final boolean skipFirstRow) {
+		this.skipFirstRow = skipFirstRow;
+	}
+
+	public boolean isSortOnly() {
+		return sortOnly;
+	}
+
+	public void setSortOnly(final boolean sortOnly) {
+		this.sortOnly = sortOnly;
+	}
+
+	public String getMaxSeparatorsPerLine() {
+		return maxSeparatorsPerLine;
+	}
+
+	public void setMaxSeparatorsPerLine(final String maxSeparatorsPerLine) {
+		this.maxSeparatorsPerLine = maxSeparatorsPerLine;
+	}
+
+	@Transient
+	public Integer getMaxSeparatorsPerLineAsInt() {
+		Integer integer = null;
+		try {
+			integer = Integer.valueOf(maxSeparatorsPerLine);
+		} catch (Exception e) {
+			integer = Integer.MAX_VALUE;
+		}
+		return integer;
+	}
+
 	public enum Align {
 		VALUES, SEPARATORS
 	}
@@ -105,10 +164,15 @@ public class ColumnAlignerModel {
 		if (trimValues != that.trimValues) return false;
 		if (trimLines != that.trimLines) return false;
 		if (sequentialProcessing != that.sequentialProcessing) return false;
+		if (skipFirstRow != that.skipFirstRow) return false;
+		if (sortOnly != that.sortOnly) return false;
 		if (added != null ? !added.equals(that.added) : that.added != null) return false;
 		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
-		return alignBy == that.alignBy;
-
+		if (alignBy != that.alignBy) return false;
+		if (sortSettings != null ? !sortSettings.equals(that.sortSettings) : that.sortSettings != null) return false;
+		if (columnSortOrder != null ? !columnSortOrder.equals(that.columnSortOrder) : that.columnSortOrder != null)
+			return false;
+		return maxSeparatorsPerLine != null ? maxSeparatorsPerLine.equals(that.maxSeparatorsPerLine) : that.maxSeparatorsPerLine == null;
 	}
 
 	@Override
@@ -121,6 +185,11 @@ public class ColumnAlignerModel {
 		result = 31 * result + (trimLines ? 1 : 0);
 		result = 31 * result + (alignBy != null ? alignBy.hashCode() : 0);
 		result = 31 * result + (sequentialProcessing ? 1 : 0);
+		result = 31 * result + (sortSettings != null ? sortSettings.hashCode() : 0);
+		result = 31 * result + (columnSortOrder != null ? columnSortOrder.hashCode() : 0);
+		result = 31 * result + (skipFirstRow ? 1 : 0);
+		result = 31 * result + (sortOnly ? 1 : 0);
+		result = 31 * result + (maxSeparatorsPerLine != null ? maxSeparatorsPerLine.hashCode() : 0);
 		return result;
 	}
 

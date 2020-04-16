@@ -1,23 +1,23 @@
 /**
-NaturalOrderComparator.java -- Perform improved 'natural order' comparisons of strings in Java.
-Copyright (C) 2016 by Vojtech Krasa <vojta.krasa@gmail.com>
-NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
-Copyright (C) 2003 by Pierre-Luc Paour <natorder@paour.com>
-Based on the C version by Martin Pool, of which this is more or less a straight conversion.
-Copyright (C) 2000 by Martin Pool <mbp@humbug.org.au>
-This software is provided 'as-is', without any express or implied
-warranty.  In no event will the authors be held liable for any damages
-arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software
-in a product, an acknowledgment in the product documentation would be
-appreciated but is not required.
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-3. This notice may not be removed or altered from any source distribution.
+ * NaturalOrderComparator.java -- Perform improved 'natural order' comparisons of strings in Java.
+ * Copyright (C) 2016 by Vojtech Krasa <vojta.krasa@gmail.com>
+ * NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
+ * Copyright (C) 2003 by Pierre-Luc Paour <natorder@paour.com>
+ * Based on the C version by Martin Pool, of which this is more or less a straight conversion.
+ * Copyright (C) 2000 by Martin Pool <mbp@humbug.org.au>
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
  */
 package osmedile.intellij.stringmanip.sort.support;
 
@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Deprecated
 public class NaturalOrderComparator implements Comparator {
 	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();
 
@@ -156,11 +157,12 @@ public class NaturalOrderComparator implements Comparator {
 		}
 	}
 
+
 	public static void main(String[] args) {
-		String[] strings = new String[]{"1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01", "pic2", "pic02",
-				"pic02a", "pic3", "pic4", "pic 4 else", "pic 5", "pic05", "pic 5", "pic 5 something", "pic 6",
-				"pic   7", "pic100", "pic100a", "pic120", "pic121", "pic02000", "tom", "x2-g8", "x2-y7", "x2-y08",
-				"x8-y8"};
+		String[] strings = new String[]{"1-2", "1-02", "1-20", "10-20", "fred", "jane", "pic01",
+			"pic2", "pic02", "pic02a", "pic3", "pic4", "pic 4 else", "pic 5", "pic05", "pic 5",
+			"pic 5 something", "pic 6", "pic   7", "pic100", "pic100a", "pic120", "pic121",
+			"pic02000", "tom", "x2-g8", "x2-y7", "x2-y08", "x8-y8"};
 
 		List orig = Arrays.asList(strings);
 

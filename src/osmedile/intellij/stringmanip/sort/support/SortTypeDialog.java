@@ -19,14 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
+
 public class SortTypeDialog {
 	public JPanel contentPane;
 
 	public JRadioButton insensitive;
 	protected JRadioButton sensitive;
 	protected JRadioButton length;
-	private JRadioButton shuffle;
-	private JRadioButton reverse;
+	public JRadioButton shuffle;
+	public JRadioButton reverse;
 	private JRadioButton hexa;
 
 	private JRadioButton asc;
@@ -43,41 +45,12 @@ public class SortTypeDialog {
 	private JTextField languageTag;
 	private JLabel languageTagLabel;
 	private JLabel valid;
-	private JPanel donatePanel;
+	public JPanel donatePanel;
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
-	}
-
-	private void enabledBy(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
-		boolean b = true;
-		for (JToggleButton jToggleButton : control) {
-			b = b && (jToggleButton.isEnabled() && jToggleButton.isSelected());
-		}
-		for (JComponent target : targets) {
-			target.setEnabled(b);
-		}
-	}
-
-	private void enabledByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
-		boolean b = false;
-		for (JToggleButton jToggleButton : control) {
-			b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
-		}
-		for (JComponent target : targets) {
-			target.setEnabled(b);
-		}
-	}
-
-	private void visibleByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
-		boolean b = false;
-		for (JToggleButton jToggleButton : control) {
-			b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
-		}
-		for (JComponent target : targets) {
-			target.setVisible(b);
-		}
+		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 	}
 
 
@@ -87,18 +60,67 @@ public class SortTypeDialog {
 		trailingCharacters.setVisible(additionaloptions);
 		removeBlank.setVisible(additionaloptions);
 		preserveBlank.setVisible(additionaloptions);
-
-		ignoreLeadingSpaces.setSelected(sortSettings.isIgnoreLeadingSpaces());
-		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
-		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
-		trailingCharacters.setText(sortSettings.getTrailingChars());
-		languageTag.setText(sortSettings.getCollatorLanguageTag());
 		languageTag.getDocument().addDocumentListener(new DocumentAdapter() {
 			@Override
 			protected void textChanged(@NotNull final DocumentEvent e) {
 				validateLocale();
 			}
 		});
+
+		init(sortSettings);
+
+		contentPane.setFocusTraversalPolicy(new ComponentsListFocusTraversalPolicy() {
+			@NotNull
+			@Override
+			protected java.util.List<Component> getOrderedComponents() {
+				List<Component> jRadioButtons = new ArrayList<Component>();
+				jRadioButtons.add(insensitive);
+				jRadioButtons.add(sensitive);
+				jRadioButtons.add(length);
+				jRadioButtons.add(reverse);
+				jRadioButtons.add(shuffle);
+				jRadioButtons.add(hexa);
+				jRadioButtons.add(asc);
+				jRadioButtons.add(desc);
+				jRadioButtons.add(removeBlank);
+				jRadioButtons.add(preserveBlank);
+				jRadioButtons.add(ignoreLeadingSpaces);
+				jRadioButtons.add(preserveLeadingSpaces);
+				jRadioButtons.add(preserveTrailingSpecialCharacters);
+				jRadioButtons.add(trailingCharacters);
+				jRadioButtons.add(comparatorNaturalOrder);
+				jRadioButtons.add(comparatorCollator);
+				jRadioButtons.add(languageTag);
+				return jRadioButtons;
+			}
+		});
+		ignoreLeadingSpaces.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (!ignoreLeadingSpaces.isSelected()) {
+					preserveLeadingSpaces.setSelected(false);
+				}
+			}
+		});
+		preserveLeadingSpaces.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if (preserveLeadingSpaces.isSelected()) {
+					ignoreLeadingSpaces.setSelected(true);
+				}
+			}
+		});
+		updateComponents();
+		donatePanel.add(Donate.newDonateButton(donatePanel));
+	}
+
+	public void init(SortSettings sortSettings) {
+		ignoreLeadingSpaces.setSelected(sortSettings.isIgnoreLeadingSpaces());
+		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
+		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
+		trailingCharacters.setText(sortSettings.getTrailingChars());
+		languageTag.setText(sortSettings.getCollatorLanguageTag());
+
 		validateLocale();
 
 		for (Field field : SortTypeDialog.class.getDeclaredFields()) {
@@ -184,50 +206,6 @@ public class SortTypeDialog {
 				desc.setSelected(true);
 				break;
 		}
-
-		contentPane.setFocusTraversalPolicy(new ComponentsListFocusTraversalPolicy() {
-			@NotNull
-			@Override
-			protected java.util.List<Component> getOrderedComponents() {
-				List<Component> jRadioButtons = new ArrayList<Component>();
-				jRadioButtons.add(insensitive);
-				jRadioButtons.add(sensitive);
-				jRadioButtons.add(length);
-				jRadioButtons.add(reverse);
-				jRadioButtons.add(shuffle);
-				jRadioButtons.add(hexa);
-				jRadioButtons.add(asc);
-				jRadioButtons.add(desc);
-				jRadioButtons.add(removeBlank);
-				jRadioButtons.add(preserveBlank);
-				jRadioButtons.add(ignoreLeadingSpaces);
-				jRadioButtons.add(preserveLeadingSpaces);
-				jRadioButtons.add(preserveTrailingSpecialCharacters);
-				jRadioButtons.add(trailingCharacters);
-				jRadioButtons.add(comparatorNaturalOrder);
-				jRadioButtons.add(comparatorCollator);
-				jRadioButtons.add(languageTag);
-				return jRadioButtons;
-			}
-		});
-		ignoreLeadingSpaces.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (!ignoreLeadingSpaces.isSelected()) {
-					preserveLeadingSpaces.setSelected(false);
-				}
-			}
-		});
-		preserveLeadingSpaces.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (preserveLeadingSpaces.isSelected()) {
-					ignoreLeadingSpaces.setSelected(true);
-				}
-			}
-		});
-		updateComponents();
-		donatePanel.add(Donate.newDonateButton(donatePanel));
 	}
 
 	private void validateLocale() {
@@ -284,5 +262,6 @@ public class SortTypeDialog {
 
 		throw new IllegalStateException();
 	}
+
 
 }

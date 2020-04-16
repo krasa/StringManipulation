@@ -6,6 +6,10 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.CaretState;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +20,7 @@ import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
+import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.*;
 
@@ -24,13 +29,17 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private static final Logger LOG = Logger.getInstance(PluginPersistentStateComponent.class);
 
 	public static final int LIMIT = 20;
-	private List<ColumnAlignerModel> history = new ArrayList<ColumnAlignerModel>();
+	private List<ColumnAlignerModel> columnAlignerHistory = new ArrayList<ColumnAlignerModel>();
 	private List<CustomActionModel> customActionModels = DefaultActions.defaultActions();
 
 	private int lastSelectedAction = 0;
 	private int version = 0;
 	private SortSettings sortSettings = new SortSettings();
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
+
+	public PluginPersistentStateComponent() {
+		System.err.println();
+	}
 
 	public int getLastSelectedAction() {
 		return lastSelectedAction;
@@ -64,14 +73,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		this.sortSettings = sortSettings;
 	}
 
-	public List<ColumnAlignerModel> getHistory() {
-		return new ArrayList<ColumnAlignerModel>(history);
+	public List<ColumnAlignerModel> getColumnAlignerHistory() {
+		return columnAlignerHistory;
 	}
 
-	public void setHistory(List<ColumnAlignerModel> history) {
-		this.history = history;
+	public void setColumnAlignerHistory(List<ColumnAlignerModel> columnAlignerHistory) {
+		this.columnAlignerHistory = columnAlignerHistory;
 	}
-
 
 	public int getVersion() {
 		return version;
@@ -83,20 +91,62 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	@NotNull
 	@Transient
-	public ColumnAlignerModel getLastModel() {
-		if (history.size() > 0) {
-			return history.get(history.size() - 1);
+	public ColumnAlignerModel guessModel(Editor editor) {
+		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+		IdeUtils.sort(caretsAndSelections);
+		StringBuilder sb = new StringBuilder();
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
+			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
+			String text = editor.getDocument().getText(
+				new TextRange(editor.logicalPositionToOffset(selectionStart),
+					editor.logicalPositionToOffset(selectionEnd)));
+
+			sb.append(text);
 		}
-		return new ColumnAlignerModel();
+		String s = sb.toString();
+
+
+		if (columnAlignerHistory.size() > 0) {
+			for (int i = columnAlignerHistory.size() - 1; i >= 0; i--) {
+				ColumnAlignerModel columnAlignerModel = columnAlignerHistory.get(i);
+				List<String> separators = columnAlignerModel.getSeparators();
+				for (String separator : separators) {
+					if (s.contains(separator)) {
+						return columnAlignerModel;
+					}
+				}
+			}
+		}
+
+
+		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel();
+		//TODO configurable?
+		addSeparator(s, columnAlignerModel, "|", false);
+		addSeparator(s, columnAlignerModel, ";", false);
+		addSeparator(s, columnAlignerModel, "->", false);
+		addSeparator(s, columnAlignerModel, "<-", false);
+		addSeparator(s, columnAlignerModel, "-", false);
+		addSeparator(s, columnAlignerModel, ",", true);
+		return columnAlignerModel;
+	}
+
+	private void addSeparator(String s, ColumnAlignerModel columnAlignerModel, String separator, boolean skipIfNotEmpty) {
+		if (!columnAlignerModel.getSeparators().isEmpty() && skipIfNotEmpty) {
+			return;
+		}
+		if (s.contains(separator)) {
+			columnAlignerModel.getSeparators().add(separator);
+		}
 	}
 
 	@Transient
 	public void addToHistory(ColumnAlignerModel columnAlignerModel) {
-		List<ColumnAlignerModel> newList = new ArrayList<ColumnAlignerModel>(history.size() + 1);
+		List<ColumnAlignerModel> newList = new ArrayList<ColumnAlignerModel>(columnAlignerHistory.size() + 1);
 
-		int startIndex = history.size() >= LIMIT ? 1 : 0;
-		for (int i = startIndex; i < history.size(); i++) {
-			ColumnAlignerModel alignerModel = history.get(i);
+		int startIndex = columnAlignerHistory.size() >= LIMIT ? 1 : 0;
+		for (int i = startIndex; i < columnAlignerHistory.size(); i++) {
+			ColumnAlignerModel alignerModel = columnAlignerHistory.get(i);
 			if (!alignerModel.equals(columnAlignerModel)) {
 				newList.add(alignerModel);
 			}
@@ -105,7 +155,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		columnAlignerModel.setAdded(new Date());
 		newList.add(columnAlignerModel);
 
-		history = newList;
+		columnAlignerHistory = newList;
 	}
 
 	private static PluginPersistentStateComponent unitTestComponent;

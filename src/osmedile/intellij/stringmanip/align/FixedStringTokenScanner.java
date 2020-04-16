@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
+import com.intellij.openapi.util.text.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -14,36 +15,50 @@ public final class FixedStringTokenScanner {
 	 * Splits the given input into tokens. Each token is either one of the given constant string
 	 * tokens or a string consisting of the other characters between the constant tokens.
 	 *
-	 * @param input             The string to split.
-	 * @param fixedStringTokens A list of strings to be recognized as separate tokens.
+	 * @param input      The string to split.
+	 * @param separators A list of strings to be recognized as separate tokens.
 	 * @return A list of strings, which when concatenated would result in the input string.
 	 * Occurrences of the fixed string tokens in the input string are returned as separate
-	 * list entries. These entries are reference-equal to the respective fixedStringTokens
+	 * list entries. These entries are reference-equal to the respective separators
 	 * entry. Characters which did not match any of the fixed string tokens are concatenated
 	 * and returned as list entries at the respective positions in the list. The list does
 	 * not contain empty or <code>null</code> entries.
 	 */
-	public static List<String> splitToFixedStringTokensAndOtherTokens(final String input, final String... fixedStringTokens) {
-		return new FixedStringTokenScannerRun(input, fixedStringTokens).splitToFixedStringAndOtherTokens();
+	public static List<String> splitToFixedStringTokensAndOtherTokens(final String input, Integer maxSeparators, final String... separators) {
+		return new FixedStringTokenScannerRun(input, maxSeparators, separators).splitToFixedStringAndOtherTokens();
 	}
 
 	private static class FixedStringTokenScannerRun {
 
 		private final String input;
-		private final String[] fixedStringTokens;
+		private final Integer maxSeparators;
+		private final String[] separators;
 
 		private int scanIx = 0;
 		StringBuilder otherContent = new StringBuilder();
 		List<String> result = new ArrayList<String>();
 		boolean lastTokenSpaceSeparator;
+		int separatorsFound = 0;
 
-		public FixedStringTokenScannerRun(final String input, final String[] fixedStringTokens) {
+		public FixedStringTokenScannerRun(final String input, Integer maxSeparators, final String[] separators) {
 			this.input = input;
-			this.fixedStringTokens = fixedStringTokens;
+			this.maxSeparators = maxSeparators;
+			this.separators = separators;
 		}
 
 		List<String> splitToFixedStringAndOtherTokens() {
 			while (scanIx < input.length()) {
+				if (maxSeparators >= 0 && separatorsFound >= maxSeparators) {
+					String substring = input.substring(scanIx);
+					if (lastTokenSpaceSeparator) {
+						substring = StringUtil.trimLeading(substring, ' ');
+					}
+					result.add(substring);
+					if (otherContent.length() > 0) {
+						System.err.println();
+					}
+					return result;
+				}
 				scanIx += matchFixedStringOrAppendToOther();
 			}
 			storeOtherToken("");
@@ -54,7 +69,7 @@ public final class FixedStringTokenScanner {
 		 * @return the number of matched characters.
 		 */
 		private int matchFixedStringOrAppendToOther() {
-			for (String separator : fixedStringTokens) {
+			for (String separator : separators) {
 				if (StringUtils.isEmpty(separator)) {
 					continue;
 				}
@@ -65,6 +80,7 @@ public final class FixedStringTokenScanner {
 					}
 					if (!lastTokenSpaceSeparator) {
 						result.add(separator); // add string instance so that identity comparison works
+						separatorsFound++;
 						if (separator.equals(" ")) {
 							lastTokenSpaceSeparator = true;
 						}

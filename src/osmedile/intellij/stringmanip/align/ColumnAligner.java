@@ -1,12 +1,21 @@
 package osmedile.intellij.stringmanip.align;
 
+import com.intellij.openapi.diagnostic.Logger;
+import osmedile.intellij.stringmanip.sort.support.SortLine;
+import osmedile.intellij.stringmanip.sort.support.SortSettings;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+import static shaded.org.apache.commons.lang3.StringUtils.isBlank;
 import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class ColumnAligner {
+	private static final Logger LOG = Logger.getInstance(ColumnAligner.class);
+
 	private final ColumnAlignerModel model;
+	private List<String> debug = new ArrayList<>();
 
 	public ColumnAligner() {
 		model = new ColumnAlignerModel();
@@ -81,6 +90,25 @@ public class ColumnAligner {
 	}
 
 	public List<String> process(List<ColumnAlignerLine> lines) {
+		initDebug(lines);
+
+		try {
+			lines = sort(lines);
+		} catch (SortFailed e) {
+			LOG.debug(e);
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+
+		if (model.isSortOnly()) {
+			List<String> strings = new ArrayList<String>();
+			for (ColumnAlignerLine line : lines) {
+				strings.add(line.getOriginalString());
+			}
+			return strings;
+		}
+
+
 		int initialSeparatorPosition = initialSeparatorPosition(lines);
 		for (ColumnAlignerLine line : lines) {
 			line.appendInitialSpace(initialSeparatorPosition);
@@ -116,10 +144,10 @@ public class ColumnAligner {
 				line.appendSpaceAfterSeparator();
 			}
 
-				int maxLength = getMaxLength(lines);
-				for (ColumnAlignerLine line : lines) {
-					line.appendSpace(maxLength);
-				}
+			int maxLength = getMaxLength(lines);
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpace(maxLength);
+			}
 
 
 			for (ColumnAlignerLine line : lines) {
@@ -132,6 +160,81 @@ public class ColumnAligner {
 			strings.add(line.getString());
 		}
 		return strings;
+	}
+
+	private void initDebug(List<ColumnAlignerLine> lines) {
+		ColumnAlignerLine line = lines.get(0);
+		debug = line.debugTokens();
+	}
+
+	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines) {
+		String sortOrder = model.getColumnSortOrder();
+		if (!isBlank(sortOrder)) {
+			SortSettings sortSettings = model.getSortSettings();
+			String[] split = sortOrder.split(" ");
+			checkParse(split);
+
+			for (int i = split.length - 1; i >= 0; i--) {
+				if (isBlank(split[i])) {
+					continue;
+				}
+				int s = Integer.parseInt(split[i]);
+				return sort(lines, s, sortSettings);
+			}
+		}
+		return lines;
+	}
+
+	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines, int index, SortSettings sortSettings) {
+		if (index <= 0) {
+			throw new SortFailed();
+		}
+		if (lines.size() > 1) {
+			List<ColumnAlignerLine> linesToSort;
+			ColumnAlignerLine firstLine = null;
+			if (model.isSkipFirstRow()) {
+				firstLine = lines.get(0);
+				linesToSort = lines.subList(1, lines.size());
+			} else {
+				linesToSort = lines;
+			}
+			Comparator<SortLine> comparator = sortSettings.getSortType().getComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+
+			linesToSort.sort(new Comparator<ColumnAlignerLine>() {
+				@Override
+				public int compare(ColumnAlignerLine o1, ColumnAlignerLine o2) {
+					String s1 = o1.getToken(index - 1);
+					String s2 = o2.getToken(index - 1);
+//					System.out.println("s1=" + s1);
+//					System.out.println("s2=" + s2);
+					return comparator.compare(new SortLine(s1, sortSettings), new SortLine(s2, sortSettings));
+				}
+			});
+			List<ColumnAlignerLine> result;
+			if (firstLine != null) {
+				result = new ArrayList<>();
+				result.add(firstLine);
+				result.addAll(linesToSort);
+			} else {
+				result = linesToSort;
+			}
+			return result;
+		}
+		return lines;
+	}
+
+
+	private void checkParse(String[] split) {
+		try {
+			for (int i = split.length - 1; i >= 0; i--) {
+				if (isBlank(split[i])) {
+					continue;
+				}
+				Integer s = Integer.valueOf(split[i]);
+			}
+		} catch (Exception e) {
+			throw new SortFailed();
+		}
 	}
 
 	protected void debug(List<ColumnAlignerLine> lines) {
@@ -158,4 +261,7 @@ public class ColumnAligner {
 		return i;
 	}
 
+	public List<String> getDebugValues() {
+		return debug;
+	}
 }
