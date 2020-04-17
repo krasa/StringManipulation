@@ -190,7 +190,7 @@ public class AlignToColumnsForm {
 		_setData(lastSeparators);
 		init(lastSeparators.getSeparators());
 		sortTypeForm.init(lastSeparators.getSortSettings());
-		preview();
+		updateComponents();
 	}
 
 

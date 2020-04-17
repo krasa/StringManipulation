@@ -318,6 +318,11 @@
                         text="Sort Lines by Subselection"
                         description="Sort lines by subselection - only for multi carets">
                 </action>
+                <action id="StringManipulation.AlignToColumns"
+                        class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
+                        text="Align/Sort by Columns"
+                        description="Format selected text to columns/table by a chosen separator/delimiter">
+                </action>
                 <action id="StringManipulation.ReverseAction"
                         class="osmedile.intellij.stringmanip.sort.ReverseLinesAction"
                         text="Reverse Lines"
@@ -386,12 +391,7 @@
             <group text="Align..."
                    description="Text and columns alignment"
                    popup="true">
-                <action id="StringManipulation.AlignToColumns"
-                        class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align and Sort by Columns"
-                        description="Format selected text to columns/table by a chosen separator/delimiter">
-                    <add-to-group group-id="CodeMenu" anchor="last"/>
-                </action>
+                <reference ref="StringManipulation.AlignToColumns"/>
                 <action id="StringManipulation.AlignLeftAction"
                         class="osmedile.intellij.stringmanip.align.AlignLeftAction"
                         text="Align Left"
