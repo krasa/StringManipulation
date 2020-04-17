@@ -310,7 +310,7 @@
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
-                        text="Sort Lines..."
+                        text="Sort Lines"
                         description="Universal lines sort with all kinds of features">
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
