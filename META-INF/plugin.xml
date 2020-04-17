@@ -325,7 +325,7 @@
                 </action>
                 <action id="StringManipulation.AlignToColumns"
                         class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align/Sort by Columns"
+                        text="Align/Sort Lines by Columns"
                         description="Format selected text to columns/table by a chosen separator/delimiter">
                 </action>
                 <action id="StringManipulation.ReverseAction"
