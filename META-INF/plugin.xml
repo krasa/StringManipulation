@@ -315,7 +315,7 @@
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort Lines by Subselection"
+                        text="Sort Lines by SubSelection"
                         description="Sort lines by subselection - only for multi carets">
                 </action>
                 <action id="StringManipulation.AlignToColumns"
