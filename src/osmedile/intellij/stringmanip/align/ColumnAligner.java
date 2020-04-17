@@ -80,11 +80,9 @@ public class ColumnAligner {
 	private List<ColumnAlignerLine> toLines(String text, String... separator) {
 		List<ColumnAlignerLine> lines = new ArrayList<ColumnAlignerLine>();
 		String[] split = text.split("\n");
-		boolean lastTokenEndsWithNewLine = text.endsWith("\n");
 		for (int i = 0; i < split.length; i++) {
 			String s = split[i];
-			boolean last = i == split.length - 1;
-			lines.add(new ColumnAlignerLine(model, s, last ? lastTokenEndsWithNewLine : true, separator));
+			lines.add(new ColumnAlignerLine(model, s, true, separator));
 		}
 		return lines;
 	}
