@@ -45,7 +45,7 @@ public class AlignToColumnsAction extends MyEditorAction {
                         @Nullable
                         @Override
                         protected String getDimensionServiceKey() {
-                            return "StringManipulation.TextAlignmentForm";
+                            return "StringManipulation.AlignToColumnsAction";
                         }
 
 

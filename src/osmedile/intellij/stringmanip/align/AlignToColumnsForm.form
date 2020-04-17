@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="730" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <preferredSize width="900" height="600"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="1ec21" class="javax.swing.JPanel" binding="myPreviewPanel" custom-create="true">
@@ -31,12 +33,12 @@
         <properties/>
       </component>
       <grid id="65f2e" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+        <margin top="0" left="0" bottom="0" right="2"/>
         <constraints>
           <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="etched" title="Sort by columns (example: &quot;3 2 1&quot;)">
+        <border type="etched" title="Sort by columns (example: &quot;1 2 3&quot;)">
           <color color="-15856896"/>
         </border>
         <children>
@@ -134,27 +136,11 @@
           </component>
           <component id="bbfaf" class="javax.swing.JCheckBox" binding="sequentially">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Process separators sequentially (old behaviour)"/>
               <toolTipText value="Otherwise process all at once"/>
-            </properties>
-          </component>
-          <component id="77bfc" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Separators:"/>
-            </properties>
-          </component>
-          <component id="fd885" class="javax.swing.JCheckBox" binding="sortOnly">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Sort only"/>
             </properties>
           </component>
           <grid id="1115e" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -181,6 +167,42 @@
                   <text value="Max number of separators per line"/>
                 </properties>
               </component>
+            </children>
+          </grid>
+          <grid id="9be46" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="5"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="77bfc" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Separators:"/>
+                </properties>
+              </component>
+              <component id="fd885" class="javax.swing.JCheckBox" binding="sortOnly">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <actionCommand value="Sort only"/>
+                  <margin top="2" left="2" bottom="2" right="5"/>
+                  <text value="Sort only"/>
+                </properties>
+                <clientProperties>
+                  <html.disable class="java.lang.Boolean" value="false"/>
+                </clientProperties>
+              </component>
+              <hspacer id="a1139">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
         </children>

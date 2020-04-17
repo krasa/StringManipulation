@@ -179,7 +179,7 @@ public class ColumnAligner {
 					continue;
 				}
 				int s = Integer.parseInt(split[i]);
-				return sort(lines, s, sortSettings);
+				sort(lines, s, sortSettings);
 			}
 		}
 		return lines;
@@ -226,7 +226,7 @@ public class ColumnAligner {
 
 	private void checkParse(String[] split) {
 		try {
-			for (int i = split.length - 1; i >= 0; i--) {
+			for (int i = 0; i < split.length; i++) {
 				if (isBlank(split[i])) {
 					continue;
 				}

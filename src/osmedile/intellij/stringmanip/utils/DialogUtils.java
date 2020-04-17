@@ -31,10 +31,8 @@ public class DialogUtils {
 		for (JToggleButton jToggleButton : control) {
 			disable = disable || (jToggleButton.isEnabled() && jToggleButton.isSelected());
 		}
-		if (disable) {
-			for (JComponent target : targets) {
-				target.setEnabled(false);
-			}
+		for (JComponent target : targets) {
+			target.setEnabled(!disable);
 		}
 	}
 

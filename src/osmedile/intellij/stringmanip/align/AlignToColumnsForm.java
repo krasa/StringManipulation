@@ -28,6 +28,7 @@ import java.util.List;
 
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
+import static shaded.org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class AlignToColumnsForm {
 	private final Editor editor;
@@ -225,26 +226,28 @@ public class AlignToColumnsForm {
 	}
 
 	private JBTextField addTextField(final String lastSeparator) {
-		final JBTextField comp = new JBTextField(lastSeparator);
-		comp.getDocument().addDocumentListener(new DocumentAdapter() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+		final JBTextField tf = new JBTextField(lastSeparator);
+		tf.getDocument().addDocumentListener(new DocumentAdapter() {
 			@Override
 			protected void textChanged(DocumentEvent e) {
 				updateComponents();
 			}
 		});
-		comp.addFocusListener(new java.awt.event.FocusAdapter() {
+		tf.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						comp.selectAll();
+						tf.selectAll();
 					}
 				});
 			}
 		});
-		comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMinimumSize().height));
-		comp.getDocument().addDocumentListener(new DocumentListener() {
-			boolean added = lastSeparator != null;
+		tf.setMaximumSize(new Dimension(Integer.MAX_VALUE, tf.getMinimumSize().height));
+		tf.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
@@ -262,30 +265,53 @@ public class AlignToColumnsForm {
 			}
 
 			public void add() {
-				if (!added) {
+				if (isNotEmpty(tf.getText()) && isLast(panel)) {
 					addTextField(null);
-					added = true;
 				}
 			}
 		});
-		textfields.add(comp);
+
+		JButton remove = new JButton("Remove");
+		remove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textfields.getComponentCount() == 1) {
+					tf.setText("");
+				} else {
+					textfields.remove(panel);
+					textfields.revalidate();
+					textfields.repaint();
+				}
+				preview();
+			}
+		});
+		panel.add(tf);
+		panel.add(remove);
+		textfields.add(panel);
 		textfields.revalidate();
 		textfields.repaint();
-		return comp;
+		return tf;
+	}
+
+	private boolean isLast(JPanel panel) {
+		return textfields.getComponent(textfields.getComponentCount() - 1) == panel;
 	}
 
 	private List<String> getSeparators() {
 		ArrayList<String> strings = new ArrayList<String>(textfields.getComponentCount());
 		Component[] components = textfields.getComponents();
 		for (Component component : components) {
-			JBTextField field = (JBTextField) component;
+			JPanel panel = (JPanel) component;
+			JBTextField field = (JBTextField) panel.getComponent(0);
 			strings.add(field.getText());
 		}
 		return strings;
 	}
 
 	public JComponent getPreferredFocusedComponent() {
-		return (JComponent) textfields.getComponent(0);
+		JComponent component = (JComponent) textfields.getComponent(0);
+		component = (JComponent) component.getComponent(0);
+		return component;
 
 	}
 
