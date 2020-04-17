@@ -22,6 +22,7 @@ Provides actions for text manipulation:
                <li>Toggle: lowercase words / camelCase</li>
                <li>Toggle: First word capitalized / camelCase</li>
                <li>Toggle: Capitalized Words / camelCase</li>
+               <li>To camelCase</li>
                <li>Capitalize</li>
                <li>To lower case</li>
             <li>To UPPER CASE</li>

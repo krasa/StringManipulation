@@ -241,6 +241,11 @@
                 </action>
                 <separator/>
 
+                <action id="StringManipulation.ToCamelCase"
+                        class="osmedile.intellij.stringmanip.styles.ToCamelCaseAction"
+                        text="To camelCase"
+                        description="To camelCase">
+                </action>
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                         class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
                         text="Capitalize"
@@ -485,6 +490,7 @@
                <li>Toggle: lowercase words / camelCase</li>
                <li>Toggle: First word capitalized / camelCase</li>
                <li>Toggle: Capitalized Words / camelCase</li>
+               <li>camelCase</li>
                <li>Capitalize</li>
                <li>To lower case</li>
                <li>To UPPER CASE</li>
@@ -590,6 +596,7 @@
 	        <ul>
                 <li>Improved: Align by column - added sorting</li>
                 <li>Added: Reversed custom switch action - for a shortcut use</li>
+                <li>Added: To camelCase action</li>
             </ul>
 	    </div>          
 	    <div>
