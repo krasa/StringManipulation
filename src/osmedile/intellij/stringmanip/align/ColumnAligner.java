@@ -161,8 +161,12 @@ public class ColumnAligner {
 	}
 
 	private void initDebug(List<ColumnAlignerLine> lines) {
-		ColumnAlignerLine line = lines.get(0);
-		debug = line.debugTokens();
+		for (ColumnAlignerLine line : lines) {
+			if (line.getOriginalString().length() > 0) {
+				debug = line.debugTokens();
+				break;
+			}
+		}
 	}
 
 	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines) {
