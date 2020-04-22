@@ -21,8 +21,8 @@ public enum Sort {
 			throw new RuntimeException();
 		}
 	}),
-	CASE_SENSITIVE_A_Z(new ComparatorFactory() {
-		public Comparator<SortLine> prototype(Comparator comparator) {
+	CASE_SENSITIVE_A_Z(new ComparatorAdapterFactory() {
+		public Comparator<SortLine> adapter(Comparator<String> comparator) {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
@@ -34,8 +34,8 @@ public enum Sort {
 			};
 		}
 	}),
-	CASE_SENSITIVE_Z_A(new ComparatorFactory() {
-		public Comparator<SortLine> prototype(Comparator comparator) {
+	CASE_SENSITIVE_Z_A(new ComparatorAdapterFactory() {
+		public Comparator<SortLine> adapter(Comparator<String> comparator) {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
@@ -48,8 +48,8 @@ public enum Sort {
 			};
 		}
 	}),
-	CASE_INSENSITIVE_A_Z(new ComparatorFactory() {
-		public Comparator<SortLine> prototype(Comparator comparator) {
+	CASE_INSENSITIVE_A_Z(new ComparatorAdapterFactory() {
+		public Comparator<SortLine> adapter(Comparator<String> comparator) {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
@@ -61,8 +61,8 @@ public enum Sort {
 			};
 		}
 	}),
-	CASE_INSENSITIVE_Z_A(new ComparatorFactory() {
-		public Comparator<SortLine> prototype(Comparator comparator) {
+	CASE_INSENSITIVE_Z_A(new ComparatorAdapterFactory() {
+		public Comparator<SortLine> adapter(Comparator<String> comparator) {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
@@ -104,13 +104,13 @@ public enum Sort {
 	});
 
 	private Comparator<SortLine> comparator;
-	private ComparatorFactory factory;
+	private ComparatorAdapterFactory factory;
 
 	Sort(Comparator<SortLine> comparator) {
 		this.comparator = comparator;
 	}
 
-	Sort(ComparatorFactory factory) {
+	Sort(ComparatorAdapterFactory factory) {
 		this.factory = factory;
 	}
 
@@ -130,9 +130,9 @@ public enum Sort {
 	}
 
 	public Comparator<SortLine> getComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
-		Comparator baseComparator = SortSettings.BaseComparator.getComparator(baseComparatorEnum, languageTag);
+		Comparator<String> baseComparator = SortSettings.BaseComparator.getComparator(baseComparatorEnum, languageTag);
 		if (factory != null) {
-			return factory.prototype(baseComparator);
+			return factory.adapter(baseComparator);
 		} else {
 			return comparator;
 		}
@@ -143,8 +143,8 @@ public enum Sort {
 		return comparator;
 	}
 
-	static abstract class ComparatorFactory {
-		abstract Comparator<SortLine> prototype(Comparator comparator);
+	static abstract class ComparatorAdapterFactory {
+		abstract Comparator<SortLine> adapter(Comparator<String> comparator);
 	}
 
 }
