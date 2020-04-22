@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.4.191.000.0</version>
+    <version>7.5.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -591,6 +591,12 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 7.5</h4>
+	        <ul>
+                <li>Fixed natural sorting, added default comparator</li>
+            </ul>
+	    </div>              
 	    <div>
 	        <h4>Version 7.4</h4>
 	        <ul>

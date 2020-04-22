@@ -46,9 +46,10 @@ public class SortTypeDialog {
 	private JLabel languageTagLabel;
 	private JLabel valid;
 	public JPanel donatePanel;
+	private JRadioButton comparatorDefault;
 
 	private void updateComponents() {
-		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorCollator}, insensitive, sensitive);
+		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 	}
@@ -88,6 +89,7 @@ public class SortTypeDialog {
 				jRadioButtons.add(preserveLeadingSpaces);
 				jRadioButtons.add(preserveTrailingSpecialCharacters);
 				jRadioButtons.add(trailingCharacters);
+				jRadioButtons.add(comparatorDefault);
 				jRadioButtons.add(comparatorNaturalOrder);
 				jRadioButtons.add(comparatorCollator);
 				jRadioButtons.add(languageTag);
@@ -152,6 +154,9 @@ public class SortTypeDialog {
 
 		switch (sortSettings.getBaseComparator()) {
 
+			case NORMAL:
+				comparatorDefault.setSelected(true);
+				break;
 			case NATURAL:
 				comparatorNaturalOrder.setSelected(true);
 				break;
@@ -226,7 +231,13 @@ public class SortTypeDialog {
 		sortSettings.setBlankLines(preserveBlank.isSelected() ? SortSettings.BlankLines.PRESERVE : SortSettings.BlankLines.REMOVE);
 		sortSettings.setIgnoreLeadingSpaces(ignoreLeadingSpaces.isSelected());
 		sortSettings.setPreserveLeadingSpaces(preserveLeadingSpaces.isSelected());
-		sortSettings.setBaseComparator(comparatorNaturalOrder.isSelected() ? SortSettings.BaseComparator.NATURAL : SortSettings.BaseComparator.LOCALE_COLLATOR);
+		if (comparatorNaturalOrder.isSelected()) {
+			sortSettings.setBaseComparator(SortSettings.BaseComparator.NATURAL);
+		} else if (comparatorCollator.isSelected()) {
+			sortSettings.setBaseComparator(SortSettings.BaseComparator.LOCALE_COLLATOR);
+		} else {
+			sortSettings.setBaseComparator(SortSettings.BaseComparator.NORMAL);
+		}
 		sortSettings.setPreserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected());
 		sortSettings.setTrailingChars(trailingCharacters.getText());
 		sortSettings.setCollatorLanguageTag(languageTag.getText());

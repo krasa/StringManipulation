@@ -26,6 +26,9 @@ public enum Sort {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
+					if (comparator == null) {
+						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
+					}
 					return comparator.compare(o1.getTextForComparison(), o2.getTextForComparison());
 				}
 			};
@@ -36,6 +39,10 @@ public enum Sort {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
+					if (comparator == null) {
+						return o2.getTextForComparison().compareTo(o1.getTextForComparison());
+					}
+
 					return comparator.compare(o2.getTextForComparison(), o1.getTextForComparison());
 				}
 			};
@@ -46,6 +53,9 @@ public enum Sort {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
+					if (comparator == null) {
+						return o1.getTextForComparison().compareToIgnoreCase(o2.getTextForComparison());
+					}
 					return comparator.compare(o1.getTextForComparison().toLowerCase(), o2.getTextForComparison().toLowerCase());
 				}
 			};
@@ -56,6 +66,9 @@ public enum Sort {
 			return new Comparator<SortLine>() {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
+					if (comparator == null) {
+						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
+					}
 					return comparator.compare(o2.getTextForComparison().toLowerCase(), o1.getTextForComparison().toLowerCase());
 				}
 			};
@@ -133,4 +146,5 @@ public enum Sort {
 	static abstract class ComparatorFactory {
 		abstract Comparator<SortLine> prototype(Comparator comparator);
 	}
+
 }

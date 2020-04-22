@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@Deprecated
 public class NaturalOrderComparator implements Comparator {
 	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();
 

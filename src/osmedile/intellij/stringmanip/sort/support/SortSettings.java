@@ -144,20 +144,18 @@ public class SortSettings {
 	}
 
 	public static enum BaseComparator {
-		NATURAL(new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator()),
-		LOCALE_COLLATOR(Collator.getInstance());
-
-		private Comparator comparator;
-
-		BaseComparator(Comparator comparator) {
-			this.comparator = comparator;
-		}
+		NORMAL,
+		NATURAL,
+		LOCALE_COLLATOR;
 
 		public static Comparator getComparator(BaseComparator baseComparator, String languageTag) {
 			Comparator comparator;
 			switch (baseComparator) {
+				case NORMAL:
+					comparator = null;
+					break;
 				case NATURAL:
-					comparator = baseComparator.comparator;
+					comparator = NaturalOrderComparator.COMPARATOR;
 					break;
 				case LOCALE_COLLATOR:
 					comparator = Collator.getInstance(Locale.forLanguageTag(languageTag));
