@@ -67,7 +67,7 @@ public enum Sort {
 				@Override
 				public int compare(SortLine o1, SortLine o2) {
 					if (comparator == null) {
-						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
+						return o2.getTextForComparison().compareToIgnoreCase(o1.getTextForComparison());
 					}
 					return comparator.compare(o2.getTextForComparison().toLowerCase(), o1.getTextForComparison().toLowerCase());
 				}
