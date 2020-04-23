@@ -1,10 +1,12 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator;
+
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.text.Collator;
+import java.text.ParseException;
+import java.text.RuleBasedCollator;
+import java.util.*;
 
 public enum Sort {
 
@@ -124,13 +126,13 @@ public enum Sort {
 				Collections.reverse(sortedLines);
 				break;
 			default:
-				sortedLines.sort(getComparator(baseComparator, languageTag));
+				sortedLines.sort(getSortLineComparator(baseComparator, languageTag));
 		}
 		return sortedLines;
 	}
 
-	public Comparator<SortLine> getComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
-		Comparator<String> baseComparator = SortSettings.BaseComparator.getComparator(baseComparatorEnum, languageTag);
+	public Comparator<SortLine> getSortLineComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
+		Comparator<String> baseComparator = getStringComparator(baseComparatorEnum, languageTag);
 		if (factory != null) {
 			return factory.adapter(baseComparator);
 		} else {
@@ -138,8 +140,29 @@ public enum Sort {
 		}
 	}
 
+	public static Comparator<String> getStringComparator(SortSettings.BaseComparator baseComparator, String languageTag) {
+		Comparator comparator;
+		switch (baseComparator) {
+			case NORMAL:
+				comparator = null;
+				break;
+			case NATURAL:
+				comparator = new NaturalOrderComparator();
+				break;
+			case LOCALE_COLLATOR:
+				try {
+					Collator instance = Collator.getInstance(Locale.forLanguageTag(languageTag));
+					String rules = ((RuleBasedCollator) instance).getRules();
+					RuleBasedCollator correctedCollator = new RuleBasedCollator(rules.replaceAll("<'\u005f'", "<' '<'\u005f'"));
+					comparator = correctedCollator;
+				} catch (ParseException e) {
+					throw new RuntimeException(e);
+				}
+				break;
+			default:
+				throw new RuntimeException("invalid enum");
+		}
 
-	public Comparator<SortLine> getComparator() {
 		return comparator;
 	}
 

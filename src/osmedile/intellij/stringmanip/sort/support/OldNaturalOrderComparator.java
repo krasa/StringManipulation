@@ -21,13 +21,9 @@
  */
 package osmedile.intellij.stringmanip.sort.support;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class NaturalOrderComparator implements Comparator {
-	final static Comparator<String> COMPARATOR = new NaturalOrderComparator();
+public class OldNaturalOrderComparator implements Comparator {
 
 	int compareRight(String a, String b) {
 		int bias = 0;
@@ -170,10 +166,60 @@ public class NaturalOrderComparator implements Comparator {
 		List scrambled = Arrays.asList(strings);
 		Collections.shuffle(scrambled);
 
-		System.out.println("Scrambled: " + scrambled);
+//		System.out.println("Scrambled: " + scrambled);
 
-		Collections.sort(scrambled, new NaturalOrderComparator());
+		Collections.sort(scrambled, new OldNaturalOrderComparator());
 
 		System.out.println("Sorted: " + scrambled);
+
+		shuffle3000(scrambled);
+
+		compareSymmetric();
+
+		floatsWithCommas();
+		numbersWithSigns();
+
+	}
+
+	private static void numbersWithSigns() {
+		List<String> unSorted = Arrays.asList("+1", "+2", "+3", "+01", "+02", "+03", "0", "1", "2", "-0", "-1", "-2", "-3", "-01", "-02", "-03");
+
+		System.out.println("Unsorted: " + unSorted);
+
+		unSorted.sort(new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator());
+
+		System.out.println("Sorted: " + unSorted);
+
+	}
+
+	static void shuffle3000(List<? extends Object> scrambled) {
+		Collections.shuffle(scrambled, new Random(3000));
+		Collections.sort(scrambled, new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator());
+
+		System.out.println("Sorted: " + scrambled);
+	}
+
+	static void compareSymmetric() {
+		osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator naturalOrderComparator = new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator();
+
+		int compare1 = naturalOrderComparator.compare("1-2", "1-02");
+		int compare2 = naturalOrderComparator.compare("1-02", "1-2");
+
+		System.out.println(compare1 + " == " + compare2);
+
+		compare1 = naturalOrderComparator.compare("pic 5", "pic05");
+		compare2 = naturalOrderComparator.compare("pic05", "pic 5");
+
+		System.out.println(compare1 + " == " + compare2);
+	}
+
+	static void floatsWithCommas() {
+		List<String> unSorted = Arrays.asList("0.9", "1.0c", "1.2", "1.3", "0.6", "1.1", "0.7", "0.3", "1.0b", "1.0", "0.8");
+
+		System.out.println("Unsorted: " + unSorted);
+
+		unSorted.sort(new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator());
+
+		System.out.println("Sorted: " + unSorted);
 	}
 }

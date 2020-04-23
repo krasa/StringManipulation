@@ -2,8 +2,6 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import com.intellij.openapi.diagnostic.Logger;
 
-import java.text.Collator;
-import java.util.Comparator;
 import java.util.Locale;
 
 public class SortSettings {
@@ -147,25 +145,6 @@ public class SortSettings {
 		NORMAL,
 		NATURAL,
 		LOCALE_COLLATOR;
-
-		public static Comparator getComparator(BaseComparator baseComparator, String languageTag) {
-			Comparator comparator;
-			switch (baseComparator) {
-				case NORMAL:
-					comparator = null;
-					break;
-				case NATURAL:
-					comparator = NaturalOrderComparator.COMPARATOR;
-					break;
-				case LOCALE_COLLATOR:
-					comparator = Collator.getInstance(Locale.forLanguageTag(languageTag));
-					break;
-				default:
-					throw new RuntimeException("invalid enum");
-			}
-
-			return comparator;
-		}
 	}
 
 	@Override

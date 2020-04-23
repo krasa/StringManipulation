@@ -5,6 +5,9 @@ package osmedile.intellij.stringmanip.sort.support.Paour;
  */
 
 /*
+ NaturalOrderComparator.java -- removed ignoring whitespaces 
+ Copyright (C) 2020 by Vojtech Krasa <vojta.krasa@gmail.com>
+ 
  NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
  Copyright (C) 2003 by Pierre-Luc Paour <natorder@paour.com>
 
@@ -81,7 +84,7 @@ public class NaturalOrderComparator implements Comparator {
 			cb = charAt(b, ib);
 
 			// skip over leading spaces or zeros
-			while (Character.isSpaceChar(ca) || ca == '0') {
+			while (ca == '0') {
 				if (ca == '0') {
 					nza++;
 				} else {
@@ -92,7 +95,7 @@ public class NaturalOrderComparator implements Comparator {
 				ca = charAt(a, ++ia);
 			}
 
-			while (Character.isSpaceChar(cb) || cb == '0') {
+			while (cb == '0') {
 				if (cb == '0') {
 					nzb++;
 				} else {

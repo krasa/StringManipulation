@@ -92,6 +92,7 @@
             </constraints>
             <properties>
               <text value="Collator "/>
+              <toolTipText value="Corrected Collator which handles spaces"/>
             </properties>
           </component>
           <component id="f8cce" class="javax.swing.JSeparator">

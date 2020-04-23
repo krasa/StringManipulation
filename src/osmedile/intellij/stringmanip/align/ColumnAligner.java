@@ -200,7 +200,7 @@ public class ColumnAligner {
 			} else {
 				linesToSort = lines;
 			}
-			Comparator<SortLine> comparator = sortSettings.getSortType().getComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+			Comparator<SortLine> comparator = sortSettings.getSortType().getSortLineComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
 
 			linesToSort.sort(new Comparator<ColumnAlignerLine>() {
 				@Override
