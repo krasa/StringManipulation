@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator;
 
 import java.math.BigInteger;
 import java.text.Collator;
@@ -147,13 +146,20 @@ public enum Sort {
 				comparator = null;
 				break;
 			case NATURAL:
-				comparator = new NaturalOrderComparator();
+				comparator = new osmedile.intellij.stringmanip.sort.support.Paour.NaturalOrderComparator();
 				break;
 			case LOCALE_COLLATOR:
 				try {
 					Collator instance = Collator.getInstance(Locale.forLanguageTag(languageTag));
 					String rules = ((RuleBasedCollator) instance).getRules();
-					RuleBasedCollator correctedCollator = new RuleBasedCollator(rules.replaceAll("<'\u005f'", "<' '<'\u005f'"));
+					//0x0009,  9	Horizontal tab	HT
+					//0x000B,  11	Vertical tab	VT
+					//0x000C,  12	Form feed	FF
+					//0x000D,  13	Carriage return	CR
+					//0x002D,  45	Hyphen-minus	0014
+
+					String correctedRules = rules.replaceAll("<'\u005f'", "<'" + (char) 0x0009 + "'<'" + (char) 0x000B + "'<'" + (char) 0x000C + "'<'" + (char) 0x000D + "'<'" + (char) 0x002D + "'<' '<'\u005f'");
+					RuleBasedCollator correctedCollator = new RuleBasedCollator(correctedRules);
 					comparator = correctedCollator;
 				} catch (ParseException e) {
 					throw new RuntimeException(e);

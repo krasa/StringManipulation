@@ -137,6 +137,21 @@ public class SortSettings {
 		this.preserveTrailingSpecialCharacters = preserveTrailingSpecialCharacters;
 	}
 
+	public SortSettings collatorLanguageTag(String collatorLanguageTag) {
+		this.collatorLanguageTag = collatorLanguageTag;
+		return this;
+	}
+
+	public SortSettings baseComparator(BaseComparator baseComparator) {
+		this.baseComparator = baseComparator;
+		return this;
+	}
+
+	public SortSettings blankLines(BlankLines blankLines) {
+		this.blankLines = blankLines;
+		return this;
+	}
+
 	public static enum BlankLines {
 		PRESERVE, REMOVE
 	}
