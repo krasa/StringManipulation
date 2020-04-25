@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.5.191.000.1</version>
+    <version>7.6.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -423,6 +423,10 @@
                     class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
                     description="Depending on what is selected or how many carets there are">
             </action>
+            <action id="osmedile.intellij.stringmanip.swap.Reverse"
+                    class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Letters"
+                    description="Reverse Letters: 'abc' -> 'cba'">
+            </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
                     class="osmedile.intellij.stringmanip.swap.SwapQuoteAction"
                     text="Wrap or Swap Between &quot; and ' and `"
@@ -572,6 +576,7 @@
 		<p>
             Other:
 			<ul>
+				<li>Reverse Letters</li>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
 				<li>Wrap or swap double quotes to single quotes to backticks</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
@@ -591,6 +596,13 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 7.6</h4>
+	        <ul>
+                <li>Fixed Collator</li>
+                <li>Added: Reverse Letters</li>
+            </ul>
+	    </div>      
 	    <div>
 	        <h4>Version 7.5</h4>
 	        <ul>

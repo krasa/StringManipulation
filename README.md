@@ -103,8 +103,9 @@ Provides actions for text manipulation:
     <p>
         Other:
         <ul>
+            <li>Reverse Letters</li>
             <li>Swap Characters/Selections/Lines/Tokens</li>
-				<li>Wrap or swap double quotes to single quotes to backticks</li>
+            <li>Wrap or swap double quotes to single quotes to backticks</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
         </ul>
     </p>
