@@ -152,13 +152,20 @@ public enum Sort {
 				try {
 					Collator instance = Collator.getInstance(Locale.forLanguageTag(languageTag));
 					String rules = ((RuleBasedCollator) instance).getRules();
-					//0x0009,  9	Horizontal tab	HT
-					//0x000B,  11	Vertical tab	VT
-					//0x000C,  12	Form feed	FF
-					//0x000D,  13	Carriage return	CR
-					//0x002D,  45	Hyphen-minus	0014
+					Character[] chars = new Character[]{
+						(char) 0x0009,//  9	Horizontal tab	HT
+						(char) 0x000B,//  11	Vertical tab	VT
+						(char) 0x000C,//  12	Form feed	FF
+						(char) 0x000D,//  13	Carriage return	CR
+						(char) 0x002D,//  45	Hyphen-minus	0014
+						(char) ' ',//  
+					};
+					StringBuilder sb = new StringBuilder();
+					for (Character aChar : chars) {
+						sb.append("<'").append(aChar).append("'");
+					}
 
-					String correctedRules = rules.replaceAll("<'\u005f'", "<'" + (char) 0x0009 + "'<'" + (char) 0x000B + "'<'" + (char) 0x000C + "'<'" + (char) 0x000D + "'<'" + (char) 0x002D + "'<' '<'\u005f'");
+					String correctedRules = rules.replaceAll("<'\u005f'", sb.toString() + "<'\u005f'");
 					RuleBasedCollator correctedCollator = new RuleBasedCollator(correctedRules);
 					comparator = correctedCollator;
 				} catch (ParseException e) {
