@@ -6,3 +6,4 @@ out/
                                                       
 build/
 .gradle
+/intellij-plugin/MavenShade/target/
