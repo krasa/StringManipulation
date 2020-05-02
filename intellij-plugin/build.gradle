@@ -12,10 +12,11 @@ sourceSets {
         resources.exclude '**/*.form'
     }
 }
+
 intellij {
     version System.getenv().getOrDefault('IDEA_VERSION', ideaVersion)
     type ideaType
-    pluginName pluginName
+    pluginName pluginId
     buildSearchableOptions { enabled = false }
     downloadSources Boolean.valueOf(sources)
     sameSinceUntilBuild Boolean.valueOf(isEAP)
