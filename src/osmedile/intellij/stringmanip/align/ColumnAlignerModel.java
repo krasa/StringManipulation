@@ -26,7 +26,6 @@ public class ColumnAlignerModel {
 	private String maxSeparatorsPerLine;
 
 	public ColumnAlignerModel() {
-		System.err.println();
 	}
 
 	public ColumnAlignerModel(String... separator) {

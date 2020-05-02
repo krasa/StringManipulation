@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.6.191.000.0</version>
+    <version>7.7.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -596,6 +596,12 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 7.7</h4>
+	        <ul>
+                <li>IntelliJ 2020.2 compatibility</li>
+            </ul>
+	    </div>              
 	    <div>
 	        <h4>Version 7.6</h4>
 	        <ul>

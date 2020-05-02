@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip.styles.custom;
 
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
-import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.styles.AbstractCaseConvertingAction;
 import osmedile.intellij.stringmanip.styles.Style;
 
@@ -24,8 +23,7 @@ public class CustomAction extends AbstractCaseConvertingAction {
 		getTemplatePresentation().setDescription(description);
 
 		if (setupHandler) {
-			MyEditorWriteActionHandler handler = (MyEditorWriteActionHandler) getHandler();
-			handler.setCustomActionModel(model);
+			myHandler.setCustomActionModel(model);
 		}
 	}
 

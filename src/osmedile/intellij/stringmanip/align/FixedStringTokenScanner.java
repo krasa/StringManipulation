@@ -54,9 +54,6 @@ public final class FixedStringTokenScanner {
 						substring = StringUtil.trimLeading(substring, ' ');
 					}
 					result.add(substring);
-					if (otherContent.length() > 0) {
-						System.err.println();
-					}
 					return result;
 				}
 				scanIx += matchFixedStringOrAppendToOther();

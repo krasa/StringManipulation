@@ -38,7 +38,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
 
 	public PluginPersistentStateComponent() {
-		System.err.println();
 	}
 
 	public int getLastSelectedAction() {

@@ -17,7 +17,8 @@ import shaded.org.apache.commons.lang3.StringUtils;
 public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 	protected final boolean setupHandler;
-	
+	protected MyEditorWriteActionHandler<T> myHandler = null;
+
 	protected AbstractStringManipAction() {
 		this(true);
 	}
@@ -25,7 +26,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	protected AbstractStringManipAction(boolean setupHandler) {
 		super(null);
 		if (setupHandler) {
-			this.setupHandler(new MyEditorWriteActionHandler<T>(getActionClass()) {
+			this.setupHandler(myHandler = new MyEditorWriteActionHandler<T>(getActionClass()) {
 				@NotNull
 				@Override
 				protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {
