@@ -1,13 +1,40 @@
 plugins {
-    id 'java'
+    id("maven-publish")
 }
-
-jar.archiveName = "StringManipulation-utils.jar"
-        
-repositories {
-    mavenCentral()
-}
+archivesBaseName = 'utils'
+version = utilsVersion
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/org.jetbrains/annotations
+    implementation group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
+}
+
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/krasa/StringManipulation")
+            credentials {
+                username = "krasa"
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+            pom {
+                name = 'StringManipulation-Utils'
+                description = 'StringManipulation IntelliJ plugin utils'
+                url = 'https://github.com/krasa/StringManipulation'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
 }

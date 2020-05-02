@@ -1,0 +1,50 @@
+plugins {
+    id 'org.jetbrains.intellij' version "0.4.18"
+}
+
+apply plugin: 'org.jetbrains.intellij'
+
+test.enabled = false
+
+sourceSets {
+    main {
+        resources.srcDirs 'src/main/java', 'src/main/resources'
+        resources.exclude '**/*.form'
+    }
+}
+intellij {
+    version System.getenv().getOrDefault('IDEA_VERSION', ideaVersion)
+    type ideaType
+    pluginName pluginName
+    buildSearchableOptions { enabled = false }
+    downloadSources Boolean.valueOf(sources)
+    sameSinceUntilBuild Boolean.valueOf(isEAP)
+    alternativeIdePath idePath
+    patchPluginXml {
+        sinceBuild pluginSinceBuild
+        untilBuild pluginUntilBuild
+    }
+
+    plugins 'java'
+
+    publishPlugin {
+        username publishUsername
+        token publishToken
+        channels publishChannel
+    }
+}                        
+   
+dependencies {
+    // https://mvnrepository.com/artifact/uk.com.robust-it/cloning
+    implementation group: 'uk.com.robust-it', name: 'cloning', version: '1.9.12'
+    implementation   name: 'shade'
+    implementation project(":utils") 
+}
+
+
+repositories {
+    flatDir {
+        dirs '../jars'
+    }
+}
+

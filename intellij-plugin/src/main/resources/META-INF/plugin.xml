@@ -1,0 +1,663 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin url="https://github.com/krasa/StringManipulation">
+    <name>String Manipulation</name>
+    <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
+
+    <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
+    <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
+    <!--branch 139 - IntelliJ IDEA 14, WebStorm 9, PyCharm 4, PhpStorm 8, RubyMine 7-->
+    <!--branch 135 - IntelliJ IDEA 13.1, WebStorm 8-->
+    <!--branch 133 - IntelliJ IDEA 13, PyCharm 3.1, WebStorm 7, PhpStorm 7-->
+    <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
+
+    <depends>com.intellij.modules.platform</depends>
+
+
+    <actions>
+        <action id="com.github.krasa.stringmanipulation.intellij.SwitchCasePopup"
+                class="com.github.krasa.stringmanipulation.intellij.SwitchCasePopupAction"
+                text="Switch Case..."
+                description="Popup Switch Case String Manipulation ..."
+                icon="/osmedile/intellij/stringmanip/edit.png">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+        </action>
+
+        <action id="com.github.krasa.stringmanipulation.intellij.PopupChoiceAction"
+                class="com.github.krasa.stringmanipulation.intellij.PopupChoiceAction"
+                text="Popup String Manipulation ..."
+                description="Popup String Manipulation ..."
+                icon="/osmedile/intellij/stringmanip/edit.png">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
+        </action>
+
+        <group id="StringManipulation.Group.Main" text="String Manipulation"
+               description="Group of String manipulation"
+               popup="true"
+               icon="/osmedile/intellij/stringmanip/edit.png"
+        >
+            <add-to-group group-id="EditMenu" anchor="last"/>
+
+            <action id="com.github.krasa.stringmanipulation.intellij.RepeatAction" class="com.github.krasa.stringmanipulation.intellij.RepeatAction"
+                    text="Repeat Last Action"/>
+            <separator/>
+
+            <group text="Escape/Unescape..."
+                   description="Group of String manipulation escape actions"
+                   popup="true">
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeJavaAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeJavaAction"
+                        text="Escape Java"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeJava">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapeJavaAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapeJavaAction"
+                        text="Unescape Java"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeJava">
+                </action>
+
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeJavaScriptAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeJavaScriptAction"
+                        text="Escape JavaScript"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeEcmaScript">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapeJavaScriptAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapeJavaScriptAction"
+                        text="Unescape JavaScript"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeEcmaScript">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeHtmlAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeHtmlAction"
+                        text="Escape HTML"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeHtml4">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapeHtmlAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapeHtmlAction"
+                        text="Unescape HTML"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeHtml4">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeSQLAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeSQLAction"
+                        text="Escape SQL"
+                >
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeJsonAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeJsonAction"
+                        text="Escape JSON"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeJson">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapeJsonAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapeJsonAction"
+                        text="Unescape JSON"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeJson">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapeXMLAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapeXMLAction"
+                        text="Escape XML"
+                        description="org.apache.commons.text.StringEscapeUtils#escapeXml11">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapeXMLAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapeXMLAction"
+                        text="Unescape XML"
+                        description="org.apache.commons.text.StringEscapeUtils#unescapeXml">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EscapePHPAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.EscapePHPAction"
+                        text="Escape PHP"
+                >
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnescapePHPAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnescapePHPAction"
+                        text="Unescape PHP"
+                >
+                </action>
+                <action id="StringManipulation.DiacriticsToAsciiAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.DiacriticsToAsciiAction"
+                        text="Convert Diacritics (Accents) to ASCII"
+                        description="Convert diacritics (accents) to ASCII">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.NonAsciiToUnicodeEscapedAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.NonAsciiToUnicodeEscapedAction"
+                        text="Escape Non-ASCII to Unicode"
+                        description="Escape non-ASCII to Unicode">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.UnicodeEscapedToStringAction"
+                        class="com.github.krasa.stringmanipulation.intellij.escaping.UnicodeEscapedToStringAction"
+                        text="Escaped Unicode to String"
+                        description="Escaped unicode to string">
+                </action>
+            </group>
+
+            <group text="Encode/Decode..."
+                   description="Group of String manipulation encode/decode actions"
+                   popup="true">
+                <action id="com.github.krasa.stringmanipulation.intellij.EncodeMd5Hex16Action"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.EncodeMd5Hex16Action"
+                        text="Encode to MD5 Hex16"
+                        description="Encode to MD5 Hex16">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EncodeBase64Action"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.EncodeBase64Action"
+                        text="Encode to Base64"
+                        description="Encode to Base 64">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.DecodeBase64Action"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.DecodeBase64Action"
+                        text="Decode Base64"
+                        description="Decode Base 64">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.EncodeHexAction"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.EncodeHexAction"
+                        text="Encode to Hex"
+                        description="Encode to Hex">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.DecodeHexAction"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.DecodeHexAction"
+                        text="Decode Hex"
+                        description="Decode hex">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.URLEncodeAction"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.URLEncodeAction"
+                        text="Encode URL"
+                        description="Encode URL (by java.net.URLEncoder)">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.URLDecodeAction"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.URLDecodeAction"
+                        text="Decode URL"
+                        description="Decode URL (by java.net.URLDecoder)">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.encoding.URLEncodeRFC3986"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.URLEncodeRFC3986Action"
+                        text="Encode URL (RFC 3986)"
+                        description="Encode URL (RFC 3986 - space character as %20 instead of +)">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.encoding.URLDecodeRFC3986"
+                        class="com.github.krasa.stringmanipulation.intellij.encoding.URLDecodeRFC3986Action"
+                        text="Decode URL (RFC 3986)"
+                        description="Decode URL (RFC 3986 - space character as %20 instead of +)">
+                </action>
+            </group>
+
+            <separator/>
+
+            <group id="StringManipulation.Group.SwitchCase" text="Switch Case..."
+                   description="Group of String manipulation Switch case actions"
+                   popup="true">
+                <!--                dynamically registered-->
+                <!--                <action id="StringManipulation.SwitchStyleAction"-->
+                <!--                        class="com.github.krasa.stringmanipulation.intellij.styles.SwitchStyleAction"-->
+                <!--                        text="Switch case"-->
+                <!--                        description="Switch/Toggle case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase,  Normal sentence, Words Capitalized)">-->
+                <!--                </action>-->
+                <separator/>
+                <action id="com.github.krasa.stringmanipulation.intellij.WordsAndCamelToConstantStyleCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToScreamingSnakeCaseAction"
+                        text="SCREAMING__SNAKE__CASE / camelCase"
+                        description="Toggle: SCREAMING_SNAKE_CASE / camelCase">
+                </action>
+                <action id="StringManipulation.ToSnakeCaseOrCamelCase"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToSnakeCaseAction"
+                        text="snake__case / camelCase"
+                        description="Toggle: snake_case / camelCase">
+                </action>
+                <action id="StringManipulation.ToHyphenCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToHyphenCaseAction"
+                        text="kebab-case / snake__case"
+                        description="Toggle: kebab-case / snake_case">
+                </action>
+                <action id="StringManipulation.ToHyphenCaseOrCamelCase"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.CamelCaseToHyphenLowerCaseAction"
+                        text="kebab-case / camelCase"
+                        description="Toggle: kebab-case / camelCase">
+                </action>
+                <action id="StringManipulation.ToDotStyleAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToDotStyleAction"
+                        text="dot.case / camelCase"
+                        description="Toggle: dot.case / camelCase">
+                </action>
+                <action id="StringManipulation.ToPascalCaseOrCamelCase"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToPascalCaseAction"
+                        text="PascalCase / camelCase"
+                        description="Toggle: PascalCase / camelCase">
+                </action>
+                <separator/>
+                <action id="com.github.krasa.stringmanipulation.intellij.styles.ToCamelCaseOrToWordLowercaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToWordLowercaseOrToCamelCaseAction"
+                        text="lower case words / camelCase"
+                        description="Toggle: lower case words / camelCase">
+                </action>
+                <action id="StringManipulation.ToSentenceCaseOrCamelCase"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToSentenceCaseOrCamelCaseAction"
+                        text="First word capitalized / camelCase"
+                        description="Toggle: First word capitalized / camelCase">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.ToCamelCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToWordCapitalizedOrCamelCaseAction"
+                        text="Capitalized Words / camelCase"
+                        description="Toggle: Capitalized Words / camelCase">
+                </action>
+                <separator/>
+
+                <action id="StringManipulation.ToCamelCase"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToCamelCaseAction"
+                        text="To camelCase"
+                        description="To camelCase">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.WordsCapitalizeAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.WordsCapitalizeAction"
+                        text="Capitalize"
+                        description="Capitalize using apache-commons WordUtils#capitalizeFully">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.ToLowerCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToLowerCaseAction"
+                        text="To lower case"
+                        description="To Lower Case">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.ToUpperCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.ToUpperCaseAction"
+                        text="To UPPER CASE"
+                        description="To Upper Case">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.SwapCaseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.styles.InvertCaseAction"
+                        text="Invert case"
+                        description="Invert Case -> iNVERT cASE">
+                </action>
+
+                <separator/>
+                <action id="StringManipulation.OpenSettingsAction"
+                        class="com.github.krasa.stringmanipulation.intellij.config.OpenSettingsAction"
+                        text="Open Settings..."/>
+            </group>
+
+            <separator/>
+
+            <group text="Increment/Decrement..."
+                   description="Increment, decrement, create sequence, unique numbers"
+                   popup="true">
+                <action id="com.github.krasa.stringmanipulation.intellij.DecrementAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.DecrementAction"
+                        text="Decrement"
+                        description="Decrement numbers inside selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.IncrementAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.IncrementAction"
+                        text="Increment"
+                        description="Increment numbers inside selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.DuplicateAndDecrementAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.DuplicateAndDecrementAction"
+                        text="Duplicate and Decrement"
+                        description="Duplicate and decrement numbers inside selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.DuplicateAndIncrementAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.DuplicateAndIncrementAction"
+                        text="Duplicate and Increment"
+                        description="Duplicate and increment numbers inside selected text">
+                </action>
+                <action id="StringManipulation.CreateSequenceAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.CreateSequenceAction"
+                        text="Create Sequence"
+                        description="Keep first number, replace all other by incrementing">
+                </action>
+                <action id="StringManipulation.IncrementDuplicateNumbersAction"
+                        class="com.github.krasa.stringmanipulation.intellij.increment.IncrementDuplicateNumbersAction"
+                        text="Increment Duplicates"
+                        description="Increment duplicate numbers">
+                </action>
+            </group>
+
+            <group text="Sort..."
+                   description="Sort lines, delimited text"
+                   popup="true">
+                <action id="StringManipulation.Sort"
+                        class="com.github.krasa.stringmanipulation.intellij.sort.SortAction"
+                        text="Sort Lines"
+                        description="Universal lines sort with all kinds of features">
+                </action>
+                <action id="StringManipulation.SortLinesBySubSelectionAction"
+                        class="com.github.krasa.stringmanipulation.intellij.sort.SortLinesBySubSelectionAction"
+                        text="Sort Lines by SubSelection"
+                        description="Sort lines by subselection - only for multi carets">
+                </action>
+                <action id="StringManipulation.AlignToColumns"
+                        class="com.github.krasa.stringmanipulation.intellij.align.AlignToColumnsAction"
+                        text="Align/Sort Lines by Columns"
+                        description="Format selected text to columns/table by a chosen separator/delimiter">
+                </action>
+                <action id="StringManipulation.ReverseAction"
+                        class="com.github.krasa.stringmanipulation.intellij.sort.ReverseLinesAction"
+                        text="Reverse Lines"
+                        description="Reverse order of lines">
+                </action>
+                <action id="StringManipulation.ShuffleLinesAction"
+                        class="com.github.krasa.stringmanipulation.intellij.sort.ShuffleLinesAction"
+                        text="Shuffle Lines"
+                        description="Shuffle lines">
+                </action>
+            </group>
+
+            <group text="Filter/Remove/Trim..."
+                   description="Filter/Remove/Trim..."
+                   popup="true">
+                <action id="com.github.krasa.stringmanipulation.intellij.GrepAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.GrepAction"
+                        text="Grep"
+                        description="Grep on selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.InvertedGrepAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.InvertedGrepAction"
+                        text="Inverted Grep"
+                        description="Inverted Grep on selected text">
+                </action>
+                <separator/>
+                <action id="StringManipulation.RemoveDuplicateLines"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.RemoveDuplicateLinesAction"
+                        text="Remove Duplicate Lines"
+                        description="Remove duplicate lines in selected text or lines within multiple selections">
+                </action>
+                <action id="StringManipulation.KeepOnlyDuplicateLines"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.KeepOnlyDuplicateLinesAction"
+                        text="Keep Only Duplicate Lines"
+                        description="Remove non-duplicate lines in selected text or lines within multiple selections">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.RemoveEmptyLinesAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.RemoveEmptyLinesAction"
+                        text="Remove Empty Lines"
+                        description="Remove empty lines in selected text">
+                </action>
+                <action id="StringManipulation.RemoveNewLinesAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.RemoveNewLinesAction"
+                        text="Remove All Newlines"
+                        description="Remove all line breaks in selected text">
+                </action>
+                <separator/>
+
+                <action id="com.github.krasa.stringmanipulation.intellij.TrimAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.TrimAction"
+                        text="Trim"
+                        description="Trim selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.TrimAllSpacesAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.TrimAllSpacesAction"
+                        text="Trim All Spaces"
+                        description="Trim all spaces selected text">
+                </action>
+                <action id="com.github.krasa.stringmanipulation.intellij.RemoveAllSpacesAction"
+                        class="com.github.krasa.stringmanipulation.intellij.filter.RemoveAllSpacesAction"
+                        text="Remove All Spaces"
+                        description="Remove all spaces in selected text">
+                </action>
+            </group>
+
+            <group text="Align..."
+                   description="Text and columns alignment"
+                   popup="true">
+                <reference ref="StringManipulation.AlignToColumns"/>
+                <action id="StringManipulation.AlignLeftAction"
+                        class="com.github.krasa.stringmanipulation.intellij.align.AlignLeftAction"
+                        text="Align Left"
+                        description="Align left">
+                </action>
+                <action id="StringManipulation.AlignCenterAction"
+                        class="com.github.krasa.stringmanipulation.intellij.align.AlignCenterAction"
+                        text="Align Center"
+                        description="Align center">
+                </action>
+                <action id="StringManipulation.AlignRightAction"
+                        class="com.github.krasa.stringmanipulation.intellij.align.AlignRightAction"
+                        text="Align Right"
+                        description="Align right">
+                </action>
+            </group>
+
+            <separator/>
+            <!--                       TODO uncomment when we get more actions  -->
+            <!--            <group text="Transform..."-->
+            <!--                   description="Group of String manipulation transform actions"-->
+            <!--                   popup="true">  -->
+            <action id="com.github.krasa.stringmanipulation.intellij.swap.SwapAction"
+                    class="com.github.krasa.stringmanipulation.intellij.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
+                    description="Depending on what is selected or how many carets there are">
+            </action>
+            <action id="com.github.krasa.stringmanipulation.intellij.swap.Reverse"
+                    class="com.github.krasa.stringmanipulation.intellij.swap.ReverseAction" text="Reverse Letters"
+                    description="Reverse Letters: 'abc' -> 'cba'">
+            </action>
+            <action id="com.github.krasa.stringmanipulation.intellij.swap.SwapQuote"
+                    class="com.github.krasa.stringmanipulation.intellij.swap.SwapQuoteAction"
+                    text="Wrap or Swap Between &quot; and ' and `"
+                    description="Swap double quote, single quote, backtick (or wrap if none present)">
+            </action>
+            <action id="StringManipulation.SwitchFilePathSeparators"
+                    class="com.github.krasa.stringmanipulation.intellij.SwitchFilePathSeparators"
+                    text="Switch File Path Separators: Windows&lt;-&gt;UNIX"
+                    description="Switch file path separators: Windows&lt;-&gt;UNIX">
+            </action>
+            <!--            <action id="com.github.krasa.stringmanipulation.intellij.transform.DelimitedListAction"-->
+            <!--                    class="com.github.krasa.stringmanipulation.intellij.transform.DelimitedListAction"-->
+            <!--                    text="Transform Delimited List"-->
+            <!--                    description="Delimited list - e.g between CSV and array">-->
+            <!--            </action>-->
+            <!--            </group>-->
+
+        </group>
+
+
+        <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
+               description="String manipulation plugin"
+               popup="false"
+               icon="/osmedile/intellij/stringmanip/edit.png">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
+
+            <separator/>
+            <reference ref="StringManipulation.Group.Main"></reference>
+        </group>
+
+    </actions>
+    <application-components>
+        <!-- Add your application components here -->
+        <component>
+            <implementation-class>com.github.krasa.stringmanipulation.intellij.MyApplicationService</implementation-class>
+        </component>
+    </application-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.github.krasa.stringmanipulation.intellij.MyApplicationService"/>
+
+        <postStartupActivity implementation="com.github.krasa.stringmanipulation.intellij.ShortcutStartupActivity"/>
+        <customizableActionGroupProvider
+                implementation="com.github.krasa.stringmanipulation.intellij.MyCustomizableActionGroupProvider" order="first"/>
+        <applicationService
+                serviceImplementation="com.github.krasa.stringmanipulation.intellij.config.PluginPersistentStateComponent"/>
+        <applicationConfigurable instance="com.github.krasa.stringmanipulation.intellij.config.MyConfigurable" id="StringManipulation"
+                                 displayName="String Manipulation"/>
+    </extensions>
+
+    <description><![CDATA[
+	<p>
+		<p>
+			Provides actions for text manipulation:
+			<ul>
+				<li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
+					words lowercase, First word capitalized, Words Capitalized, PascalCase)
+				</li>
+               <li>Toggle: SCREAMING_SNAKE_CASE / camelCase</li>
+               <li>Toggle: snake_case / camelCase</li>
+               <li>Toggle: kebab-case / snake_case</li>
+               <li>Toggle: kebab-case / camelCase</li>
+               <li>Toggle: dot.case / camelCase</li>
+               <li>Toggle: PascalCase / camelCase</li>
+               <li>Toggle: lowercase words / camelCase</li>
+               <li>Toggle: First word capitalized / camelCase</li>
+               <li>Toggle: Capitalized Words / camelCase</li>
+               <li>camelCase</li>
+               <li>Capitalize</li>
+               <li>To lower case</li>
+               <li>To UPPER CASE</li>
+               <li>Invert case</li>
+			</ul>
+			-'Switch case' action can be customized, or new ones can be added in settings<br> 
+            -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
+		</p>
+		<p>
+            Un/Escape:
+			<ul>
+				<li>Un/Escape selected Java text</li>
+				<li>Un/Escape selected JavaScript text</li>
+				<li>Un/Escape selected HTML text</li>
+				<li>Un/Escape selected JSON text</li>
+				<li>Un/Escape selected XML text</li>
+				<li>Un/Escape selected SQL text</li>
+				<li>Un/Escape selected PHP text</li>
+                <li>Convert diacritics (accents) to ASCII</li>
+                <li>Convert non-ASCII to escaped Unicode</li>
+                <li>Convert escaped Unicode to String</li>
+			</ul>
+		</p>
+		<p>
+            Encode/Decode:
+			<ul>
+				<li>Encode selected text to MD5 Hex16</li>
+				<li>De/Encode selected text as URL</li>
+				<li>De/Encode selected text to Base64</li>
+				<li>De/Encode selected text to Hex</li>
+			</ul>
+		</p>
+		<p>
+            Increment/Decrement:
+			<ul>
+				<li>Increment/decrement all numbers found.</li>
+				<li>Duplicate line and increment/decrement all numbers found.</li>	
+				<li>Create sequence - Keep first number, replace all other by incrementing</li>	
+				<li>Increment duplicate numbers</li>	
+            </ul>
+		</p>
+		<p>
+            Sort with natural order or Collator:
+			<ul>
+				<li>Reversing order of lines</li>
+				<li>Shuffle lines</li>
+				<li>Sort case-sensitive A-z</li>
+				<li>Sort case-sensitive z-A</li>
+				<li>Sort case-insensitive A-Z</li>
+				<li>Sort case-insensitive Z-A</li>
+				<li>Sort line length asc., desc.</li>
+				<li>Sort hexadecimally</li>
+				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
+			</ul>
+		</p>
+		<p>
+            Align:
+			<ul>
+				<li>Format selected text to columns/table by a chosen separator/delimiter and sort by columns</li>
+				<li>Align text to left/center/right</li>
+			</ul>
+		</p>
+		<p>
+            Filter/Remove/Trim...:
+			<ul>
+				<li>Grep selected text, All lines not matching input text wil be removed.
+					(Does not work in column mode)
+				</li>
+				<li>Inverted Grep</li>
+				<li>Trim selected text</li>
+				<li>Trim all spaces in selected text</li>
+				<li>Remove all spaces in selected text</li>
+				<li>Remove duplicate lines</li>
+				<li>Keep only duplicate lines</li>
+				<li>Remove empty lines</li>
+				<li>Remove all newlines</li>
+			</ul>
+		</p>
+		<p>
+            Other:
+			<ul>
+				<li>Reverse Letters</li>
+				<li>Swap Characters/Selections/Lines/Tokens</li>
+				<li>Wrap or swap double quotes to single quotes to backticks</li>
+				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
+			</ul>
+		</p>
+		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
+			<br>You can setup your own shortcuts for better usability.
+			<br>Popup can be customized in File | Settings | Appearance & Behavior | Menus and Toolbars.
+		</p>
+        <br> <br>
+        <a href="https://www.paypal.me/VojtechKrasa">Donations are welcomed.</a>
+	</p>
+       ]]>
+    </description>
+
+
+    <change-notes>
+        <![CDATA[
+	<p>                   
+	    <div>
+	        <h4>Version 7.7</h4>
+	        <ul>
+                <li>IntelliJ 2020.2 compatibility</li>
+            </ul>
+	    </div>              
+	    <div>
+	        <h4>Version 7.6</h4>
+	        <ul>
+                <li>Fixed Collator</li>
+                <li>Added: Reverse Letters</li>
+            </ul>
+	    </div>      
+	    <div>
+	        <h4>Version 7.5</h4>
+	        <ul>
+                <li>Fixed natural sorting, added default comparator</li>
+            </ul>
+	    </div>              
+	    <div>
+	        <h4>Version 7.4</h4>
+	        <ul>
+                <li>Improved: Align by column - added sorting</li>
+                <li>Added: Reversed custom switch action - for a shortcut use</li>
+                <li>Added: To camelCase action</li>
+            </ul>
+	    </div>          
+	    <div>
+	        <h4>Version 7.3</h4>
+	        <ul>
+                <li>Improved: Switch File Path Separators</li>
+                <li>Added: Encode/Decode Hex</li>
+                <li>IntelliJ 2020 compatibility</li>
+            </ul>
+	    </div>
+	    <div>
+	        <h4>Version 7.2</h4>
+	        <ul>
+                <li>Column align: added preview</li>
+                <li>Added: Un/Escape JSON</li>
+            </ul>
+	    </div>
+	    <div>
+	        <h4>Version 7.1</h4>
+	        <ul>
+                <li>Minor fixes</li>
+            </ul>
+	    </div>
+	    <div>
+	        <h4>Version 7.0</h4>
+	        <ul>
+                <li>Customizable case switching actions</li>
+                <li>Updated escaping of Java, JavaScript, Html to commons-lang3-3.9</li>
+                <li>Improved: Align to column - aligning by multiple separators at once</li>
+                <li>Sort with collator</li>
+                <li>Grep support for regular expressions</li>
+                <li>Case switching - settings for adding a separator before or after a number</li>
+                <li>Swap quotes action: added swapping to backticks and wrapping</li>
+            </ul>
+	    </div>
+	    <p>
+	</p>
+    ]]>
+    </change-notes>
+
+</idea-plugin>
+    

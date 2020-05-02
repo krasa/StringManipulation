@@ -1,3 +1,4 @@
 rootProject.name = 'StringManipulation'
-include 'utils'
+include ':utils'
+include ':intellij-plugin'
 

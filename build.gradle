@@ -1,78 +1,5 @@
-plugins {
-    id 'org.jetbrains.intellij' version "0.4.18"   
-    id("maven-publish")
-}
-
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
 apply plugin: 'idea'
 
-sourceCompatibility = javaVersion
-targetCompatibility = javaTargetVersion
-
-group pluginGroup
-version = pluginVersion
-
-test.enabled = false
-
-tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
-
-sourceSets {
-    main {
-        java.srcDirs 'src'
-        resources.srcDirs 'resources', 'plugin/resources'   ,  'src'
-        resources.exclude '**/*.form'
-    }
-    test {
-        java.srcDir 'test'
-    }
-}
-intellij {
-    version System.getenv().getOrDefault('IDEA_VERSION', ideaVersion)
-    type ideaType
-    pluginName pluginName
-    buildSearchableOptions {enabled = false}
-    downloadSources Boolean.valueOf(sources)
-    sameSinceUntilBuild Boolean.valueOf(isEAP)
-    alternativeIdePath idePath
-    patchPluginXml {
-        sinceBuild pluginSinceBuild
-        untilBuild pluginUntilBuild
-    }
-
-    plugins 'java'
-
-    publishPlugin {
-        username publishUsername
-        token publishToken
-        channels publishChannel
-    }
-}
-
-test {
-    testLogging {
-        exceptionFormat = 'full'
-    }
-}
-
-task testCompilation(type: Test, group: 'Verification', dependsOn: [classes, testClasses]) {
-    testLogging {
-        exceptionFormat = 'full'
-    }
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile  name: 'shade'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-text
-    compile group: 'org.apache.commons', name: 'commons-text', version: '1.8'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'   
-    // https://mvnrepository.com/artifact/uk.com.robust-it/cloning
-    compile group: 'uk.com.robust-it', name: 'cloning', version: '1.9.12'
-    
-}
-apply plugin: 'idea'
 idea {
     project {
         jdkName = javaVersion
@@ -80,36 +7,41 @@ idea {
     }
 }
 
-
-repositories {
-    flatDir {
-        dirs 'jars'
-    }
-    mavenCentral()
-    maven { url 'https://dl.bintray.com/jetbrains/intellij-plugin-service' }
+allprojects {
+    group pluginGroup
+    version = pluginVersion
 }
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.incremental = true
-    options.fork = true
-}
-
-
-publishing {
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaTargetVersion
     repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/krasa/StringManipulation")
-            credentials {
-                username = "krasa"
-                password = System.getenv("GITHUB_TOKEN")
-            }
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/jetbrains/intellij-plugin-service' }
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.incremental = true
+        options.fork = true
+    }
+    test {
+        testLogging {
+            exceptionFormat = 'full'
         }
     }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
+
+    task testCompilation(type: Test, group: 'Verification', dependsOn: [classes, testClasses]) {
+        testLogging {
+            exceptionFormat = 'full'
         }
+    }
+    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        // https://mvnrepository.com/artifact/org.apache.commons/commons-text
+        implementation group: 'org.apache.commons', name: 'commons-text', version: '1.8'
+        // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
     }
 }
