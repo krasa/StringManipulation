@@ -8,9 +8,9 @@ import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.util.Computable;
 import com.intellij.ui.DocumentAdapter;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.apache.commons.text.StringEscapeUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
-import shaded.org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

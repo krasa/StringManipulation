@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.config;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.dnd.*;
 
@@ -11,12 +12,14 @@ import java.awt.dnd.*;
 class MyDragListener implements DragSourceListener, DragGestureListener {
 	JList list;
 
-	DragSource ds = new DragSource();
+	DragSource ds;
 
 	public MyDragListener(JList list) {
 		this.list = list;
-		DragGestureRecognizer dgr = ds.createDefaultDragGestureRecognizer(list, DnDConstants.ACTION_MOVE, this);
-
+		if (!GraphicsEnvironment.isHeadless()) {
+			ds = new DragSource();
+			DragGestureRecognizer dgr = ds.createDefaultDragGestureRecognizer(list, DnDConstants.ACTION_MOVE, this);
+		}
 	}
 
 	public void dragGestureRecognized(DragGestureEvent dge) {

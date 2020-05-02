@@ -8,26 +8,18 @@
     <artifactId>MavenShade</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
+    
+    <properties>
+      <maven.compiler.source>1.6</maven.compiler.source>
+      <maven.compiler.target>1.6</maven.compiler.target>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>4.3.9.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.6</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -48,12 +40,6 @@
                 <configuration>
                     <!-- put your configurations here -->
                     <filters>
-                        <filter>
-                            <artifact>org.apache.commons:*</artifact>
-                            <includes>
-                                <include>**</include>
-                            </includes>
-                        </filter>
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>

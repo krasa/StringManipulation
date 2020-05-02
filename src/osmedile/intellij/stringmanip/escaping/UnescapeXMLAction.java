@@ -10,6 +10,6 @@ public class UnescapeXMLAction extends AbstractStringManipAction {
 
 	@Override                                                                                                 
 	public String transformByLine(String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.unescapeXml(s);
+		return org.apache.commons.text.StringEscapeUtils.unescapeXml(s);
     }
 }

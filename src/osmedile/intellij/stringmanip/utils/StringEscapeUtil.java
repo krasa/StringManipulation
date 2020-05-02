@@ -17,7 +17,7 @@
 package osmedile.intellij.stringmanip.utils;
 
 
-import shaded.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.StringWriter;

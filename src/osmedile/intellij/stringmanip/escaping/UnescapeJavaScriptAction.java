@@ -10,6 +10,6 @@ public class UnescapeJavaScriptAction extends AbstractStringManipAction {
 
 	@Override                                                                         
 	public String transformByLine(String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.unescapeEcmaScript(s);
+		return org.apache.commons.text.StringEscapeUtils.unescapeEcmaScript(s);
     }
 }                                                                            

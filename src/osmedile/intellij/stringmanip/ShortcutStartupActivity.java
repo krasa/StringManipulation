@@ -8,11 +8,11 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 

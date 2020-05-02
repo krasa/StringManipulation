@@ -10,6 +10,6 @@ public class EscapeJavaAction extends AbstractStringManipAction {
 
 	@Override
 	public String transformByLine(String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.escapeJava(s);
+		return org.apache.commons.text.StringEscapeUtils.escapeJava(s);
     }
 }

@@ -6,6 +6,6 @@ public class UnescapeJsonAction extends AbstractStringManipAction {
 
 	@Override
 	public String transformByLine(String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.unescapeJson(s);
+		return org.apache.commons.text.StringEscapeUtils.unescapeJson(s);
 	}
 }

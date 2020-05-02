@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.utils;
 
+import org.apache.commons.lang3.CharUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
-import shaded.org.apache.commons.lang3.CharUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import static java.lang.Character.isWhitespace;
 import static java.lang.Character.*;
-import static shaded.org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.*;
 
 
 /**

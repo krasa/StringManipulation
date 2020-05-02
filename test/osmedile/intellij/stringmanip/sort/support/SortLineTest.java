@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import static org.junit.Assert.assertEquals;
 import static osmedile.intellij.stringmanip.sort.support.SortSettings.allFeaturesDisabled;

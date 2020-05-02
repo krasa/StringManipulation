@@ -18,6 +18,7 @@ import com.intellij.ui.ScrollPaneFactory;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.ui.components.labels.LinkListener;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.align.ColumnAligner;
@@ -28,7 +29,6 @@ import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 import osmedile.intellij.stringmanip.utils.Cloner;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -344,7 +344,9 @@ public class CustomActionSettingsForm implements Disposable {
 			}
 		});
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		list.setDragEnabled(true);
+		if (!GraphicsEnvironment.isHeadless()) {
+			list.setDragEnabled(true);
+		}		
 		list.setDropMode(DropMode.INSERT);
 		list.setTransferHandler(new MyListDropHandler(list) {
 			@Override
@@ -413,7 +415,9 @@ public class CustomActionSettingsForm implements Disposable {
 				return comp;
 			}
 		});
-		jbList.setDragEnabled(true);
+		if (!GraphicsEnvironment.isHeadless()) {
+			jbList.setDragEnabled(true);
+		}
 		jbList.setDropMode(DropMode.INSERT);
 		jbList.setTransferHandler(new MyListDropHandler(jbList));
 
