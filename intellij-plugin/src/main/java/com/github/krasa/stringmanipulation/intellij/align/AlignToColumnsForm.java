@@ -1,10 +1,10 @@
 package com.github.krasa.stringmanipulation.intellij.align;
 
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
 import com.github.krasa.stringmanipulation.intellij.Donate;
 import com.github.krasa.stringmanipulation.intellij.sort.SortTypeDialog;
 import com.github.krasa.stringmanipulation.intellij.utils.IdeUtils;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
 import com.google.common.base.Joiner;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.CaretState;

@@ -1,11 +1,11 @@
 package com.github.krasa.stringmanipulation.intellij.sort;
 
+import com.github.krasa.stringmanipulation.commons.sort.SortLine;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 import com.github.krasa.stringmanipulation.intellij.MyEditorAction;
 import com.github.krasa.stringmanipulation.intellij.MyEditorWriteActionHandler;
 import com.github.krasa.stringmanipulation.intellij.config.PluginPersistentStateComponent;
 import com.github.krasa.stringmanipulation.intellij.utils.IdeUtils;
-import com.github.krasa.stringmanipulation.utils.sort.SortLine;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;

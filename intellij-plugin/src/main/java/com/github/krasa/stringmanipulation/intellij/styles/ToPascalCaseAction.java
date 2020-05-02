@@ -1,6 +1,6 @@
 package com.github.krasa.stringmanipulation.intellij.styles;
 
-import com.github.krasa.stringmanipulation.utils.style.Style;
+import com.github.krasa.stringmanipulation.commons.style.Style;
 
 public class ToPascalCaseAction extends AbstractCaseConvertingAction {
     public ToPascalCaseAction() {

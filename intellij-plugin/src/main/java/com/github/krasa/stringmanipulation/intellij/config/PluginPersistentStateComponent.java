@@ -1,13 +1,13 @@
 package com.github.krasa.stringmanipulation.intellij.config;
 
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
+import com.github.krasa.stringmanipulation.commons.style.Style;
+import com.github.krasa.stringmanipulation.commons.util.StringUtil;
 import com.github.krasa.stringmanipulation.intellij.CaseSwitchingSettings;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.CustomActionModel;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.DefaultActions;
 import com.github.krasa.stringmanipulation.intellij.utils.IdeUtils;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
-import com.github.krasa.stringmanipulation.utils.common.StringUtil;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
-import com.github.krasa.stringmanipulation.utils.style.Style;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;

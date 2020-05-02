@@ -38,13 +38,13 @@ dependencies {
     // https://mvnrepository.com/artifact/uk.com.robust-it/cloning
     implementation group: 'uk.com.robust-it', name: 'cloning', version: '1.9.12'
     implementation   name: 'shade'
-    implementation project(":utils") 
+    implementation project(":commons") 
 }
 
 
 repositories {
     flatDir {
-        dirs '../jars'
+        dirs 'jars'
     }
 }
 

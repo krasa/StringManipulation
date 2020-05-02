@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.styles;
 
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import com.github.krasa.stringmanipulation.intellij.AbstractStringManipAction;
-import com.github.krasa.stringmanipulation.utils.style.Style;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;

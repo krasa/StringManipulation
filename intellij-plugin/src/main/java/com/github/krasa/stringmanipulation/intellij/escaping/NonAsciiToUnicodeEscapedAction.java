@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.escaping;
 
+import com.github.krasa.stringmanipulation.commons.util.StringUtil;
 import com.github.krasa.stringmanipulation.intellij.AbstractStringManipAction;
-import com.github.krasa.stringmanipulation.utils.common.StringUtil;
 
 /**
  * @author Olivier Smedile

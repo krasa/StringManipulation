@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NaturalOrderComparatorEnumTest {
 	//	private static final Comparator C = new NaturalOrderComparator();
-	private static final Comparator C = new com.github.krasa.stringmanipulation.utils.sort.paour.NaturalOrderComparator();
+	private static final Comparator C = new com.github.krasa.stringmanipulation.commons.sort.paour.NaturalOrderComparator();
 
 	@Test
 	public void test1() throws Exception {

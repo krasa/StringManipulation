@@ -1,9 +1,9 @@
 package com.github.krasa.stringmanipulation.intellij.increment;
 
+import com.github.krasa.stringmanipulation.commons.util.DuplicatUtils;
+import com.github.krasa.stringmanipulation.commons.util.StringUtil;
 import com.github.krasa.stringmanipulation.intellij.MyApplicationService;
 import com.github.krasa.stringmanipulation.intellij.MyEditorAction;
-import com.github.krasa.stringmanipulation.utils.common.DuplicatUtils;
-import com.github.krasa.stringmanipulation.utils.common.StringUtil;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretAction;

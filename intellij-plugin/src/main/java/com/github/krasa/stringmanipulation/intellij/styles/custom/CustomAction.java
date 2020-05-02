@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.styles.custom;
 
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import com.github.krasa.stringmanipulation.intellij.styles.AbstractCaseConvertingAction;
-import com.github.krasa.stringmanipulation.utils.style.Style;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 

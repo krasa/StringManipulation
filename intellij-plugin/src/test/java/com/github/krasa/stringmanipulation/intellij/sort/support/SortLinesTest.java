@@ -1,15 +1,15 @@
 package com.github.krasa.stringmanipulation.intellij.sort.support;
 
-import com.github.krasa.stringmanipulation.utils.sort.Sort;
-import com.github.krasa.stringmanipulation.utils.sort.SortLines;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
+import com.github.krasa.stringmanipulation.commons.sort.Sort;
+import com.github.krasa.stringmanipulation.commons.sort.SortLines;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.github.krasa.stringmanipulation.utils.sort.SortSettings.allFeaturesDisabled;
+import static com.github.krasa.stringmanipulation.commons.sort.SortSettings.allFeaturesDisabled;
 
 public class SortLinesTest {
 	private List<String> input = Arrays.asList("ccc;;", "aa,", "b");

@@ -1,11 +1,11 @@
 package com.github.krasa.stringmanipulation.intellij.styles;
 
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import com.github.krasa.stringmanipulation.intellij.CaseSwitchingSettings;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.CustomAction;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.DefaultActions;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
-import com.github.krasa.stringmanipulation.utils.style.Style;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;

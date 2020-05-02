@@ -1,8 +1,8 @@
 package com.github.krasa.stringmanipulation.intellij.align;
 
+import com.github.krasa.stringmanipulation.commons.align.ArrayListModel;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
 import com.github.krasa.stringmanipulation.intellij.config.PluginPersistentStateComponent;
-import com.github.krasa.stringmanipulation.utils.align.ArrayListModel;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 

@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.align;
 
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
 import com.google.common.base.Joiner;
 import org.junit.Test;
 

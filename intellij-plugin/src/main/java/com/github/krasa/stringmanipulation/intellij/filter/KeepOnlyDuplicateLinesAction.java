@@ -1,8 +1,8 @@
 package com.github.krasa.stringmanipulation.intellij.filter;
 
+import com.github.krasa.stringmanipulation.commons.util.FilterUtils;
 import com.github.krasa.stringmanipulation.intellij.MultiCaretHandlerHandler;
 import com.github.krasa.stringmanipulation.intellij.MyEditorAction;
-import com.github.krasa.stringmanipulation.utils.common.FilterUtils;
 
 import java.util.Arrays;
 import java.util.List;

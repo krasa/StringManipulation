@@ -1,8 +1,8 @@
 package com.github.krasa.stringmanipulation.intellij.sort;
 
-import com.github.krasa.stringmanipulation.utils.sort.Sort;
-import com.github.krasa.stringmanipulation.utils.sort.SortLines;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
+import com.github.krasa.stringmanipulation.commons.sort.Sort;
+import com.github.krasa.stringmanipulation.commons.sort.SortLines;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;

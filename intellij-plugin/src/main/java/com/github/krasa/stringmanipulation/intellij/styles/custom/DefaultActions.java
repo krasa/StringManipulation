@@ -1,11 +1,11 @@
 package com.github.krasa.stringmanipulation.intellij.styles.custom;
 
-import com.github.krasa.stringmanipulation.utils.style.Style;
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-import static com.github.krasa.stringmanipulation.utils.style.Style.*;
+import static com.github.krasa.stringmanipulation.commons.style.Style.*;
 
 public class DefaultActions {
 

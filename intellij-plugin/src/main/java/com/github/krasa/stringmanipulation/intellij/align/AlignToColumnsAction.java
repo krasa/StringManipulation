@@ -1,10 +1,10 @@
 package com.github.krasa.stringmanipulation.intellij.align;
 
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
 import com.github.krasa.stringmanipulation.intellij.MultiCaretHandlerHandler;
 import com.github.krasa.stringmanipulation.intellij.MyEditorAction;
 import com.github.krasa.stringmanipulation.intellij.config.PluginPersistentStateComponent;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;

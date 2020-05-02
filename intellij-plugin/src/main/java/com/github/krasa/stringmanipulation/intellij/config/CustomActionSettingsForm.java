@@ -1,13 +1,13 @@
 package com.github.krasa.stringmanipulation.intellij.config;
 
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAlignerModel;
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.CustomAction;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.CustomActionModel;
 import com.github.krasa.stringmanipulation.intellij.styles.custom.DefaultActions;
 import com.github.krasa.stringmanipulation.intellij.utils.Cloner;
 import com.github.krasa.stringmanipulation.intellij.utils.IdeUtils;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.align.ColumnAlignerModel;
-import com.github.krasa.stringmanipulation.utils.style.Style;
 import com.intellij.ide.DataManager;
 import com.intellij.ide.ui.customization.CustomActionsSchema;
 import com.intellij.ide.ui.customization.CustomisedActionGroup;

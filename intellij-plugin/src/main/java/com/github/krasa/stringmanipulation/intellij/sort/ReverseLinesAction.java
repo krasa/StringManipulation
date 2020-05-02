@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.sort;
 
-import com.github.krasa.stringmanipulation.utils.sort.Sort;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
+import com.github.krasa.stringmanipulation.commons.sort.Sort;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 
 public class ReverseLinesAction extends SortAction {
 	public static final String STORE_KEY = "StringManipulation.ReverseLinesAction.SortSettings";

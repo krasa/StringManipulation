@@ -1,13 +1,13 @@
 package com.github.krasa.stringmanipulation.intellij.sort.support;
 
-import com.github.krasa.stringmanipulation.utils.align.ColumnAligner;
-import com.github.krasa.stringmanipulation.utils.sort.Sort;
-import com.github.krasa.stringmanipulation.utils.sort.SortLine;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
+import com.github.krasa.stringmanipulation.commons.align.ColumnAligner;
+import com.github.krasa.stringmanipulation.commons.sort.Sort;
+import com.github.krasa.stringmanipulation.commons.sort.SortLine;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
-import static com.github.krasa.stringmanipulation.utils.sort.SortSettings.allFeaturesDisabled;
+import static com.github.krasa.stringmanipulation.commons.sort.SortSettings.allFeaturesDisabled;
 import static org.junit.Assert.assertEquals;
 
 public class SortLineTest {

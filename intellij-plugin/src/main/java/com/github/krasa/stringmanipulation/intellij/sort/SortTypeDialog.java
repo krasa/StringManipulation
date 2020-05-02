@@ -1,8 +1,8 @@
 package com.github.krasa.stringmanipulation.intellij.sort;
 
+import com.github.krasa.stringmanipulation.commons.sort.Sort;
+import com.github.krasa.stringmanipulation.commons.sort.SortSettings;
 import com.github.krasa.stringmanipulation.intellij.Donate;
-import com.github.krasa.stringmanipulation.utils.sort.Sort;
-import com.github.krasa.stringmanipulation.utils.sort.SortSettings;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;

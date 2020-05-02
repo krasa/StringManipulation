@@ -1,7 +1,7 @@
 package com.github.krasa.stringmanipulation.intellij.unused;
 
+import com.github.krasa.stringmanipulation.commons.util.StringUtil;
 import com.github.krasa.stringmanipulation.intellij.AbstractStringManipAction;
-import com.github.krasa.stringmanipulation.utils.common.StringUtil;
 
 public class WordsToConstantStyleCaseAction extends AbstractStringManipAction {
 

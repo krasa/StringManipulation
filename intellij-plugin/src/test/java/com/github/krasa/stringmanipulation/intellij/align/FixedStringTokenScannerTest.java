@@ -1,6 +1,6 @@
 package com.github.krasa.stringmanipulation.intellij.align;
 
-import com.github.krasa.stringmanipulation.utils.align.FixedStringTokenScanner;
+import com.github.krasa.stringmanipulation.commons.align.FixedStringTokenScanner;
 import org.junit.Assert;
 import org.junit.Test;
 

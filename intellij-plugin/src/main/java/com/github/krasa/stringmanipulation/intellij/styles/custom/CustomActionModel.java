@@ -1,6 +1,6 @@
 package com.github.krasa.stringmanipulation.intellij.styles.custom;
 
-import com.github.krasa.stringmanipulation.utils.style.Style;
+import com.github.krasa.stringmanipulation.commons.style.Style;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.annotations.Transient;
 
@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static com.github.krasa.stringmanipulation.utils.style.Style.valueOf;
+import static com.github.krasa.stringmanipulation.commons.style.Style.valueOf;
 
 public class CustomActionModel {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomActionModel.class);
