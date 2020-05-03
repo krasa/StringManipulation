@@ -20,7 +20,8 @@ public class WhatsNewPopup {
 	protected static final int CURRENT_VERSION = 2;
 
 	public static void whatsNewCheck(Editor editor) {
-		popup(PluginPersistentStateComponent.getInstance(), editor.getProject());
+//		popup(PluginPersistentStateComponent.getInstance(), editor.getProject());
+//		System.err.println();
 	}
 
 	public static void popup(PluginPersistentStateComponent stateComponent, final Project project) {
