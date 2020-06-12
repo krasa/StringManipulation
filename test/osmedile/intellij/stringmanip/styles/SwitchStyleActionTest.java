@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SwitchStyleActionTest extends CaseSwitchingTest {
@@ -38,7 +39,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 	@Test
 	public void testTransform1() throws Exception {
 		String input = "\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer";
-		input = transform(input, "\\my\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer");
+		input = transform(input, "\\my\\appBundle\\app\\twig\\googleTagManagerDataLayer");
 		input = transform(input, "\\my\\app-bundle\\app\\twig\\google-tag-manager-data-layer");
 		input = transform(input, "\\MY\\APP-BUNDLE\\APP\\TWIG\\GOOGLE-TAG-MANAGER-DATA-LAYER");
 		input = transform(input, "\\my\\app_bundle\\app\\twig\\google_tag_manager_data_layer");
@@ -48,7 +49,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		input = transform(input, "\\My\\app bundle\\app\\twig\\google tag manager data layer");
 		input = transform(input, "\\My\\App Bundle\\App\\Twig\\Google Tag Manager Data Layer");
 		input = transform(input, "\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer");
-		input = transform(input, "\\my\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer");
+		input = transform(input, "\\my\\appBundle\\app\\twig\\googleTagManagerDataLayer");
 	}
 	@Test
 	public void testTransform() throws Exception {
@@ -212,6 +213,9 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 				"foo350",
 				"Foo350",
 				"\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer",
+//				"\"Submitted By\", \"Owner\", \"Creation Date\", \"Root Cause\", ",
+//				"11 foo bar",
+//				"1.1 foo bar",
 				""
 			);
 
@@ -231,8 +235,10 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 				}
 
 				if (actualStyle != style) {
-					ok.add(j + "F " + inputStyle.name() + " -> " + style.name() + "(actual " + actualStyle.name() + "): " + input
-						+ " -> " + transform);
+					String e = j + "F " + inputStyle.name() + " -> " + style.name() + "(actual " + actualStyle.name() + "): " + input
+							+ " -> " + transform;
+					ok.add(e);
+					failed.add(e);
 				} else {
 					ok.add(j + " " + inputStyle.name() + " -> " + style.name() + ": " + input + " -> " + transform);
 				}
@@ -244,6 +250,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		print(text);
 
 		writeToFile("testEdgeCases.txt", text);
+//		writeToFile("testEdgeCases_fail.txt", toText(Collections.emptyList(), failed));
 
 	}
 

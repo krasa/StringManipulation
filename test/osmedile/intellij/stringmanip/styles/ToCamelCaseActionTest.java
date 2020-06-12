@@ -5,12 +5,17 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ToCamelCaseActionTest extends CaseSwitchingTest {
-
 	protected ToWordCapitalizedOrCamelCaseAction action;
+	protected ToCamelCaseAction toCamelCaseAction;
 
     @Test
     public void testTransform() throws Exception {
 		action = new ToWordCapitalizedOrCamelCaseAction(false);
+		toCamelCaseAction = new ToCamelCaseAction(false);
+
+		assertEquals("\"submittedBy\",\"owner\",\"creationDate\",\"rootCause\",", action.transformByLine("\"Submitted By\",\"Owner\",\"Creation Date\",\"Root Cause\","));
+		assertEquals("\"submittedBy\",\"owner\",\"creationDate\",\"rootCause\",", toCamelCaseAction.transformByLine("\"Submitted By\",\"Owner\",\"Creation Date\",\"Root Cause\","));
+		assertEquals("\"submittedBy\", \"owner\", \"creationDate\", \"rootCause\",", toCamelCaseAction.transformByLine("\"Submitted By\", \"Owner\", \"Creation Date\", \"Root Cause\","));
 		assertEquals("Foo", action.transformByLine("foo"));
 		assertEquals("foo", action.transformByLine("Foo"));
 		assertEquals("Foo", action.transformByLine("FOO"));
@@ -40,7 +45,7 @@ public class ToCamelCaseActionTest extends CaseSwitchingTest {
 //		assertEquals("Whoah A_test", action.transformByLine("WHOAH A_TEST"));
 //		assertEquals("Whoah A.test", action.transformByLine("WHOAH A.TEST"));
 //		assertEquals("Whoah A-test", action.transformByLine("WHOAH A-TEST"));
-		
+
 		assertEquals("'closeBsAlert'", action.transformByLine("'Close Bs Alert'"));
 		assertEquals("\"closeBsAlert\"", action.transformByLine("\"Close Bs Alert\""));
     }

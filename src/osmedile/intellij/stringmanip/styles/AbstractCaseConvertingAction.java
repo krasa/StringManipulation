@@ -13,6 +13,7 @@ import com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.utils.StringUtil;
 
 /** todo write some tests for this shit */
 public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction {
@@ -158,7 +159,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 				selectionModel.removeSelection();
 				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			}
-			if (Style.isQuoted(selectedText)) {
+			if (StringUtil.isQuoted(selectedText)) {
 				selectionModel.setSelection(selectionModel.getSelectionStart() + 1,
 						selectionModel.getSelectionEnd() - 1);
 			}

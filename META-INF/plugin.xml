@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.7.191.000.0</version>
+    <version>7.8.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -478,9 +478,10 @@
     </extensions>
 
     <description><![CDATA[
-	<p>
-		<p>
-			Provides actions for text manipulation:
+    Provides actions for text manipulation: case switching, sorting, filtering, aligning, escaping, encoding...<br><br>
+    <p>
+        <p>
+            Case switching:
 			<ul>
 				<li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, First word capitalized, Words Capitalized, PascalCase)
@@ -494,7 +495,7 @@
                <li>Toggle: lowercase words / camelCase</li>
                <li>Toggle: First word capitalized / camelCase</li>
                <li>Toggle: Capitalized Words / camelCase</li>
-               <li>camelCase</li>
+               <li>To camelCase</li>
                <li>Capitalize</li>
                <li>To lower case</li>
                <li>To UPPER CASE</li>
@@ -597,11 +598,17 @@
         <![CDATA[
 	<p>                   
 	    <div>
+	        <h4>Version 7.8</h4>
+	        <ul>
+                <li>More universal case switching</li>
+            </ul>
+	    </div>
+	    <div>
 	        <h4>Version 7.7</h4>
 	        <ul>
                 <li>IntelliJ 2020.2 compatibility</li>
             </ul>
-	    </div>              
+	    </div>
 	    <div>
 	        <h4>Version 7.6</h4>
 	        <ul>

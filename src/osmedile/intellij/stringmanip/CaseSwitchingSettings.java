@@ -5,6 +5,7 @@ import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 public class CaseSwitchingSettings {
 	private boolean separatorBeforeDigit = true;
 	private boolean separatorAfterDigit = true;
+	private boolean putSeparatorBetweenUpperCases;
 
 	public CaseSwitchingSettings() {
 	}
@@ -32,5 +33,15 @@ public class CaseSwitchingSettings {
 	public void resetToDefault() {
 		separatorBeforeDigit = true;
 		separatorAfterDigit = true;
+		putSeparatorBetweenUpperCases = false;
 	}
+
+	public boolean isPutSeparatorBetweenUpperCases() {
+		return putSeparatorBetweenUpperCases;
+	}
+
+	public void setPutSeparatorBetweenUpperCases(boolean putSeparatorBetweenUpperCases) {
+		this.putSeparatorBetweenUpperCases = putSeparatorBetweenUpperCases;
+	}
+
 }

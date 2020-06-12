@@ -31,8 +31,9 @@ public class ToSentenceCaseOrCamelCaseActionTest {
 
 		assertEquals("fooBar", action.transformByLine("Foo bar"));
 		assertEquals("fooBar", action.transformByLine("Foo bar."));
-		assertEquals("foo,Bar", action.transformByLine("Foo, bar."));
+		assertEquals("foo, bar", action.transformByLine("Foo, bar."));
 		assertEquals("Foo,bar", action.transformByLine("foo,Bar"));
-		assertEquals("foo,Bar", action.transformByLine("Foo,bar"));
+		assertEquals("Foo, bar", action.transformByLine("foo, Bar"));
+		assertEquals("foo,barBar", action.transformByLine("Foo,bar bar"));
 	}
 }

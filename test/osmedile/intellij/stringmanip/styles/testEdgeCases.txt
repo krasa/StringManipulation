@@ -24,9 +24,9 @@
 24 WORD_CAPITALIZED           -> KEBAB_LOWERCASE                                   : Foo Bar1,1                                       -> foo-bar-1,1
 25F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foobar                                           -> foobar
 26F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo,bar                                          -> foo,bar
-27 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : foo, bar                                         -> foo,-bar
-28 WORD_LOWERCASE             -> KEBAB_LOWERCASE                                   : foo , bar                                        -> foo-,-bar
-29 SNAKE_CASE                 -> KEBAB_LOWERCASE                                   : foo.,_bar                                        -> foo-,-bar
+27F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo, bar                                         -> foo, bar
+28F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo , bar                                        -> foo , bar
+29F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo.,_bar                                        -> foo.,-bar
 30 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border350A                                  -> dark-border-350-a
 31 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border35.0A                                 -> dark-border-35-0-a
 32 _UNKNOWN                   -> KEBAB_LOWERCASE                                   : dark border35,0A                                 -> dark-border-35,0-a
@@ -69,9 +69,9 @@
 70 WORD_CAPITALIZED           -> KEBAB_UPPERCASE                                   : Foo Bar1,1                                       -> FOO-BAR-1,1
 71F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foobar                                           -> FOOBAR
 72F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo,bar                                          -> FOO,BAR
-73 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo, bar                                         -> FOO,-BAR
-74 WORD_LOWERCASE             -> KEBAB_UPPERCASE                                   : foo , bar                                        -> FOO-,-BAR
-75 SNAKE_CASE                 -> KEBAB_UPPERCASE                                   : foo.,_bar                                        -> FOO-,-BAR
+73F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo, bar                                         -> FOO, BAR
+74F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo , bar                                        -> FOO , BAR
+75F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo.,_bar                                        -> FOO.,-BAR
 76 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border350A                                  -> DARK-BORDER-350-A
 77 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35.0A                                 -> DARK-BORDER-35-0-A
 78 _UNKNOWN                   -> KEBAB_UPPERCASE                                   : dark border35,0A                                 -> DARK-BORDER-35,0-A
@@ -114,9 +114,9 @@
 116 WORD_CAPITALIZED          -> SNAKE_CASE                                        : Foo Bar1,1                                       -> foo_bar_1,1
 117F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foobar                                           -> foobar
 118F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
-119 WORD_LOWERCASE            -> SNAKE_CASE                                        : foo, bar                                         -> foo,_bar
-120 WORD_LOWERCASE            -> SNAKE_CASE                                        : foo , bar                                        -> foo_,_bar
-121 SNAKE_CASE                -> SNAKE_CASE                                        : foo.,_bar                                        -> foo_,_bar
+119F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
+120F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
+121F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo.,_bar                                        -> foo.,_bar
 122 _UNKNOWN                  -> SNAKE_CASE                                        : dark border350A                                  -> dark_border_350_a
 123 _UNKNOWN                  -> SNAKE_CASE                                        : dark border35.0A                                 -> dark_border_35_0_a
 124 _UNKNOWN                  -> SNAKE_CASE                                        : dark border35,0A                                 -> dark_border_35,0_a
@@ -159,9 +159,9 @@
 162 WORD_CAPITALIZED          -> SCREAMING_SNAKE_CASE                              : Foo Bar1,1                                       -> FOO_BAR_1,1
 163F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foobar                                           -> FOOBAR
 164F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo,bar                                          -> FOO,BAR
-165 WORD_LOWERCASE            -> SCREAMING_SNAKE_CASE                              : foo, bar                                         -> FOO,_BAR
-166 WORD_LOWERCASE            -> SCREAMING_SNAKE_CASE                              : foo , bar                                        -> FOO_,_BAR
-167 SNAKE_CASE                -> SCREAMING_SNAKE_CASE                              : foo.,_bar                                        -> FOO_,_BAR
+165F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo, bar                                         -> FOO, BAR
+166F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo , bar                                        -> FOO , BAR
+167F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo.,_bar                                        -> FOO.,_BAR
 168 _UNKNOWN                  -> SCREAMING_SNAKE_CASE                              : dark border350A                                  -> DARK_BORDER_350_A
 169 _UNKNOWN                  -> SCREAMING_SNAKE_CASE                              : dark border35.0A                                 -> DARK_BORDER_35_0_A
 170 _UNKNOWN                  -> SCREAMING_SNAKE_CASE                              : dark border35,0A                                 -> DARK_BORDER_35,0_A
@@ -204,9 +204,9 @@
 208 WORD_CAPITALIZED          -> PASCAL_CASE                                       : Foo Bar1,1                                       -> FooBar1,1
 209F WORD_LOWERCASE           -> PASCAL_CASE(actual _SINGLE_WORD_CAPITALIZED)      : foobar                                           -> Foobar
 210 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo,bar                                          -> Foo,Bar
-211 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo, bar                                         -> Foo,Bar
-212 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo , bar                                        -> Foo,Bar
-213 SNAKE_CASE                -> PASCAL_CASE                                       : foo.,_bar                                        -> Foo,Bar
+211 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo, bar                                         -> Foo, Bar
+212 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo , bar                                        -> Foo , Bar
+213 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo.,_bar                                        -> Foo,Bar
 214 _UNKNOWN                  -> PASCAL_CASE                                       : dark border350A                                  -> DarkBorder350A
 215F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : dark border35.0A                                 -> DarkBorder35.0A
 216 _UNKNOWN                  -> PASCAL_CASE                                       : dark border35,0A                                 -> DarkBorder35,0A
@@ -235,10 +235,10 @@
 240F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo.bar 1.1                                      -> fooBar1.1
 241F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : foo.bar 1_1                                      -> fooBar1_1
 242 _UNKNOWN                  -> CAMEL_CASE                                        : foo.bar 1,1                                      -> fooBar1,1
-243 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo,bar 1 1                                      -> foo,Bar11
-244F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo,bar 1.1                                      -> foo,Bar1.1
-245F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : foo,bar 1_1                                      -> foo,Bar1_1
-246 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo,bar 1,1                                      -> foo,Bar1,1
+243F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar 1 1                                      -> foo,bar11
+244F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo,bar 1.1                                      -> foo,bar1.1
+245F _UNKNOWN                 -> CAMEL_CASE(actual SNAKE_CASE)                     : foo,bar 1_1                                      -> foo,bar1_1
+246F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar 1,1                                      -> foo,bar1,1
 247 WORD_CAPITALIZED          -> CAMEL_CASE                                        : FooBar1 1                                        -> fooBar11
 248F DOT                      -> CAMEL_CASE(actual DOT)                            : FooBar1.1                                        -> fooBar1.1
 249F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : FooBar1_1                                        -> fooBar1_1
@@ -248,26 +248,26 @@
 253F WORD_CAPITALIZED         -> CAMEL_CASE(actual _UNKNOWN)                       : Foo Bar1_1                                       -> fooBar1_1
 254 WORD_CAPITALIZED          -> CAMEL_CASE                                        : Foo Bar1,1                                       -> fooBar1,1
 255F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foobar                                           -> foobar
-256 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo,bar                                          -> foo,Bar
-257 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo, bar                                         -> foo,Bar
-258 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo , bar                                        -> foo,Bar
-259 SNAKE_CASE                -> CAMEL_CASE                                        : foo.,_bar                                        -> foo,Bar
+256F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
+257F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
+258F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
+259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo,Bar
 260 _UNKNOWN                  -> CAMEL_CASE                                        : dark border350A                                  -> darkBorder350A
 261F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0A                                 -> darkBorder35.0A
-262 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35,0A                                 -> darkBorder35,0A
+262 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35,0A                                 -> darkBorder35,0a
 263F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0A                                 -> darkBorder35_0A
 264F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0A                                 -> darkBorder35-0A
 265 WORD_LOWERCASE            -> CAMEL_CASE                                        : dark border350a                                  -> darkBorder350A
 266F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0a                                 -> darkBorder35.0A
-267 WORD_LOWERCASE            -> CAMEL_CASE                                        : dark border35,0a                                 -> darkBorder35,0A
+267 WORD_LOWERCASE            -> CAMEL_CASE                                        : dark border35,0a                                 -> darkBorder35,0a
 268F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0a                                 -> darkBorder35_0A
 269F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0a                                 -> darkBorder35-0A
 270 PASCAL_CASE               -> CAMEL_CASE                                        : DarkBorder350A                                   -> darkBorder350A
 271 PASCAL_CASE               -> CAMEL_CASE                                        : DarkBorder350a                                   -> darkBorder350A
-272 WORD_LOWERCASE            -> CAMEL_CASE                                        : foo350a                                          -> foo350A
+272F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo350a                                          -> foo350A
 273F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo350                                           -> foo350
 274F _SINGLE_WORD_CAPITALIZED -> CAMEL_CASE(actual WORD_LOWERCASE)                 : Foo350                                           -> foo350
-275 PASCAL_CASE               -> CAMEL_CASE                                        : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \my\AppBundle\App\Twig\GoogleTagManagerDataLayer
+275 PASCAL_CASE               -> CAMEL_CASE                                        : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \my\appBundle\app\twig\googleTagManagerDataLayer
 277 WORD_LOWERCASE            -> DOT                                               : foo bar 1 1                                      -> foo.bar.1.1
 278 _UNKNOWN                  -> DOT                                               : foo bar 1.1                                      -> foo.bar.1.1
 279 _UNKNOWN                  -> DOT                                               : foo bar 1_1                                      -> foo.bar.1.1
@@ -294,9 +294,9 @@
 300 WORD_CAPITALIZED          -> DOT                                               : Foo Bar1,1                                       -> foo.bar.1,1
 301F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foobar                                           -> foobar
 302F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo,bar                                          -> foo,bar
-303 WORD_LOWERCASE            -> DOT                                               : foo, bar                                         -> foo,.bar
-304 WORD_LOWERCASE            -> DOT                                               : foo , bar                                        -> foo.,.bar
-305 SNAKE_CASE                -> DOT                                               : foo.,_bar                                        -> foo.,.bar
+303F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo, bar                                         -> foo, bar
+304F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo , bar                                        -> foo , bar
+305F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo.,_bar                                        -> foo.,.bar
 306 _UNKNOWN                  -> DOT                                               : dark border350A                                  -> dark.border.350.a
 307 _UNKNOWN                  -> DOT                                               : dark border35.0A                                 -> dark.border.35.0.a
 308 _UNKNOWN                  -> DOT                                               : dark border35,0A                                 -> dark.border.35,0.a
@@ -341,7 +341,7 @@
 348 WORD_LOWERCASE            -> WORD_LOWERCASE                                    : foo,bar                                          -> foo,bar
 349 WORD_LOWERCASE            -> WORD_LOWERCASE                                    : foo, bar                                         -> foo, bar
 350 WORD_LOWERCASE            -> WORD_LOWERCASE                                    : foo , bar                                        -> foo , bar
-351 SNAKE_CASE                -> WORD_LOWERCASE                                    : foo.,_bar                                        -> foo , bar
+351 WORD_LOWERCASE            -> WORD_LOWERCASE                                    : foo.,_bar                                        -> foo., bar
 352 _UNKNOWN                  -> WORD_LOWERCASE                                    : dark border350A                                  -> dark border 350 a
 353 _UNKNOWN                  -> WORD_LOWERCASE                                    : dark border35.0A                                 -> dark border 35 0 a
 354 _UNKNOWN                  -> WORD_LOWERCASE                                    : dark border35,0A                                 -> dark border 35,0 a
@@ -384,9 +384,9 @@
 392 WORD_CAPITALIZED          -> SENTENCE_CASE                                     : Foo Bar1,1                                       -> Foo bar 1,1
 393F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foobar                                           -> Foobar
 394F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo,bar                                          -> Foo,bar
-395 WORD_LOWERCASE            -> SENTENCE_CASE                                     : foo, bar                                         -> Foo, bar
-396 WORD_LOWERCASE            -> SENTENCE_CASE                                     : foo , bar                                        -> Foo , bar
-397 SNAKE_CASE                -> SENTENCE_CASE                                     : foo.,_bar                                        -> Foo , bar
+395F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo, bar                                         -> Foo, bar
+396F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo , bar                                        -> Foo , bar
+397F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo.,_bar                                        -> Foo.,_bar
 398 _UNKNOWN                  -> SENTENCE_CASE                                     : dark border350A                                  -> Dark border 350 a
 399 _UNKNOWN                  -> SENTENCE_CASE                                     : dark border35.0A                                 -> Dark border 35 0 a
 400 _UNKNOWN                  -> SENTENCE_CASE                                     : dark border35,0A                                 -> Dark border 35,0 a
@@ -429,9 +429,9 @@
 438 WORD_CAPITALIZED          -> WORD_CAPITALIZED                                  : Foo Bar1,1                                       -> Foo Bar1,1
 439F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual _SINGLE_WORD_CAPITALIZED) : foobar                                           -> Foobar
 440F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo,bar                                          -> Foo,Bar
-441 WORD_LOWERCASE            -> WORD_CAPITALIZED                                  : foo, bar                                         -> Foo, Bar
-442 WORD_LOWERCASE            -> WORD_CAPITALIZED                                  : foo , bar                                        -> Foo , Bar
-443 SNAKE_CASE                -> WORD_CAPITALIZED                                  : foo.,_bar                                        -> Foo , Bar
+441F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo, bar                                         -> Foo, Bar
+442F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo , bar                                        -> Foo , Bar
+443F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo.,_bar                                        -> Foo.,_Bar
 444 _UNKNOWN                  -> WORD_CAPITALIZED                                  : dark border350A                                  -> Dark Border 350 A
 445 _UNKNOWN                  -> WORD_CAPITALIZED                                  : dark border35.0A                                 -> Dark Border 35 0 A
 446 _UNKNOWN                  -> WORD_CAPITALIZED                                  : dark border35,0A                                 -> Dark Border 35,0 A
@@ -448,3 +448,98 @@
 457F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual _SINGLE_WORD_CAPITALIZED) : foo350                                           -> Foo350
 458 _SINGLE_WORD_CAPITALIZED  -> WORD_CAPITALIZED                                  : Foo350                                           -> Foo 350
 459 PASCAL_CASE               -> WORD_CAPITALIZED                                  : \My\AppBundle\App\Twig\GoogleTagManagerDataLayer -> \My\App Bundle\App\Twig\Google Tag Manager Data Layer
+                             
+FAILED                        :  
+25F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foobar                                           -> foobar
+26F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo,bar                                          -> foo,bar
+27F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo, bar                                         -> foo, bar
+28F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo , bar                                        -> foo , bar
+29F WORD_LOWERCASE            -> KEBAB_LOWERCASE(actual WORD_LOWERCASE)            : foo.,_bar                                        -> foo.,-bar
+71F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foobar                                           -> FOOBAR
+72F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo,bar                                          -> FOO,BAR
+73F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo, bar                                         -> FOO, BAR
+74F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo , bar                                        -> FOO , BAR
+75F WORD_LOWERCASE            -> KEBAB_UPPERCASE(actual _ALL_UPPER_CASE)           : foo.,_bar                                        -> FOO.,-BAR
+117F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foobar                                           -> foobar
+118F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
+119F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
+120F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
+121F WORD_LOWERCASE           -> SNAKE_CASE(actual WORD_LOWERCASE)                 : foo.,_bar                                        -> foo.,_bar
+163F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foobar                                           -> FOOBAR
+164F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo,bar                                          -> FOO,BAR
+165F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo, bar                                         -> FOO, BAR
+166F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo , bar                                        -> FOO , BAR
+167F WORD_LOWERCASE           -> SCREAMING_SNAKE_CASE(actual _ALL_UPPER_CASE)      : foo.,_bar                                        -> FOO.,_BAR
+186F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : foo bar 1.1                                      -> FooBar1.1
+187F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : foo bar 1_1                                      -> FooBar1_1
+190F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : foo_bar 1.1                                      -> FooBar1.1
+191F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : foo_bar 1_1                                      -> FooBar1_1
+194F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : foo.bar 1.1                                      -> FooBar1.1
+195F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : foo.bar 1_1                                      -> FooBar1_1
+198F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : foo,bar 1.1                                      -> Foo,Bar1.1
+199F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : foo,bar 1_1                                      -> Foo,Bar1_1
+202F DOT                      -> PASCAL_CASE(actual DOT)                           : FooBar1.1                                        -> FooBar1.1
+203F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : FooBar1_1                                        -> FooBar1_1
+206F WORD_CAPITALIZED         -> PASCAL_CASE(actual DOT)                           : Foo Bar1.1                                       -> FooBar1.1
+207F WORD_CAPITALIZED         -> PASCAL_CASE(actual _UNKNOWN)                      : Foo Bar1_1                                       -> FooBar1_1
+209F WORD_LOWERCASE           -> PASCAL_CASE(actual _SINGLE_WORD_CAPITALIZED)      : foobar                                           -> Foobar
+215F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : dark border35.0A                                 -> DarkBorder35.0A
+217F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35_0A                                 -> DarkBorder35_0A
+218F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35-0A                                 -> DarkBorder35-0A
+220F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : dark border35.0a                                 -> DarkBorder35.0A
+222F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35_0a                                 -> DarkBorder35_0A
+223F _UNKNOWN                 -> PASCAL_CASE(actual _UNKNOWN)                      : dark border35-0a                                 -> DarkBorder35-0A
+227F WORD_LOWERCASE           -> PASCAL_CASE(actual _SINGLE_WORD_CAPITALIZED)      : foo350                                           -> Foo350
+228F _SINGLE_WORD_CAPITALIZED -> PASCAL_CASE(actual _SINGLE_WORD_CAPITALIZED)      : Foo350                                           -> Foo350
+232F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo bar 1.1                                      -> fooBar1.1
+233F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : foo bar 1_1                                      -> fooBar1_1
+236F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo_bar 1.1                                      -> fooBar1.1
+237F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : foo_bar 1_1                                      -> fooBar1_1
+240F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo.bar 1.1                                      -> fooBar1.1
+241F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : foo.bar 1_1                                      -> fooBar1_1
+243F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar 1 1                                      -> foo,bar11
+244F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : foo,bar 1.1                                      -> foo,bar1.1
+245F _UNKNOWN                 -> CAMEL_CASE(actual SNAKE_CASE)                     : foo,bar 1_1                                      -> foo,bar1_1
+246F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar 1,1                                      -> foo,bar1,1
+248F DOT                      -> CAMEL_CASE(actual DOT)                            : FooBar1.1                                        -> fooBar1.1
+249F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : FooBar1_1                                        -> fooBar1_1
+252F WORD_CAPITALIZED         -> CAMEL_CASE(actual DOT)                            : Foo Bar1.1                                       -> fooBar1.1
+253F WORD_CAPITALIZED         -> CAMEL_CASE(actual _UNKNOWN)                       : Foo Bar1_1                                       -> fooBar1_1
+255F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foobar                                           -> foobar
+256F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
+257F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
+258F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
+259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo,Bar
+261F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0A                                 -> darkBorder35.0A
+263F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0A                                 -> darkBorder35_0A
+264F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0A                                 -> darkBorder35-0A
+266F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0a                                 -> darkBorder35.0A
+268F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0a                                 -> darkBorder35_0A
+269F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0a                                 -> darkBorder35-0A
+272F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo350a                                          -> foo350A
+273F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo350                                           -> foo350
+274F _SINGLE_WORD_CAPITALIZED -> CAMEL_CASE(actual WORD_LOWERCASE)                 : Foo350                                           -> foo350
+301F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foobar                                           -> foobar
+302F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo,bar                                          -> foo,bar
+303F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo, bar                                         -> foo, bar
+304F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo , bar                                        -> foo , bar
+305F WORD_LOWERCASE           -> DOT(actual WORD_LOWERCASE)                        : foo.,_bar                                        -> foo.,.bar
+381F WORD_LOWERCASE           -> SENTENCE_CASE(actual WORD_CAPITALIZED)            : foo,bar 1 1                                      -> Foo,bar 1 1
+382F _UNKNOWN                 -> SENTENCE_CASE(actual WORD_CAPITALIZED)            : foo,bar 1.1                                      -> Foo,bar 1 1
+383F _UNKNOWN                 -> SENTENCE_CASE(actual WORD_CAPITALIZED)            : foo,bar 1_1                                      -> Foo,bar 1 1
+384F WORD_LOWERCASE           -> SENTENCE_CASE(actual WORD_CAPITALIZED)            : foo,bar 1,1                                      -> Foo,bar 1,1
+393F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foobar                                           -> Foobar
+394F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo,bar                                          -> Foo,bar
+395F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo, bar                                         -> Foo, bar
+396F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo , bar                                        -> Foo , bar
+397F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo.,_bar                                        -> Foo.,_bar
+410F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo350a                                          -> Foo350a
+411F WORD_LOWERCASE           -> SENTENCE_CASE(actual _SINGLE_WORD_CAPITALIZED)    : foo350                                           -> Foo350
+412F _SINGLE_WORD_CAPITALIZED -> SENTENCE_CASE(actual WORD_CAPITALIZED)            : Foo350                                           -> Foo 350
+439F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual _SINGLE_WORD_CAPITALIZED) : foobar                                           -> Foobar
+440F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo,bar                                          -> Foo,Bar
+441F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo, bar                                         -> Foo, Bar
+442F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo , bar                                        -> Foo , Bar
+443F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual PASCAL_CASE)              : foo.,_bar                                        -> Foo.,_Bar
+456F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual _SINGLE_WORD_CAPITALIZED) : foo350a                                          -> Foo350a
+457F WORD_LOWERCASE           -> WORD_CAPITALIZED(actual _SINGLE_WORD_CAPITALIZED) : foo350                                           -> Foo350

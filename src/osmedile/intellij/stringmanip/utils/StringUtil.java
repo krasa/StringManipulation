@@ -20,7 +20,7 @@ import static shaded.org.apache.commons.lang3.StringUtils.*;
  * @version $Id: StringUtil.java 62 2008-04-20 11:11:54Z osmedile $
  */
 public class StringUtil {
-	private static PluginPersistentStateComponent persistentStateComponent;
+	public static PluginPersistentStateComponent persistentStateComponent;
 	public static final char EMPTY_CHAR = 0;
 
 	public static String removeAllSpace(String s) {
@@ -40,7 +40,7 @@ public class StringUtil {
 				buf.append(" ");
 				nc = Character.toLowerCase(c);
 			} else if ((isSeparatorAfterDigit() && isDigit(lastChar) && isLetter(c))
-				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
+					|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
 				if (lastChar != ' ') {
 					buf.append(" ");
 				}
@@ -152,21 +152,50 @@ public class StringUtil {
 	public static String toCamelCase(String s) {
 		String[] words = splitByCharacterTypeCamelCase(s);
 
-		boolean firstWordNotFound = true;
+		boolean firstWord = true;
 		for (int i = 0; i < words.length; i++) {
 			String word = words[i];
-			if (firstWordNotFound && startsWithLetter(word)) {
+			if (firstWord && startsWithLetter(word)) {
 				words[i] = word.toLowerCase();
-				firstWordNotFound = false;
+				firstWord = false;
+				if (i > 1 && isBlank(words[i - 1]) && isAllLetterOrDigit(words[i - 2])) {
+					words[i - 1] = "";
+				}
+			} else if (specialWord(word)) { // multiple camelCases
+				firstWord = true;
 			} else {
 				words[i] = com.intellij.openapi.util.text.StringUtil.capitalize(word.toLowerCase());
+				if (i > 1 && isBlank(words[i - 1]) && isAllLetterOrDigit(words[i - 2])) {
+					words[i - 1] = "";
+				}
 			}
 		}
 		String join = join(words);
 		join = replaceSeparator_keepBetweenDigits(join, '_', EMPTY_CHAR);
 		join = replaceSeparator_keepBetweenDigits(join, '-', EMPTY_CHAR);
 		join = replaceSeparator_keepBetweenDigits(join, '.', EMPTY_CHAR);
-		return join.replaceAll("[\\s]", "");
+		return join;
+	}
+
+	private static boolean isAllLetterOrDigit(String word) {
+		for (char c : word.toCharArray()) {
+			if (!isLetterOrDigit(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean specialWord(String word) {
+		if (isBlank(word)) {
+			return false;
+		}
+		for (char c : word.toCharArray()) {
+			if (isDigit(c) || isLetter(c) ||isSeparator(c)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean startsWithLetter(String word) {
@@ -183,7 +212,7 @@ public class StringUtil {
 		char lastChar = 'a';
 		for (char c : s.toCharArray()) {
 			if (isWhitespace(lastChar) && (!isWhitespace(c) && '_' != c) &&
-				buf.length() > 0 && buf.charAt(buf.length() - 1) != '_') {
+					buf.length() > 0 && buf.charAt(buf.length() - 1) != '_') {
 				buf.append("_");
 			}
 			if (!isWhitespace(c)) {
@@ -202,8 +231,7 @@ public class StringUtil {
 	}
 
 	public static String wordsAndHyphenAndCamelToConstantCase(String s) {
-		boolean _betweenUpperCases = false;
-		boolean containsLowerCase = containsLowerCase(s);
+//		boolean containsLowerCase = containsLowerCase(s);
 
 		StringBuilder buf = new StringBuilder();
 		char previousChar = ' ';
@@ -214,25 +242,25 @@ public class StringUtil {
 			boolean isUpperCaseAndPreviousIsLowerCase = isLowerCase(previousChar) && isUpperCase(c);
 			// boolean isLowerCaseLetter = !isWhitespace(c) && '_' != c && !isUpperCase(c);
 			// boolean isLowerCaseAndPreviousIsWhitespace = isWhitespace(lastChar) && isLowerCaseLetter;
-			boolean previousIsWhitespace = isWhitespace(previousChar);
-			boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
-			boolean isNotUnderscore = c != '_';
+//			boolean previousIsWhitespace = isWhitespace(previousChar);
+//			boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
+//			boolean isNotUnderscore = c != '_';
 			//  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
 
-
 			//camelCase handling - add extra _
-			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace
-				|| (_betweenUpperCases && containsLowerCase && isUpperCaseAndPreviousIsUpperCase))) {
+			if (isLetter(c) && isLetter(previousChar) && (isUpperCaseAndPreviousIsLowerCase || (putSeparatorBetweenUppercases() &&  isUpperCaseAndPreviousIsUpperCase))) {
 				buf.append("_");
+			// extra _ after number
 			} else if ((isSeparatorAfterDigit() && isDigit(previousChar) && isLetter(c))
-				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(previousChar))) { // extra _ after number
+					|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(previousChar))) {
 				buf.append('_');
 			}
 
-			if (shouldReplace(c) && lastOneIsNotUnderscore) {
-				buf.append('_');
-			} else if (!isWhitespace(c) && (isNotUnderscore || lastOneIsNotUnderscore)) {
-				// uppercase anything, do not add whitespace, do not add _ if there was previously
+
+			//replace separators by _
+			if ((isSeparator(c)||isWhitespace(c))&& isLetterOrDigit(previousChar) && nextIsLetterOrDigit(s, i)) {
+					buf.append('_');
+			} else {
 				buf.append(Character.toUpperCase(c));
 			}
 
@@ -246,9 +274,33 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	private static boolean shouldReplace(char c) {
-//		return !isLetterOrDigit(c) && !isSlash(c) && lastOneIsNotUnderscore && !isNotBorderQuote(c, i, chars);       //replace special chars to _ (not quotes, no double _)
-		return c == '.' || c == '_' || c == '-';
+	private static boolean putSeparatorBetweenUppercases() {
+		if (persistentStateComponent == null) {
+			persistentStateComponent = PluginPersistentStateComponent.getInstance();
+		}
+		return persistentStateComponent.getCaseSwitchingSettings().isPutSeparatorBetweenUpperCases();
+	}
+
+	private static boolean betweenLettersOrDigits(char[] chars, int i) {
+		for (int j = i; j < chars.length; j++) {
+			char aChar = chars[j];
+			if (!isLetterOrDigit(aChar) && !isWhitespace(aChar)) {
+				return false;
+			}
+			if (isLetterOrDigit(aChar)) {
+				break;
+			}
+		}
+		for (int j = i; j >= 0; j--) {
+			char aChar = chars[j];
+			if (!isLetterOrDigit(aChar) && !isWhitespace(aChar)) {
+				return false;
+			}
+			if (isLetterOrDigit(aChar)) {
+				break;
+			}
+		}
+		return true;
 	}
 
 	private static boolean isSlash(char c) {
@@ -280,7 +332,7 @@ public class StringUtil {
 			if (lastOneIsNotUnderscore && (isUpperCaseAndPreviousIsLowerCase || previousIsWhitespace)) {
 				buf.append(".");
 			} else if ((isSeparatorAfterDigit() && isDigit(lastChar) && isLetter(c))
-				|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
+					|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(lastChar))) {
 				buf.append(".");
 			}
 
@@ -339,6 +391,22 @@ public class StringUtil {
 			return false;
 		} else {
 			return Character.isDigit(s.charAt(i + 1));
+		}
+	}
+
+	private static boolean nextIsLetterOrDigit(String s, int i) {
+		if (i + 1 >= s.length()) {
+			return false;
+		} else {
+			return Character.isLetterOrDigit(s.charAt(i + 1));
+		}
+	}
+
+	private static boolean nextIsLetter(String s, int i) {
+		if (i + 1 >= s.length()) {
+			return false;
+		} else {
+			return Character.isLetter(s.charAt(i + 1));
 		}
 	}
 
@@ -428,7 +496,7 @@ public class StringUtil {
 		char lastChar = 'a';
 		for (char c : s.toCharArray()) {
 			if (isWhitespace(lastChar) && (!isWhitespace(c) && '-' != c) && buf.length() > 0
-				&& buf.charAt(buf.length() - 1) != '-') {
+					&& buf.charAt(buf.length() - 1) != '-') {
 				buf.append("-");
 			}
 			if ('_' == c) {
@@ -484,4 +552,176 @@ public class StringUtil {
 		return persistentStateComponent.getCaseSwitchingSettings().isSeparatorAfterDigit();
 	}
 
+	public static String substringUntilSpecialCharacter(String s) {
+		int firstLetterOrDigitOrSeparator = -1;
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (!isLetterOrDigit(c) && !isWhitespace(c) && !isSeparator(c) && firstLetterOrDigitOrSeparator != -1) {
+				return s.substring(firstLetterOrDigitOrSeparator, i);
+			}
+			if (isLetterOrDigit(c) || isWhitespace(c) || isSeparator(c)){
+				if (firstLetterOrDigitOrSeparator == -1) {
+					firstLetterOrDigitOrSeparator = i;
+				}
+			}
+		}
+		return s;
+	}
+
+	private static boolean isSeparator(char c) {
+		return c == '.' || c == '-' || c == '_';
+	}
+
+	public static boolean containsOnlyLettersAndDigits(String s) {
+		for (char c : s.toCharArray()) {
+			if (!isLetterOrDigit(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public static boolean noUpperCase(String s) {
+		for (char c : s.toCharArray()) {
+			if (Character.isUpperCase(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static String removeBorderQuotes(String s) {
+		if (isQuoted(s)) {
+			s = s.substring(1, s.length() - 1);
+		}
+		return s;
+	}
+
+	public static boolean isQuoted(String selectedText) {
+		return selectedText != null && selectedText.length() > 2
+				&& (isBorderChar(selectedText, "\"") || isBorderChar(selectedText, "\'"));
+	}
+
+	public static boolean isBorderChar(String s, String borderChar) {
+		return s.startsWith(borderChar) && s.endsWith(borderChar);
+	}
+
+	public static boolean noLowerCase(String s) {
+		for (char c : s.toCharArray()) {
+			if (Character.isLowerCase(c)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean containsUpperCase(String s) {
+		for (char c : s.toCharArray()) {
+			if (Character.isUpperCase(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean containsUpperCaseAfterLowerCase(String s) {
+		char previous = ' ';
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (isUpperCase(c)&& isLetter(previous) && isLowerCase(previous)) {
+				return true;
+			}
+			previous = c;
+		}
+		return false;
+	}
+
+	public static boolean isCapitalizedFirstButNotAll(String str) {
+		if (str.length() == 0) {
+			return false;
+		}
+		Set<Integer> delimiterSet = generateDelimiterSet(new char[]{' '});
+		int strLen = str.length();
+		int index = 0;
+
+		int firstCapitalizedIndex = -1;
+		boolean someUncapitalized = false;
+		boolean afterSeparatorOrFirst = true;
+		while (index < strLen) {
+			int codePoint = str.codePointAt(index);
+//			char c = str.charAt(index);
+			if (delimiterSet.contains(codePoint)) {
+				afterSeparatorOrFirst = true;
+			} else {
+				if (isLowerCase(codePoint) && afterSeparatorOrFirst) {
+					if (firstCapitalizedIndex == -1) {
+						return false;
+					}
+					someUncapitalized = true;
+					afterSeparatorOrFirst = false;
+				} else if (isUpperCase(codePoint) && afterSeparatorOrFirst) {
+					if (firstCapitalizedIndex == -1) {
+						firstCapitalizedIndex = index;
+					}
+					afterSeparatorOrFirst = false;
+				}
+			}
+			index += charCount(codePoint);
+		}
+		return firstCapitalizedIndex != -1 && someUncapitalized;
+	}
+
+	public static boolean startsWithUppercase(String s) {
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (isLetter(c) && isLowerCase(c)) {
+				return false;
+			}
+			if (isLetter(c) && isUpperCase(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean noSeparatorsBetweenLetters(String s, char... delimiters) {
+		if (s.length() == 0) {
+			return true;
+		}
+		Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
+
+		char previous = '?';
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (delimiterSet.contains((int)c)&& isLetterOrDigit(previous) && nextIsLetterOrDigit(s, i)) {
+				return false;
+			}
+			previous = c;
+		}
+		return true;
+	}
+
+
+	public static boolean containsSeparatorBetweenLetters(String s, char separator) {
+		char previous = '?';
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (c==separator&& isLetterOrDigit(previous) && nextIsLetterOrDigit(s, i)) {
+				return true;
+			}
+			previous = c;
+		}
+		return false;
+	}
+
+
+	public static class Constants {
+		public static final char[] DELIMITERS = new char[]{'\'', '\"', ' '};
+	}
 }

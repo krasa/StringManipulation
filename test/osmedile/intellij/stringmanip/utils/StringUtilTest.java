@@ -16,13 +16,15 @@ import static org.junit.Assert.assertEquals;
 public class StringUtilTest extends CaseSwitchingTest {
     @Test
     public void testToCamelCase() {
-        assertEquals("fooBarBar1_1", StringUtil.toCamelCase(" fooBar bar 1_1 "));
-        assertEquals("fooBar11", StringUtil.toCamelCase(" foo bar 1 1 "));
+        assertEquals(" fooBarBar1_1 ", StringUtil.toCamelCase(" fooBar bar 1_1 "));
+        assertEquals(" fooBar11 ", StringUtil.toCamelCase(" foo bar 1 1 "));
         assertEquals("thisIsAText", StringUtil.toCamelCase("This is a text"));
         //this is ugly but nothing can be done about that.
         assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh a TeSt"));
         assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh_a_TeSt"));
         assertEquals("whOAhATeSt", StringUtil.toCamelCase("WhOAh a_TeSt"));
+        assertEquals("11foo22FooBar33Bar44Foo55X6Y7Z", StringUtil.toCamelCase("11Foo22FooBar33Bar44Foo55X6Y7Z"));
+        assertEquals("11foo22FooBar33Bar44Foo55X6Y7Z", StringUtil.toCamelCase("11 Foo 22 Foo Bar 33 Bar 44 Foo55 X6 Y7 Z"));
         //previously
 //        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh a TeSt"));
 //        assertEquals("whoahATest", StringUtil.toCamelCase("WhOAh_a_TeSt"));
@@ -42,14 +44,30 @@ public class StringUtilTest extends CaseSwitchingTest {
         assertEquals("V2_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v2Counter"));
         assertEquals("V22_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter"));
         assertEquals("V22_COUNTER22", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter22"));
+
+        StringUtil.persistentStateComponent.getCaseSwitchingSettings().setPutSeparatorBetweenUpperCases(true);
+        assertEquals("THIS_IS_A_TEXT", StringUtil.wordsAndHyphenAndCamelToConstantCase("ThisIsAText"));
+        assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("WhoahATest"));
+        assertEquals("WHOAH_A_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah ATest"));
+
+        StringUtil.persistentStateComponent.getCaseSwitchingSettings().setPutSeparatorBetweenUpperCases(false);
         assertEquals("THIS_IS_ATEXT", StringUtil.wordsAndHyphenAndCamelToConstantCase("ThisIsAText"));
         assertEquals("WHOAH_ATEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("WhoahATest"));
         assertEquals("WHOAH_ATEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah ATest"));
-        assertEquals("WHOAH_A_TEST,_AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
-        assertEquals("ANOTHER_T_EST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Another      t_Est"));
-        assertEquals("TEST_AGAIN_TEST",
+        StringUtil.persistentStateComponent = null;
+
+        assertEquals("WHOAH  A   TEST, AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
+        assertEquals("ANOTHER      T_EST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Another      t_Est"));
+        assertEquals("TEST_AGAIN     _    _    TEST",
             StringUtil.wordsAndHyphenAndCamelToConstantCase("test again     _    _    test"));
-        assertEquals("TEST_AGAIN_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("TestAgain_   _    Test"));
+        assertEquals("TEST_AGAIN_   _    TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("TestAgain_   _    Test"));
+
+        //being strict, this will no longer work
+//        assertEquals("WHOAH_A_TEST, AGAIN", StringUtil.wordsAndHyphenAndCamelToConstantCase("Whoah  A   Test, again"));
+//        assertEquals("ANOTHER_T_EST", StringUtil.wordsAndHyphenAndCamelToConstantCase("Another      t_Est"));
+//        assertEquals("TEST_AGAIN_TEST",
+//            StringUtil.wordsAndHyphenAndCamelToConstantCase("test again     _    _    test"));
+//        assertEquals("TEST_AGAIN_TEST", StringUtil.wordsAndHyphenAndCamelToConstantCase("TestAgain_   _    Test"));
     }
 
     @Test
