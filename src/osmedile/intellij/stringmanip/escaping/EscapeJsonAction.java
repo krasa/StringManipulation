@@ -2,10 +2,12 @@ package osmedile.intellij.stringmanip.escaping;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-public class EscapeJsonAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class EscapeJsonAction extends AbstractStringManipAction<Object> {
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		return shaded.org.apache.commons.text.StringEscapeUtils.escapeJson(s);
 	}
 }

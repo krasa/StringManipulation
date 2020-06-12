@@ -15,8 +15,11 @@ import com.intellij.psi.util.PsiUtilBase;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
+import java.util.Map;
+
 /** todo write some tests for this shit */
-public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction {
+public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction<Object> {
+	public static final String FROM = "from";
 	private final Logger LOG = Logger.getInstance("#" + getClass().getCanonicalName());
 
 	public AbstractCaseConvertingAction() {
@@ -173,5 +176,12 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			return true;
 		}
 	}
-
+	protected Style getStyle(Map<String, Object> actionContext, String s) {
+		Style from = (Style) actionContext.get(FROM);
+		if (from == null) {
+			from = Style.from(s);
+			actionContext.put(FROM, from);
+		}
+		return from;
+	}
 }

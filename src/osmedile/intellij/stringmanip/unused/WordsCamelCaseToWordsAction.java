@@ -2,7 +2,9 @@ package osmedile.intellij.stringmanip.unused;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-public class WordsCamelCaseToWordsAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class WordsCamelCaseToWordsAction extends AbstractStringManipAction<Object> {
     public WordsCamelCaseToWordsAction() {
     }
 
@@ -11,7 +13,7 @@ public class WordsCamelCaseToWordsAction extends AbstractStringManipAction {
     }
 
 	@Override
-    public String transformByLine(String s) {
+    public String transformByLine(Map<String, Object> actionContext, String s) {
         String res = "";
         for (int i = 0; i < s.length(); i++) {
             Character ch = s.charAt(i);

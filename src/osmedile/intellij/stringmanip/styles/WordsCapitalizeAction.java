@@ -3,6 +3,8 @@ package osmedile.intellij.stringmanip.styles;
 
 import shaded.org.apache.commons.text.WordUtils;
 
+import java.util.Map;
+
 public class WordsCapitalizeAction extends AbstractCaseConvertingAction {
 	public WordsCapitalizeAction() {
 	}
@@ -12,7 +14,7 @@ public class WordsCapitalizeAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		return WordUtils.capitalizeFully(s);
 	}
 }

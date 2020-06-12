@@ -6,6 +6,7 @@ import osmedile.intellij.stringmanip.styles.AbstractCaseConvertingAction;
 import osmedile.intellij.stringmanip.styles.Style;
 
 import java.util.List;
+import java.util.Map;
 
 public class CustomAction extends AbstractCaseConvertingAction {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomAction.class);
@@ -44,10 +45,11 @@ public class CustomAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		List<CustomActionModel.Step> steps = customActionModel.getSteps();
 
-		Style from = Style.from(s);
+		Style from = getStyle(actionContext, s);
+
 		int currentStep = -1;
 		for (int i = 0; i < steps.size(); i++) {
 			CustomActionModel.Step step = steps.get(i);
@@ -63,7 +65,7 @@ public class CustomAction extends AbstractCaseConvertingAction {
 					if (!setupHandler) {
 						System.out.println("from " + from + " to " + step.getStyle());
 					}
-					return stepStyle.transform(from, s);
+					return stepStyle.transform( s);
 				}
 			}
 		}
@@ -78,11 +80,13 @@ public class CustomAction extends AbstractCaseConvertingAction {
 					if (!setupHandler) {
 						System.out.println("from " + from + " to " + step.getStyle());
 					}
-					return step.getStyleAsEnum().transform(from, s);
+					return step.getStyleAsEnum().transform( s);
 				}
 			}
 		}
 		throw new RuntimeException("No enabled steps. " + customActionModel);
 
 	}
+
+
 }

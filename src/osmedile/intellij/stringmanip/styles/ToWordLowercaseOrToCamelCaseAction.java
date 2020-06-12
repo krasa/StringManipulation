@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import java.util.Map;
+
 public class ToWordLowercaseOrToCamelCaseAction extends AbstractCaseConvertingAction {
     public ToWordLowercaseOrToCamelCaseAction() {
     }
@@ -9,12 +11,12 @@ public class ToWordLowercaseOrToCamelCaseAction extends AbstractCaseConvertingAc
     }
 
     @Override
-    public String transformByLine(String s) {
-        Style from = Style.from(s);
+    public String transformByLine(Map<String, Object> actionContext, String s) {
+        Style from = getStyle(actionContext, s);
         if (from != Style.WORD_LOWERCASE) {
-            return Style.WORD_LOWERCASE.transform(from, s);
+            return Style.WORD_LOWERCASE.transform( s);
         } else {
-            return Style.CAMEL_CASE.transform(from, s);
+            return Style.CAMEL_CASE.transform( s);
         }
     }
 }

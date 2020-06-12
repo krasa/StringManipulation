@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import java.util.Map;
+
 public class ToUpperCaseAction extends AbstractCaseConvertingAction {
 	public ToUpperCaseAction() {
 	}
@@ -9,7 +11,7 @@ public class ToUpperCaseAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		return s.toUpperCase();
 	}
 }

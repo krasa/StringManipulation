@@ -2,7 +2,10 @@ package osmedile.intellij.stringmanip.escaping;
 
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
-public class DiacriticsToAsciiAction extends AbstractStringManipAction {
+import java.util.HashMap;
+import java.util.Map;
+
+public class DiacriticsToAsciiAction extends AbstractStringManipAction<Object> {
 
 	public DiacriticsToAsciiAction() {
 	}
@@ -12,7 +15,7 @@ public class DiacriticsToAsciiAction extends AbstractStringManipAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		return toPlain(s);
 	}
 

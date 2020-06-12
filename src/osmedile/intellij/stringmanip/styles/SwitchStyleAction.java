@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import java.util.Map;
+
 @Deprecated
 public class SwitchStyleAction extends AbstractCaseConvertingAction {
 
@@ -31,14 +33,14 @@ public class SwitchStyleAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
-		Style style = Style.from(s);
+	public String transformByLine(Map<String, Object> actionContext, String s) {
+		Style style = getStyle(actionContext, s);
 		for (Style[] styles : transformation) {
 			if (styles[0] == style) {
 				if (!setupHandler) {
 					System.out.println("from " + styles[0] + " to " + styles[1]);
 				}
-				return styles[1].transform(styles[0], s);
+				return styles[1].transform(s);
 			}
 		}
 		return s;

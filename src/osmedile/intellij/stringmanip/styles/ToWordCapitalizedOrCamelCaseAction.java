@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import java.util.Map;
+
 public class ToWordCapitalizedOrCamelCaseAction extends AbstractCaseConvertingAction {
 	public ToWordCapitalizedOrCamelCaseAction() {
 	}
@@ -9,12 +11,12 @@ public class ToWordCapitalizedOrCamelCaseAction extends AbstractCaseConvertingAc
 	}
 
 	@Override
-	public String transformByLine(String s) {
-		Style from = Style.from(s);
+	public String transformByLine(Map<String, Object> actionContext, String s) {
+		Style from = getStyle(actionContext, s);
 		if (from == Style.WORD_CAPITALIZED || from == Style._SINGLE_WORD_CAPITALIZED) {
-			return Style.CAMEL_CASE.transform(from, s);
+			return Style.CAMEL_CASE.transform( s);
 		} else {
-			return Style.WORD_CAPITALIZED.transform(from, s);
+			return Style.WORD_CAPITALIZED.transform( s);
 		}
 	}
 }

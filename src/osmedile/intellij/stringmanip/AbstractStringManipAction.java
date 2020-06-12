@@ -6,9 +6,14 @@ import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.UnprotectedUserDataHolder;
+import com.intellij.openapi.util.UserDataHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import shaded.org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Olivier Smedile
@@ -61,15 +66,16 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	}
 
 	protected void executeMyWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
+		Map<String, Object> actionContext = new HashMap<>();
 		editor.getCaretModel().runForEachCaret(new CaretAction() {
 			@Override
 			public void perform(Caret caret) {
-				executeMyWriteActionPerCaret(caret.getEditor(), caret, dataContext, additionalParam);
+				executeMyWriteActionPerCaret(caret.getEditor(), caret, actionContext, dataContext, additionalParam);
 			}
 		});
 	}
 
-	protected void executeMyWriteActionPerCaret(Editor editor, Caret caret, DataContext dataContext, T additionalParam) {
+	protected void executeMyWriteActionPerCaret(Editor editor, Caret caret, Map<String, Object> actionContext, DataContext dataContext, T additionalParam) {
 		final SelectionModel selectionModel = editor.getSelectionModel();
 		String selectedText = selectionModel.getSelectedText();
 
@@ -82,18 +88,20 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 			}
 		}
 
-		String s = transformSelection(editor, dataContext, selectedText, additionalParam);
+		String s = transformSelection(editor, actionContext, dataContext, selectedText, additionalParam);
 		s = s.replace("\r\n", "\n");
 		s = s.replace("\r", "\n");
         editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
     }
 
 
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, T additionalParam) {
+	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, T additionalParam) {
 		String[] textParts = selectedText.split("\n");
 
 		for (int i = 0; i < textParts.length; i++) {
-			textParts[i] = transformByLine(textParts[i]);
+			if (!StringUtils.isBlank(textParts[i])) {
+				textParts[i] = transformByLine(actionContext, textParts[i]);
+			}
 		}
 
 		String join = StringUtils.join(textParts, '\n');
@@ -113,5 +121,9 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		return true;
 	}
 
-	public abstract String transformByLine(String s);
+	public final String transformByLine( String s) {
+		return transformByLine(new HashMap<>(),s );
+	}
+
+	public abstract String transformByLine(Map<String, Object> actionContext, String s);
 }

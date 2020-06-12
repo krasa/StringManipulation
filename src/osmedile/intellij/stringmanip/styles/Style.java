@@ -128,12 +128,11 @@ public enum Style {
 		return presentableName;
 	}
 
-	public abstract String transform(Style style, String s);
+	protected abstract String transform(Style style, String s);
 
 	public String transform(String s) {
 		Style from = from(s);
-		String transform = this.transform(from, s);
-		return transform;
+		return this.transform(from, s);
 	}
 
 	public static Style from(String s) {

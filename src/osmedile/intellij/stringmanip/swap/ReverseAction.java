@@ -5,15 +5,17 @@ import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import shaded.org.apache.commons.lang3.StringUtils;
 
-public class ReverseAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class ReverseAction extends AbstractStringManipAction<Object> {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String s, Object additionalParam) {
+	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String s, Object additionalParam) {
 		return StringUtils.reverse(s);
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -3,10 +3,12 @@ package osmedile.intellij.stringmanip.escaping;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringEscapeUtil;
 
-public class EscapePHPAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class EscapePHPAction extends AbstractStringManipAction<Object> {
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
         return StringEscapeUtil.escapePHP(s);
     }
 }

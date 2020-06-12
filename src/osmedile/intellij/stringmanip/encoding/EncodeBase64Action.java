@@ -12,6 +12,7 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import javax.swing.*;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 /**
  * @author Olivier Smedile
@@ -69,7 +70,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 	}
 
 	@Override
-	public String transformSelection(Editor editor, DataContext dataContext, final String s, Base64EncodingDialog base64EncodingDialog) {
+	public String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Base64EncodingDialog base64EncodingDialog) {
 		Charset charset = null;
 		try {
 			charset = Charset.forName(base64EncodingDialog.getCharset());
@@ -92,7 +93,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		throw new UnsupportedOperationException();
 	}
 }

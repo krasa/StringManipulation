@@ -3,10 +3,12 @@ package osmedile.intellij.stringmanip.unused;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
-public class WordsToConstantStyleCaseAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class WordsToConstantStyleCaseAction extends AbstractStringManipAction<Object> {
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
         return StringUtil.wordsToConstantCase(s);
     }
 }

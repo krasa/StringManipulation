@@ -5,7 +5,9 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
-public class SwitchFilePathSeparators extends AbstractStringManipAction {
+import java.util.Map;
+
+public class SwitchFilePathSeparators extends AbstractStringManipAction<Object> {
 
     protected SwitchFilePathSeparators() {
     }
@@ -31,7 +33,7 @@ public class SwitchFilePathSeparators extends AbstractStringManipAction {
     }
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
         String s1;
         if (replaceOperation == SwitchTo.op_Unknown) {
             int fslash = s.indexOf('/');

@@ -1,5 +1,8 @@
 package osmedile.intellij.stringmanip.styles;
 
+
+import java.util.Map;
+
 public class ToLowerCaseAction extends AbstractCaseConvertingAction {
 	public ToLowerCaseAction() {
 	}
@@ -9,7 +12,7 @@ public class ToLowerCaseAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		return s.toLowerCase();
 	}
 }

@@ -2,6 +2,8 @@ package osmedile.intellij.stringmanip.styles;
 
 import shaded.org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 public class InvertCaseAction extends AbstractCaseConvertingAction {
     public InvertCaseAction() {
     }
@@ -11,7 +13,7 @@ public class InvertCaseAction extends AbstractCaseConvertingAction {
     }
 
     @Override
-    public String transformByLine(String s) {
+    public String transformByLine(Map<String, Object> actionContext, String s) {
         return StringUtils.swapCase(s);
     }
 }

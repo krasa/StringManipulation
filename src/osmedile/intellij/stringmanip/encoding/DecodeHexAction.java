@@ -19,6 +19,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 public class DecodeHexAction extends AbstractStringManipAction<Charset> {
 
@@ -111,12 +112,12 @@ public class DecodeHexAction extends AbstractStringManipAction<Charset> {
     }
 
     @Override
-    protected String transformSelection(Editor editor, DataContext dataContext, String s, Charset charset) {
+    protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String s, Charset charset) {
         return new String(Hex.decode(s.getBytes(charset)), charset);
     }
 
     @Override
-    public String transformByLine(String s) {
+    public String transformByLine(Map<String, Object> actionContext, String s) {
         throw new NotImplementedException();
     }
 

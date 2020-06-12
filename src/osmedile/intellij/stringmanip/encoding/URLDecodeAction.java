@@ -5,15 +5,17 @@ import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.EncodingUtils;
 
-public class URLDecodeAction extends AbstractStringManipAction {
+import java.util.Map;
+
+public class URLDecodeAction extends AbstractStringManipAction<Object> {
 
 	@Override
-	protected String transformSelection(Editor editor, DataContext dataContext, String selectedText, Object additionalParam) {
+	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, Object additionalParam) {
 		return EncodingUtils.decodeUrl(selectedText);
 	}
 
 	@Override
-	public String transformByLine(String s) {
+	public String transformByLine(Map<String, Object> actionContext, String s) {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import java.util.Map;
+
 public class ToDotStyleAction extends AbstractCaseConvertingAction {
 	public ToDotStyleAction() {
 	}
@@ -9,12 +11,12 @@ public class ToDotStyleAction extends AbstractCaseConvertingAction {
 	}
 
 	@Override
-	public String transformByLine(String s) {
-		Style from = Style.from(s);
+	public String transformByLine(Map<String, Object> actionContext, String s) {
+		Style from = getStyle(actionContext, s);
 		if (from == Style.DOT) {
-			return Style.CAMEL_CASE.transform(from, s);
+			return Style.CAMEL_CASE.transform( s);
 		} else {
-			return Style.DOT.transform(from, s);
+			return Style.DOT.transform( s);
 		}
 	}
 

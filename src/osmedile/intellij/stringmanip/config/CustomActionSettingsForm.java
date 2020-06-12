@@ -196,7 +196,7 @@ public class CustomActionSettingsForm implements Disposable {
 				CustomAction customAction = new CustomAction(selectedItem);
 				Style from = Style.from(text);
 
-				String result = customAction.transformByLine(text);
+				String result = customAction.transformByLine(new HashMap<>(), text);
 				Style to = Style.from(result);
 
 				sb.append(text).append(" $$$-> ").append(result).append(" $$$: (").append(from.getPresentableName()).append(" $$$-> ").append(to.getPresentableName()).append(")\n");
