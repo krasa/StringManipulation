@@ -19,14 +19,14 @@ public class AlignToColumnsActionTest {
 	public void testSpace1() {
 		String process = align("foo      bar"
 			, " ");
-		assertThat(process, is("foo bar"));
+		assertThat(process, is("foo bar\n"));
 	}
 
 	@Test
 	public void test() {
 		String process = align("foo 1     | foo 2"
 			, "|");
-		assertThat(process, is("foo 1 | foo 2"));
+		assertThat(process, is("foo 1 | foo 2\n"));
 	}
 
 
@@ -34,14 +34,14 @@ public class AlignToColumnsActionTest {
 	public void test2() {
 		String process = align("foo 1     | foo 2|"
 			, "|");
-		assertThat(process, is("foo 1 | foo 2 |"));
+		assertThat(process, is("foo 1 | foo 2 |\n"));
 	}
 
 	@Test
 	public void test3() {
 		String process = align("|foo 1     | foo 2"
 			, "|");
-		assertThat(process, is("| foo 1 | foo 2"));
+		assertThat(process, is("| foo 1 | foo 2\n"));
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class AlignToColumnsActionTest {
 		String expectedText =
 			"| foo 1       | foooooooooo 2 | foo 3  | foo 4\n"
 				+ "| val 11      | val 12        | val 13 | val 14 | val 15           |\n"
-				+ "| foooooooooo | val 22        | val 33 | val34  | fooooooooooooooo |";
+				+ "| foooooooooo | val 22        | val 33 | val34  | fooooooooooooooo |\n";
 		// @formatter:on
 
 		String process = align(notFormattedText
@@ -128,7 +128,7 @@ public class AlignToColumnsActionTest {
 
 		String expectedText =
 			"   | foo   1 | foooooooooo 2 | foo    3 | foo            4 | val 11      | val\n" +
-				"12 | val 13  | val 14        | val 15   |                  | foooooooooo | val   22 | val 33 | val34 | fooooooooooooooo |";
+				"12 | val 13  | val 14        | val 15   |                  | foooooooooo | val   22 | val 33 | val34 | fooooooooooooooo |\n";
 		// @formatter:on
 
 		String process = align(notFormattedText
@@ -148,11 +148,11 @@ public class AlignToColumnsActionTest {
 		//  @formatter:off
 		String notFormattedText =
 			"   1  2  345  67 89 \n" +
-				"1 2 3  4  5 6  7 8  9     ";
+				"1 2 3  4  5 6  7 8  9     \n";
 
 		String expectedText =
 			"1 2 345 67 89 \n" +
-				"1 2 3   4  5  6 7 8 9 ";
+				"1 2 3   4  5  6 7 8 9 \n";
 		// @formatter:on
 
 		String process = align(notFormattedText, " ");
@@ -172,11 +172,11 @@ public class AlignToColumnsActionTest {
 		String notFormattedText =
 			"   1  2  345  67 89 \n" +
 				"1 2 3  4  5 6  7 8  9 \n" +
-				"     ";
+				"    \n";
 
 		String expectedText =
 			"1 2 345 67 89 \n" +
-				"1 2 3   4  5  6 7 8 9 \n";
+				"1 2 3   4  5  6 7 8 9 \n\n";
 		// @formatter:on
 
 		String process = align(notFormattedText, " ");
@@ -189,7 +189,6 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
-
 
 	@Test
 	public void test12() {
@@ -204,7 +203,7 @@ public class AlignToColumnsActionTest {
 			"$table->addColumn('field_01',        'boolean',  ['default' => false]);\n" +
 				"$table->addColumn('field_02',        'boolean',  ['default' => false]);\n" +
 				"$table->addColumn('field_03',        'datetime', ['notnull' => false]);\n" +
-				"$table->addColumn('field_long_name', 'datetime', ['notnull' => false]);";
+				"$table->addColumn('field_long_name', 'datetime', ['notnull' => false]);\n";
 		// @formatter:on
 
 
@@ -232,7 +231,7 @@ public class AlignToColumnsActionTest {
 
 		String expectedText =
 			"93 WORD_LOWERCASE -> CAMEL_CASE : foo350a         -> foo350A\n" +
-				"97 _UNKNOWN       -> DOT        : dark border350A -> dark.border350.a";
+				"97 _UNKNOWN       -> DOT        : dark border350A -> dark.border350.a\n";
 		// @formatter:on
 
 
@@ -254,11 +253,11 @@ public class AlignToColumnsActionTest {
 		// @formatter:off
 		String notFormattedText =
 			"93 WORD_LOWERCASE -> CAMEL_CASE: foo350a -> foo350A\n" +
-				"97 _UNKNOWN -> DOT: dark border350A -> dark.border350.a";
+				"97 _UNKNOWN -> DOT: dark border350A -> dark.border350.a\n";
 
 		String expectedText =
 			"93 WORD_LOWERCASE -> CAMEL_CASE : foo350a         -> foo350A\n" +
-				"97 _UNKNOWN       -> DOT        : dark border350A -> dark.border350.a";
+				"97 _UNKNOWN       -> DOT        : dark border350A -> dark.border350.a\n";
 		// @formatter:on
 
 
@@ -285,7 +284,7 @@ public class AlignToColumnsActionTest {
 
 		String expectedText =
 			"93 WORD_LOWERCASE -> CAMEL_CASE : foo350a               -> foo350A\n" +
-				"97 _UNKNOWN       -> DOT              : dark border350A -> dark.border350.a";
+				"97 _UNKNOWN       -> DOT              : dark border350A -> dark.border350.a\n";
 		// @formatter:on
 
 
@@ -335,7 +334,7 @@ public class AlignToColumnsActionTest {
 	public void testSpace17() {
 		String process = align("zm9vig-jhcg=="
 			, ",", "");
-		assertThat(process, is("zm9vig-jhcg=="));
+		assertThat(process, is("zm9vig-jhcg==\n"));
 	}
 
 	@Test
@@ -347,7 +346,7 @@ public class AlignToColumnsActionTest {
 
 		String expectedText =
 			"< li > Convert diacritics (accents) to      ASCII   < /li >\n" +
-			"< li > Convert non-ASCII  to        escaped Unicode < /li >";
+			"< li > Convert non-ASCII  to        escaped Unicode < /li >\n";
 		// @formatter:on
 
 
@@ -375,7 +374,7 @@ public class AlignToColumnsActionTest {
 		String expectedText =
 "1 | 2    --- 3 4-5 --- 6 ---\n" +
 "1 | 2123 |         --- 3    4-445 | |\n" +
-"1 | 25   --- 3 4-5       |  66";
+"1 | 25   --- 3 4-5       |  66\n";
 		// @formatter:on
 
 
@@ -401,7 +400,7 @@ public class AlignToColumnsActionTest {
 
 String expectedText =
 "foo bar\n" +
-"foo bar" ;
+"foo bar\n" ;
 
 		// @formatter:on
 
