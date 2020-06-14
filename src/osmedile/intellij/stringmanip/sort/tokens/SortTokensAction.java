@@ -14,13 +14,6 @@ import javax.swing.*;
 import java.util.List;
 
 public class SortTokensAction extends MyEditorAction {
-	public static final String STORE_KEY = "StringManipulation.SortAction.SortTokensModel";
-	private String storeKey = STORE_KEY;
-
-	public SortTokensAction(String storeKey) {
-		this();
-		this.storeKey = storeKey;
-	}
 
 	protected SortTokensAction() {
 		this(true);

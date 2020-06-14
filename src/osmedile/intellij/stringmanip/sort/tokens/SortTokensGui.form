@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="745" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <preferredSize width="700" height="700"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="8e7a3" binding="sortSubPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
