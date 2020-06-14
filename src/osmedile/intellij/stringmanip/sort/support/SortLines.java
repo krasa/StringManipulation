@@ -7,13 +7,13 @@ import java.util.*;
 public class SortLines {
 	private List<SortLine> lines = new ArrayList<SortLine>();
 	private Map<Integer, String> emptyLines = new TreeMap<Integer, String>();
-	private boolean endsWith;
+	private boolean endsWithNewLine;
 	private final SortSettings sortSettings;
 
 
 	public SortLines(String text, SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
-		this.endsWith = text.endsWith("\n");
+		this.endsWithNewLine = text.endsWith("\n");
 
 		String[] split = text.split("\n");
 		List<String> list = Arrays.asList(split);
@@ -42,7 +42,7 @@ public class SortLines {
 	public String sort() {
 		List<String> sort = sortLines();
 		String join = StringUtils.join(sort.toArray(), '\n');
-		if (endsWith) {
+		if (endsWithNewLine) {
 			join = join + "\n";
 		}
 		return join;

@@ -9,24 +9,24 @@ import java.util.*;
 
 public enum Sort {
 
-	SHUFFLE(new Comparator<SortLine>() {
+	SHUFFLE(new Comparator<Sortable>() {
 
 		@Override
-		public int compare(SortLine o1, SortLine o2) {
+		public int compare(Sortable o1, Sortable o2) {
 			throw new RuntimeException();
 		}
 	}),
-	REVERSE(new Comparator<SortLine>() {
+	REVERSE(new Comparator<Sortable>() {
 		@Override
-		public int compare(SortLine o1, SortLine o2) {
+		public int compare(Sortable o1, Sortable o2) {
 			throw new RuntimeException();
 		}
 	}),
 	CASE_SENSITIVE_A_Z(new ComparatorAdapterFactory() {
-		public Comparator<SortLine> adapter(Comparator<String> comparator) {
-			return new Comparator<SortLine>() {
+		public Comparator<Sortable> adapter(Comparator<String> comparator) {
+			return new Comparator<Sortable>() {
 				@Override
-				public int compare(SortLine o1, SortLine o2) {
+				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
 					}
@@ -36,10 +36,10 @@ public enum Sort {
 		}
 	}),
 	CASE_SENSITIVE_Z_A(new ComparatorAdapterFactory() {
-		public Comparator<SortLine> adapter(Comparator<String> comparator) {
-			return new Comparator<SortLine>() {
+		public Comparator<Sortable> adapter(Comparator<String> comparator) {
+			return new Comparator<Sortable>() {
 				@Override
-				public int compare(SortLine o1, SortLine o2) {
+				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o2.getTextForComparison().compareTo(o1.getTextForComparison());
 					}
@@ -50,10 +50,10 @@ public enum Sort {
 		}
 	}),
 	CASE_INSENSITIVE_A_Z(new ComparatorAdapterFactory() {
-		public Comparator<SortLine> adapter(Comparator<String> comparator) {
-			return new Comparator<SortLine>() {
+		public Comparator<Sortable> adapter(Comparator<String> comparator) {
+			return new Comparator<Sortable>() {
 				@Override
-				public int compare(SortLine o1, SortLine o2) {
+				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o1.getTextForComparison().compareToIgnoreCase(o2.getTextForComparison());
 					}
@@ -63,10 +63,10 @@ public enum Sort {
 		}
 	}),
 	CASE_INSENSITIVE_Z_A(new ComparatorAdapterFactory() {
-		public Comparator<SortLine> adapter(Comparator<String> comparator) {
-			return new Comparator<SortLine>() {
+		public Comparator<Sortable> adapter(Comparator<String> comparator) {
+			return new Comparator<Sortable>() {
 				@Override
-				public int compare(SortLine o1, SortLine o2) {
+				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o2.getTextForComparison().compareToIgnoreCase(o1.getTextForComparison());
 					}
@@ -75,22 +75,22 @@ public enum Sort {
 			};
 		}
 	}),
-	LINE_LENGTH_SHORT_LONG(new Comparator<SortLine>() {
+	LINE_LENGTH_SHORT_LONG(new Comparator<Sortable>() {
 		@Override
-		public int compare(SortLine o1, SortLine o2) {
+		public int compare(Sortable o1, Sortable o2) {
 			return o1.getTextForComparison().length() - o2.getTextForComparison().length();
 		}
 	}),
-	LINE_LENGTH_LONG_SHORT(new Comparator<SortLine>() {
+	LINE_LENGTH_LONG_SHORT(new Comparator<Sortable>() {
 		@Override
-		public int compare(SortLine o1, SortLine o2) {
+		public int compare(Sortable o1, Sortable o2) {
 			return o2.getTextForComparison().length() - o1.getTextForComparison().length();
 
 		}
 	}),
-	HEXA(new Comparator<SortLine>() {   //TODO error handling?
+	HEXA(new Comparator<Sortable>() {   //TODO error handling?
 		@Override
-		public int compare(SortLine o1, SortLine o2) {
+		public int compare(Sortable o1, Sortable o2) {
 			return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
 		}
 
@@ -104,10 +104,10 @@ public enum Sort {
 		}
 	});
 
-	private Comparator<SortLine> comparator;
+	private Comparator<Sortable> comparator;
 	private ComparatorAdapterFactory factory;
 
-	Sort(Comparator<SortLine> comparator) {
+	Sort(Comparator<Sortable> comparator) {
 		this.comparator = comparator;
 	}
 
@@ -115,7 +115,7 @@ public enum Sort {
 		this.factory = factory;
 	}
 
-	public <T extends SortLine> List<T> sortLines(List<T> lines, SortSettings.BaseComparator baseComparator, String languageTag) {
+	public <T extends Sortable> List<T> sortLines(List<T> lines, SortSettings.BaseComparator baseComparator, String languageTag) {
 		List<T> sortedLines = new ArrayList<T>(lines);
 		switch (this) {
 			case SHUFFLE:
@@ -130,7 +130,7 @@ public enum Sort {
 		return sortedLines;
 	}
 
-	public Comparator<SortLine> getSortLineComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
+	public Comparator<Sortable> getSortLineComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
 		Comparator<String> baseComparator = getStringComparator(baseComparatorEnum, languageTag);
 		if (factory != null) {
 			return factory.adapter(baseComparator);
@@ -180,7 +180,7 @@ public enum Sort {
 	}
 
 	static abstract class ComparatorAdapterFactory {
-		abstract Comparator<SortLine> adapter(Comparator<String> comparator);
+		abstract Comparator<Sortable> adapter(Comparator<String> comparator);
 	}
 
 }

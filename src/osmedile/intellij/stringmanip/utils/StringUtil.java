@@ -4,9 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import shaded.org.apache.commons.lang3.CharUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -718,6 +716,43 @@ public class StringUtil {
 			previous = c;
 		}
 		return false;
+	}
+
+	@NotNull
+	public static List<String> splitToTokensBySpace(String originalText) {
+		char[] chars = originalText.toCharArray();
+		List<String> result = new ArrayList<>();
+
+		int whiteSpaceBeginning = -1;
+		int tokenBeginning = -1;
+		for (int i = 0; i < chars.length; i++) {
+			char aChar = chars[i];
+			if (aChar == ' ') {
+				if (whiteSpaceBeginning == -1) {
+					whiteSpaceBeginning = i;
+				}
+				if (tokenBeginning != -1) {
+					result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, i )));
+					tokenBeginning = -1;
+				}
+			} else {
+				if (whiteSpaceBeginning != -1) {
+					result.add(new String(Arrays.copyOfRange(chars, whiteSpaceBeginning, i)));
+					whiteSpaceBeginning = -1;
+				}
+				if (tokenBeginning == -1) {
+					tokenBeginning = i;
+				}
+			}
+		}
+
+		if (tokenBeginning != -1) {
+			result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, chars.length )));
+		}
+		if (whiteSpaceBeginning != -1) {
+			result.add(new String(Arrays.copyOfRange(chars, whiteSpaceBeginning, chars.length)));
+		}
+		return result;
 	}
 
 

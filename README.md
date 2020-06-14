@@ -75,6 +75,7 @@ Provides actions for text manipulation:
             <li>Sort line length asc., desc.</li>
             <li>Sort hexadecimally</li>
             <li>Sort lines by subselection - only one selection/caret per line is handled</li>
+            <li>Sort tokens (delimited text)</li>
         </ul>
     </p>
     <p>

@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>7.8.191.000.0</version>
+    <version>8.0.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -318,6 +318,11 @@
                         text="Sort Lines"
                         description="Universal lines sort with all kinds of features">
                 </action>
+                <action id="StringManipulation.SortTokens"
+                        class="osmedile.intellij.stringmanip.sort.tokens.SortTokensAction"
+                        text="Sort Tokens"
+                        description="Sort delimited text">
+                </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
                         text="Sort Lines by SubSelection"
@@ -549,6 +554,7 @@
 				<li>Sort line length asc., desc.</li>
 				<li>Sort hexadecimally</li>
 				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
+				<li>Sort tokens (delimited text)</li>
 			</ul>
 		</p>
 		<p>
@@ -598,9 +604,11 @@
         <![CDATA[
 	<p>                   
 	    <div>
-	        <h4>Version 7.8</h4>
+	        <h4>Version 8.0</h4>
 	        <ul>
                 <li>More universal case switching</li>
+                <li>All carets and lines should now switch to the same case</li>
+                <li>Added: Sort tokens (delimited text)</li>
             </ul>
 	    </div>
 	    <div>

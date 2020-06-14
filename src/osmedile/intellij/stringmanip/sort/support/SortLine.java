@@ -5,7 +5,7 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
 import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 import static com.intellij.openapi.util.text.StringUtil.isWhiteSpace;
 
-public class SortLine {
+public class SortLine implements Sortable {
 
 	private final String text;
 	private final SortSettings sortSettings;
@@ -28,7 +28,7 @@ public class SortLine {
 	protected String makeTextForComparison(String text, SortSettings sortSettings) {
 		String textForComparison = text;
 		if (sortSettings.isIgnoreLeadingSpaces()) {
-			textForComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text), text.length());
+			textForComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text));
 		}
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
 			int textWithoutTrailingCharsEndIndex = lastIndexOfAnyBut(textForComparison, sortSettings.getTrailingChars());
@@ -37,6 +37,7 @@ public class SortLine {
 		return textForComparison;
 	}
 
+	@Override
 	public String getTextForComparison() {
 		return textForComparison;
 	}

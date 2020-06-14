@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.align;
 import com.intellij.openapi.diagnostic.Logger;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
+import osmedile.intellij.stringmanip.sort.support.Sortable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -200,7 +201,7 @@ public class ColumnAligner {
 			} else {
 				linesToSort = lines;
 			}
-			Comparator<SortLine> comparator = sortSettings.getSortType().getSortLineComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+			Comparator<Sortable> comparator = sortSettings.getSortType().getSortLineComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
 
 			linesToSort.sort(new Comparator<ColumnAlignerLine>() {
 				@Override
