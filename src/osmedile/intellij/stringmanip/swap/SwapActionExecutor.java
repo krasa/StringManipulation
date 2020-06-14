@@ -297,7 +297,6 @@ public class SwapActionExecutor {
 	}
 
 	private void swapTokens() {
-		ObjectUtils.assertNotNull(separator);
 		for (CaretState caretsAndSelection : caretsAndSelections) {
 			int start = toOffset(caretsAndSelection.getSelectionStart());
 			int end = toOffset(caretsAndSelection.getSelectionEnd());
