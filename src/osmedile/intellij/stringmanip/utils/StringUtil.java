@@ -169,9 +169,9 @@ public class StringUtil {
 			}
 		}
 		String join = join(words);
-		join = replaceSeparator_keepBetweenDigits(join, '_', EMPTY_CHAR);
-		join = replaceSeparator_keepBetweenDigits(join, '-', EMPTY_CHAR);
-		join = replaceSeparator_keepBetweenDigits(join, '.', EMPTY_CHAR);
+		join = replaceSeparatorBetweenLetters(join, '_', EMPTY_CHAR);
+		join = replaceSeparatorBetweenLetters(join, '-', EMPTY_CHAR);
+		join = replaceSeparatorBetweenLetters(join, '.', EMPTY_CHAR);
 		return join;
 	}
 
@@ -360,20 +360,26 @@ public class StringUtil {
 	}
 
 	@NotNull
-	public static String replaceSeparator_keepBetweenDigits(String s, char from, char to) {
+	public static String replaceSeparatorBetweenLetters(String s, char from, char to) {
 		StringBuilder buf = new StringBuilder();
 		char lastChar = ' ';
 		char[] charArray = s.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
-			boolean lastDigit = isDigit(lastChar);
-			boolean nextDigit = nextIsDigit(s, i);
+			if (c == from) {
+				boolean lastDigit = isDigit(lastChar);
+				boolean lastLetterOrDigit = isLetterOrDigit(lastChar);
+				boolean nextDigit = nextIsDigit(s, i);
+				boolean nextLetterOrDigit = nextIsLetterOrDigit(s, i);
 
-			if (c == from && lastDigit && nextDigit) {
-				buf.append(c);
-			} else if (c == from) {
-				if (to != EMPTY_CHAR) {
-					buf.append(to);
+				if (lastDigit && nextDigit) {
+					buf.append(c);
+				} else if (lastLetterOrDigit && nextLetterOrDigit) {
+					if (to != EMPTY_CHAR) {
+						buf.append(to);
+					}
+				} else {
+					buf.append(c);
 				}
 			} else {
 				buf.append(c);

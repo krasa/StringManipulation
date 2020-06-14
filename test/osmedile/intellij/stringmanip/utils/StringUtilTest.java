@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class StringUtilTest extends CaseSwitchingTest {
     @Test
     public void testToCamelCase() {
+        assertEquals("fooBar...", StringUtil.toCamelCase("foo bar..."));
         assertEquals(" fooBarBar1_1 ", StringUtil.toCamelCase(" fooBar bar 1_1 "));
         assertEquals(" fooBar11 ", StringUtil.toCamelCase(" foo bar 1 1 "));
         assertEquals("thisIsAText", StringUtil.toCamelCase("This is a text"));
@@ -35,6 +36,7 @@ public class StringUtilTest extends CaseSwitchingTest {
     public void testWordsAndCamelToConstantCase() {
         PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorAfterDigit(true);
         PluginPersistentStateComponent.getInstance().getCaseSwitchingSettings().setSeparatorBeforeDigit(true);
+        assertEquals("FOO_BAR... ", StringUtil.wordsAndHyphenAndCamelToConstantCase("fooBar... "));
         assertEquals("V_2_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v2Counter"));
         assertEquals("V_22_COUNTER", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter"));
         assertEquals("V_22_COUNTER_22", StringUtil.wordsAndHyphenAndCamelToConstantCase("v22Counter22"));
@@ -96,7 +98,7 @@ public class StringUtilTest extends CaseSwitchingTest {
 
     @Test
     public void replaceSeparator_keepBetweenDigits() {
-        assertEquals(" foo bar 1_1 ", StringUtil.replaceSeparator_keepBetweenDigits("_foo_bar_1_1_", '_', ' '));
+        assertEquals("_foo bar 1_1_", StringUtil.replaceSeparatorBetweenLetters("_foo_bar_1_1_", '_', ' '));
 
     }
 }

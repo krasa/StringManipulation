@@ -206,7 +206,7 @@
 210 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo,bar                                          -> Foo,Bar
 211 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo, bar                                         -> Foo, Bar
 212 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo , bar                                        -> Foo , Bar
-213 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo.,_bar                                        -> Foo,Bar
+213 WORD_LOWERCASE            -> PASCAL_CASE                                       : foo.,_bar                                        -> Foo.,_Bar
 214 _UNKNOWN                  -> PASCAL_CASE                                       : dark border350A                                  -> DarkBorder350A
 215F _UNKNOWN                 -> PASCAL_CASE(actual DOT)                           : dark border35.0A                                 -> DarkBorder35.0A
 216 _UNKNOWN                  -> PASCAL_CASE                                       : dark border35,0A                                 -> DarkBorder35,0A
@@ -251,7 +251,7 @@
 256F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
 257F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
 258F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
-259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo,Bar
+259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo.,_Bar
 260 _UNKNOWN                  -> CAMEL_CASE                                        : dark border350A                                  -> darkBorder350A
 261F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0A                                 -> darkBorder35.0A
 262 _UNKNOWN                  -> CAMEL_CASE                                        : dark border35,0A                                 -> darkBorder35,0a
@@ -509,7 +509,7 @@ FAILED                        :
 256F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo,bar                                          -> foo,bar
 257F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo, bar                                         -> foo, bar
 258F WORD_LOWERCASE           -> CAMEL_CASE(actual WORD_LOWERCASE)                 : foo , bar                                        -> foo , bar
-259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo,Bar
+259F WORD_LOWERCASE           -> CAMEL_CASE(actual _UNKNOWN)                       : foo.,_bar                                        -> foo.,_Bar
 261F _UNKNOWN                 -> CAMEL_CASE(actual DOT)                            : dark border35.0A                                 -> darkBorder35.0A
 263F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35_0A                                 -> darkBorder35_0A
 264F _UNKNOWN                 -> CAMEL_CASE(actual _UNKNOWN)                       : dark border35-0A                                 -> darkBorder35-0A
