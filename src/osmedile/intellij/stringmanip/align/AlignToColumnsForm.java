@@ -303,7 +303,10 @@ public class AlignToColumnsForm {
 		for (Component component : components) {
 			JPanel panel = (JPanel) component;
 			JBTextField field = (JBTextField) panel.getComponent(0);
-			strings.add(field.getText());
+			String text = field.getText();
+			if (!isEmpty(text)) {
+				strings.add(text);
+			}
 		}
 		return strings;
 	}
