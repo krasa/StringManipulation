@@ -5,9 +5,8 @@ import shaded.org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
 public class SortLines {
-	private List<SortLine> lines = new ArrayList<SortLine>();
-	private Map<Integer, String> emptyLines = new TreeMap<Integer, String>();
 	private boolean endsWithNewLine;
+	private List<String> originalLines;
 	private final SortSettings sortSettings;
 
 
@@ -16,27 +15,12 @@ public class SortLines {
 		this.endsWithNewLine = text.endsWith("\n");
 
 		String[] split = text.split("\n");
-		List<String> list = Arrays.asList(split);
-		initLines(sortSettings, list);
-	}
-
-	protected void initLines(SortSettings sortSettings, List<String> list) {
-		for (int i = 0; i < list.size(); i++) {
-			String s = list.get(i);
-			if (shaded.org.apache.commons.lang3.StringUtils.isBlank(s)) {
-				if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE) {
-					emptyLines.put(i, s);
-				}
-				continue;
-			}
-			this.lines.add(new SortLine(s, sortSettings));
-		}
+		originalLines = Arrays.asList(split);
 	}
 
 	public SortLines(List<String> text, SortSettings sortSettings) {
+		originalLines = text;
 		this.sortSettings = sortSettings;
-
-		initLines(sortSettings, text);
 	}
 
 	public String sort() {
@@ -49,16 +33,28 @@ public class SortLines {
 	}
 
 	public List<String> sortLines() {
-		Sort sortType = sortSettings.getSortType();
-		List<SortLine> lines = sortType.sortLines(this.lines, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+		Map<Integer, String> emptyLines = new TreeMap<Integer, String>();
+		List<SortLine> linesToSort = new ArrayList<SortLine>();
 
-		List<String> result = new ArrayList<>();
-		for (int i = 0; i < lines.size(); i++) {
-			SortLine originalLine = this.lines.get(i);
-			SortLine newLine = lines.get(i);
-			result.add(originalLine.transformTo(newLine));
+		for (int i1 = 0; i1 < originalLines.size(); i1++) {
+			String s = originalLines.get(i1);
+			if (StringUtils.isBlank(s)) {
+				if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE) {
+					emptyLines.put(i1, s);
+				}
+				continue;
+			}
+			linesToSort.add(new SortLine(s, sortSettings));
 		}
 
+		List<SortLine> sortedLines = sortSettings.getSortType().sortLines(linesToSort, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+
+		List<String> result = new ArrayList<>();
+		for (int i = 0; i < sortedLines.size(); i++) {
+			SortLine originalLine = linesToSort.get(i);
+			SortLine newLine = sortedLines.get(i);
+			result.add(originalLine.transformTo(newLine));
+		}
 
 		for (Map.Entry<Integer, String> emptyLine : emptyLines.entrySet()) {
 			result.add(emptyLine.getKey(), emptyLine.getValue());
