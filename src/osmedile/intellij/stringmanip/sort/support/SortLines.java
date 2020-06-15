@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import org.jetbrains.annotations.NotNull;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -33,32 +34,127 @@ public class SortLines {
 	}
 
 	public List<String> sortLines() {
-		Map<Integer, String> emptyLines = new TreeMap<Integer, String>();
-		List<SortLine> linesToSort = new ArrayList<SortLine>();
+		if (sortSettings.isHierarchicalSort()) {
+			return new HierarchicalSort(originalLines, sortSettings).sort();
+		}
+
+		List<Sortable> originalLines = toSortables(this.originalLines);
+
+		if (sortSettings.isSortByGroups()) {
+			List<Sortable> sortables = sortByGroup(originalLines, sortSettings);
+			return toStrings(sortables);
+		}
+
+		List<Sortable> result = flatSort(originalLines, sortSettings, sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE);
+		return toStrings(result);
+	}
+
+	private List<String> toStrings(List<Sortable> result) {
+		List<String> strings = new ArrayList<>();
+		for (Sortable sortable : result) {
+			strings.add(sortable.getText());
+		}
+		return strings;
+	}
+
+	private List<Sortable> toSortables(List<String> originalLines) {
+		List<Sortable> sortables = new ArrayList<>();
+		for (String originalLine : originalLines) {
+			sortables.add(new SortLine(originalLine, sortSettings));
+		}
+		return sortables;
+	}
+
+	@NotNull
+	public static <T extends Sortable> List<T> flatSort(List<T> originalLines, SortSettings sortSettings, boolean preserveBlank) {
+		Map<Integer, T> emptyLines = new TreeMap<>();
+		List<T> linesToSort = new ArrayList<>();
 
 		for (int i1 = 0; i1 < originalLines.size(); i1++) {
-			String s = originalLines.get(i1);
-			if (StringUtils.isBlank(s)) {
-				if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE) {
+			T s = originalLines.get(i1);
+			if (StringUtils.isBlank(s.getText())) {
+				if (preserveBlank) {
 					emptyLines.put(i1, s);
 				}
 				continue;
 			}
-			linesToSort.add(new SortLine(s, sortSettings));
+			linesToSort.add(s);
 		}
 
-		List<SortLine> sortedLines = sortSettings.getSortType().sortLines(linesToSort, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+		List<T> sortedLines = sortSettings.getSortType().sortLines(linesToSort, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
 
-		List<String> result = new ArrayList<>();
+		List<T> result = new ArrayList<>();
 		for (int i = 0; i < sortedLines.size(); i++) {
-			SortLine originalLine = linesToSort.get(i);
-			SortLine newLine = sortedLines.get(i);
-			result.add(originalLine.transformTo(newLine));
+			T originalLine = linesToSort.get(i);
+			T newLine = sortedLines.get(i);
+			if (originalLine instanceof SortLine && newLine instanceof SortLine) {
+				//preserve leading/trailing space
+				result.add((T) ((SortLine) originalLine).transformTo((SortLine) newLine));
+			} else {
+				result.add(newLine);
+			}
 		}
 
-		for (Map.Entry<Integer, String> emptyLine : emptyLines.entrySet()) {
+		for (Map.Entry<Integer, T> emptyLine : emptyLines.entrySet()) {
 			result.add(emptyLine.getKey(), emptyLine.getValue());
 		}
 		return result;
 	}
+
+	public static <T extends Sortable> List<T> sortByGroup(List<T> originalLines, SortSettings sortSettings) {
+		boolean sortByLevel = true;
+		List<T> result = new ArrayList<>();
+
+		int from = 0;
+		while (from < originalLines.size()) {
+			Map<Integer, T> emptyLines = new TreeMap<>();
+			List<T> linesToSort = new ArrayList<>();
+			int prevLevel = -1;
+			int level;
+
+			for (int i1 = from; i1 < originalLines.size(); i1++) {
+
+				T s = originalLines.get(i1);
+				String text = s.getText();
+				level = HierarchicalSort.level(text);
+				if (sortByLevel && prevLevel != -1 && prevLevel != level) {
+					break;
+				}
+				if (StringUtils.isBlank(text)) {
+					if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE || sortByLevel) {
+						from++;
+						emptyLines.put(i1, s);
+					}
+					if (sortByLevel && !linesToSort.isEmpty()) {
+						break;
+					}
+					continue;
+				}
+				from++;
+				linesToSort.add(s);
+
+
+				prevLevel = level;
+			}
+
+			List<T> sortedLines = sortSettings.getSortType().sortLines(linesToSort, sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+
+			for (int i = 0; i < sortedLines.size(); i++) {
+				T originalLine = linesToSort.get(i);
+				T newLine = sortedLines.get(i);
+				if (originalLine instanceof SortLine && newLine instanceof SortLine) {
+					//preserve leading/trailing space
+					result.add((T) ((SortLine) originalLine).transformTo((SortLine) newLine));
+				} else {
+					result.add(newLine);
+				}
+			}
+
+			for (Map.Entry<Integer, T> emptyLine : emptyLines.entrySet()) {
+				result.add(emptyLine.getKey(), emptyLine.getValue());
+			}
+		}
+		return result;
+	}
+
 }

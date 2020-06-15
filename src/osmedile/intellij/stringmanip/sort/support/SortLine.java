@@ -42,31 +42,37 @@ public class SortLine implements Sortable {
 		return textForComparison;
 	}
 
-	public String transformTo(SortLine line) {
-		String result = line.text;
-		String fromText = text;
+	public String transformFrom(String originalLine) {
+		return transform(originalLine, text);
+	}
+
+	public SortLine transformTo(SortLine to) {
+		return new SortLine(transform(text, to.text), sortSettings);
+	}
+
+	protected String transform(String from, String to) {
 		if (sortSettings.isPreserveLeadingSpaces()) {
-			int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(fromText);
-			int newContentStartIndex = StringUtil.indexOfAnyButWhitespace(result);
+			int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(from);
+			int newContentStartIndex = StringUtil.indexOfAnyButWhitespace(to);
 
-			String oldContentLeadingSpaces = fromText.substring(0, oldContentStartIndex);
-			String newActualContent = result.substring(newContentStartIndex, result.length());
+			String oldContentLeadingSpaces = from.substring(0, oldContentStartIndex);
+			String newActualContent = to.substring(newContentStartIndex, to.length());
 
-			result = oldContentLeadingSpaces + newActualContent;
+			to = oldContentLeadingSpaces + newActualContent;
 		}
 
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
-			int newContentEndIndex = lastIndexOfAnyBut(result, sortSettings.getTrailingChars());
-			int oldContentEndIndex = lastIndexOfAnyBut(fromText, sortSettings.getTrailingChars());
+			int newContentEndIndex = lastIndexOfAnyBut(to, sortSettings.getTrailingChars());
+			int oldContentEndIndex = lastIndexOfAnyBut(from, sortSettings.getTrailingChars());
 
-			String newContentWithoutTrailingCharacters = result.substring(0, newContentEndIndex);
-			String oldTrailingCharacters = fromText.substring(oldContentEndIndex);
+			String newContentWithoutTrailingCharacters = to.substring(0, newContentEndIndex);
+			String oldTrailingCharacters = from.substring(oldContentEndIndex);
 
-			result = newContentWithoutTrailingCharacters + oldTrailingCharacters;
+			to = newContentWithoutTrailingCharacters + oldTrailingCharacters;
 		}
 
 
-		return result;
+		return to;
 	}
 
 	protected int lastIndexOfAnyBut(String str, String searchChars) {
@@ -88,6 +94,18 @@ public class SortLine implements Sortable {
 		} else {
 			return str.length();
 		}
+	}
+
+	@Override
+	public String getText() {
+		return text;
+	}
+
+	@Override
+	public String toString() {
+		return "SortLine{" +
+				"text='" + text + '\'' +
+				'}';
 	}
 
 

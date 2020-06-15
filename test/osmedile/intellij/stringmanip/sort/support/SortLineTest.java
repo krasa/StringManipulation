@@ -242,7 +242,8 @@ public class SortLineTest {
 				}
 
 				public void produces(String expectedResult) {
-					assertEquals("expected={" + expectedResult + "} actual={" + line.transformTo(to) + "}", expectedResult, line.transformTo(to));
+					String result = line.transformTo(to).getText();
+					assertEquals("expected={" + expectedResult + "} actual={" + result + "}", expectedResult, result);
 				}
 
 				public AssertTransformTo print(String s, String s1) {

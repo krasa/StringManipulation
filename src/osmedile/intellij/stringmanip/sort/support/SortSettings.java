@@ -15,6 +15,8 @@ public class SortSettings {
 	private boolean ignoreLeadingSpaces = true;
 	private boolean preserveLeadingSpaces = true;
 	private boolean preserveTrailingSpecialCharacters = false;
+	private boolean hierarchicalSort = false;
+	private boolean sortByGroups = false;
 
 	public static SortSettings allFeaturesDisabled(Sort sort) {
 		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
@@ -152,6 +154,32 @@ public class SortSettings {
 		return this;
 	}
 
+	public boolean isHierarchicalSort() {
+		return hierarchicalSort;
+	}
+
+	public boolean isSortByGroups() {
+		return sortByGroups;
+	}
+
+	public void setSortByGroups(boolean sortByGroups) {
+		this.sortByGroups = sortByGroups;
+	}
+
+	public void setHierarchicalSort(boolean hierarchicalSort) {
+		this.hierarchicalSort = hierarchicalSort;
+	}
+
+	public SortSettings sortByGroups(boolean sortByGroups) {
+		this.sortByGroups = sortByGroups;
+		return this;
+	}
+
+	public SortSettings hierarchicalSort(boolean hiearchicalSort) {
+		this.hierarchicalSort = hiearchicalSort;
+		return this;
+	}
+
 	public static enum BlankLines {
 		PRESERVE, REMOVE
 	}
@@ -172,6 +200,8 @@ public class SortSettings {
 		if (ignoreLeadingSpaces != that.ignoreLeadingSpaces) return false;
 		if (preserveLeadingSpaces != that.preserveLeadingSpaces) return false;
 		if (preserveTrailingSpecialCharacters != that.preserveTrailingSpecialCharacters) return false;
+		if (hierarchicalSort != that.hierarchicalSort) return false;
+		if (sortByGroups != that.sortByGroups) return false;
 		if (trailingChars != null ? !trailingChars.equals(that.trailingChars) : that.trailingChars != null)
 			return false;
 		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
@@ -191,6 +221,8 @@ public class SortSettings {
 		result = 31 * result + (ignoreLeadingSpaces ? 1 : 0);
 		result = 31 * result + (preserveLeadingSpaces ? 1 : 0);
 		result = 31 * result + (preserveTrailingSpecialCharacters ? 1 : 0);
+		result = 31 * result + (hierarchicalSort ? 1 : 0);
+		result = 31 * result + (sortByGroups ? 1 : 0);
 		return result;
 	}
 }

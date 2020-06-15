@@ -66,7 +66,7 @@ public class TokenLine {
 		List<String> strings = replaceTokens2(sortedIterator);
 
 		if (sortedIterator.hasNext()) {
-			strings.add(sortedIterator.next().getToken());
+			strings.add(sortedIterator.next().getText());
 		}
 		return strings;
 	}
@@ -85,7 +85,7 @@ public class TokenLine {
 					continue;
 				}
 
-				String resultToken = sortedIterator.next().getToken();
+				String resultToken = sortedIterator.next().getText();
 
 //				if (sortSettings.isPreserveLeadingSpaces()) {
 				int oldContentStartIndex = StringUtil.indexOfAnyButWhitespace(split[i]);

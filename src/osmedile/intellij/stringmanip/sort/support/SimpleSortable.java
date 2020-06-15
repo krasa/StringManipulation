@@ -1,7 +1,5 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import osmedile.intellij.stringmanip.sort.support.Sortable;
-
 public class SimpleSortable implements Sortable {
 	private String token;
 	private final String textForComparison;
@@ -16,7 +14,8 @@ public class SimpleSortable implements Sortable {
 		return textForComparison;
 	}
 
-	public String getToken() {
+	@Override
+	public String getText() {
 		return token;
 	}
 
