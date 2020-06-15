@@ -57,11 +57,11 @@ public class SortAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(getSortSettings(storeKey), true);
+		final SortTypeDialog dialog = new SortTypeDialog(getSortSettings(storeKey), true, editor);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Sort Settings");
+				setTitle("Sort Lines");
 			}
 
 			@Nullable

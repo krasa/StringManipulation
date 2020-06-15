@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.0.191.000.2</version>
+    <version>8.1.191.000.2</version>
     <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
     <idea-version since-build="191.000"/>
 
@@ -325,7 +325,7 @@
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort Lines by SubSelection"
+                        text="Sort Lines by Subselection"
                         description="Sort lines by subselection - only for multi carets">
                 </action>
                 <action id="StringManipulation.AlignToColumns"
@@ -603,6 +603,13 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 8.1</h4>
+	        <ul>
+                <li>Added: hierarchical sort, sorting by groups separated by a blank line</li>
+                <li>Added previews for sorting<li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.0</h4>
 	        <ul>

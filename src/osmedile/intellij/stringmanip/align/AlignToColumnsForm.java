@@ -51,7 +51,7 @@ public class AlignToColumnsForm {
 	private JPanel debugValues;
 	private JCheckBox sortOnly;
 	private JTextField maxSeparators;
-	private EditorImpl myEditor;
+	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
 	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
@@ -70,7 +70,7 @@ public class AlignToColumnsForm {
 		sortTypeForm.donatePanel.setVisible(false);
 		sortTypeForm.reverse.setVisible(false);
 		sortTypeForm.shuffle.setVisible(false);
-		sortSubPanel.add(sortTypeForm.contentPane);
+		sortSubPanel.add(sortTypeForm.coreWithoutPreview);
 		init(lastModel);
 		historyButton.addActionListener(new ActionListener() {
 			@Override
@@ -147,8 +147,8 @@ public class AlignToColumnsForm {
 	}
 
 	private void updateComponents() {
-		preview();
 		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines}, sortOnly);
+		preview();
 	}
 
 
@@ -180,7 +180,7 @@ public class AlignToColumnsForm {
 
 
 		ApplicationManager.getApplication().runWriteAction(() -> {
-			myEditor.getDocument().setText(Joiner.on("\n").join(result));
+			myPreviewEditor.getDocument().setText(Joiner.on("\n").join(result));
 			myPreviewPanel.validate();
 			myPreviewPanel.repaint();
 		});
@@ -204,8 +204,8 @@ public class AlignToColumnsForm {
 		debugValues.setLayout(new BoxLayout(debugValues, BoxLayout.Y_AXIS));
 		debugValues.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		myEditor = IdeUtils.createEditorPreview("", false);
-		myPreviewPanel = (JPanel) myEditor.getComponent();
+		myPreviewEditor = IdeUtils.createEditorPreview("", false);
+		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}
 

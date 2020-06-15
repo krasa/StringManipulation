@@ -9,7 +9,6 @@ import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
-import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
@@ -35,7 +34,6 @@ public class SortTokensGui {
 	private JPanel sortSubPanel;
 	private JPanel textfields;
 	private JPanel myPreviewPanel;
-	private JPanel donatePanel;
 	private JRadioButton sortAllLinesTogether;
 	private JRadioButton processEachLineSeparatellyRadioButton;
 	private EditorImpl myEditor;
@@ -43,14 +41,14 @@ public class SortTokensGui {
 	public SortTokensGui(SortTokensModel lastModel, Editor editor) {
 		this.editor = editor;
 		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
-		sortTypeForm.donatePanel.setVisible(false);
+//		sortTypeForm.donatePanel.setVisible(false);
 		sortTypeForm.reverse.setVisible(false);
 		sortTypeForm.shuffle.setVisible(false);
-		sortSubPanel.add(sortTypeForm.contentPane);
+		sortSubPanel.add(sortTypeForm.coreWithoutPreview);
 		init(lastModel);
 		addPreviewListeners(this);
 		addPreviewListeners(sortTypeForm);
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+//		donatePanel.add(Donate.newDonateButton(donatePanel));
 	}
 
 	private void addPreviewListeners(Object object) {

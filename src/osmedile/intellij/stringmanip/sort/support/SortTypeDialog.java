@@ -1,10 +1,18 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import com.google.common.base.Joiner;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.editor.CaretState;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.utils.IdeUtils;
 import shaded.org.apache.commons.lang3.LocaleUtils;
 
 import javax.swing.*;
@@ -16,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,20 +56,38 @@ public class SortTypeDialog {
 	private JLabel valid;
 	public JPanel donatePanel;
 	private JRadioButton comparatorDefault;
+	private JPanel myPreviewPanel;
+	private JPanel sortStrategy;
+	private JRadioButton hierarchicalSort;
+	private JCheckBox groupSort;
+	private JRadioButton normalSort;
+	private JPanel previewParent;
+	public JPanel coreWithoutPreview;
+	private EditorImpl myPreviewEditor;
+
+	private final Editor editor;
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
+		preview();
 	}
 
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
+		this(sortSettings, additionaloptions, null);
+	}
+
+	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions, Editor editor) {
+		this.editor = editor;
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
 		removeBlank.setVisible(additionaloptions);
 		preserveBlank.setVisible(additionaloptions);
+		sortStrategy.setVisible(additionaloptions);
+		previewParent.setVisible(editor != null);
 		languageTag.getDocument().addDocumentListener(new DocumentAdapter() {
 			@Override
 			protected void textChanged(@NotNull final DocumentEvent e) {
@@ -78,21 +105,30 @@ public class SortTypeDialog {
 				jRadioButtons.add(insensitive);
 				jRadioButtons.add(sensitive);
 				jRadioButtons.add(length);
+				jRadioButtons.add(hexa);
 				jRadioButtons.add(reverse);
 				jRadioButtons.add(shuffle);
-				jRadioButtons.add(hexa);
+
 				jRadioButtons.add(asc);
 				jRadioButtons.add(desc);
-				jRadioButtons.add(removeBlank);
-				jRadioButtons.add(preserveBlank);
-				jRadioButtons.add(ignoreLeadingSpaces);
-				jRadioButtons.add(preserveLeadingSpaces);
-				jRadioButtons.add(preserveTrailingSpecialCharacters);
-				jRadioButtons.add(trailingCharacters);
+
 				jRadioButtons.add(comparatorDefault);
 				jRadioButtons.add(comparatorNaturalOrder);
 				jRadioButtons.add(comparatorCollator);
 				jRadioButtons.add(languageTag);
+
+				jRadioButtons.add(normalSort);
+				jRadioButtons.add(hierarchicalSort);
+				jRadioButtons.add(groupSort);
+
+				jRadioButtons.add(ignoreLeadingSpaces);
+				jRadioButtons.add(preserveLeadingSpaces);
+				jRadioButtons.add(preserveTrailingSpecialCharacters);
+				jRadioButtons.add(trailingCharacters);
+
+				jRadioButtons.add(removeBlank);
+				jRadioButtons.add(preserveBlank);
+
 				return jRadioButtons;
 			}
 		});
@@ -114,6 +150,74 @@ public class SortTypeDialog {
 		});
 		updateComponents();
 		donatePanel.add(Donate.newDonateButton(donatePanel));
+
+		if (this.editor != null) {
+			addPreviewListeners(this);
+		} else {
+			myPreviewEditor = null;
+			myPreviewPanel = new JPanel();
+		}
+	}
+
+	private void addPreviewListeners(Object object) {
+		for (Field field : object.getClass().getDeclaredFields()) {
+			try {
+				field.setAccessible(true);
+				Object o = field.get(object);
+				if (o instanceof JToggleButton) {
+					JToggleButton button = (JToggleButton) o;
+					button.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							updateComponents();
+						}
+
+					});
+				}
+				if (o instanceof JTextField) {
+					JTextField jTextField = (JTextField) o;
+					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
+						@Override
+						protected void textChanged(DocumentEvent e) {
+							updateComponents();
+						}
+					});
+				}
+			} catch (Throwable e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	protected void preview() {
+		if (this.editor != null) {
+			List<String> result = sort(editor, getSettings());
+
+			ApplicationManager.getApplication().runWriteAction(() -> {
+				myPreviewEditor.getDocument().setText(Joiner.on("\n").join(result));
+				myPreviewPanel.validate();
+				myPreviewPanel.repaint();
+			});
+		}
+	}
+
+	protected List<String> sort(Editor editor, SortSettings settings) {
+		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+		IdeUtils.sort(caretsAndSelections);
+		List<String> lines = new ArrayList<String>();
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
+			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
+			String text = editor.getDocument().getText(
+					new TextRange(editor.logicalPositionToOffset(selectionStart),
+							editor.logicalPositionToOffset(selectionEnd)));
+
+			String[] split = text.split("\n");
+			lines.addAll(Arrays.asList(split));
+		}
+
+		List<String> result = new SortLines(lines, settings).sortLines();
+		return result;
 	}
 
 	public void init(SortSettings sortSettings) {
@@ -122,6 +226,9 @@ public class SortTypeDialog {
 		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
 		languageTag.setText(sortSettings.getCollatorLanguageTag());
+		normalSort.setSelected(!sortSettings.isHierarchicalSort());
+		hierarchicalSort.setSelected(sortSettings.isHierarchicalSort());
+		groupSort.setSelected(sortSettings.isSortByGroups());
 
 		validateLocale();
 
@@ -241,6 +348,8 @@ public class SortTypeDialog {
 		sortSettings.setPreserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected());
 		sortSettings.setTrailingChars(trailingCharacters.getText());
 		sortSettings.setCollatorLanguageTag(languageTag.getText());
+		sortSettings.setSortByGroups(groupSort.isSelected());
+		sortSettings.setHierarchicalSort(hierarchicalSort.isSelected());
 		return sortSettings;
 	}
 
@@ -275,4 +384,9 @@ public class SortTypeDialog {
 	}
 
 
+	private void createUIComponents() {
+		myPreviewEditor = IdeUtils.createEditorPreview("", false);
+		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
+		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
+	}
 }

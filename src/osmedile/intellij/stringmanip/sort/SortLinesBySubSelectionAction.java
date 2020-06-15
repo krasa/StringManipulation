@@ -69,11 +69,26 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(PluginPersistentStateComponent.getInstance().getSortSettings(), false);
+		final SortTypeDialog dialog = new SortTypeDialog(PluginPersistentStateComponent.getInstance().getSortSettings(), false, editor) {
+			@Override
+			protected List<String> sort(Editor editor1, SortSettings settings) {
+				List<CaretState> caretsAndSelections = editor1.getCaretModel().getCaretsAndSelections();
+				IdeUtils.sort(caretsAndSelections);
+				List<SubSelectionSortLine> lines = getLines(editor, getSettings(), caretsAndSelections);
+
+				List<SubSelectionSortLine> sortedLines = settings.getSortType().sortLines(lines, settings.getBaseComparator(), settings.getCollatorLanguageTag());
+
+				List<String> result = new ArrayList<>();
+				for (SubSelectionSortLine sortedLine : sortedLines) {
+					result.add(sortedLine.line);
+				}
+				return result;
+			}
+		};
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Sort Settings");
+				setTitle("Sort Lines by Subselection");
 			}
 
 			@Nullable
@@ -85,7 +100,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			@Nullable
 			@Override
 			protected String getDimensionServiceKey() {
-				return "StringManipulation.SortTypeDialog";
+				return "StringManipulation.SortLinesBySubSelection";
 			}
 
 			@Nullable
@@ -119,7 +134,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			int lineNumber = editor.getDocument().getLineNumber(
 					editor.logicalPositionToOffset(caretPosition));
 			if (lineNumber == previousLineNumber) {
-                Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
+				Caret caret = getCaretAt(editor, caretsAndSelection.getCaretPosition());
 				editor.getCaretModel().removeCaret(caret);
 				iterator.remove();
 			}
@@ -127,15 +142,15 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		}
 	}
 
-    protected Caret getCaretAt(Editor editor, LogicalPosition position) {
-        List<Caret> allCarets = editor.getCaretModel().getAllCarets();
-        for (Caret caret : allCarets) {
-            if (caret.getLogicalPosition().equals(position)) {
-                return caret;
-            }
-        }
-        throw new IllegalStateException("caret not found for " + position + "allCarets:" + allCarets);
-    }
+	protected Caret getCaretAt(Editor editor, LogicalPosition position) {
+		List<Caret> allCarets = editor.getCaretModel().getAllCarets();
+		for (Caret caret : allCarets) {
+			if (caret.getLogicalPosition().equals(position)) {
+				return caret;
+			}
+		}
+		throw new IllegalStateException("caret not found for " + position + "allCarets:" + allCarets);
+	}
 
 	private void processMultiCaret(Editor editor, @NotNull SortSettings sortSettings, List<CaretState> caretsAndSelections) {
 		List<SubSelectionSortLine> lines = getLines(editor, sortSettings, caretsAndSelections);
@@ -166,7 +181,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			}
 
 			String selection = editor.getDocument().getText(
-				new TextRange(selectionStartOffset, selectionEndOffset));
+					new TextRange(selectionStartOffset, selectionEndOffset));
 
 			int lineNumber = editor.getDocument().getLineNumber(selectionStartOffset);
 			int lineStartOffset = editor.getDocument().getLineStartOffset(lineNumber);
@@ -174,14 +189,14 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			String line = editor.getDocument().getText(new TextRange(lineStartOffset, lineEndOffset));
 
 			lines.add(new SubSelectionSortLine(sortSettings, line, selection, lineStartOffset, lineEndOffset,
-				selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset
+					selectionStartOffset - lineStartOffset, selectionEndOffset - lineStartOffset
 			));
 		}
 		return lines;
 	}
 
 	private void write(Editor editor, List<SubSelectionSortLine> lines, List<SubSelectionSortLine> sortedLines) {
-        List<Caret> allCarets = editor.getCaretModel().getAllCarets();
+		List<Caret> allCarets = editor.getCaretModel().getAllCarets();
 		for (int i = lines.size() - 1; i >= 0; i--) {
 			SubSelectionSortLine oldLine = lines.get(i);
 			SubSelectionSortLine newLine = sortedLines.get(i);
@@ -190,7 +205,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 			int startColumn = newLine.selectionStartLineOffset;
 			int endColumn = newLine.selectionEndLineOffset;
 
-            Caret caret = allCarets.get(i);
+			Caret caret = allCarets.get(i);
 			caret.setSelection(lineStartOffset + startColumn, lineStartOffset + endColumn);
 			caret.moveToOffset(lineStartOffset + startColumn);
 		}
@@ -204,7 +219,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		private final int selectionEndLineOffset;
 
 		public SubSelectionSortLine(SortSettings sortSettings, String line, String selection, int lineStartOffset, int lineEndOffset,
-                                    int selectionStartLineOffset, int selectionEndLineOffset) {
+									int selectionStartLineOffset, int selectionEndLineOffset) {
 			super(selection, sortSettings);
 			this.line = line;
 			this.lineStartOffset = lineStartOffset;
