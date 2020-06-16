@@ -54,7 +54,7 @@ public class LineNode implements Sortable {
 		if (sortSettings.isSortByGroups()) {
 			children = SortLines.sortByGroup(children, sortSettings);
 		} else {
-			children = SortLines.flatSort(children, sortSettings, true);
+			children = SortLines.flatSort(children, sortSettings, false);
 		}
 		for (LineNode child : children) {
 			child.deepSort(sortSettings);

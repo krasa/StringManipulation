@@ -144,20 +144,16 @@ public class SortLinesTest {
 				"a1\n" +
 				" a1b1\n" +
 				"  a1b1c1\n" +
-				"  \n" +
 				"  a1b1c2\n" +
 				"  a1b1c3\n" +
-				"  \n" +
 				" a1b2\n" +
 				"   a1b2c1\n" +
 				"   a1b2c2\n" +
 				"   a1b2c3\n" +
-				"   \n" +
 				" a1b3\n" +
 				"   a1b3c1\n" +
 				"   a1b3c2\n" +
 				"   a1b3c3\n" +
-				"  \n" +
 				"a2\n" +
 				" a2b1\n" +
 				"  a2b1c1\n" +
@@ -254,6 +250,29 @@ public class SortLinesTest {
 	}
 
 	@Test
+	public void sort_tree_group3() throws Exception {
+		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).hierarchicalSort(true).sortByGroups(true);
+		String input = "" +
+				"  \n" +
+				" a1b1\n" +
+				"  a1b1c2\n" +
+				"  \n" +
+				"  a1b1c3\n" +
+				"  a1b1c1\n" +
+				"";
+
+		String expected = "" +
+				"  \n" +
+				" a1b1\n" +
+				"  a1b1c2\n" +
+				"  \n" +
+				"  a1b1c1\n" +
+				"  a1b1c3\n" +
+				"";
+		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+	}
+
+	@Test
 	public void sort_tree3() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).hierarchicalSort(true);
 		String input = "" +
@@ -265,10 +284,33 @@ public class SortLinesTest {
 
 		String expected = "" +
 				"a1\n" +
+				"a2\n" +
+				" a2b1\n" +
+				"a3\n" +
+				"";
+
+
+		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+	}
+
+	@Test
+	public void sort_tree4() throws Exception {
+		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).hierarchicalSort(true);
+		String input = "" +
 				"\n" +
 				"a2\n" +
 				" a2b1\n" +
+				"a1\n" +
 				"a3\n";
+
+		String expected = "" +
+				"a1\n" +
+				"a2\n" +
+				" a2b1\n" +
+				"a3\n" +
+				"";
+
+
 		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
 	}
 

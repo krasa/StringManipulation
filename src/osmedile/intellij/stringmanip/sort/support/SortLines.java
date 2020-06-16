@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class SortLines {
 	private boolean endsWithNewLine;
@@ -102,6 +103,8 @@ public class SortLines {
 	}
 
 	public static <T extends Sortable> List<T> sortByGroup(List<T> originalLines, SortSettings sortSettings) {
+		String levelRegexp = sortSettings.getLevelRegex();
+		Pattern compile = Pattern.compile(levelRegexp);
 		boolean sortByLevel = true;
 		List<T> result = new ArrayList<>();
 
@@ -116,7 +119,7 @@ public class SortLines {
 
 				T s = originalLines.get(i1);
 				String text = s.getText();
-				level = HierarchicalSort.level(text);
+				level = HierarchicalSort.level(text, compile);
 				if (sortByLevel && prevLevel != -1 && prevLevel != level) {
 					break;
 				}

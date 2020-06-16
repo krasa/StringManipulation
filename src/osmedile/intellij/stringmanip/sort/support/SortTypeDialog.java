@@ -27,10 +27,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
+import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog {
+	public static final int MAX_PREVIEW_LENGTH = 10000;
 	public JPanel contentPane;
 
 	public JRadioButton insensitive;
@@ -63,6 +66,9 @@ public class SortTypeDialog {
 	private JRadioButton normalSort;
 	private JPanel previewParent;
 	public JPanel coreWithoutPreview;
+	private JTextField levelRegex;
+	private JLabel levelRegexStatus;
+	private JLabel levelRegexLabel;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
@@ -71,6 +77,12 @@ public class SortTypeDialog {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
+//		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
+		enabledByAny(new JComponent[]{levelRegex, levelRegexStatus, levelRegexLabel}, groupSort, hierarchicalSort);
+
+		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
+		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
+
 		preview();
 	}
 
@@ -120,6 +132,7 @@ public class SortTypeDialog {
 				jRadioButtons.add(normalSort);
 				jRadioButtons.add(hierarchicalSort);
 				jRadioButtons.add(groupSort);
+				jRadioButtons.add(levelRegex);
 
 				jRadioButtons.add(ignoreLeadingSpaces);
 				jRadioButtons.add(preserveLeadingSpaces);
@@ -191,6 +204,9 @@ public class SortTypeDialog {
 
 	protected void preview() {
 		if (this.editor != null) {
+			if (!validateRegexp()) {
+				return;
+			}
 			List<String> result = sort(editor, getSettings());
 
 			ApplicationManager.getApplication().runWriteAction(() -> {
@@ -204,6 +220,7 @@ public class SortTypeDialog {
 	protected List<String> sort(Editor editor, SortSettings settings) {
 		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 		IdeUtils.sort(caretsAndSelections);
+		int length = 0;
 		List<String> lines = new ArrayList<String>();
 		for (CaretState caretsAndSelection : caretsAndSelections) {
 			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
@@ -212,8 +229,12 @@ public class SortTypeDialog {
 					new TextRange(editor.logicalPositionToOffset(selectionStart),
 							editor.logicalPositionToOffset(selectionEnd)));
 
+			length += text.length();
 			String[] split = text.split("\n");
 			lines.addAll(Arrays.asList(split));
+			if (length > MAX_PREVIEW_LENGTH) {
+				break;
+			}
 		}
 
 		List<String> result = new SortLines(lines, settings).sortLines();
@@ -229,8 +250,10 @@ public class SortTypeDialog {
 		normalSort.setSelected(!sortSettings.isHierarchicalSort());
 		hierarchicalSort.setSelected(sortSettings.isHierarchicalSort());
 		groupSort.setSelected(sortSettings.isSortByGroups());
+		levelRegex.setText(sortSettings.getLevelRegex());
 
 		validateLocale();
+		validateRegexp();
 
 		for (Field field : SortTypeDialog.class.getDeclaredFields()) {
 			try {
@@ -332,6 +355,20 @@ public class SortTypeDialog {
 		}
 	}
 
+	private boolean validateRegexp() {
+		try {
+			String text = levelRegex.getText();
+			Pattern.compile(text);
+			levelRegexStatus.setText("valid");
+			levelRegexStatus.setForeground(JBColor.GREEN);
+			return true;
+		} catch (Throwable e) {
+			levelRegexStatus.setText("invalid");
+			levelRegexStatus.setForeground(JBColor.RED);
+			return false;
+		}
+	}
+
 
 	public SortSettings getSettings() {
 		SortSettings sortSettings = new SortSettings(getResult());
@@ -350,6 +387,7 @@ public class SortTypeDialog {
 		sortSettings.setCollatorLanguageTag(languageTag.getText());
 		sortSettings.setSortByGroups(groupSort.isSelected());
 		sortSettings.setHierarchicalSort(hierarchicalSort.isSelected());
+		sortSettings.setLevelRegex(levelRegex.getText());
 		return sortSettings;
 	}
 

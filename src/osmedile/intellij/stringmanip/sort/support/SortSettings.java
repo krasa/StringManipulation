@@ -8,6 +8,7 @@ public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
 
 	private String trailingChars = ",;";
+	private String levelRegex = "^[\\s]+";
 	private String collatorLanguageTag = Locale.getDefault().toString();
 	private BaseComparator baseComparator = BaseComparator.NATURAL;
 	private BlankLines blankLines = BlankLines.REMOVE;
@@ -131,6 +132,14 @@ public class SortSettings {
 		this.ignoreLeadingSpaces = ignoreLeadingSpaces;
 	}
 
+	public String getLevelRegex() {
+		return levelRegex;
+	}
+
+	public void setLevelRegex(String levelRegex) {
+		this.levelRegex = levelRegex;
+	}
+
 	public void setPreserveLeadingSpaces(boolean preserveLeadingSpaces) {
 		this.preserveLeadingSpaces = preserveLeadingSpaces;
 	}
@@ -151,6 +160,11 @@ public class SortSettings {
 
 	public SortSettings blankLines(BlankLines blankLines) {
 		this.blankLines = blankLines;
+		return this;
+	}
+
+	public SortSettings levelRegexp(String levelRegexp) {
+		this.levelRegex = levelRegexp;
 		return this;
 	}
 
@@ -204,6 +218,7 @@ public class SortSettings {
 		if (sortByGroups != that.sortByGroups) return false;
 		if (trailingChars != null ? !trailingChars.equals(that.trailingChars) : that.trailingChars != null)
 			return false;
+		if (levelRegex != null ? !levelRegex.equals(that.levelRegex) : that.levelRegex != null) return false;
 		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
 			return false;
 		if (baseComparator != that.baseComparator) return false;
@@ -214,6 +229,7 @@ public class SortSettings {
 	@Override
 	public int hashCode() {
 		int result = trailingChars != null ? trailingChars.hashCode() : 0;
+		result = 31 * result + (levelRegex != null ? levelRegex.hashCode() : 0);
 		result = 31 * result + (collatorLanguageTag != null ? collatorLanguageTag.hashCode() : 0);
 		result = 31 * result + (baseComparator != null ? baseComparator.hashCode() : 0);
 		result = 31 * result + (blankLines != null ? blankLines.hashCode() : 0);
