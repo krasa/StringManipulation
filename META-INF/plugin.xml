@@ -483,8 +483,8 @@
     </extensions>
 
     <description><![CDATA[
-    Provides actions for text manipulation: case switching, sorting, filtering, aligning, escaping, encoding...<br><br>
-    <p>
+       Case switching, sorting, filtering, incrementing, aligning to columns, grepping, escaping, encoding...<br><br>
+      <p>
         <p>
             Case switching:
 			<ul>
@@ -506,7 +506,7 @@
                <li>To UPPER CASE</li>
                <li>Invert case</li>
 			</ul>
-			-'Switch case' action can be customized, or new ones can be added in settings<br> 
+			-'Switch case' action can be customized, or new ones can be added in settings<br>
             -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
 		</p>
 		<p>
@@ -537,9 +537,9 @@
             Increment/Decrement:
 			<ul>
 				<li>Increment/decrement all numbers found.</li>
-				<li>Duplicate line and increment/decrement all numbers found.</li>	
-				<li>Create sequence - Keep first number, replace all other by incrementing</li>	
-				<li>Increment duplicate numbers</li>	
+				<li>Duplicate line and increment/decrement all numbers found.</li>
+				<li>Create sequence - Keep first number, replace all other by incrementing</li>
+				<li>Increment duplicate numbers</li>
             </ul>
 		</p>
 		<p>

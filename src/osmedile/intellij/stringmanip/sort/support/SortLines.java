@@ -1,9 +1,11 @@
 package osmedile.intellij.stringmanip.sort.support;
 
 import org.jetbrains.annotations.NotNull;
+import osmedile.intellij.stringmanip.sort.support.tree.HierarchicalSort;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SortLines {
@@ -42,11 +44,11 @@ public class SortLines {
 		List<Sortable> originalLines = toSortables(this.originalLines);
 
 		if (sortSettings.isSortByGroups()) {
-			List<Sortable> sortables = sortByGroup(originalLines, sortSettings);
+			List<Sortable> sortables = groupSort(originalLines, sortSettings);
 			return toStrings(sortables);
 		}
 
-		List<Sortable> result = flatSort(originalLines, sortSettings, sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE);
+		List<Sortable> result = normalSort(originalLines, sortSettings, sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE);
 		return toStrings(result);
 	}
 
@@ -67,7 +69,7 @@ public class SortLines {
 	}
 
 	@NotNull
-	public static <T extends Sortable> List<T> flatSort(List<T> originalLines, SortSettings sortSettings, boolean preserveBlank) {
+	public static <T extends Sortable> List<T> normalSort(List<T> originalLines, SortSettings sortSettings, boolean preserveBlank) {
 		Map<Integer, T> emptyLines = new TreeMap<>();
 		List<T> linesToSort = new ArrayList<>();
 
@@ -102,9 +104,8 @@ public class SortLines {
 		return result;
 	}
 
-	public static <T extends Sortable> List<T> sortByGroup(List<T> originalLines, SortSettings sortSettings) {
-		String levelRegexp = sortSettings.getLevelRegex();
-		Pattern compile = Pattern.compile(levelRegexp);
+	public static <T extends Sortable> List<T> groupSort(List<T> originalLines, SortSettings sortSettings) {
+		Pattern levelRegexp = Pattern.compile(sortSettings.getLevelRegex());
 		boolean sortByLevel = true;
 		List<T> result = new ArrayList<>();
 
@@ -119,7 +120,7 @@ public class SortLines {
 
 				T s = originalLines.get(i1);
 				String text = s.getText();
-				level = HierarchicalSort.level(text, compile);
+				level = level(text, levelRegexp);
 				if (sortByLevel && prevLevel != -1 && prevLevel != level) {
 					break;
 				}
@@ -160,4 +161,22 @@ public class SortLines {
 		return result;
 	}
 
+	public static int level(String s, Pattern compile) {
+		Matcher matcher = compile.matcher(s);
+		if (matcher.find()) {
+			return matcher.group().length();
+		}
+		return 0;
+//		return matcher.end();
+//		int i = 0;
+//		char[] chars = s.toCharArray();
+//		for (char aChar : chars) {
+//			if (Character.isWhitespace(aChar)) {
+//				i++;
+//			} else {
+//				break;
+//			}
+//		}
+//		return i;
+	}
 }

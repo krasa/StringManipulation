@@ -52,9 +52,9 @@ public class LineNode implements Sortable {
 
 	public void deepSort(SortSettings sortSettings) {
 		if (sortSettings.isSortByGroups()) {
-			children = SortLines.sortByGroup(children, sortSettings);
+			children = SortLines.groupSort(children, sortSettings);
 		} else {
-			children = SortLines.flatSort(children, sortSettings, false);
+			children = SortLines.normalSort(children, sortSettings, false);
 		}
 		for (LineNode child : children) {
 			child.deepSort(sortSettings);

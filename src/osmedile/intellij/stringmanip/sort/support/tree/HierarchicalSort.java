@@ -1,11 +1,11 @@
-package osmedile.intellij.stringmanip.sort.support;
+package osmedile.intellij.stringmanip.sort.support.tree;
 
-import osmedile.intellij.stringmanip.sort.support.tree.LineNode;
+import osmedile.intellij.stringmanip.sort.support.SortLines;
+import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HierarchicalSort {
@@ -41,25 +41,6 @@ public class HierarchicalSort {
 	}
 
 
-	static int level(String s, Pattern compile) {
-		Matcher matcher = compile.matcher(s);
-		if (matcher.find()) {
-			return matcher.group().length();
-		}
-		return 0;
-//		return matcher.end();
-//		int i = 0;
-//		char[] chars = s.toCharArray();
-//		for (char aChar : chars) {
-//			if (Character.isWhitespace(aChar)) {
-//				i++;
-//			} else {
-//				break;
-//			}
-//		}
-//		return i;
-	}
-
 	private class TreeBuilder {
 		List<LineNode> lineNodes = new ArrayList<>();
 		List<LineNode> lineBreaks = new ArrayList<>();
@@ -77,7 +58,7 @@ public class HierarchicalSort {
 					lineBreaks.add(blankLine = new LineNode(sortSettings, i, line, prevLevel));
 					continue;
 				}
-				int level = level(line, pattern);
+				int level = SortLines.level(line, pattern);
 
 				if (currentNode == null) {
 					addBlankLine(lineNodes);

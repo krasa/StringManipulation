@@ -331,6 +331,7 @@ public class SortTest {
 		};
 //@formatter:on
 		assertSort(scramble(input), Sort.CASE_SENSITIVE_A_Z, result);
+
 	}
 
 	@Test

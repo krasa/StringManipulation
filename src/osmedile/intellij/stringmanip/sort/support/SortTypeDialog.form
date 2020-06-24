@@ -148,7 +148,7 @@
                     </constraints>
                     <properties>
                       <text value="Hiearchical sort"/>
-                      <toolTipText value="Count of leading whitespaces determine a line level. "/>
+                      <toolTipText value="Uses 'Level regex' to determine the level of nodes."/>
                     </properties>
                   </component>
                   <component id="87119" class="javax.swing.JSeparator">
