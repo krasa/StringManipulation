@@ -1,20 +1,24 @@
 package osmedile.intellij.stringmanip.sort;
 
+import java.util.List;
+
+import javax.swing.*;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
-
-import javax.swing.*;
-import java.util.List;
+import osmedile.intellij.stringmanip.utils.Cloner;
 
 public class SortAction extends MyEditorAction {
 	public static final String STORE_KEY = "StringManipulation.SortAction.SortSettings";
@@ -93,13 +97,20 @@ public class SortAction extends MyEditorAction {
 		if (!b) {
 			return null;
 		}
-		SortSettings settings = dialog.getSettings();
-		PluginPersistentStateComponent.getInstance().setSortSettings(settings);
-		return settings;
+		SortSettings newSettings = dialog.getSettings();
+		storeSortSettings(newSettings);
+		return newSettings;
+	}
+
+	protected void storeSortSettings(SortSettings newSettings) {
+		PluginPersistentStateComponent.getInstance()
+				.setSortSettings(newSettings);
 	}
 
 	protected SortSettings getSortSettings(String storeKey) {
-		return PluginPersistentStateComponent.getInstance().getSortSettings();	
+		SortSettings sortSettings = PluginPersistentStateComponent.getInstance()
+				.getSortSettings();
+		return Cloner.deepClone(sortSettings);
 	}
 
 }
