@@ -76,7 +76,7 @@ Provides actions for text manipulation:
             <li>Sort hexadecimally</li>
             <li>Sort lines by subselection - only one selection/caret per line is handled</li>
             <li>Sort tokens (delimited text)</li>
-	    <li><a src="https://github.com/krasa/StringManipulation/wiki/Hiarchical-sort/">Hiearchical sort</a></li>
+	    <li><a href="https://github.com/krasa/StringManipulation/wiki/Hiarchical-sort/" >Hiearchical sort</a></li>
         </ul>
     </p>
     <p>
