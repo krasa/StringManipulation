@@ -1,24 +1,8 @@
 package osmedile.intellij.stringmanip.sort.support;
 
-import com.google.common.base.Joiner;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.CaretState;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.editor.impl.EditorImpl;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.ui.DocumentAdapter;
-import com.intellij.ui.JBColor;
-import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
-import org.jetbrains.annotations.NotNull;
-import osmedile.intellij.stringmanip.Donate;
-import osmedile.intellij.stringmanip.utils.IdeUtils;
-import shaded.org.apache.commons.lang3.LocaleUtils;
+import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
+import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,8 +13,30 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
-import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.google.common.base.Joiner;
+import com.intellij.ide.BrowserUtil;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.editor.CaretState;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.ui.ColoredSideBorder;
+import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.JBColor;
+import com.intellij.ui.components.labels.LinkLabel;
+import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
+
+import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.utils.IdeUtils;
+import shaded.org.apache.commons.lang3.LocaleUtils;
 
 public class SortTypeDialog {
 	public static final int MAX_PREVIEW_LENGTH = 10000;
@@ -66,19 +72,24 @@ public class SortTypeDialog {
 	private JRadioButton normalSort;
 	private JPanel previewParent;
 	public JPanel coreWithoutPreview;
-	private JTextField levelRegex;
-	private JLabel levelRegexStatus;
+	private MyJBTextField levelRegex;
 	private JLabel levelRegexLabel;
+	private LinkLabel linkLabel;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
+	public static final ColoredSideBorder ERROR_BORDER = new ColoredSideBorder(
+			JBColor.RED, JBColor.RED, JBColor.RED, JBColor.RED, 1);
+	public static final ColoredSideBorder VALID_BORDER = new ColoredSideBorder(
+			JBColor.GREEN, JBColor.GREEN, JBColor.GREEN, JBColor.GREEN, 1);
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 //		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
-		enabledByAny(new JComponent[]{levelRegex, levelRegexStatus, levelRegexLabel}, groupSort, hierarchicalSort);
+enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
+		hierarchicalSort);
 
 		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
 		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
@@ -170,6 +181,9 @@ public class SortTypeDialog {
 			myPreviewEditor = null;
 			myPreviewPanel = new JPanel();
 		}
+		linkLabel.setListener(
+				(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
+				"https://github.com/krasa/StringManipulation/wiki/Hiarchical-sort");
 	}
 
 	private void addPreviewListeners(Object object) {
@@ -359,12 +373,12 @@ public class SortTypeDialog {
 		try {
 			String text = levelRegex.getText();
 			Pattern.compile(text);
-			levelRegexStatus.setText("valid");
-			levelRegexStatus.setForeground(JBColor.GREEN);
+			levelRegex.setMyBorder(VALID_BORDER);
+			levelRegex.setToolTipText("valid regex");
 			return true;
 		} catch (Throwable e) {
-			levelRegexStatus.setText("invalid");
-			levelRegexStatus.setForeground(JBColor.RED);
+			levelRegex.setMyBorder(ERROR_BORDER);
+			levelRegex.setToolTipText("invalid regex");
 			return false;
 		}
 	}
@@ -427,4 +441,5 @@ public class SortTypeDialog {
 		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}
+
 }
