@@ -65,11 +65,11 @@ public class DuplicatUtils {
      */
     public static String simpleAddition(final String str, final int add) {
         Number number = getNumber(str);
-        if (number != null) {
-            return simpleAddition(number, add);
-        } else {
-            return str;
-        }
+         if (number != null) {
+             return simpleAddition(number, add);
+         } else {
+             return str;
+         }
     }
 
     public static String simpleAddition(Number number, int add) {

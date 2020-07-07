@@ -56,7 +56,7 @@ public class IncrementDuplicateNumbersAction extends MyEditorAction {
 	}
 
 	protected String processSelection(String selectedText, Set<String> values) {
-		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
+		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, UniversalNumber.UNIVERSAL_NUMBER_REGEX);
 		for (int i = 0; i < textParts.length; i++) {
 			textParts[i] = processTextPart(values, textParts[i]);
 		}
@@ -68,9 +68,9 @@ public class IncrementDuplicateNumbersAction extends MyEditorAction {
 		String s = textPart;
 		if (DuplicatUtils.getNumber(textPart) != null) {
 			if (values.contains(textPart)) {
-				s = DuplicatUtils.simpleInc(textPart);
+				s = UniversalNumber.increment(textPart);
 				while (values.contains(s)) {
-					s = DuplicatUtils.simpleInc(s);
+					s = UniversalNumber.increment(s);
 				}
 			}
 			values.add(s);

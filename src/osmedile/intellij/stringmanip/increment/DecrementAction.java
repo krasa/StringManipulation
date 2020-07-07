@@ -7,7 +7,6 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
-import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import shaded.org.apache.commons.lang3.StringUtils;
 
@@ -43,9 +42,9 @@ public class DecrementAction extends MyEditorAction {
 
 				if (selectedText != null) {
 					String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
-						DuplicatUtils.SIMPLE_NUMBER_REGEX);
+							UniversalNumber.UNIVERSAL_NUMBER_REGEX);
 					for (int i = 0; i < textParts.length; i++) {
-						textParts[i] = DuplicatUtils.simpleDec(textParts[i]);
+						textParts[i] = new UniversalNumber(textParts[i]).decrement();
 					}
 
 					final String newText = StringUtils.join(textParts);

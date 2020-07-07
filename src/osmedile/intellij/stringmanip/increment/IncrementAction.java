@@ -7,7 +7,6 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
-import osmedile.intellij.stringmanip.utils.DuplicatUtils;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 import shaded.org.apache.commons.lang3.StringUtils;
 
@@ -55,10 +54,9 @@ public class IncrementAction extends MyEditorAction {
 	}
 
 	protected String processSelection(String selectedText) {
-		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText,
-			DuplicatUtils.SIMPLE_NUMBER_REGEX);
+		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, UniversalNumber.UNIVERSAL_NUMBER_REGEX);
 		for (int i = 0; i < textParts.length; i++) {
-			textParts[i] = DuplicatUtils.simpleInc(textParts[i]);
+			textParts[i] = UniversalNumber.increment(textParts[i]);
 		}
 
 		return StringUtils.join(textParts);

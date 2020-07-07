@@ -55,7 +55,7 @@ public class CreateSequenceAction extends MyEditorAction {
 	}
 
 	protected String processSelection(String selectedText, AtomicReference<String> lastValue) {
-		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, DuplicatUtils.SIMPLE_NUMBER_REGEX);
+		String[] textParts = StringUtil.splitPreserveAllTokens(selectedText, UniversalNumber.UNIVERSAL_NUMBER_REGEX);
 		for (int i = 0; i < textParts.length; i++) {
 			textParts[i] = processTextPart(lastValue, textParts[i]);
 		}
@@ -69,7 +69,7 @@ public class CreateSequenceAction extends MyEditorAction {
 			String last = lastValue.get();
 
 			if (last != null) {
-				s = DuplicatUtils.simpleInc(last);
+				s = UniversalNumber.increment(last);
 			}
 
 			lastValue.set(s);
