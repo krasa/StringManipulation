@@ -8,6 +8,9 @@ public class UniversalNumberTest {
 
 	@Test
 	public void increment() {
+		check("999.999,99", "1.000.000,00");
+		check("9.999,99", "10.000,00");
+
 		check("-1", "0");
 		check("-2", "-1");
 		check("-09", "-08");
@@ -43,6 +46,13 @@ public class UniversalNumberTest {
 
 	@Test
 	public void decrement() {
+		checkDecrement("1.000,00", "999,99");
+		checkDecrement("1.000.000,00", "999.999,99");
+		checkDecrement("10.000,00", "9.999,99");
+		checkDecrement("1.000", "0.999");
+		checkDecrement("1.000 000", "0.999 999");
+		checkDecrement("1,000 000", "0,999 999");
+
 		checkDecrement("+0", "-1");
 		checkDecrement("-0", "-1");
 		checkDecrement("-1", "-2");

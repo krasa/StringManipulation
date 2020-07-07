@@ -7,7 +7,7 @@ import static java.lang.Character.isDigit;
 public class UniversalNumber {
 	public static final String UNIVERSAL_NUMBER_REGEX = "[+-]?\\d+([\\., ]\\d+)*";
 
-	private char[] chars;
+	char[] chars;
 	private UniversalNumberSeparator separator;
 
 	public static String increment(String s) {
@@ -16,7 +16,7 @@ public class UniversalNumber {
 
 	public UniversalNumber(String textPart) {
 		chars = textPart.toCharArray();
-		separator = new UniversalNumberSeparator(chars);
+		separator = new UniversalNumberSeparator(this);
 	}
 
 	public String increment() {
@@ -96,7 +96,7 @@ public class UniversalNumber {
 				} else {
 					if (num - 1 == 0 && canRemove(i)) {
 						chars = ArrayUtils.remove(chars, i);
-						if (isSpace(i)) {
+						if (separator.canRemoveSeparator(i)) {
 							chars = ArrayUtils.remove(chars, i);
 						}
 					} else {
@@ -108,16 +108,13 @@ public class UniversalNumber {
 		}
 	}
 
-	private boolean isSpace(int i) {
-		return chars.length > i && chars[i] == ' ';
-	}
 
 	private boolean canRemove(int i) {
 		for (int j = i + 1; j < chars.length; j++) {
 			char aChar = chars[j];
 			if (isDigit(aChar)) {
 				return true;
-			} else if (aChar == ' ') {
+			} else if (separator.canRemoveSeparator(j)) {
 				continue;
 			} else {
 				return false;
