@@ -8,6 +8,21 @@ public class UniversalNumberTest {
 
 	@Test
 	public void increment() {
+		check("-1", "0");
+		check("-2", "-1");
+		check("-09", "-08");
+		check("-10", "-9");
+		check("-010", "-009");
+		check("-10", "-9");
+
+		check("-1,1", "-1,0");
+		check("-2,0", "-1,9");
+
+		check("-1.2", "-1.1");
+
+		check("-100 001", "-100 000");
+
+
 		check("0", "1");
 		check("1", "2");
 		check("08", "09");
@@ -28,6 +43,7 @@ public class UniversalNumberTest {
 
 	@Test
 	public void decrement() {
+		checkDecrement("+0", "-1");
 		checkDecrement("-0", "-1");
 		checkDecrement("-1", "-2");
 		checkDecrement("-08", "-09");

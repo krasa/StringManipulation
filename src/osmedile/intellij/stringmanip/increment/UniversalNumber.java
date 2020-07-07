@@ -20,7 +20,11 @@ public class UniversalNumber {
 	}
 
 	public String increment() {
-		shiftUp(chars.length - 1);
+		if (isNegative()) {
+			shiftDown(chars.length - 1);
+		} else {
+			shiftUp(chars.length - 1);
+		}
 		if (isZero() && isNegative()) {
 			chars = ArrayUtils.remove(chars, 0);
 		}
@@ -32,7 +36,11 @@ public class UniversalNumber {
 		if (isZero() || isNegative()) {
 			shiftUp(chars.length - 1);
 			if (!isNegative()) {
-				chars = ArrayUtils.add(chars, 0, '-');
+				if (chars[0] == '+') {
+					chars[0] = '-';
+				} else {
+					chars = ArrayUtils.add(chars, 0, '-');
+				}
 			}
 		} else {
 			shiftDown(chars.length - 1);
@@ -42,7 +50,7 @@ public class UniversalNumber {
 
 	private void shiftUp(int start) {
 		if (start == -1) {
-			addExtra1(0);
+			addExtraPlace(0);
 			return;
 		}
 		for (int i = start; i >= 0; i--) {
@@ -56,13 +64,14 @@ public class UniversalNumber {
 				}
 				break;
 			} else if (i == 0 && aChar == '-') {
-				addExtra1(1);
+				addExtraPlace(1);
 				break;
 			}
 		}
 	}
 
-	private void addExtra1(int index) {
+	//todo what is the proper name?
+	private void addExtraPlace(int index) {
 		if (separator.needSeparator()) {
 			Character character = separator.guessSeparator();
 			if (character != null) {
