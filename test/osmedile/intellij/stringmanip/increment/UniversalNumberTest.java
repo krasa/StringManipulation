@@ -8,6 +8,10 @@ public class UniversalNumberTest {
 
 	@Test
 	public void increment() {
+		check("\n", "\n");
+		check("\t", "\t");
+		check(" ", " ");
+
 		check("999.999,99", "1.000.000,00");
 		check("9.999,99", "10.000,00");
 
@@ -46,6 +50,12 @@ public class UniversalNumberTest {
 
 	@Test
 	public void decrement() {
+		checkDecrement("\n", "\n");
+		checkDecrement("\t", "\t");
+		checkDecrement(" ", " ");
+
+		checkDecrement("001", "000");
+
 		checkDecrement("1.000,00", "999,99");
 		checkDecrement("1.000.000,00", "999.999,99");
 		checkDecrement("10.000,00", "9.999,99");

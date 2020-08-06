@@ -14,10 +14,9 @@ public class DuplicateAndDecrementAction extends DecrementAction {
 
 		if (hasSelection) {
 			int selectionStart = selectionModel.getSelectionStart();
-			int selectionEnd = selectionModel.getSelectionEnd();
 			int length = newText.length();
-			caretModel.moveToOffset(caretOffset);
-			selectionModel.setSelection(selectionStart - length, selectionEnd - length);
+			caretModel.moveToOffset(selectionStart - length);
+			selectionModel.setSelection(selectionStart - length, selectionStart);
 			editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
 		} else {
 			selectionModel.removeSelection();

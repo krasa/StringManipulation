@@ -138,15 +138,18 @@ public class UniversalNumber {
 	}
 
 	private boolean isZero() {
+		boolean zero = false;
 		for (int i = 0; i < chars.length; i++) {
 			char aChar = chars[i];
 			if (isDigit(aChar)) {
 				int num = Character.getNumericValue(aChar);
 				if (num != 0) {
 					return false;
+				} else {
+					zero = true;
 				}
 			}
 		}
-		return true;
+		return zero;
 	}
 }

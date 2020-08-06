@@ -14,11 +14,10 @@ public class DuplicateAndIncrementAction extends IncrementAction {
 		editor.getDocument().insertString(selectionModel.getSelectionEnd(), newText);
 
 		if (hasSelection) {
-			int selectionStart = selectionModel.getSelectionStart();
 			int selectionEnd = selectionModel.getSelectionEnd();
 			int length = newText.length();
-			caretModel.moveToOffset(caretOffset + length);
-			selectionModel.setSelection(selectionStart + length, selectionEnd + length);
+			caretModel.moveToOffset(selectionEnd + length);
+			selectionModel.setSelection(selectionEnd, selectionEnd + length);
 			editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
 		} else {
 			selectionModel.removeSelection();
