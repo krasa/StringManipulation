@@ -28,7 +28,7 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 		}
 	}
 
-	protected final void singleSelection(Editor editor, List<CaretState> caretsAndSelections, T additionalParameter) {
+	protected void singleSelection(Editor editor, List<CaretState> caretsAndSelections, T additionalParameter) {
 		CaretState caretsAndSelection = caretsAndSelections.get(0);
 		LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
 		LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();

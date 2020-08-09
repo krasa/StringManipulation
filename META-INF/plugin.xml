@@ -402,21 +402,33 @@
             <group text="Align..."
                    description="Text and columns alignment"
                    popup="true">
+                <action id="StringManipulation.AlignCaretsAction"
+                        class="osmedile.intellij.stringmanip.align.AlignCaretsAction"
+                        text="Align Carets"
+                        description="Align all of the carets into a vertical line by inserting spaces"
+                />
+                <action id="StringManipulation.AlignSelectionsAction"
+                        class="osmedile.intellij.stringmanip.align.AlignSelectionsAction"
+                        text="Align Selections"
+                        description="Align all of the selections from both sides by inserting spaces"
+                />
+                <separator/>
                 <reference ref="StringManipulation.AlignToColumns"/>
+                <separator/>
                 <action id="StringManipulation.AlignLeftAction"
                         class="osmedile.intellij.stringmanip.align.AlignLeftAction"
                         text="Align Left"
-                        description="Align left">
+                        description="Align text within selections">
                 </action>
                 <action id="StringManipulation.AlignCenterAction"
                         class="osmedile.intellij.stringmanip.align.AlignCenterAction"
                         text="Align Center"
-                        description="Align center">
+                        description="Align text within selections">
                 </action>
                 <action id="StringManipulation.AlignRightAction"
                         class="osmedile.intellij.stringmanip.align.AlignRightAction"
                         text="Align Right"
-                        description="Align right">
+                        description="Align text within selections">
                 </action>
             </group>
 
