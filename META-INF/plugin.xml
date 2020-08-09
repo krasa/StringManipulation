@@ -1,8 +1,8 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.2.191.000.0</version>
-    <vendor email="vojta.krasa@gmail.com">original author: Olivier Smedile, current maintainer: Vojtech Krasa</vendor>
+    <version>8.3.191.000.0</version>
+    <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
     <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
@@ -13,6 +13,7 @@
     <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
 
     <depends>com.intellij.modules.platform</depends>
+    <depends optional="true" config-file="">com.intellij.modules.java</depends>
 
 
     <actions>
@@ -603,6 +604,13 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 8.3</h4>
+	        <ul>
+                <li>Persisting of the last action for repeating<li>
+                <li>Improved: Align by columns<li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.2</h4>
 	        <ul>
