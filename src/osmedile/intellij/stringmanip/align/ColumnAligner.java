@@ -266,7 +266,7 @@ public class ColumnAligner {
 		String result = null;
 		for (ColumnAlignerLine line : lines) {
 			String leadingIndent = line.leadingIndent;
-			if (result == null || (leadingIndent.length() < result.length() && line.getOriginalString().length() > 0)) {
+			if (result == null || (leadingIndent.length() < result.length() && !isBlank(line.getOriginalString()))) {
 				result = leadingIndent;
 			}
 		}

@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -63,12 +64,16 @@ public class ColumnAlignerLine {
 
 	public void appendText() {
 		if (hasToken()) {
-			String str = split[index];
-			if (trimValues) {
-				str = str.trim();
-			}
-			sb.append(str);
+			sb.append(currentToken());
 		}
+	}
+
+	protected String currentToken() {
+		String str = split[index];
+		if (trimValues) {
+			str = str.trim();
+		}
+		return str;
 	}
 
 
@@ -140,7 +145,7 @@ public class ColumnAlignerLine {
 	public int currentTokenLength() {
 		int result = -1;
 		if (hasToken()) {
-			result = split[index].length();
+			result = currentToken().length();
 		}
 		return result;
 	}
@@ -159,6 +164,9 @@ public class ColumnAlignerLine {
 			} else {
 				e = e.trim();
 			}
+		}
+		if (StringUtils.isBlank(e)) {
+			e = e.trim();
 		}
 		if (endsWithNextLine) {
 			return e + "\n";
