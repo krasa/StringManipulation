@@ -2,8 +2,8 @@ package osmedile.intellij.stringmanip.swap;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 

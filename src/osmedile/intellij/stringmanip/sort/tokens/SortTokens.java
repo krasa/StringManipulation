@@ -1,10 +1,10 @@
 package osmedile.intellij.stringmanip.sort.tokens;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.sort.support.SimpleSortable;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.utils.StringUtil;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 

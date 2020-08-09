@@ -1,7 +1,7 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.util.text.StringUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

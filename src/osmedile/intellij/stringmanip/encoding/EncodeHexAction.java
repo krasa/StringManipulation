@@ -2,7 +2,7 @@ package osmedile.intellij.stringmanip.encoding;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.nio.charset.Charset;

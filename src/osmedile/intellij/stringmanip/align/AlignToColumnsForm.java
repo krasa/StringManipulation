@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
-import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
-import static shaded.org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class AlignToColumnsForm {
 	private final Editor editor;

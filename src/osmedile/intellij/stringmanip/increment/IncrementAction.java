@@ -5,10 +5,10 @@ import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.StringUtil;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Olivier Smedile

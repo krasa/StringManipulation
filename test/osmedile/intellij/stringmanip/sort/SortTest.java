@@ -1,12 +1,12 @@
 package osmedile.intellij.stringmanip.sort;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
 import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

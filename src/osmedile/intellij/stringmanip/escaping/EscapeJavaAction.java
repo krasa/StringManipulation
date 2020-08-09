@@ -12,6 +12,6 @@ public class EscapeJavaAction extends AbstractStringManipAction<Object> {
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.escapeJava(s);
+		return org.apache.commons.text.StringEscapeUtils.escapeJava(s);
     }
 }

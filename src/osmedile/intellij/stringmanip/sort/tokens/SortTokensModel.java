@@ -1,7 +1,7 @@
 package osmedile.intellij.stringmanip.sort.tokens;
 
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

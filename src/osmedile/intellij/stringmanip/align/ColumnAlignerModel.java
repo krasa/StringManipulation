@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.intellij.util.xmlb.annotations.Transient;
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

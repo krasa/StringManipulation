@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static shaded.org.apache.commons.lang3.StringUtils.isBlank;
-import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class ColumnAligner {
 	private static final Logger LOG = Logger.getInstance(ColumnAligner.class);

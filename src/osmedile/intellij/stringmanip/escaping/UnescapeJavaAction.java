@@ -12,6 +12,6 @@ public class UnescapeJavaAction extends AbstractStringManipAction<Object> {
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		return shaded.org.apache.commons.text.StringEscapeUtils.unescapeJava(s);
+		return org.apache.commons.text.StringEscapeUtils.unescapeJava(s);
     }
 }

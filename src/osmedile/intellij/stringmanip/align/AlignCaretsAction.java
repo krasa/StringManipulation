@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static shaded.org.apache.commons.lang3.StringUtils.repeat;
+import static org.apache.commons.lang3.StringUtils.repeat;
 
 public class AlignCaretsAction extends MyEditorAction {
 	public AlignCaretsAction() {

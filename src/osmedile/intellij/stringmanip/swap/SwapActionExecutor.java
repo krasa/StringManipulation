@@ -4,7 +4,6 @@ import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.util.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
@@ -37,9 +36,9 @@ public class SwapActionExecutor {
 	public String swapTokens(String separator, String selectedText) {
 		String[] split;
 		if (separator.equals(" ")) {
-			split = shaded.org.apache.commons.lang3.StringUtils.splitByWholeSeparator(selectedText.trim(), separator);
+			split = org.apache.commons.lang3.StringUtils.splitByWholeSeparator(selectedText.trim(), separator);
 		} else {
-			split = shaded.org.apache.commons.lang3.StringUtils.splitByWholeSeparatorPreserveAllTokens(selectedText, separator);
+			split = org.apache.commons.lang3.StringUtils.splitByWholeSeparatorPreserveAllTokens(selectedText, separator);
 		}
 
 		String[] result = new String[split.length];
@@ -47,7 +46,7 @@ public class SwapActionExecutor {
 		System.arraycopy(split, 0, result, 1, split.length - 1);
 
 		if (separator.equals(" ")) {
-			return shaded.org.apache.commons.lang3.StringUtils.join(result, separator);
+			return org.apache.commons.lang3.StringUtils.join(result, separator);
 		} else {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < result.length; i++) {

@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.sort.support.tree;
 
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

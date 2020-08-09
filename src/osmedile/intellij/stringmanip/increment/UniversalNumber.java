@@ -1,6 +1,6 @@
 package osmedile.intellij.stringmanip.increment;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import static java.lang.Character.isDigit;
 

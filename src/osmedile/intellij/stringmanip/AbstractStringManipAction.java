@@ -6,11 +6,9 @@ import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.UnprotectedUserDataHolder;
-import com.intellij.openapi.util.UserDataHolder;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

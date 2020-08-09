@@ -1,7 +1,7 @@
 package osmedile.intellij.stringmanip.escaping;
 
+import org.apache.commons.text.StringEscapeUtils;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-import shaded.org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Map;
 

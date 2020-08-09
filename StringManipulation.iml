@@ -13,8 +13,11 @@
           <root url="file://$MODULE_DIR$/jars" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/jars/source" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/jars" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/jars/source" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />

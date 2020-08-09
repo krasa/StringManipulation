@@ -1,8 +1,8 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.sort.support.tree.HierarchicalSort;
-import shaded.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.regex.Matcher;
