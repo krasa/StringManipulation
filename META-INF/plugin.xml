@@ -615,6 +615,7 @@
                 <li>Persisting of the last action for repeating<li>
                 <li>Improved: Align by columns<li>
                 <li>Escape HTML - added ' escaping to &#39;<li>
+                <li>Added: Swap " and ' (not shift)<li>
             </ul>
 	    </div>
 	    <div>
