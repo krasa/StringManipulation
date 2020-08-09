@@ -433,10 +433,15 @@
                     class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Letters"
                     description="Reverse Letters: 'abc' -> 'cba'">
             </action>
+            <action id="StringManipulation.ShiftQuoteAction"
+                    class="osmedile.intellij.stringmanip.swap.ShiftQuoteAction"
+                    text="Wrap or Shift Between &quot; and ' and `"
+                    description="Shift all double quote, single quote, backtick to the next type (or wrap if none present)">
+            </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapQuote"
                     class="osmedile.intellij.stringmanip.swap.SwapQuoteAction"
-                    text="Wrap or Swap Between &quot; and ' and `"
-                    description="Swap double quote, single quote, backtick (or wrap if none present)">
+                    text="Swap &quot; and '"
+            >
             </action>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"

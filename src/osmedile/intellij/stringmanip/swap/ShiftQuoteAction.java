@@ -6,20 +6,19 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import java.util.Map;
 
-public class SwapQuoteAction extends AbstractStringManipAction<Object> {
+public class ShiftQuoteAction extends AbstractStringManipAction<Object> {
 
 	@Override
 	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String s, Object additionalParam) {
-		char[] chars = s.toCharArray();
-		for (int i = 0; i < chars.length; i++) {
-			char aChar = chars[i];
-			if (aChar == '\'') {
-				chars[i] = '\"';
-			} else if (aChar == '\"') {
-				chars[i] = '\'';
-			}
+		if (s.contains("\"")) {
+			return s.replace("\"", "'");
+		} else if (s.contains("'")) {
+			return s.replace("'", "`");
+		} else if (s.contains("`")) {
+			return s.replace("`", "\"");
+		} else {
+			return "\"" + s + "\"";
 		}
-		return String.valueOf(chars);
 	}
 
 
