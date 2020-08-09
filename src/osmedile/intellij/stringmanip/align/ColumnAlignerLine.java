@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+import static com.intellij.openapi.util.text.StringUtil.trimTrailing;
+
 @SuppressWarnings("Duplicates")
 public class ColumnAlignerLine {
 
@@ -11,12 +13,14 @@ public class ColumnAlignerLine {
 	protected StringBuilder sb = new StringBuilder();
 	private int index = 0;
 	private final String originalText;
+	protected final String leadingIndent;
 	protected boolean endsWithNextLine;
 	private boolean hasSeparatorBeforeFirstToken = false;
 
 	private boolean appendSpaceBeforeSeparator = false;
 	private boolean appendSpaceAfterSeparator = false;
 	private boolean trimValues = false;
+	private boolean keepLeadingIndent = false;
 	private boolean trimLines = false;
 	private Set<String> separators;
 
@@ -29,7 +33,9 @@ public class ColumnAlignerLine {
 		this.appendSpaceAfterSeparator = model.isSpaceAfterSeparator();
 		this.trimValues = model.isTrimValues();
 		this.trimLines = model.isTrimLines();
+		this.keepLeadingIndent = model.isKeepLeadingIndent();
 
+		leadingIndent = leading(textPart);
 		if (trimLines) {
 			textPart = textPart.trim();
 		}
@@ -37,6 +43,14 @@ public class ColumnAlignerLine {
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 	}
 
+	@NotNull
+	public static String leading(@NotNull CharSequence string) {
+		int index;
+		for (index = 0; index < string.length() && Character.isWhitespace(string.charAt(index)); ++index) {
+		}
+
+		return string.subSequence(0, index).toString();
+	}
 
 	public void appendInitialSpace(int initialSeparatorPosition) {
 		if (hasToken() && hasSeparatorBeforeFirstToken) {
@@ -140,7 +154,11 @@ public class ColumnAlignerLine {
 	String getString() {
 		String e = sb.toString();
 		if (trimLines) {
-			e = e.trim();
+			if (keepLeadingIndent) {
+				e = trimTrailing(e);
+			} else {
+				e = e.trim();
+			}
 		}
 		if (endsWithNextLine) {
 			return e + "\n";
@@ -185,5 +203,9 @@ public class ColumnAlignerLine {
 			currentIndex++;
 		}
 		return strings;
+	}
+
+	public void append(String text) {
+		sb.append(text);
 	}
 }

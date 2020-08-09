@@ -106,7 +106,12 @@ public class ColumnAligner {
 			}
 			return strings;
 		}
-
+		if (model.isKeepLeadingIndent()) {
+			String leadingIndent = minLeadingIndent(lines);
+			for (ColumnAlignerLine line : lines) {
+				line.append(leadingIndent);
+			}
+		}
 
 		int initialSeparatorPosition = initialSeparatorPosition(lines);
 		for (ColumnAlignerLine line : lines) {
@@ -257,6 +262,16 @@ public class ColumnAligner {
 		return maxLength;
 	}
 
+	private String minLeadingIndent(List<ColumnAlignerLine> lines) {
+		String result = null;
+		for (ColumnAlignerLine line : lines) {
+			String leadingIndent = line.leadingIndent;
+			if (result == null || leadingIndent.length() < result.length()) {
+				result = leadingIndent;
+			}
+		}
+		return result;
+	}
 
 	private int initialSeparatorPosition(List<ColumnAlignerLine> lines) {
 		int i = 0;

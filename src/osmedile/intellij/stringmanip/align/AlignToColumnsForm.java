@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
+import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 import static shaded.org.apache.commons.lang3.StringUtils.isEmpty;
 import static shaded.org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -51,6 +52,7 @@ public class AlignToColumnsForm {
 	private JPanel debugValues;
 	private JCheckBox sortOnly;
 	private JTextField maxSeparators;
+	private JCheckBox keepLeadingIndent;
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
@@ -148,6 +150,7 @@ public class AlignToColumnsForm {
 
 	private void updateComponents() {
 		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines}, sortOnly);
+		enabledByAny(new JComponent[]{keepLeadingIndent}, trimValues, trimLines);
 		preview();
 	}
 
@@ -346,6 +349,8 @@ public class AlignToColumnsForm {
 
 		data.setSortSettings(sortTypeForm.getSettings());
 		getData(data);
+
+		data.setKeepLeadingIndent(keepLeadingIndent.isSelected() && keepLeadingIndent.isEnabled());
 	}
 
 	public void setData(ColumnAlignerModel data) {
@@ -356,8 +361,9 @@ public class AlignToColumnsForm {
 		trimValues.setSelected(data.isTrimValues());
 		trimLines.setSelected(data.isTrimLines());
 		sequentially.setSelected(data.isSequentialProcessing());
-		sortOnly.setSelected(data.isSortOnly());
 		maxSeparators.setText(data.getMaxSeparatorsPerLine());
+		sortOnly.setSelected(data.isSortOnly());
+		keepLeadingIndent.setSelected(data.isKeepLeadingIndent());
 	}
 
 	public void getData(ColumnAlignerModel data) {
@@ -368,6 +374,7 @@ public class AlignToColumnsForm {
 		data.setTrimValues(trimValues.isSelected());
 		data.setTrimLines(trimLines.isSelected());
 		data.setSequentialProcessing(sequentially.isSelected());
+		data.setMaxSeparatorsPerLine(maxSeparators.getText());
 		data.setSortOnly(sortOnly.isSelected());
 		data.setMaxSeparatorsPerLine(maxSeparators.getText());
 	}
@@ -381,9 +388,10 @@ public class AlignToColumnsForm {
 		if (trimValues.isSelected() != data.isTrimValues()) return true;
 		if (trimLines.isSelected() != data.isTrimLines()) return true;
 		if (sequentially.isSelected() != data.isSequentialProcessing()) return true;
-		if (sortOnly.isSelected() != data.isSortOnly()) return true;
 		if (maxSeparators.getText() != null ? !maxSeparators.getText().equals(data.getMaxSeparatorsPerLine()) : data.getMaxSeparatorsPerLine() != null)
 			return true;
+		if (sortOnly.isSelected() != data.isSortOnly()) return true;
+		if (keepLeadingIndent.isSelected() != data.isKeepLeadingIndent()) return true;
 		return false;
 	}
 }

@@ -24,6 +24,7 @@ public class ColumnAlignerModel {
 	private boolean skipFirstRow;
 	private boolean sortOnly;
 	private String maxSeparatorsPerLine;
+	private boolean keepLeadingIndent = true;
 
 	public ColumnAlignerModel() {
 	}
@@ -147,6 +148,14 @@ public class ColumnAlignerModel {
 		return integer;
 	}
 
+	public boolean isKeepLeadingIndent() {
+		return keepLeadingIndent;
+	}
+
+	public void setKeepLeadingIndent(final boolean keepLeadingIndent) {
+		this.keepLeadingIndent = keepLeadingIndent;
+	}
+
 	public enum Align {
 		VALUES, SEPARATORS
 	}
@@ -165,6 +174,7 @@ public class ColumnAlignerModel {
 		if (sequentialProcessing != that.sequentialProcessing) return false;
 		if (skipFirstRow != that.skipFirstRow) return false;
 		if (sortOnly != that.sortOnly) return false;
+		if (keepLeadingIndent != that.keepLeadingIndent) return false;
 		if (added != null ? !added.equals(that.added) : that.added != null) return false;
 		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
 		if (alignBy != that.alignBy) return false;
@@ -189,6 +199,7 @@ public class ColumnAlignerModel {
 		result = 31 * result + (skipFirstRow ? 1 : 0);
 		result = 31 * result + (sortOnly ? 1 : 0);
 		result = 31 * result + (maxSeparatorsPerLine != null ? maxSeparatorsPerLine.hashCode() : 0);
+		result = 31 * result + (keepLeadingIndent ? 1 : 0);
 		return result;
 	}
 
