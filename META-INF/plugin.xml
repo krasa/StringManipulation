@@ -609,6 +609,7 @@
 	        <ul>
                 <li>Persisting of the last action for repeating<li>
                 <li>Improved: Align by columns<li>
+                <li>Escape HTML - added ' escaping to &#39;<li>
             </ul>
 	    </div>
 	    <div>
