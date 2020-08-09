@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip;
 
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.ex.ActionManagerEx;
 import com.intellij.openapi.components.ServiceManager;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 public class MyApplicationService {
 	private static final Logger LOG = Logger.getInstance(MyApplicationService.class);
+	private static final String KEY = "osmedile.intellij.stringmanip.MyApplicationService.lastAction";
 
 	private Class lastAction;
 	private CustomActionModel lastCustomActionModel;
@@ -26,6 +28,16 @@ public class MyApplicationService {
 		if (lastCustomActionModel != null) {
 			return ActionManagerEx.getInstanceEx().getAction(lastCustomActionModel.getId());
 		}
+		if (lastAction == null) {
+			String value = PropertiesComponent.getInstance().getValue(KEY);
+			if (value != null) {
+				try {
+					lastAction = Class.forName(value);
+				} catch (Throwable e) {
+					LOG.debug(e);
+				}
+			}
+		}
 		return getActionMap().get(lastAction);
 	}
 
@@ -34,6 +46,7 @@ public class MyApplicationService {
 			MyApplicationService instance = getInstance();
 			instance.lastAction = aClass;
 			instance.lastCustomActionModel = customActionModel;
+			PropertiesComponent.getInstance().setValue(KEY, aClass.getCanonicalName());
 		}
 	}
 
