@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.3.191.000.1</version>
+    <version>8.3.191.000.2</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -405,12 +405,12 @@
                 <action id="StringManipulation.AlignCaretsAction"
                         class="osmedile.intellij.stringmanip.align.AlignCaretsAction"
                         text="Align Carets"
-                        description="Align all of the carets into a vertical line by inserting spaces"
+                        description="Align carets into a vertical line by inserting spaces"
                 />
                 <action id="StringManipulation.AlignSelectionsAction"
                         class="osmedile.intellij.stringmanip.align.AlignSelectionsAction"
                         text="Align Selections"
-                        description="Align all of the selections from both sides by inserting spaces"
+                        description="Align selections from both sides by inserting spaces"
                 />
                 <separator/>
                 <reference ref="StringManipulation.AlignToColumns"/>
@@ -445,7 +445,7 @@
                     class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Letters"
                     description="Reverse Letters: 'abc' -> 'cba'">
             </action>
-            <action id="StringManipulation.ShiftQuoteAction"
+            <action id="StringManipulation.ShiftQuote"
                     class="osmedile.intellij.stringmanip.swap.ShiftQuoteAction"
                     text="Wrap or Shift Between &quot; and ' and `"
                     description="Shift all double quote, single quote, backtick to the next type (or wrap if none present)">
@@ -509,20 +509,20 @@
 				<li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, First word capitalized, Words Capitalized, PascalCase)
 				</li>
-               <li>Toggle: SCREAMING_SNAKE_CASE / camelCase</li>
-               <li>Toggle: snake_case / camelCase</li>
-               <li>Toggle: kebab-case / snake_case</li>
-               <li>Toggle: kebab-case / camelCase</li>
-               <li>Toggle: dot.case / camelCase</li>
-               <li>Toggle: PascalCase / camelCase</li>
-               <li>Toggle: lowercase words / camelCase</li>
-               <li>Toggle: First word capitalized / camelCase</li>
-               <li>Toggle: Capitalized Words / camelCase</li>
-               <li>To camelCase</li>
-               <li>Capitalize</li>
-               <li>To lower case</li>
-               <li>To UPPER CASE</li>
-               <li>Invert case</li>
+                <li>Toggle: SCREAMING_SNAKE_CASE / camelCase</li>
+                <li>Toggle: snake_case / camelCase</li>
+                <li>Toggle: kebab-case / snake_case</li>
+                <li>Toggle: kebab-case / camelCase</li>
+                <li>Toggle: dot.case / camelCase</li>
+                <li>Toggle: PascalCase / camelCase</li>
+                <li>Toggle: lowercase words / camelCase</li>
+                <li>Toggle: First word capitalized / camelCase</li>
+                <li>Toggle: Capitalized Words / camelCase</li>
+                <li>To camelCase</li>
+                <li>Capitalize</li>
+                <li>To lower case</li>
+                <li>To UPPER CASE</li>
+                <li>Invert case</li>
 			</ul>
 			-'Switch case' action can be customized, or new ones can be added in settings<br>
             -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
@@ -578,6 +578,7 @@
 		<p>
             Align:
 			<ul>
+				<li>Align carets/selections into a vertical line by inserting spaces</li>
 				<li>Format selected text to columns/table by a chosen separator/delimiter and sort by columns</li>
 				<li>Align text to left/center/right</li>
 			</ul>
@@ -603,7 +604,8 @@
 			<ul>
 				<li>Reverse Letters</li>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
-				<li>Wrap or swap double quotes to single quotes to backticks</li>
+				<li>Wrap or shift double quotes to single quotes to backticks</li>
+				<li>Swap between double quotes and single quotes</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
 			</ul>
 		</p>
@@ -628,6 +630,7 @@
                 <li>Improved: Align by columns<li>
                 <li>Escape HTML - added ' escaping to &#39;<li>
                 <li>Added: Swap " and ' (not shift)<li>
+                <li>Added: Align Carets/Selections<li>
             </ul>
 	    </div>
 	    <div>

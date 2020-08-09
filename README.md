@@ -52,7 +52,8 @@ Provides actions for text manipulation:
             <li>Encode selected text to MD5 Hex16</li>
             <li>De/Encode selected text as URL</li>
             <li>De/Encode selected text to Base64</li>
-        </ul>
+            <li>De/Encode selected text to Hex</li>
+    </ul>
     </p>
     <p>
         Increment/Decrement:
@@ -82,6 +83,7 @@ Provides actions for text manipulation:
     <p>
         Align:
         <ul>
+            <li>Align carets/selections into a vertical line by inserting spaces</li>
             <li>Format selected text to columns/table by a chosen separator/delimiter and sort by columns</li>
             <li>Align text to left/center/right</li>
         </ul>
@@ -107,7 +109,8 @@ Provides actions for text manipulation:
         <ul>
             <li>Reverse Letters</li>
             <li>Swap Characters/Selections/Lines/Tokens</li>
-            <li>Wrap or swap double quotes to single quotes to backticks</li>
+            <li>Wrap or shift double quotes to single quotes to backticks</li>
+            <li>Swap between double quotes and single quotes</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
         </ul>
     </p>
