@@ -123,6 +123,11 @@ public class ColumnAligner {
 			for (ColumnAlignerLine line : lines) {
 				line.next();
 			}
+
+			for (ColumnAlignerLine line : lines) {
+				line.appendSpaceBeforeSeparator();
+			}
+
 			if (model.getAlignBy() == ColumnAlignerModel.Align.SEPARATORS) {
 				int maxLength = getMaxLength(lines);
 				for (ColumnAlignerLine line : lines) {
@@ -130,9 +135,6 @@ public class ColumnAligner {
 				}
 			}
 
-			for (ColumnAlignerLine line : lines) {
-				line.appendSpaceBeforeSeparator();
-			}
 			for (ColumnAlignerLine line : lines) {
 				line.appendSeparator();
 			}

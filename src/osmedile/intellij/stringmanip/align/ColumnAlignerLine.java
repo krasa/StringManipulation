@@ -69,7 +69,7 @@ public class ColumnAlignerLine {
 
 	public void appendSpaceBeforeSeparator() {
 		if (hasToken()) {
-			if (appendSpaceBeforeSeparator && !split[index].equals(" ") && sb.length() > 0) {
+			if (appendSpaceBeforeSeparator && !split[index].equals(" ") && sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
 				sb.append(" ");
 			}
 		}
