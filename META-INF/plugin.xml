@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.3.191.000.2</version>
+    <version>8.3.191.000.3</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -402,18 +402,18 @@
             <group text="Align..."
                    description="Text and columns alignment"
                    popup="true">
-                <action id="StringManipulation.AlignCaretsAction"
+                <reference ref="StringManipulation.AlignToColumns"/>
+                <separator/>
+                <action id="StringManipulation.AlignCarets"
                         class="osmedile.intellij.stringmanip.align.AlignCaretsAction"
                         text="Align Carets"
                         description="Align carets into a vertical line by inserting spaces"
                 />
-                <action id="StringManipulation.AlignSelectionsAction"
+                <action id="StringManipulation.AlignSelections"
                         class="osmedile.intellij.stringmanip.align.AlignSelectionsAction"
                         text="Align Selections"
                         description="Align selections from both sides by inserting spaces"
                 />
-                <separator/>
-                <reference ref="StringManipulation.AlignToColumns"/>
                 <separator/>
                 <action id="StringManipulation.AlignLeftAction"
                         class="osmedile.intellij.stringmanip.align.AlignLeftAction"
@@ -626,11 +626,11 @@
 	    <div>
 	        <h4>Version 8.3</h4>
 	        <ul>
-                <li>Persisting of the last action for repeating<li>
+                <li>Added: Align Carets/Selections<li>
                 <li>Improved: Align by columns<li>
                 <li>Escape HTML - added ' escaping to &#39;<li>
                 <li>Added: Swap " and ' (not shift)<li>
-                <li>Added: Align Carets/Selections<li>
+                <li>Persisting of the last action for repeating<li>
             </ul>
 	    </div>
 	    <div>
