@@ -128,6 +128,12 @@ public class ColumnAligner {
 			for (ColumnAlignerLine line : lines) {
 				line.next();
 			}
+			if (model.getAlignBy() == ColumnAlignerModel.Align.SEPARATORS) {
+				int maxLength = getMaxLength(lines);
+				for (ColumnAlignerLine line : lines) {
+					line.appendSpace(maxLength);
+				}
+			}
 
 			for (ColumnAlignerLine line : lines) {
 				line.appendSpaceBeforeSeparator();

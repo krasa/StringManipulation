@@ -87,11 +87,11 @@ public class ColumnAlignerLine {
 	}
 
 	public void appendSpaceBeforeSeparator() {
-		if (hasToken()) {
-			if (appendSpaceBeforeSeparator && !split[index].equals(" ") && sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
-				sb.append(" ");
-			}
+//		if (hasToken()) {
+		if (appendSpaceBeforeSeparator && (hasToken() && isSeparator(split[index]) && !split[index].equals(" ")) && sb.length() > 0) {
+			sb.append(" ");
 		}
+//		}
 	}
 
 	public void appendSpaceAfterSeparator() {
@@ -152,7 +152,7 @@ public class ColumnAlignerLine {
 
 	@Override
 	public String toString() {
-		return sb.toString() + " [" + sb.length() + "]";
+		return sb.toString() + "[" + sb.length() + "]";
 	}
 
 	@NotNull
