@@ -3,6 +3,11 @@ String Manipulation [![Donate][badge-paypal-img]][badge-paypal]
 IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162 
 
 
+![](case.gif)
+
+![](alignCaretsSelections.gif)
+
+![](alignColumns.gif)
 
 Provides actions for text manipulation:
 
