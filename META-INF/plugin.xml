@@ -144,12 +144,12 @@
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.EncodeBase64Action"
                         text="Encode to Base64"
-                        description="Encode to Base 64">
+                        description="Encode to Base64">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DecodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.DecodeBase64Action"
                         text="Decode Base64"
-                        description="Decode Base 64">
+                        description="Decode Base64">
                 </action>
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.EncodeHexAction"
@@ -551,7 +551,7 @@
 			<ul>
 				<li>Encode selected text to MD5 Hex16</li>
 				<li>De/Encode selected text as URL</li>
-				<li>De/Encode selected text to Base64</li>
+				<li>De/Encode selected text to Base64 (+ zip/deflate)</li>
 				<li>De/Encode selected text to Hex</li>
 			</ul>
 		</p>
@@ -631,6 +631,7 @@
 	        <h4>Version 8.4</h4>
 	        <ul>
                 <li>Base64 zipping<li>
+                <li>Base64 inflating/deflating<li>
             </ul>
 	    </div>
 	    <div>

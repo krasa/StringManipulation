@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.encoding;
 
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
@@ -13,10 +14,12 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.Inflater;
 
 
 /**
@@ -24,13 +27,17 @@ import java.util.zip.GZIPInputStream;
  * @version $Id: EscapeHtmlAction.java 16 2008-03-20 19:21:43Z osmedile $
  */
 public class DecodeBase64Action extends AbstractStringManipAction<Base64EncodingDialog> {
+	private static final Logger LOG = Logger.getInstance(DecodeBase64Action.class);
 
 	@NotNull
 	@Override
 	public Pair<Boolean, Base64EncodingDialog> beforeWriteAction(Editor editor, DataContext dataContext) {
 		final Base64EncodingDialog base64EncodingDialog = new Base64EncodingDialog();
 		base64EncodingDialog.encodingOptions.setVisible(false);
-		base64EncodingDialog.zipCheckBox.setText("Unzip after decoding");
+		base64EncodingDialog.lineEnd.setVisible(false);
+		base64EncodingDialog.zip.setText("Unzip after decoding");
+		base64EncodingDialog.inflateDeflate.setText("Inflate after decoding");
+		base64EncodingDialog.inflateDeflate.setToolTipText("");
 
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
@@ -81,6 +88,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		try {
 			return transform(s, dialog);
 		} catch (Exception e) {
+			LOG.warn(e);
 			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Error"));
 			return s;
 		}
@@ -91,13 +99,34 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		Charset charset = Charset.forName(dialog.getCharset());
 		byte[] decodeBase64 = Base64.decodeBase64(s.getBytes(charset));
 
-		if (dialog.zipCheckBox.isSelected()) {
+		if (dialog.zip.isSelected()) {
 			decodeBase64 = decompress(decodeBase64);
+		} else if (dialog.inflateDeflate.isSelected()) {
+			decodeBase64 = inflate(decodeBase64);
 		}
 
 		return new String(decodeBase64, charset);
 	}
 
+	protected byte[] inflate(byte[] input) {
+		try {
+			Inflater inflater = new Inflater(true);
+			inflater.setInput(input);
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream(input.length);
+
+			byte[] buffer = new byte[1024];
+			while (!inflater.finished()) {
+				int count = inflater.inflate(buffer);
+				outputStream.write(buffer, 0, count);
+			}
+
+			outputStream.close();
+			return outputStream.toByteArray();
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public static byte[] decompress(byte[] decoded) {
 		try {

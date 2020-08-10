@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.text.StringUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -78,6 +80,13 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 	}
 
 	protected String transform(String s, Base64EncodingDialog base64EncodingDialog) {
+		if (base64EncodingDialog.lf.isSelected()) {
+			//probably useless
+			s = StringUtil.convertLineSeparators(s, "\n");
+		} else if (base64EncodingDialog.crlf.isSelected()) {
+			s = StringUtil.convertLineSeparators(s, "\r\n");
+		}
+
 		Charset charset = null;
 		try {
 			charset = Charset.forName(base64EncodingDialog.getCharset());
@@ -86,8 +95,10 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		}
 		byte[] bytes = s.getBytes(charset);
 
-		if (base64EncodingDialog.zipCheckBox.isSelected()) {
+		if (base64EncodingDialog.zip.isSelected()) {
 			bytes = compress(bytes);
+		} else if (base64EncodingDialog.inflateDeflate.isSelected()) {
+			bytes = deflate(bytes);
 		}
 
 		if (base64EncodingDialog.defaultRadioButton.isSelected()) {
@@ -102,6 +113,22 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 			return new String(Base64.encodeBase64(bytes, true, false), charset);
 		}
 		throw new IllegalStateException();
+	}
+
+	public static byte[] deflate(byte[] data) {
+		Deflater compressor = new Deflater(Deflater.DEFAULT_COMPRESSION, true);
+		compressor.setInput(data);
+		compressor.finish();
+
+		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+
+		while (!compressor.finished()) {
+			int size = compressor.deflate(buffer);
+			byteArray.write(buffer, 0, size);
+		}
+
+		return byteArray.toByteArray();
 	}
 
 	public static byte[] compress(byte[] str) {

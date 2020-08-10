@@ -18,8 +18,13 @@ public class Base64EncodingDialog {
 	protected JRadioButton urlSafeChunked;
 	protected JRadioButton chunked;
 	protected JComboBox myComboBox;
-	JCheckBox zipCheckBox;
+	JRadioButton zip;
 	protected JPanel encodingOptions;
+	JRadioButton inflateDeflate;
+	protected JRadioButton noCompression;
+	protected JRadioButton lf;
+	protected JRadioButton crlf;
+	protected JPanel lineEnd;
 	public DefaultComboBoxModel model;
 	public Color defaultColor;
 
