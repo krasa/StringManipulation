@@ -7,6 +7,8 @@ IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162
 
 ![](alignCaretsSelections.gif)
 
+![](alignCarets.gif)
+
 ![](alignColumns.gif)
 
 Provides actions for text manipulation:
