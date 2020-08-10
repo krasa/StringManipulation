@@ -9,14 +9,15 @@ public class DecrementActionTest {
 
 	@Test
 	public void processSelection() throws Exception {
-		check("001\n" +
-						"001\n" +
-						"001\n" +
-						"001",
-				"000\n" +
+		check("000\n" +
 						"000\n" +
 						"000\n" +
-						"000");
+						"000",
+				"001\n" +
+						"001\n" +
+						"001\n" +
+						"001"
+		);
 	}
 
 	@Test
@@ -30,7 +31,7 @@ public class DecrementActionTest {
 		check("08", "09");
 	}
 
-	public void check(String input, String expected) {
+	public void check(String expected, String input) {
 		assertEquals(expected, action.processSelection(input));
 	}
 
