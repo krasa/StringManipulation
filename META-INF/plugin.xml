@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.3.191.000.3</version>
+    <version>8.4.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -140,6 +140,7 @@
                         text="Encode to MD5 Hex16"
                         description="Encode to MD5 Hex16">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
                         class="osmedile.intellij.stringmanip.encoding.EncodeBase64Action"
                         text="Encode to Base64"
@@ -150,6 +151,7 @@
                         text="Decode Base64"
                         description="Decode Base 64">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EncodeHexAction"
                         class="osmedile.intellij.stringmanip.encoding.EncodeHexAction"
                         text="Encode to Hex"
@@ -160,6 +162,7 @@
                         text="Decode Hex"
                         description="Decode hex">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.URLEncodeAction"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeAction"
                         text="Encode URL"
@@ -170,6 +173,7 @@
                         text="Decode URL"
                         description="Decode URL (by java.net.URLDecoder)">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986"
                         class="osmedile.intellij.stringmanip.encoding.URLEncodeRFC3986Action"
                         text="Encode URL (RFC 3986)"
@@ -623,6 +627,12 @@
     <change-notes>
         <![CDATA[
 	<p>                   
+	    <div>
+	        <h4>Version 8.4</h4>
+	        <ul>
+                <li>Base64 zipping<li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.3</h4>
 	        <ul>

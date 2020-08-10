@@ -18,6 +18,8 @@ public class Base64EncodingDialog {
 	protected JRadioButton urlSafeChunked;
 	protected JRadioButton chunked;
 	protected JComboBox myComboBox;
+	JCheckBox zipCheckBox;
+	protected JPanel encodingOptions;
 	public DefaultComboBoxModel model;
 	public Color defaultColor;
 
@@ -26,8 +28,8 @@ public class Base64EncodingDialog {
 
 	private void createUIComponents() {
 		model = new DefaultComboBoxModel(new String[]{
-						"UTF-8",
-						"ASCII",
+				"UTF-8",
+				"ASCII",
 						"CP1256",
 						"ISO-8859-1",
 						"ISO-8859-2",

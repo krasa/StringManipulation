@@ -11,8 +11,11 @@ import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 
 import javax.swing.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author Olivier Smedile
@@ -27,7 +30,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Base64 Encoding Options");
+				setTitle("Encode Base64");
 			}
 
 			@Nullable
@@ -71,6 +74,10 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 
 	@Override
 	public String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Base64EncodingDialog base64EncodingDialog) {
+		return transform(s, base64EncodingDialog);
+	}
+
+	protected String transform(String s, Base64EncodingDialog base64EncodingDialog) {
 		Charset charset = null;
 		try {
 			charset = Charset.forName(base64EncodingDialog.getCharset());
@@ -78,6 +85,11 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 			return s;
 		}
 		byte[] bytes = s.getBytes(charset);
+
+		if (base64EncodingDialog.zipCheckBox.isSelected()) {
+			bytes = compress(bytes);
+		}
+
 		if (base64EncodingDialog.defaultRadioButton.isSelected()) {
 			return new String(Base64.encodeBase64(bytes), charset);
 		} else if (base64EncodingDialog.urlSafe.isSelected()) {
@@ -90,6 +102,18 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 			return new String(Base64.encodeBase64(bytes, true, false), charset);
 		}
 		throw new IllegalStateException();
+	}
+
+	public static byte[] compress(byte[] str) {
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			GZIPOutputStream gzip = new GZIPOutputStream(out);
+			gzip.write(str);
+			gzip.close();
+			return out.toByteArray();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
