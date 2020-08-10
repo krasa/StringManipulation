@@ -81,7 +81,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		try {
 			return transform(s, dialog);
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Error");
+			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Error"));
 			return s;
 		}
 	}
