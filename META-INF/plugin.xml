@@ -21,7 +21,7 @@
                 class="osmedile.intellij.stringmanip.SwitchCasePopupAction"
                 text="Switch Case..."
                 description="Popup Switch Case String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/edit.png">
+                icon="/osmedile/intellij/stringmanip/edit.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
         </action>
 
@@ -29,7 +29,7 @@
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String Manipulation ..."
                 description="Popup String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/edit.png">
+                icon="/osmedile/intellij/stringmanip/edit.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
@@ -38,7 +38,7 @@
         <group id="StringManipulation.Group.Main" text="String Manipulation"
                description="Group of String manipulation"
                popup="true"
-               icon="/osmedile/intellij/stringmanip/edit.png"
+               icon="/osmedile/intellij/stringmanip/edit.svg"
         >
             <add-to-group group-id="EditMenu" anchor="last"/>
 
@@ -477,7 +477,7 @@
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
                description="String manipulation plugin"
                popup="false"
-               icon="/osmedile/intellij/stringmanip/edit.png">
+               icon="/osmedile/intellij/stringmanip/edit.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
