@@ -21,7 +21,7 @@
                 class="osmedile.intellij.stringmanip.SwitchCasePopupAction"
                 text="Switch Case..."
                 description="Popup Switch Case String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/edit.svg">
+                icon="/osmedile/intellij/stringmanip/icons/case.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
         </action>
 
@@ -29,7 +29,7 @@
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String Manipulation ..."
                 description="Popup String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/edit.svg">
+                icon="/osmedile/intellij/stringmanip/icons/edit.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
@@ -38,7 +38,7 @@
         <group id="StringManipulation.Group.Main" text="String Manipulation"
                description="Group of String manipulation"
                popup="true"
-               icon="/osmedile/intellij/stringmanip/edit.svg"
+               icon="/osmedile/intellij/stringmanip/icons/edit.svg"
         >
             <add-to-group group-id="EditMenu" anchor="last"/>
 
@@ -59,6 +59,7 @@
                         text="Unescape Java"
                         description="org.apache.commons.text.StringEscapeUtils#unescapeJava">
                 </action>
+                <separator/>
 
                 <action id="osmedile.intellij.stringmanip.EscapeJavaScriptAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJavaScriptAction"
@@ -70,6 +71,7 @@
                         text="Unescape JavaScript"
                         description="org.apache.commons.text.StringEscapeUtils#unescapeEcmaScript">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeHtmlAction"
                         text="Escape HTML"
@@ -80,11 +82,13 @@
                         text="Unescape HTML"
                         description="org.apache.commons.text.StringEscapeUtils#unescapeHtml4">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapeSQLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeSQLAction"
                         text="Escape SQL"
                 >
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapeJsonAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeJsonAction"
                         text="Escape JSON"
@@ -95,6 +99,7 @@
                         text="Unescape JSON"
                         description="org.apache.commons.text.StringEscapeUtils#unescapeJson">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapeXMLAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeXMLAction"
                         text="Escape XML"
@@ -105,6 +110,7 @@
                         text="Unescape XML"
                         description="org.apache.commons.text.StringEscapeUtils#unescapeXml">
                 </action>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapePHPAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapePHPAction"
                         text="Escape PHP"
@@ -115,6 +121,7 @@
                         text="Unescape PHP"
                 >
                 </action>
+                <separator/>
                 <action id="StringManipulation.DiacriticsToAsciiAction"
                         class="osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction"
                         text="Convert Diacritics (Accents) to ASCII"
@@ -190,6 +197,7 @@
 
             <group id="StringManipulation.Group.SwitchCase" text="Switch Case..."
                    description="Group of String manipulation Switch case actions"
+                   icon="/osmedile/intellij/stringmanip/icons/case.svg"
                    popup="true">
                 <!--                dynamically registered-->
                 <!--                <action id="StringManipulation.SwitchStyleAction"-->
@@ -282,41 +290,51 @@
 
             <group text="Increment/Decrement..."
                    description="Increment, decrement, create sequence, unique numbers"
+                   icon="/osmedile/intellij/stringmanip/icons/calc/calc.svg"
                    popup="true">
-                <action id="osmedile.intellij.stringmanip.DecrementAction"
-                        class="osmedile.intellij.stringmanip.increment.DecrementAction"
-                        text="Decrement"
-                        description="Decrement numbers inside selected text">
-                </action>
                 <action id="osmedile.intellij.stringmanip.IncrementAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementAction"
                         text="Increment"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/plus.svg"
                         description="Increment numbers inside selected text">
-                </action>
-                <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
-                        class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
-                        text="Duplicate and Decrement"
-                        description="Duplicate and decrement numbers inside selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndIncrementAction"
                         text="Duplicate and Increment"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/plusCircle.svg"
                         description="Duplicate and increment numbers inside selected text">
                 </action>
+                <separator/>
+                <action id="osmedile.intellij.stringmanip.DecrementAction"
+                        class="osmedile.intellij.stringmanip.increment.DecrementAction"
+                        text="Decrement"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/minus.svg"
+                        description="Decrement numbers inside selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
+                        class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
+                        text="Duplicate and Decrement"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/minusCircle.svg"
+                        description="Duplicate and decrement numbers inside selected text">
+                </action>
+                <separator/>
                 <action id="StringManipulation.CreateSequenceAction"
                         class="osmedile.intellij.stringmanip.increment.CreateSequenceAction"
                         text="Create Sequence"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/sequence.svg"
                         description="Keep first number, replace all other by incrementing">
                 </action>
                 <action id="StringManipulation.IncrementDuplicateNumbersAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementDuplicateNumbersAction"
                         text="Increment Duplicates"
+                        icon="/osmedile/intellij/stringmanip/icons/calc/dup.svg"
                         description="Increment duplicate numbers">
                 </action>
             </group>
 
             <group text="Sort..."
                    description="Sort lines, delimited text"
+                   icon="/osmedile/intellij/stringmanip/icons/sort.svg"
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
@@ -352,6 +370,7 @@
 
             <group text="Filter/Remove/Trim..."
                    description="Filter/Remove/Trim..."
+                   icon="/osmedile/intellij/stringmanip/icons/filter.svg"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
                         class="osmedile.intellij.stringmanip.filter.GrepAction"
@@ -405,17 +424,20 @@
 
             <group text="Align..."
                    description="Text and columns alignment"
+                   icon="/osmedile/intellij/stringmanip/icons/align/align.svg"
                    popup="true">
                 <reference ref="StringManipulation.AlignToColumns"/>
                 <separator/>
                 <action id="StringManipulation.AlignCarets"
                         class="osmedile.intellij.stringmanip.align.AlignCaretsAction"
                         text="Align Carets"
+                        icon="/osmedile/intellij/stringmanip/icons/align/carets.svg"
                         description="Align carets into a vertical line by inserting spaces"
                 />
                 <action id="StringManipulation.AlignSelections"
                         class="osmedile.intellij.stringmanip.align.AlignSelectionsAction"
                         text="Align Selections"
+                        icon="/osmedile/intellij/stringmanip/icons/align/selections.svg"
                         description="Align selections from both sides by inserting spaces"
                 />
                 <separator/>
@@ -477,7 +499,7 @@
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
                description="String manipulation plugin"
                popup="false"
-               icon="/osmedile/intellij/stringmanip/edit.svg">
+               icon="/osmedile/intellij/stringmanip/icons/edit.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
@@ -632,6 +654,7 @@
 	        <ul>
                 <li>Base64 zipping<li>
                 <li>Base64 inflating/deflating<li>
+                <li>Icons from <a href="https://tablericons.com/">https://tablericons.com/</a><li>
             </ul>
 	    </div>
 	    <div>
