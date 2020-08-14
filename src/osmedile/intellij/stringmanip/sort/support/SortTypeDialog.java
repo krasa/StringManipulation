@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.sort.support;
 import com.google.common.base.Joiner;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
@@ -36,6 +37,8 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog {
+	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
+
 	public static final int MAX_PREVIEW_LENGTH = 10000;
 	public JPanel contentPane;
 
@@ -218,14 +221,27 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 			if (!validateRegexp()) {
 				return;
 			}
-			List<String> result = sort(editor, getSettings());
 
+			String s;
+			try {
+				List<String> result = sort(editor, getSettings());
+				s = Joiner.on("\n").join(result);
+			} catch (SortException e) {
+				LOG.warn(e);
+				s = e.getMessage();
+			} catch (Throwable e) {
+				LOG.error(e);
+				s = e.toString();
+			}
+
+			String finalS = s;
 			ApplicationManager.getApplication().runWriteAction(() -> {
-				myPreviewEditor.getDocument().setText(Joiner.on("\n").join(result));
+				myPreviewEditor.getDocument().setText(finalS);
 				myPreviewPanel.validate();
 				myPreviewPanel.repaint();
 			});
 		}
+
 	}
 
 	protected List<String> sort(Editor editor, SortSettings settings) {

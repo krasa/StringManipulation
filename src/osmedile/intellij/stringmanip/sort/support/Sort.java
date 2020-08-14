@@ -91,7 +91,11 @@ public enum Sort {
 	HEXA(new Comparator<Sortable>() {   //TODO error handling?
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
-			return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
+			try {
+				return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
+			} catch (Throwable e) {
+				throw new SortException("Hexadecimal sort failed, select Hex text only \n(" + e.toString() + ")", e);
+			}
 		}
 
 		protected BigInteger toHex(String textForComparison) {
