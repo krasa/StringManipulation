@@ -3,14 +3,12 @@ package osmedile.intellij.stringmanip.sort;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
-import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
@@ -46,22 +44,12 @@ public class SortAction extends MyEditorAction {
 
 			@Override
 			protected String processSingleSelection(Editor editor, String text, SortSettings settings) {
-				try {
 					return new SortLines(text, settings).sort();
-				} catch (SortException e) {
-					SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), e.getMessage(), "Error"));
-					return text;
-				}
 			}
 
 			@Override
 			protected List<String> processMultiSelections(Editor editor, List<String> lines, SortSettings settings) {
-				try {
-					return new SortLines(lines, settings).sortLines();
-				} catch (SortException e) {
-					SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), e.getMessage(), "Error"));
-					return lines;
-				}
+				return new SortLines(lines, settings).sortLines();
 			}
 
 		});

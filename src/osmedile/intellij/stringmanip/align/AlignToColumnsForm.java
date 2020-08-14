@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.align;
 
 import com.google.common.base.Joiner;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
@@ -12,6 +13,7 @@ import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
@@ -32,6 +34,7 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class AlignToColumnsForm {
+	private static final Logger LOG = Logger.getInstance(AlignToColumnsForm.class);
 	private final Editor editor;
 	public JPanel root;
 	private JPanel textfields;
@@ -156,34 +159,45 @@ public class AlignToColumnsForm {
 
 
 	protected void preview() {
-		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-		IdeUtils.sort(caretsAndSelections);
-		List<String> lines = new ArrayList<String>();
-		for (CaretState caretsAndSelection : caretsAndSelections) {
-			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-			String text = editor.getDocument().getText(
-				new TextRange(editor.logicalPositionToOffset(selectionStart),
-					editor.logicalPositionToOffset(selectionEnd)));
+		String x = null;
+		try {
+			List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+			IdeUtils.sort(caretsAndSelections);
+			List<String> lines = new ArrayList<String>();
+			for (CaretState caretsAndSelection : caretsAndSelections) {
+				LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
+				LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
+				String text = editor.getDocument().getText(
+						new TextRange(editor.logicalPositionToOffset(selectionStart),
+								editor.logicalPositionToOffset(selectionEnd)));
 
-			String[] split = text.split("\n");
-			lines.addAll(Arrays.asList(split));
+				String[] split = text.split("\n");
+				lines.addAll(Arrays.asList(split));
+			}
+
+			ColumnAligner columnAligner = new ColumnAligner(getModel());
+			List<String> result = columnAligner.align(lines);
+
+			debugValues.removeAll();
+			List<String> debug = columnAligner.getDebugValues();
+			for (String s : debug) {
+				debugValues.add(new JLabel(s));
+			}
+			debugValues.revalidate();
+			debugValues.repaint();
+
+			x = Joiner.on("\n").join(result);
+		} catch (SortException e) {
+			LOG.warn(e);
+			x = e.getMessage();
+		} catch (Throwable e) {
+			LOG.error(e);
+			x = e.toString();
 		}
 
-		ColumnAligner columnAligner = new ColumnAligner(getModel());
-		List<String> result = columnAligner.align(lines);
-
-		debugValues.removeAll();
-		List<String> debug = columnAligner.getDebugValues();
-		for (String s : debug) {
-			debugValues.add(new JLabel(s));
-		}
-		debugValues.revalidate();
-		debugValues.repaint();
-
-
+		String finalS = x;
 		ApplicationManager.getApplication().runWriteAction(() -> {
-			myPreviewEditor.getDocument().setText(Joiner.on("\n").join(result));
+			myPreviewEditor.getDocument().setText(finalS);
 			myPreviewPanel.validate();
 			myPreviewPanel.repaint();
 		});

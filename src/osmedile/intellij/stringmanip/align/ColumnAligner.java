@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.diagnostic.Logger;
+import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.Sortable;
@@ -93,8 +94,8 @@ public class ColumnAligner {
 
 		try {
 			lines = sort(lines);
-		} catch (SortFailed e) {
-			LOG.debug(e);
+		} catch (SortException e) {
+			throw e;
 		} catch (Exception e) {
 			LOG.error(e);
 		}
@@ -203,7 +204,7 @@ public class ColumnAligner {
 
 	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines, int index, SortSettings sortSettings) {
 		if (index <= 0) {
-			throw new SortFailed();
+			throw new SortException("Invalid sort column index: " + index);
 		}
 		if (lines.size() > 1) {
 			List<ColumnAlignerLine> linesToSort;
@@ -249,7 +250,7 @@ public class ColumnAligner {
 				Integer s = Integer.valueOf(split[i]);
 			}
 		} catch (Exception e) {
-			throw new SortFailed();
+			throw new SortException("Invalid sort settings: " + e.getMessage(), e);
 		}
 	}
 

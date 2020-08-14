@@ -5,10 +5,14 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
+
+import javax.swing.*;
 
 /**
  * for showing dialogs before the action
@@ -35,7 +39,11 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 		final Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				executeWriteAction(editor, caret, dataContext, additionalParameter.second);
+				try {
+					executeWriteAction(editor, caret, dataContext, additionalParameter.second);
+				} catch (SortException e) {
+					SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), e.getMessage(), "Error"));
+				}
 			}
 		};
 		new EditorWriteActionHandler(false) {

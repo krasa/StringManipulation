@@ -654,7 +654,7 @@
 	        <ul>
                 <li>Base64 zipping<li>
                 <li>Base64 inflating/deflating<li>
-                <li>Sort dialog exception fix<li>
+                <li>Sort dialog error handling<li>
                 <li>Icons from <a href="https://tablericons.com/">https://tablericons.com/</a><li>
             </ul>
 	    </div>
