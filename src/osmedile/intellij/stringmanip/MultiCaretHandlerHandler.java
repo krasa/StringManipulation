@@ -36,7 +36,7 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 				new TextRange(editor.logicalPositionToOffset(selectionStart),
 						editor.logicalPositionToOffset(selectionEnd)));
 
-		String charSequence = processSingleSelection(text, additionalParameter);
+		String charSequence = processSingleSelection(editor, text, additionalParameter);
 
 		editor.getDocument().replaceString(editor.logicalPositionToOffset(selectionStart),
 				editor.logicalPositionToOffset(selectionEnd), charSequence);
@@ -54,7 +54,7 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 			lines.add(text);
 		}
 
-		lines = processMultiSelections(lines, additionalParameter);
+		lines = processMultiSelections(editor, lines, additionalParameter);
 
 		for (int i = caretsAndSelections.size() - 1; i >= 0; i--) {
 			CaretState caretsAndSelection = caretsAndSelections.get(i);
@@ -76,7 +76,7 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 		}
 	}
 
-	protected abstract String processSingleSelection(String text, T additionalParameter);
+	protected abstract String processSingleSelection(Editor editor, String text, T additionalParameter);
 
-	protected abstract List<String> processMultiSelections(List<String> lines, T additionalParameter);
+	protected abstract List<String> processMultiSelections(Editor editor, List<String> lines, T additionalParameter);
 }

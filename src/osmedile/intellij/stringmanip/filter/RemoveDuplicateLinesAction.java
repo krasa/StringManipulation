@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.filter;
 
+import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.FilterUtils;
@@ -14,14 +15,14 @@ public class RemoveDuplicateLinesAction extends MyEditorAction {
 		setupHandler(new MultiCaretHandlerHandler<Void>(getActionClass()) {
 
 			@Override
-			protected String processSingleSelection(String text, Void additionalParameter) {
+			protected String processSingleSelection(Editor editor, String text, Void additionalParameter) {
 				String[] split = text.split("\n");
 				String[] uniqueLines = FilterUtils.filterDuplicates(split);
 				return join(uniqueLines);
 			}
 
 			@Override
-			protected List<String> processMultiSelections(List<String> lines, Void additionalParameter) {
+			protected List<String> processMultiSelections(Editor editor, List<String> lines, Void additionalParameter) {
 				String[] split = lines.toArray(new String[0]);
 				String[] uniqueLines = FilterUtils.filterDuplicates(split);
 				return Arrays.asList(uniqueLines);

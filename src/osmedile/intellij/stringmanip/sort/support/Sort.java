@@ -88,13 +88,13 @@ public enum Sort {
 
 		}
 	}),
-	HEXA(new Comparator<Sortable>() {   //TODO error handling?
+	HEXA(new Comparator<Sortable>() {
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
 			try {
 				return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
 			} catch (Throwable e) {
-				throw new SortException("Hexadecimal sort failed, select Hex text only \n(" + e.toString() + ")", e);
+				throw new SortException("Hexadecimal sort failed, select Hex text only! \n(" + e.toString() + ")", e);
 			}
 		}
 

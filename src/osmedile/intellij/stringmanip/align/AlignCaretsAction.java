@@ -79,12 +79,12 @@ public class AlignCaretsAction extends MyEditorAction {
 		}
 
 		@Override
-		protected String processSingleSelection(String text, Object model) {
+		protected String processSingleSelection(Editor editor, String text, Object model) {
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		protected List<String> processMultiSelections(List<String> lines, Object additionalParameter) {
+		protected List<String> processMultiSelections(Editor editor, List<String> lines, Object additionalParameter) {
 			throw new UnsupportedOperationException();
 		}
 

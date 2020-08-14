@@ -71,13 +71,13 @@ public class AlignToColumnsAction extends MyEditorAction {
 				}
 
 				@Override
-                protected String processSingleSelection(String text, ColumnAlignerModel model) {
-                    return new ColumnAligner(model).align(text);
+				protected String processSingleSelection(Editor editor, String text, ColumnAlignerModel model) {
+					return new ColumnAligner(model).align(text);
 				}
 
-                @Override
-                protected List<String> processMultiSelections(List<String> lines, ColumnAlignerModel model) {
-                    return new ColumnAligner(model).align(lines);
+				@Override
+				protected List<String> processMultiSelections(Editor editor, List<String> lines, ColumnAlignerModel model) {
+					return new ColumnAligner(model).align(lines);
 				}
 
             });

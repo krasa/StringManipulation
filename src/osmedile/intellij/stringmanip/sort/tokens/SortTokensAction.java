@@ -32,12 +32,12 @@ public class SortTokensAction extends MyEditorAction {
 			}
 
 			@Override
-			protected String processSingleSelection(String text, SortTokensModel settings) {
+			protected String processSingleSelection(Editor editor, String text, SortTokensModel settings) {
 				return new SortTokens(text, settings).sortText();
 			}
 
 			@Override
-			protected List<String> processMultiSelections(List<String> lines, SortTokensModel settings) {
+			protected List<String> processMultiSelections(Editor editor, List<String> lines, SortTokensModel settings) {
 				return new SortTokens(lines, settings).sortLines();
 			}
 

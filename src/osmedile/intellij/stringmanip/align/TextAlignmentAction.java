@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
+import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
@@ -20,12 +21,12 @@ public abstract class TextAlignmentAction extends MyEditorAction {
 			this.setupHandler(new MultiCaretHandlerHandler<Void>(getActionClass()) {
 
 				@Override
-				protected String processSingleSelection(String text, Void additionalParameter) {
+				protected String processSingleSelection(Editor editor, String text, Void additionalParameter) {
 					return alignment.alignLines(text);
 				}
 
 				@Override
-				protected List<String> processMultiSelections(List<String> lines, Void additionalParameter) {
+				protected List<String> processMultiSelections(Editor editor, List<String> lines, Void additionalParameter) {
 					return alignLines(lines, alignment);
 				}
 
