@@ -431,13 +431,11 @@
                 <action id="StringManipulation.AlignCarets"
                         class="osmedile.intellij.stringmanip.align.AlignCaretsAction"
                         text="Align Carets"
-                        icon="/osmedile/intellij/stringmanip/icons/align/carets.svg"
                         description="Align carets into a vertical line by inserting spaces"
                 />
                 <action id="StringManipulation.AlignSelections"
                         class="osmedile.intellij.stringmanip.align.AlignSelectionsAction"
                         text="Align Selections"
-                        icon="/osmedile/intellij/stringmanip/icons/align/selections.svg"
                         description="Align selections from both sides by inserting spaces"
                 />
                 <separator/>
@@ -648,7 +646,7 @@
 
     <change-notes>
         <![CDATA[
-	<p>                   
+	<p>
 	    <div>
 	        <h4>Version 8.4</h4>
 	        <ul>
@@ -689,67 +687,6 @@
                 <li>Added: Sort tokens (delimited text)</li>
             </ul>
 	    </div>
-	    <div>
-	        <h4>Version 7.7</h4>
-	        <ul>
-                <li>IntelliJ 2020.2 compatibility</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 7.6</h4>
-	        <ul>
-                <li>Fixed Collator</li>
-                <li>Added: Reverse Letters</li>
-            </ul>
-	    </div>      
-	    <div>
-	        <h4>Version 7.5</h4>
-	        <ul>
-                <li>Fixed natural sorting, added default comparator</li>
-            </ul>
-	    </div>              
-	    <div>
-	        <h4>Version 7.4</h4>
-	        <ul>
-                <li>Improved: Align by column - added sorting</li>
-                <li>Added: Reversed custom switch action - for a shortcut use</li>
-                <li>Added: To camelCase action</li>
-            </ul>
-	    </div>          
-	    <div>
-	        <h4>Version 7.3</h4>
-	        <ul>
-                <li>Improved: Switch File Path Separators</li>
-                <li>Added: Encode/Decode Hex</li>
-                <li>IntelliJ 2020 compatibility</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 7.2</h4>
-	        <ul>
-                <li>Column align: added preview</li>
-                <li>Added: Un/Escape JSON</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 7.1</h4>
-	        <ul>
-                <li>Minor fixes</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 7.0</h4>
-	        <ul>
-                <li>Customizable case switching actions</li>
-                <li>Updated escaping of Java, JavaScript, Html to commons-lang3-3.9</li>
-                <li>Improved: Align to column - aligning by multiple separators at once</li>
-                <li>Sort with collator</li>
-                <li>Grep support for regular expressions</li>
-                <li>Case switching - settings for adding a separator before or after a number</li>
-                <li>Swap quotes action: added swapping to backticks and wrapping</li>
-            </ul>
-	    </div>
-	    <p>
 	</p>
     ]]>
     </change-notes>
