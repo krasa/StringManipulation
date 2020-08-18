@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.align;
 import com.google.common.base.Joiner;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -3,12 +3,11 @@ package osmedile.intellij.stringmanip;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RepeatAction extends EditorAction {
+public class RepeatAction extends MyEditorAction {
 
 	public RepeatAction() {
 		super(new MyEditorWriteActionHandler(null) {
