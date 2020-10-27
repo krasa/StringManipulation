@@ -72,6 +72,51 @@
                         description="org.apache.commons.text.StringEscapeUtils#unescapeEcmaScript">
                 </action>
                 <separator/>
+                <group text="Escape C#" popup="true">
+                    <action id="osmedile.intellij.stringmanip.escaping.EscapeCSharpRegularAction"
+                            class="osmedile.intellij.stringmanip.escaping.EscapeCSharpRegularAction"
+                            text="C# Regular &quot;...&quot;"
+                            description="C# regular &quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.EscapeCSharpVerbatimAction"
+                            class="osmedile.intellij.stringmanip.escaping.EscapeCSharpVerbatimAction"
+                            text="C# Verbatim @&quot;...&quot;"
+                            description="C# verbatim @&quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.EscapeCSharpInterpolatedAction"
+                            class="osmedile.intellij.stringmanip.escaping.EscapeCSharpInterpolatedAction"
+                            text="C# Interpolated $&quot;...&quot;"
+                            description="C# interpolated $&quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.EscapeCSharpInterpolatedVerbatimAction"
+                            class="osmedile.intellij.stringmanip.escaping.EscapeCSharpInterpolatedVerbatimAction"
+                            text="C# Interpolated Verbatim @$&quot;...&quot;"
+                            description="C# interpolated verbatim @$&quot;...&quot;">
+                    </action>
+                </group>
+                <group text="Unescape C#" popup="true">
+                    <action id="osmedile.intellij.stringmanip.escaping.UnescapeCSharpRegularAction"
+                            class="osmedile.intellij.stringmanip.escaping.UnescapeCSharpRegularAction"
+                            text="C# Regular &quot;...&quot;"
+                            description="C# regular &quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.UnescapeCSharpVerbatimAction"
+                            class="osmedile.intellij.stringmanip.escaping.UnescapeCSharpVerbatimAction"
+                            text="C# Verbatim @&quot;...&quot;"
+                            description="C# verbatim @&quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.UnescapeCSharpInterpolatedAction"
+                            class="osmedile.intellij.stringmanip.escaping.UnescapeCSharpInterpolatedAction"
+                            text="C# Interpolated $&quot;...&quot;"
+                            description="C# interpolated $&quot;...&quot;">
+                    </action>
+                    <action id="osmedile.intellij.stringmanip.escaping.UnescapeCSharpInterpolatedVerbatimAction"
+                            class="osmedile.intellij.stringmanip.escaping.UnescapeCSharpInterpolatedVerbatimAction"
+                            text="C# Interpolated Verbatim @$&quot;...&quot;"
+                            description="C# interpolated verbatim @$&quot;...&quot;">
+                    </action>
+                </group>
+                <separator/>
                 <action id="osmedile.intellij.stringmanip.EscapeHtmlAction"
                         class="osmedile.intellij.stringmanip.escaping.EscapeHtmlAction"
                         text="Escape HTML"
@@ -692,4 +737,4 @@
     </change-notes>
 
 </idea-plugin>
-    
+
