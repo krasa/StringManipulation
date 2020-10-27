@@ -43,6 +43,7 @@ Provides actions for text manipulation:
         <ul>
             <li>Un/Escape selected Java text</li>
             <li>Un/Escape selected JavaScript text</li>
+            <li>Un/Escape selected C# text (regular, verbatim, interpolated)</li>
             <li>Un/Escape selected HTML text</li>
             <li>Un/Escape selected JSON text</li>
             <li>Un/Escape selected XML text</li>
