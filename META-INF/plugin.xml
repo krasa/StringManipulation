@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.4.191.000.0</version>
+    <version>8.5.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -601,6 +601,7 @@
 			<ul>
 				<li>Un/Escape selected Java text</li>
 				<li>Un/Escape selected JavaScript text</li>
+                <li>Un/Escape selected C# text (regular, verbatim, interpolated)</li>
 				<li>Un/Escape selected HTML text</li>
 				<li>Un/Escape selected JSON text</li>
 				<li>Un/Escape selected XML text</li>
@@ -692,6 +693,12 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.5</h4>
+	        <ul>
+                <li>Un/Escape selected C# text (regular, verbatim, interpolated)<li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.4</h4>
 	        <ul>
