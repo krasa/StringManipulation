@@ -3,13 +3,13 @@ String Manipulation [![Donate][badge-paypal-img]][badge-paypal]
 IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162 
 
 
-![](case.gif)
+![](images/case.gif)
 
-![](alignCaretsSelections.gif)
+![](images/alignCaretsSelections.gif)
 
-![](alignCarets.gif)
+![](images/alignCarets.gif)
 
-![](alignColumns.gif)
+![](images/alignColumns.gif)
 
 Provides actions for text manipulation:
 
@@ -127,6 +127,32 @@ Provides actions for text manipulation:
     </p>
 </p>
 
+
+## How to build and run
+
+1. Import the project into IDEA.
+
+2. In "File -> Project Structure" add an SDK. Choose IntelliJ Platform Plugin SDK, not JDK. It looks like this on Windows:
+
+    ![](images/add-plugin-sdk-win.png)
+
+    And like this on a Mac:
+
+    ![](images/add-plugin-sdk-mac.png)
+
+3. Choose the SDK root. Windows:
+
+    ![](images/select-sdk-root-win.png)
+
+    Mac (select the `/Applications/IntelliJ IDEA/`):
+
+    ![](images/select-sdk-root-mac.png)
+
+4. The project should build now. To run add the following run configuration if it's not added already:
+
+    ![](images/run-configuration.png)
+
+5. Now you should be able to run and debug the plugin in a separate IDEA instance.
 
 
 ------
