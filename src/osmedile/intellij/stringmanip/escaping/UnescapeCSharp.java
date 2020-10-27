@@ -130,14 +130,15 @@ public abstract class UnescapeCSharp extends AbstractStringManipAction<Object> {
                                     sb.append(ccc);
                                     return true;
                                 }
-                                input.putBack();
+                                input.putBack(); // hex nibble 4
                             }
-                            input.putBack();
+                            input.putBack(); // hex nibble 3
                         }
-                        input.putBack();
+                        input.putBack(); // hex nibble 2
                     }
-                    input.putBack();
+                    input.putBack(); // hex nibble 1
                 }
+                input.putBack(); // 'u'
                 return false;
             default:
                 input.putBack();
