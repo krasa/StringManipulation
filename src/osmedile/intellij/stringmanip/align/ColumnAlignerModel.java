@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * update #equals!!
+ */
 public class ColumnAlignerModel {
 	private Date added;
 	private List<String> separators = new ArrayList<String>();
@@ -25,6 +28,7 @@ public class ColumnAlignerModel {
 	private boolean sortOnly;
 	private String maxSeparatorsPerLine;
 	private boolean keepLeadingIndent = true;
+	private boolean sbcCaseWorkaround;
 
 	public ColumnAlignerModel() {
 	}
@@ -156,6 +160,14 @@ public class ColumnAlignerModel {
 		this.keepLeadingIndent = keepLeadingIndent;
 	}
 
+	public boolean isSbcCaseWorkaround() {
+		return sbcCaseWorkaround;
+	}
+
+	public void setSbcCaseWorkaround(final boolean sbcCaseWorkaround) {
+		this.sbcCaseWorkaround = sbcCaseWorkaround;
+	}
+
 	public enum Align {
 		VALUES, SEPARATORS
 	}
@@ -175,10 +187,12 @@ public class ColumnAlignerModel {
 		if (skipFirstRow != that.skipFirstRow) return false;
 		if (sortOnly != that.sortOnly) return false;
 		if (keepLeadingIndent != that.keepLeadingIndent) return false;
+		if (sbcCaseWorkaround != that.sbcCaseWorkaround) return false;
 		if (added != null ? !added.equals(that.added) : that.added != null) return false;
 		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
 		if (alignBy != that.alignBy) return false;
-		if (sortSettings != null ? !sortSettings.equals(that.sortSettings) : that.sortSettings != null) return false;
+		if (sortSettings != null ? !sortSettings.equals(that.sortSettings) : that.sortSettings != null)
+			return false;
 		if (columnSortOrder != null ? !columnSortOrder.equals(that.columnSortOrder) : that.columnSortOrder != null)
 			return false;
 		return maxSeparatorsPerLine != null ? maxSeparatorsPerLine.equals(that.maxSeparatorsPerLine) : that.maxSeparatorsPerLine == null;
@@ -200,6 +214,7 @@ public class ColumnAlignerModel {
 		result = 31 * result + (sortOnly ? 1 : 0);
 		result = 31 * result + (maxSeparatorsPerLine != null ? maxSeparatorsPerLine.hashCode() : 0);
 		result = 31 * result + (keepLeadingIndent ? 1 : 0);
+		result = 31 * result + (sbcCaseWorkaround ? 1 : 0);
 		return result;
 	}
 

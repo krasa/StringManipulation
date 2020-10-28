@@ -56,6 +56,7 @@ public class AlignToColumnsForm {
 	private JCheckBox sortOnly;
 	private JTextField maxSeparators;
 	private JCheckBox keepLeadingIndent;
+	private JCheckBox sbcCaseWorkaround;
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
@@ -378,6 +379,7 @@ public class AlignToColumnsForm {
 		maxSeparators.setText(data.getMaxSeparatorsPerLine());
 		sortOnly.setSelected(data.isSortOnly());
 		keepLeadingIndent.setSelected(data.isKeepLeadingIndent());
+		sbcCaseWorkaround.setSelected(data.isSbcCaseWorkaround());
 	}
 
 	public void getData(ColumnAlignerModel data) {
@@ -390,7 +392,8 @@ public class AlignToColumnsForm {
 		data.setSequentialProcessing(sequentially.isSelected());
 		data.setMaxSeparatorsPerLine(maxSeparators.getText());
 		data.setSortOnly(sortOnly.isSelected());
-		data.setMaxSeparatorsPerLine(maxSeparators.getText());
+		data.setKeepLeadingIndent(keepLeadingIndent.isSelected());
+		data.setSbcCaseWorkaround(sbcCaseWorkaround.isSelected());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
@@ -406,6 +409,7 @@ public class AlignToColumnsForm {
 			return true;
 		if (sortOnly.isSelected() != data.isSortOnly()) return true;
 		if (keepLeadingIndent.isSelected() != data.isKeepLeadingIndent()) return true;
+		if (sbcCaseWorkaround.isSelected() != data.isSbcCaseWorkaround()) return true;
 		return false;
 	}
 }

@@ -24,6 +24,7 @@ public class ColumnAlignerLine {
 	private boolean keepLeadingIndent = false;
 	private boolean trimLines = false;
 	private Set<String> separators;
+	private boolean sbcCaseWorkaround;
 
 
 	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
@@ -35,6 +36,7 @@ public class ColumnAlignerLine {
 		this.trimValues = model.isTrimValues();
 		this.trimLines = model.isTrimLines();
 		this.keepLeadingIndent = model.isKeepLeadingIndent();
+		sbcCaseWorkaround = model.isSbcCaseWorkaround();
 
 		leadingIndent = leading(textPart);
 		if (trimLines) {
@@ -79,11 +81,27 @@ public class ColumnAlignerLine {
 
 	public void appendSpace(int maxLength) {
 		if (hasToken()) {
-			int appendSpaces = Math.max(0, maxLength - sb.length());
+			int appendSpaces = Math.max(0, maxLength - getSbLength());
 			for (int j = 0; j < appendSpaces; j++) {
+
 				sb.append(" ");
 			}
 		}
+	}
+
+	protected int getSbLength() {
+		if (sbcCaseWorkaround) {
+			String s = sb.toString();
+			return sbcReplace(s).length();
+		} else {
+			return sb.length();
+		}
+	}
+
+
+	@NotNull
+	private String sbcReplace(String s) {
+		return s.replaceAll("[^ \\x00-\\xff]", "xx");
 	}
 
 	public void appendSpaceBeforeSeparator() {
@@ -123,7 +141,7 @@ public class ColumnAlignerLine {
 	}
 
 	public int resultLength() {
-		return sb.length();
+		return getSbLength();
 	}
 
 	public boolean hasToken() {
@@ -145,14 +163,18 @@ public class ColumnAlignerLine {
 	public int currentTokenLength() {
 		int result = -1;
 		if (hasToken()) {
-			result = currentToken().length();
+			String s = currentToken();
+			if (sbcCaseWorkaround) {
+				s = sbcReplace(s);
+			}
+			result = s.length();
 		}
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return sb.toString() + "[" + sb.length() + "]";
+		return sb.toString() + "[" + sb.length() + "," + getSbLength() + "]";
 	}
 
 	@NotNull
