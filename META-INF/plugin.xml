@@ -187,10 +187,20 @@
             <group text="Encode/Decode..."
                    description="Group of String manipulation encode/decode actions"
                    popup="true">
-                <action id="osmedile.intellij.stringmanip.EncodeMd5Hex16Action"
-                        class="osmedile.intellij.stringmanip.encoding.EncodeMd5Hex16Action"
-                        text="Encode to MD5 Hex16"
-                        description="Encode to MD5 Hex16">
+                <action id="osmedile.intellij.stringmanip.EncodeMd5HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeMd5HexAction"
+                        text="Encode to MD5 Hex"
+                        description="Encode to MD5 Hex">
+                </action>
+                <action id="osmedile.intellij.stringmanip.EncodeSha1HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeSha1HexAction"
+                        text="Encode to SHA-1 Hex"
+                        description="Encode to SHA-1 Hex">
+                </action>
+                <action id="osmedile.intellij.stringmanip.EncodeSha256HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeSha256HexAction"
+                        text="Encode to SHA-256 Hex"
+                        description="Encode to SHA-256 Hex">
                 </action>
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
@@ -615,7 +625,9 @@
 		<p>
             Encode/Decode:
 			<ul>
-				<li>Encode selected text to MD5 Hex16</li>
+				<li>Encode selected text to MD5 Hex</li>
+				<li>Encode selected text to SHA-1 Hex</li>
+				<li>Encode selected text to SHA-256 Hex</li>
 				<li>De/Encode selected text as URL</li>
 				<li>De/Encode selected text to Base64 (+ zip/deflate)</li>
 				<li>De/Encode selected text to Hex</li>

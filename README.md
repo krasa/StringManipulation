@@ -57,7 +57,9 @@ Provides actions for text manipulation:
     <p>
         Encode/Decode:
         <ul>
-            <li>Encode selected text to MD5 Hex16</li>
+            <li>Encode selected text to MD5 Hex</li>
+            <li>Encode selected text to SHA-1 Hex</li>
+            <li>Encode selected text to SHA-256 Hex</li>
             <li>De/Encode selected text as URL</li>
             <li>De/Encode selected text to Base64</li>
             <li>De/Encode selected text to Hex</li>
