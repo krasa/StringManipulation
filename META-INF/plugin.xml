@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.5.191.000.0</version>
+    <version>8.6.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -201,6 +201,22 @@
                         class="osmedile.intellij.stringmanip.encoding.EncodeSha256HexAction"
                         text="Encode to SHA-256 Hex"
                         description="Encode to SHA-256 Hex">
+                </action>
+                <action id="osmedile.intellij.stringmanip.EncodeSha512HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeSha512HexAction"
+                        text="Encode to SHA-512 Hex"
+                        description="Encode to SHA-512 Hex">
+                </action>
+                <separator/>
+                <action id="osmedile.intellij.stringmanip.EncodeSha3_256HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeSha3_256HexAction"
+                        text="Encode to SHA3-256 Hex"
+                        description="Encode to SHA3-256 Hex">
+                </action>
+                <action id="osmedile.intellij.stringmanip.EncodeSha3_512HexAction"
+                        class="osmedile.intellij.stringmanip.encoding.EncodeSha3_512HexAction"
+                        text="Encode to SHA3-512 Hex"
+                        description="Encode to SHA3-512 Hex">
                 </action>
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.EncodeBase64Action"
@@ -628,6 +644,9 @@
 				<li>Encode selected text to MD5 Hex</li>
 				<li>Encode selected text to SHA-1 Hex</li>
 				<li>Encode selected text to SHA-256 Hex</li>
+				<li>Encode selected text to SHA-512 Hex</li>
+				<li>Encode selected text to SHA3-256 Hex</li>
+				<li>Encode selected text to SHA3-512 Hex</li>
 				<li>De/Encode selected text as URL</li>
 				<li>De/Encode selected text to Base64 (+ zip/deflate)</li>
 				<li>De/Encode selected text to Hex</li>
@@ -705,6 +724,15 @@
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.6</h4>
+	        <ul>
+				<li>Encode selected text to SHA-256 Hex</li>
+				<li>Encode selected text to SHA-512 Hex</li>
+				<li>Encode selected text to SHA3-256 Hex</li>
+				<li>Encode selected text to SHA3-512 Hex</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.5</h4>
 	        <ul>
