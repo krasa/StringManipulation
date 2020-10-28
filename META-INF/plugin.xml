@@ -661,6 +661,7 @@
 				<li>De/Encode selected text as URL</li>
 				<li>De/Encode selected text to Base64 (+ zip/deflate)</li>
 				<li>De/Encode selected text to Hex</li>
+                <li>De/Encode selected text to Timestamp</li>
 			</ul>
 		</p>
 		<p>
@@ -739,6 +740,7 @@
 	        <h4>Version 8.6</h4>
 	        <ul>
 				<li>Align/Sort by Columns - SBC case workaround</li>
+                <li>De/Encode selected text to Timestamp</li>
 				<li>Encode selected text to SHA-256 Hex</li>
 				<li>Encode selected text to SHA-512 Hex</li>
 				<li>Encode selected text to SHA3-256 Hex</li>
