@@ -741,7 +741,8 @@
 	        <h4>Version 8.6</h4>
 	        <ul>
 				<li>Align/Sort by Columns - SBC case workaround</li>
-                <li>De/Encode selected text to Timestamp</li>
+                <li>ISO Timestamp to Epoch Milliseconds</li>
+                <li>Epoch Milliseconds to ISO Timestamp</li>
 				<li>Encode selected text to SHA-256 Hex</li>
 				<li>Encode selected text to SHA-512 Hex</li>
 				<li>Encode selected text to SHA3-256 Hex</li>
