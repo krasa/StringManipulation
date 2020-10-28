@@ -265,13 +265,13 @@
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.encoding.TimestampEncodeAction"
                         class="osmedile.intellij.stringmanip.encoding.TimestampEncodeAction"
-                        text="Encode Instant"
-                        description="Encode Instant as epoch milliseconds">
+                        text="ISO Timestamp to Epoch Milliseconds"
+                >
                 </action>
                 <action id="osmedile.intellij.stringmanip.encoding.TimestampDecodeAction"
                         class="osmedile.intellij.stringmanip.encoding.TimestampDecodeAction"
-                        text="Decode Instant"
-                        description="Decode epoch milliseconds as Instant">
+                        text="Epoch Milliseconds to ISO Timestamp"
+                >
                 </action>
             </group>
 
@@ -661,7 +661,8 @@
 				<li>De/Encode selected text as URL</li>
 				<li>De/Encode selected text to Base64 (+ zip/deflate)</li>
 				<li>De/Encode selected text to Hex</li>
-                <li>De/Encode selected text to Timestamp</li>
+                <li>ISO Timestamp to Epoch Milliseconds</li>
+                <li>Epoch Milliseconds to ISO Timestamp</li>
 			</ul>
 		</p>
 		<p>
