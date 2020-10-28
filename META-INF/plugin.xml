@@ -246,6 +246,17 @@
                         text="Decode URL (RFC 3986)"
                         description="Decode URL (RFC 3986 - space character as %20 instead of +)">
                 </action>
+                <separator/>
+                <action id="osmedile.intellij.stringmanip.encoding.TimestampEncodeAction"
+                        class="osmedile.intellij.stringmanip.encoding.TimestampEncodeAction"
+                        text="Encode Instant"
+                        description="Encode Instant as epoch milliseconds">
+                </action>
+                <action id="osmedile.intellij.stringmanip.encoding.TimestampDecodeAction"
+                        class="osmedile.intellij.stringmanip.encoding.TimestampDecodeAction"
+                        text="Decode Instant"
+                        description="Decode epoch milliseconds as Instant">
+                </action>
             </group>
 
             <separator/>

@@ -63,6 +63,7 @@ Provides actions for text manipulation:
             <li>De/Encode selected text as URL</li>
             <li>De/Encode selected text to Base64</li>
             <li>De/Encode selected text to Hex</li>
+            <li>De/Encode selected text to Timestamp</li>
     </ul>
     </p>
     <p>
