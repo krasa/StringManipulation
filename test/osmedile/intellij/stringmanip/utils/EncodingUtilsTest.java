@@ -39,5 +39,23 @@ public class EncodingUtilsTest {
         Assert.assertEquals("foo+bar", EncodingUtils.decodeUrl("foo%2Bbar"));
     }
 
+    @Test
+    public void decodeTimestamp() {
+        Assert.assertEquals("2020-10-28T15:59:23.123Z", TimestampUtils.decodeTimestamp("1603900763123"));
+        Assert.assertEquals("2020-10-28T15:59:23Z", TimestampUtils.decodeTimestamp("1603900763000"));
+        Assert.assertEquals("2020-10-28T15:59:00Z", TimestampUtils.decodeTimestamp("1603900740000"));
+        Assert.assertEquals("2020-10-28T00:00:00Z", TimestampUtils.decodeTimestamp("1603843200000"));
+    }
 
+    @Test
+    public void encodeTimestamp() {
+        Assert.assertEquals("1603900763123", TimestampUtils.encodeTimestamp("2020-10-28T15:59:23.123Z"));
+        Assert.assertEquals("1603900763000", TimestampUtils.encodeTimestamp("2020-10-28T15:59:23Z"));
+        Assert.assertEquals("1603900740000", TimestampUtils.encodeTimestamp("2020-10-28T15:59Z"));
+        Assert.assertEquals("1603897163000", TimestampUtils.encodeTimestamp("2020-10-28T15:59:23+01:00"));
+        Assert.assertEquals("1603897163000", TimestampUtils.encodeTimestamp("2020-10-28T15:59:23+01:00[Europe/Prague]"));
+        Assert.assertEquals("1603900763000", TimestampUtils.encodeTimestamp("2020-10-28T15:59:23"));
+        Assert.assertEquals("1603900740000", TimestampUtils.encodeTimestamp("2020-10-28T15:59"));
+        Assert.assertEquals("1603843200000", TimestampUtils.encodeTimestamp("2020-10-28"));
+    }
 }
