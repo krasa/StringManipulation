@@ -343,12 +343,12 @@
                 </action>
                 <action id="StringManipulation.ToSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
-                        text="To snake_case"
+                        text="To snake__case"
                         description="To snake_case">
                 </action>
                 <action id="StringManipulation.ToScreamingSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
-                        text="To SCREAMING_SNAKE_CASE"
+                        text="To SCREAMING__SNAKE__CASE"
                         description="To SCREAMING_SNAKE_CASE">
                 </action>
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
