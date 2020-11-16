@@ -12,10 +12,6 @@ public class ToSnakeCaseAction extends AbstractCaseConvertingAction {
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getStyle(actionContext, s);
-		if (from != Style.SNAKE_CASE) {
-			return Style.SNAKE_CASE.transform(s);
-		}
-		return s;
+		return Style.SNAKE_CASE.transform(s);
 	}
 }

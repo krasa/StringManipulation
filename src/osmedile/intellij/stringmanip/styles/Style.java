@@ -1,7 +1,5 @@
 package osmedile.intellij.stringmanip.styles;
 
-import static java.lang.Character.isLowerCase;
-import static java.lang.Character.isUpperCase;
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
@@ -137,7 +135,7 @@ public enum Style {
 
 	public static Style from(String s) {
 		s = removeBorderQuotes(s).trim();
-		boolean underscore = containsSeparatorBetweenLetters(s,'_');
+		boolean underscore = containsSeparatorBetweenLetters(s, '_');
 		boolean noUpperCase = noUpperCase(s);
 		boolean noLowerCase = noLowerCase(s);
 //		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
@@ -145,24 +143,27 @@ public enum Style {
 		boolean noSpecialSeparators = noSeparatorsBetweenLetters(s, '.', '-', '_');
 		boolean containsUpperCaseAfterLowerCase = containsUpperCaseAfterLowerCase(s);
 		boolean noSpace = noSeparatorsBetweenLetters(s, ' ');
+		boolean dot = containsSeparatorBetweenLetters(s, '.');
+		boolean hyphen = containsSeparatorBetweenLetters(s, '-');
+		boolean noDot = !dot;
+		boolean noHyphen = !hyphen;
+		boolean noUnderscore = !underscore;
 
-		if (underscore && noUpperCase && noSpace) {
+		if (underscore && noUpperCase && noSpace && noDot && noHyphen) {
 			return SNAKE_CASE;
 		}
-		if (underscore && noLowerCase && noSpace) {
+		if (underscore && noLowerCase && noSpace && noDot && noHyphen) {
 			return SCREAMING_SNAKE_CASE;
 		}
 
-		boolean hyphen = containsSeparatorBetweenLetters(s,'-');
-		if (hyphen && noUpperCase && noSpace) {
+		if (hyphen && noUpperCase && noSpace && noDot && noUnderscore) {
 			return KEBAB_LOWERCASE;
 		}
-		if (hyphen && noLowerCase && noSpace) {
+		if (hyphen && noLowerCase && noSpace && noDot && noUnderscore) {
 			return KEBAB_UPPERCASE;
 		}
 
-		boolean containsDot = containsSeparatorBetweenLetters(s,'.');
-		if (containsDot && noSpace) {
+		if (dot && noSpace && noUnderscore && noHyphen) {
 			return DOT;
 		}
 
