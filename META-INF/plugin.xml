@@ -289,12 +289,12 @@
                 <!--                </action>-->
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseOrCamelAction"
                         text="SCREAMING__SNAKE__CASE / camelCase"
                         description="Toggle: SCREAMING_SNAKE_CASE / camelCase">
                 </action>
                 <action id="StringManipulation.ToSnakeCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.ToSnakeCaseOrCamelAction"
                         text="snake__case / camelCase"
                         description="Toggle: snake_case / camelCase">
                 </action>
@@ -341,6 +341,16 @@
                         text="To camelCase"
                         description="To camelCase">
                 </action>
+                <action id="StringManipulation.ToSnakeCase"
+                        class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
+                        text="To snake_case"
+                        description="To snake_case">
+                </action>
+                <action id="StringManipulation.ToScreamingSnakeCase"
+                        class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
+                        text="To SCREAMING_SNAKE_CASE"
+                        description="To SCREAMING_SNAKE_CASE">
+                </action>
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                         class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
                         text="Capitalize"
@@ -349,7 +359,7 @@
                 <action id="osmedile.intellij.stringmanip.ToLowerCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToLowerCaseAction"
                         text="To lower case"
-                        description="To Lower Case">
+                        description="To lower case">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToUpperCaseAction"
                         class="osmedile.intellij.stringmanip.styles.ToUpperCaseAction"

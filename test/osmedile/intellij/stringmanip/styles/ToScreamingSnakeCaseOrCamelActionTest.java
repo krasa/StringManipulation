@@ -6,15 +6,15 @@ import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 
 import static org.junit.Assert.assertEquals;
 
-public class ToScreamingSnakeCaseActionTest extends CaseSwitchingTest {
+public class ToScreamingSnakeCaseOrCamelActionTest extends CaseSwitchingTest {
 
-	protected ToScreamingSnakeCaseAction action;
+	protected ToScreamingSnakeCaseOrCamelAction action;
 
 	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		action = new ToScreamingSnakeCaseAction(false);
+		action = new ToScreamingSnakeCaseOrCamelAction(false);
 	}
 
 	@Test

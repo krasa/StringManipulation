@@ -5,18 +5,18 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ToSnakeCaseActionTest extends CaseSwitchingTest {
-    protected ToSnakeCaseAction action;
+public class ToSnakeCaseOrCamelActionTest extends CaseSwitchingTest {
+	protected ToSnakeCaseOrCamelAction action;
 
 	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		action = new ToSnakeCaseAction(false);
+		action = new ToSnakeCaseOrCamelAction(false);
 	}
 
 	@Test
-    public void testTransform() throws Exception {
+	public void testTransform() throws Exception {
 		caseSwitchingSettings.setSeparatorBeforeDigit(false);
 		
 		assertEquals("11_foo22_foo_bar33_bar44_foo55_x6_y7_z",
