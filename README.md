@@ -20,9 +20,9 @@ Provides actions for text manipulation:
             <li>Switch case (camelCase, kebab-lowercase, KEBAB-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case,
 					words lowercase, First word capitalized, Words Capitalized, PascalCase)
             </li>
-               <li>Toggle: SCREAMING__SNAKE__CASE / camelCase</li>
-               <li>Toggle: snake__case / camelCase</li>
-               <li>Toggle: kebab-case / snake__case</li>
+               <li>Toggle: SCREAMING_SNAKE_CASE / camelCase</li>
+               <li>Toggle: snake_case / camelCase</li>
+               <li>Toggle: kebab-case / snake_case</li>
                <li>Toggle: kebab-case / camelCase</li>
                <li>Toggle: dot.case / camelCase</li>
                <li>Toggle: PascalCase / camelCase</li>
@@ -30,6 +30,8 @@ Provides actions for text manipulation:
                <li>Toggle: First word capitalized / camelCase</li>
                <li>Toggle: Capitalized Words / camelCase</li>
                <li>To camelCase</li>
+               <li>To snake_case</li>
+               <li>To SCREAMING_SNAKE_CASE</li>
                <li>Capitalize</li>
                <li>To lower case</li>
             <li>To UPPER CASE</li>
