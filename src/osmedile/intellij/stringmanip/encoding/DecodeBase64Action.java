@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.encoding;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
@@ -90,7 +91,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		} catch (Exception e) {
 			LOG.warn(e);
 			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Error"));
-			return s;
+			throw new ProcessCanceledException(e);
 		}
 	}
 
