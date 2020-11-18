@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.8.191.000.1</version>
+    <version>8.9.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -722,13 +722,14 @@
 					(Does not work in column mode)
 				</li>
 				<li>Inverted Grep</li>
-				<li>Trim selected text</li>
-				<li>Trim all spaces in selected text</li>
-				<li>Remove all spaces in selected text</li>
+				<li>Trim</li>
+				<li>Replace whitespaces with a single space char</li>
+				<li>Remove all spaces</li>
 				<li>Remove duplicate lines</li>
 				<li>Keep only duplicate lines</li>
 				<li>Remove empty lines</li>
 				<li>Remove all newlines</li>
+				<li>Minify JSON</li>
 			</ul>
 		</p>
 		<p>
@@ -755,6 +756,12 @@
     <change-notes>
         <![CDATA[
 	<p>        
+	    <div>
+	        <h4>Version 8.9</h4>
+	        <ul>
+                <li>Added: Minify JSON</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.8</h4>
 	        <ul>

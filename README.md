@@ -112,14 +112,15 @@ Provides actions for text manipulation:
                 (Does not work in column mode)
             </li>
             <li>Inverted Grep</li>
-            <li>Trim selected text</li>
-            <li>Trim all spaces in selected text</li>
-            <li>Remove all spaces in selected text</li>
+            <li>Trim</li>
+            <li>Replace whitespaces with a single space char</li>
+            <li>Remove all spaces</li>
             <li>Remove duplicate lines</li>
             <li>Keep only duplicate lines</li>
             <li>Remove empty lines</li>
             <li>Remove all newlines</li>
-        </ul>
+            <li>Minify JSON</li>
+   </ul>
     </p>
     <p>
         Other:
