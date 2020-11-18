@@ -504,13 +504,19 @@
                 </action>
                 <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAllSpacesAction"
-                        text="Trim All Spaces"
-                        description="Trim all spaces selected text">
+                        text="Replace Whitespaces with a Single Space Char"
+                        description="Replace multiple whitespaces with a single space character">
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveAllSpacesAction"
                         text="Remove All Spaces"
                         description="Remove all spaces in selected text">
+                </action>
+                <separator/>
+                <action id="StringManipulation.MinifyJsonAction"
+                        class="osmedile.intellij.stringmanip.transform.MinifyJsonAction"
+                        text="Minify Json"
+                        description="Using github.com/stleary/JSON-java">
                 </action>
             </group>
 
