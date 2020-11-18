@@ -14,7 +14,7 @@ public class Donate {
 	public static JComponent newDonateButton(JPanel donatePanel) {
 		JButton donate = new JButton();
 		donate.setBorder(null);
-		donate.setIcon(IconLoader.getIcon("donate.gif", Donate.class));
+		donate.setIcon(IconLoader.getIcon("donate.png", Donate.class));
 		donate.setContentAreaFilled(false);
 		donate.addActionListener(new ActionListener() {
 			@Override
