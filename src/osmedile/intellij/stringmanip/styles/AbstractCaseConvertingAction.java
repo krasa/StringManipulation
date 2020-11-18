@@ -6,6 +6,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.StdFileTypes;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
@@ -32,7 +33,11 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 	@Override
 	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
 		try {
-			PsiFile psiFile = PsiDocumentManager.getInstance(editor.getProject()).getPsiFile(editor.getDocument());
+			Project project = editor.getProject();
+			if (project == null) {
+				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			}
+			PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
 			if (psiFile == null) {// select whole line in plaintext
 				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			}
@@ -51,7 +56,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 				handled = genericHandling(editor, dataContext, selectionModel, psiFile);
 			}
 			return handled;
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			LOG.error("please report this, so I can fix it :(", e);
 			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 		}
