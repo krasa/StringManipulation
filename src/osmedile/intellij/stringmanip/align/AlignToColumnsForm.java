@@ -3,12 +3,9 @@ package osmedile.intellij.stringmanip.align;
 import com.google.common.base.Joiner;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +13,7 @@ import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
+import osmedile.intellij.stringmanip.utils.PreviewUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -25,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -162,19 +159,8 @@ public class AlignToColumnsForm {
 	protected void preview() {
 		String x = null;
 		try {
-			List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-			IdeUtils.sort(caretsAndSelections);
-			List<String> lines = new ArrayList<String>();
-			for (CaretState caretsAndSelection : caretsAndSelections) {
-				LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-				LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-				String text = editor.getDocument().getText(
-						new TextRange(editor.logicalPositionToOffset(selectionStart),
-								editor.logicalPositionToOffset(selectionEnd)));
+			List<String> lines = PreviewUtils.getPreviewLines(editor);
 
-				String[] split = text.split("\n");
-				lines.addAll(Arrays.asList(split));
-			}
 
 			ColumnAligner columnAligner = new ColumnAligner(getModel());
 			List<String> result = columnAligner.align(lines);

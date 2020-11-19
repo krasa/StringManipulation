@@ -6,22 +6,19 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.Transient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
-import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
+import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
-import osmedile.intellij.stringmanip.utils.IdeUtils;
+import osmedile.intellij.stringmanip.utils.PreviewUtils;
 
 import java.util.*;
 
@@ -93,7 +90,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	@NotNull
 	@Transient
 	public ColumnAlignerModel guessModel(Editor editor) {
-		String s = getTextForPreview(editor);
+		String s = PreviewUtils.getTextForPreview(editor);
 		if (columnAlignerHistory.size() > 0) {
 			for (int i = columnAlignerHistory.size() - 1; i >= 0; i--) {
 				ColumnAlignerModel columnAlignerModel = columnAlignerHistory.get(i);
@@ -119,28 +116,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		addSeparator(s, ",", true, separators);
 		addSeparator(s, " ", true, separators);
 		return columnAlignerModel;
-	}
-
-	@NotNull
-	protected String getTextForPreview(Editor editor) {
-		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
-		IdeUtils.sort(caretsAndSelections);
-		StringBuilder sb = new StringBuilder();
-		for (CaretState caretsAndSelection : caretsAndSelections) {
-			LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
-			LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
-			String text = editor.getDocument().getText(
-					new TextRange(editor.logicalPositionToOffset(selectionStart),
-							editor.logicalPositionToOffset(selectionEnd)));
-
-			sb.append(text);
-			if (sb.length() > 10000) {
-				break;
-			}
-		}
-		String s = sb.toString();
-		s = s.substring(0, Math.min(10000, s.length()));
-		return s;
 	}
 
 	@Transient
@@ -230,11 +205,11 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	}
 
 	public SortTokensModel guessSortTokensModel(Editor editor) {
-		String s = getTextForPreview(editor);
+		String s = PreviewUtils.getTextForPreview(editor);
 
 		SortTokensModel model = sortTokensModel != null ? sortTokensModel : new SortTokensModel();
 		List<String> separators = model.getSeparators();
-		separators.removeIf(next -> next.length()==0 ||!s.contains(next));
+		separators.removeIf(next -> next.length() == 0 || !s.contains(next));
 
 		//TODO configurable?
 		addSeparator(s, "|", true, separators);
