@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.9.191.000.1</version>
+    <version>8.9.191.000.2</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -461,7 +461,7 @@
             </group>
 
             <group text="Filter/Remove/Trim..."
-                   description="Filter/Remove/Trim..."
+                   description="Filter/Remove/Trim/Minify..."
                    icon="/osmedile/intellij/stringmanip/icons/filter.svg"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
