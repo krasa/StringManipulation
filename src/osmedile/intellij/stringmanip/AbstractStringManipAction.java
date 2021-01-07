@@ -9,6 +9,7 @@ import com.intellij.openapi.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +78,8 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		final SelectionModel selectionModel = editor.getSelectionModel();
 		String selectedText = selectionModel.getSelectedText();
 
-		if (selectedText == null) {
+		boolean noSelection = selectedText == null;
+		if (noSelection) {
 			selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			selectedText = selectionModel.getSelectedText();
 
@@ -89,8 +91,11 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		String s = transformSelection(editor, actionContext, dataContext, selectedText, additionalParam);
 		s = s.replace("\r\n", "\n");
 		s = s.replace("\r", "\n");
-        editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
-    }
+		editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
+		if (noSelection && PluginPersistentStateComponent.getInstance().isDoNotAddSelection()) {
+			selectionModel.removeSelection();
+		}
+	}
 
 
 	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, T additionalParam) {

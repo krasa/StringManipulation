@@ -767,6 +767,7 @@
 	        <ul>
                 <li>Added: Minify JS</li>
                 <li>Minify JSON - fixed order</li>
+                <li>New option: Do not add selection.</li>
             </ul>
 	    </div>
 	    <div>

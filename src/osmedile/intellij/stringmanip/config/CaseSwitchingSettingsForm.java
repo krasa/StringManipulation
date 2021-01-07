@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.diagnostic.Logger;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
-import osmedile.intellij.stringmanip.Donate;
 
 import javax.swing.*;
 
@@ -12,10 +11,9 @@ public class CaseSwitchingSettingsForm {
 	private JCheckBox separatorBefore;
 	private JCheckBox separatorAfter;
 	private JPanel root;
-	private JPanel donatePanel;
 
 	public CaseSwitchingSettingsForm() {
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+		;
 	}
 
 	public void setData(CaseSwitchingSettings data) {

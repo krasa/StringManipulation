@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.diagnostic.Logger;
+import osmedile.intellij.stringmanip.Donate;
 
 import javax.swing.*;
 
@@ -10,10 +11,13 @@ public class SettingsForm {
 	private JPanel root;
 	private JPanel settings;
 	private JPanel customActions;
+	private JCheckBox doNotAddSelection;
+	private JPanel donatePanel;
 	private CaseSwitchingSettingsForm caseSwitchingSettingsForm;
 	private CustomActionSettingsForm customActionSettingsForm;
 
 	public SettingsForm() {
+		donatePanel.add(Donate.newDonateButton(donatePanel));
 	}
 
 	public JPanel getRoot() {
@@ -26,20 +30,23 @@ public class SettingsForm {
 		}
 	}
 
-	public boolean isModified(PluginPersistentStateComponent state) {
+	public boolean isModified(PluginPersistentStateComponent data) {
+		if (doNotAddSelection.isSelected() != data.isDoNotAddSelection()) return true;
 		if (customActionSettingsForm.isModified()) return true;
-		if (caseSwitchingSettingsForm.isModified(state.getCaseSwitchingSettings())) return true;
+		if (caseSwitchingSettingsForm.isModified(data.getCaseSwitchingSettings())) return true;
 		return false;
 	}
 
-	public void getData(PluginPersistentStateComponent state) {
+	public void getData(PluginPersistentStateComponent data) {
+		data.setDoNotAddSelection(doNotAddSelection.isSelected());
 		customActionSettingsForm.getData();
-		caseSwitchingSettingsForm.getData(state.getCaseSwitchingSettings());
+		caseSwitchingSettingsForm.getData(data.getCaseSwitchingSettings());
 	}
 
-	public void setData(PluginPersistentStateComponent state) {
+	public void setData(PluginPersistentStateComponent data) {
+		doNotAddSelection.setSelected(data.isDoNotAddSelection());
 		customActionSettingsForm.setData();
-		caseSwitchingSettingsForm.setData(state.getCaseSwitchingSettings());
+		caseSwitchingSettingsForm.setData(data.getCaseSwitchingSettings());
 
 	}
 
@@ -49,5 +56,6 @@ public class SettingsForm {
 		customActionSettingsForm = new CustomActionSettingsForm();
 		customActions = customActionSettingsForm.getRoot();
 	}
+
 }
 

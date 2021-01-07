@@ -35,6 +35,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private SortSettings sortSettings = new SortSettings();
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
 	private SortTokensModel sortTokensModel;
+	private boolean doNotAddSelection;
 
 	public PluginPersistentStateComponent() {
 	}
@@ -234,5 +235,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void storeModel(SortTokensModel settings) {
 		this.sortTokensModel = settings;
+	}
+
+	public boolean isDoNotAddSelection() {
+		return doNotAddSelection;
+	}
+
+	public void setDoNotAddSelection(final boolean doNotAddSelection) {
+		this.doNotAddSelection = doNotAddSelection;
 	}
 }
