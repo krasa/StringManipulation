@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.9.191.000.2</version>
+    <version>8.10.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -460,7 +460,7 @@
                 </action>
             </group>
 
-            <group text="Filter/Remove/Trim..."
+            <group text="Filter/Remove/Trim/Minify..."
                    description="Filter/Remove/Trim/Minify..."
                    icon="/osmedile/intellij/stringmanip/icons/filter.svg"
                    popup="true">
@@ -517,6 +517,11 @@
                         class="osmedile.intellij.stringmanip.transform.MinifyJsonAction"
                         text="Minify JSON"
                         description="Using github.com/stleary/JSON-java">
+                </action>
+                <action id="StringManipulation.MinifyJavaScriptAction"
+                        class="osmedile.intellij.stringmanip.transform.MinifyJavaScriptAction"
+                        text="Minify JavaScript"
+                        description="Using github.com/wro4j/wro4j (requires JRE 1.9+)">
                 </action>
             </group>
 
@@ -716,7 +721,7 @@
 			</ul>
 		</p>
 		<p>
-            Filter/Remove/Trim...:
+            Filter/Remove/Trim/Minify...:
 			<ul>
 				<li>Grep selected text, All lines not matching input text wil be removed.
 					(Does not work in column mode)
@@ -730,6 +735,7 @@
 				<li>Remove empty lines</li>
 				<li>Remove all newlines</li>
 				<li>Minify JSON</li>
+				<li>Minify JavaScript</li>
 			</ul>
 		</p>
 		<p>
@@ -756,6 +762,13 @@
     <change-notes>
         <![CDATA[
 	<p>        
+	    <div>
+	        <h4>Version 8.10</h4>
+	        <ul>
+                <li>Added: Minify JS</li>
+                <li>Minify JSON - fixed order</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.9</h4>
 	        <ul>
