@@ -180,7 +180,7 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 		}
 		linkLabel.setListener(
 				(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
-				"https://github.com/krasa/StringManipulation/wiki/Hiarchical-sort");
+				"https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort");
 	}
 
 	private void addPreviewListeners(Object object) {
