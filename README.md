@@ -155,24 +155,27 @@ Provides actions for text manipulation:
 
     ![](images/select-sdk-root-win.png)
 
-    Mac (select the `/Applications/IntelliJ IDEA/`):
+   Mac (select the `/Applications/IntelliJ IDEA/`):
 
-    ![](images/select-sdk-root-mac.png)
+   ![](images/select-sdk-root-mac.png)
 
 4. The project should build now. To run add the following run configuration if it's not added already:
 
-    ![](images/run-configuration.png)
+   ![](images/run-configuration.png)
 
 5. Now you should be able to run and debug the plugin in a separate IDEA instance.
 
+6. To package a distribution:
+   ![](images/deployment.png)
+   (StringManipulation.zip will be generated in the project root, which you can install to the main IDE)
 
 ------
 ![YourKit-Logo](https://www.yourkit.com/images/yklogo.png)
 
-YourKit supports open source projects with its full-featured Java Profiler.
-YourKit, LLC is the creator of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/)
-and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/),
-innovative and intelligent tools for profiling Java and .NET applications.
+YourKit supports open source projects with its full-featured Java Profiler. YourKit, LLC is the creator
+of [YourKit Java Profiler](https://www.yourkit.com/java/profiler/)
+and [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/), innovative and intelligent tools for profiling Java
+and .NET applications.
 
 
 [badge-paypal-img]:       https://img.shields.io/badge/donate-paypal-green.svg
