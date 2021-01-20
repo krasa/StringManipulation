@@ -166,7 +166,9 @@ Provides actions for text manipulation:
 5. Now you should be able to run and debug the plugin in a separate IDEA instance.
 
 6. To package a distribution:
+
    ![](images/deployment.png)
+   
    (StringManipulation.zip will be generated in the project root, which you can install to the main IDE)
 
 ------
