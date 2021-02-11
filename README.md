@@ -172,6 +172,10 @@ Provides actions for text manipulation:
    (StringManipulation.zip will be generated in the project root, which you can install to the main IDE)
 
 ------
+
+Privacy Notice: No personal data is collected at all
+
+------
 ![YourKit-Logo](https://www.yourkit.com/images/yklogo.png)
 
 YourKit supports open source projects with its full-featured Java Profiler. YourKit, LLC is the creator
