@@ -73,6 +73,9 @@ public class PopupChoiceAction extends MyEditorAction {
 	}
 
 	public static boolean isFromDialog(Project project) {
+		if (!EventQueue.isDispatchThread()) {
+			return false; //probably Search Everywhere
+		}
 		final Component owner = IdeFocusManager.getInstance(project).getFocusOwner();
 		if (owner != null) {
 			final DialogWrapper instance = DialogWrapper.findInstance(owner);

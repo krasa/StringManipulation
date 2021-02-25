@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.10.191.000.0</version>
+    <version>8.11.191.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="191.000"/>
 
@@ -762,6 +762,12 @@
     <change-notes>
         <![CDATA[
 	<p>        
+	    <div>
+	        <h4>Version 8.11</h4>
+	        <ul>
+                <li>Exception fix for IJ 2021</li>
+            </ul>
+	    </div>  
 	    <div>
 	        <h4>Version 8.10</h4>
 	        <ul>
