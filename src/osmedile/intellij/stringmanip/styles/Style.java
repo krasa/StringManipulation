@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.styles;
 
+import osmedile.intellij.stringmanip.utils.StringUtil;
+
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
 public enum Style {
@@ -79,6 +81,12 @@ public enum Style {
 			}
 //			return WordUtils.capitalize(s, Constants.DELIMITERS);
 			return capitalizeFirstWord2(s);
+		}
+	},
+	SPRING_BOOT_ENVIRONMENT_VARIABLE("Spring Boot Env variable", "FOO_BAR") {
+		@Override
+		protected String transform(Style style, String s) {
+			return StringUtil.toSpringEnvVariable(s);
 		}
 	},
 	/**

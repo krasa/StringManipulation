@@ -1,12 +1,14 @@
 package osmedile.intellij.stringmanip.utils;
 
 import org.apache.commons.lang3.CharUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.lang.Character.isWhitespace;
 import static java.lang.Character.*;
@@ -243,7 +245,7 @@ public class StringUtil {
 //			boolean previousIsWhitespace = isWhitespace(previousChar);
 //			boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt(buf.length() - 1) != '_';
 //			boolean isNotUnderscore = c != '_';
-			//  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
+			//  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {
 
 			//camelCase handling - add extra _
 			if (isLetter(c) && isLetter(previousChar) && (isUpperCaseAndPreviousIsLowerCase || (putSeparatorBetweenUppercases() &&  isUpperCaseAndPreviousIsUpperCase))) {
@@ -760,6 +762,15 @@ public class StringUtil {
 		}
 		return result;
 	}
+
+    public static String toSpringEnvVariable(String s) {
+        return Arrays.stream(split(s, "."))
+                .map(StringUtils::trim)
+                .map(str -> StringUtils.replaceChars(str, "-", ""))
+                .map(str -> StringUtils.replaceChars(str, "_", ""))
+                .collect(Collectors.joining("_"))
+                .toUpperCase();
+    }
 
 
 	public static class Constants {
