@@ -398,10 +398,11 @@
                         text="Invert case"
                         description="Invert Case -> iNVERT cASE">
                 </action>
+                <separator/>
                 <action id="StringManipulation.ToSpringEnvironmentVariable"
                         class="osmedile.intellij.stringmanip.styles.ToSpringBootEnvironmentVariableAction"
-                        text="To Spring Boot Env variable"
-                        description="To Spring Boot Env variable">
+                        text="To Spring Boot System Env Variable"
+                >
                 </action>
                 <separator/>
                 <action id="StringManipulation.OpenSettingsAction"

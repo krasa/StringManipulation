@@ -1,9 +1,16 @@
 package osmedile.intellij.stringmanip.styles;
 
-import osmedile.intellij.stringmanip.utils.StringUtil;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
 
+/**
+ * Finite state machine.
+ *
+ * @see DefaultActions.Helper#getDefaultSteps()
+ * @see PluginPersistentStateComponent#fixActions()
+ */
 public enum Style {
 	KEBAB_LOWERCASE("kebab-case", "foo-bar") {
 		@Override
@@ -81,12 +88,6 @@ public enum Style {
 			}
 //			return WordUtils.capitalize(s, Constants.DELIMITERS);
 			return capitalizeFirstWord2(s);
-		}
-	},
-	SPRING_BOOT_ENVIRONMENT_VARIABLE("Spring Boot Env variable", "FOO_BAR") {
-		@Override
-		protected String transform(Style style, String s) {
-			return StringUtil.toSpringEnvVariable(s);
 		}
 	},
 	/**

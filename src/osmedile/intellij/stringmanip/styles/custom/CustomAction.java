@@ -38,7 +38,9 @@ public class CustomAction extends AbstractCaseConvertingAction {
 				if (sb.length() > 0) {
 					sb.append(", ");
 				}
-				sb.append(step.getStyleAsEnum().getPresentableName());
+				Style styleAsEnum = step.getStyleAsEnum();
+				String presentableName = styleAsEnum.getPresentableName();
+				sb.append(presentableName);
 			}
 		}
 		return sb.toString();

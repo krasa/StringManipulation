@@ -174,19 +174,19 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 				styles.remove(stepStyle);
 			}
 
-			if (!styles.isEmpty()) {
-				Iterator<CustomActionModel.Step> stepIterator = steps.iterator();
-				while (stepIterator.hasNext()) {
-					CustomActionModel.Step next = stepIterator.next();
-					Style stepStyle = next.getStyleAsEnum();
-					if (stepStyle == null) {
-						stepIterator.remove();
-					}
+			Iterator<CustomActionModel.Step> stepIterator = steps.iterator();
+			while (stepIterator.hasNext()) {
+				CustomActionModel.Step next = stepIterator.next();
+				Style stepStyle = next.getStyleAsEnum();
+				if (stepStyle == null) {
+					stepIterator.remove();
 				}
+			}
+			if (!styles.isEmpty()) {
 				for (Style style : styles) {
 					Boolean enabled = DefaultActions.DEFAULT_AS_MAP.get(style);
 					if (enabled == null) {
-						enabled = !style.name().startsWith("_");
+						enabled = false;
 					}
 					steps.add(new CustomActionModel.Step(enabled, style));
 				}
