@@ -54,6 +54,7 @@ Provides actions for text manipulation:
             <li>Convert diacritics (accents) to ASCII</li>
             <li>Convert non-ASCII to escaped Unicode</li>
             <li>Convert escaped Unicode to String</li>
+            <li>Unicode normalization (NFD, NFC, NFKC, NFKD)</li>
         </ul>
     </p>
     <p>

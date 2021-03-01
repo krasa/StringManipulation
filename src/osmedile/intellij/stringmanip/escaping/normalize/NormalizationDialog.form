@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="osmedile.intellij.stringmanip.escaping.normalize.NormalizationDialog">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="48" y="54" width="752" height="512"/>
+    </constraints>
+    <properties>
+      <focusCycleRoot value="false"/>
+      <focusTraversalPolicyProvider value="true"/>
+      <preferredSize width="600" height="700"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="c5181" binding="previewParent" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4bed8" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Preview:"/>
+            </properties>
+          </component>
+          <component id="7e03e" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="884d5" class="javax.swing.JPanel" binding="myPreviewPanel" custom-create="true">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <grid id="4a0a9" binding="coreWithoutPreview" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="57845" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="2" row-span="7" col-span="1" vsize-policy="2" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <orientation value="1"/>
+            </properties>
+          </component>
+          <component id="e9f4" class="javax.swing.JRadioButton" binding="formNFD">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusCycleRoot value="false"/>
+              <selected value="false"/>
+              <text value="Form D (NFD)"/>
+              <toolTipText value="Canonical Decomposition"/>
+            </properties>
+          </component>
+          <component id="a6f" class="javax.swing.JRadioButton" binding="formNFC">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="false"/>
+              <text value="Form C (NFC)"/>
+              <toolTipText value="Canonical Decomposition, followed by Canonical Composition"/>
+            </properties>
+          </component>
+          <component id="36701" class="javax.swing.JRadioButton" binding="formNFKD">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="false"/>
+              <text value="Form KD (NFKD)"/>
+              <toolTipText value="Compatibility Decomposition"/>
+            </properties>
+          </component>
+          <component id="b53d7" class="javax.swing.JRadioButton" binding="formNFKC">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusCycleRoot value="false"/>
+              <selected value="false"/>
+              <text value="Form KC (NFKC)"/>
+              <toolTipText value="Compatibility Decomposition, followed by Canonical Composition"/>
+            </properties>
+          </component>
+          <component id="36289" class="javax.swing.JRadioButton" binding="stripAccents">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusCycleRoot value="false"/>
+              <selected value="false"/>
+              <text value="Strip accents"/>
+              <toolTipText value="Removes diacritics (~= accents) from a string. Using: org.apache.commons.lang3.StringUtils#stripAccents"/>
+            </properties>
+          </component>
+          <component id="297ee" class="javax.swing.JRadioButton" binding="convertDiacritics">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusCycleRoot value="false"/>
+              <selected value="false"/>
+              <text value="Convert Diacritics (Accents) to ASCII"/>
+              <toolTipText value="Custom action"/>
+            </properties>
+          </component>
+          <component id="fadb3" class="com.intellij.ui.components.labels.LinkLabel" binding="linkLabel">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Link"/>
+            </properties>
+          </component>
+          <component id="eebb" class="com.intellij.ui.components.labels.LinkLabel" binding="stripAccentsLink">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Link"/>
+            </properties>
+          </component>
+          <component id="2a375" class="javax.swing.JRadioButton" binding="nothing">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusCycleRoot value="false"/>
+              <selected value="true"/>
+              <text value="Nothing"/>
+              <toolTipText value="Canonical Decomposition"/>
+            </properties>
+          </component>
+          <component id="c0c79" class="javax.swing.JCheckBox" binding="unescapeBeforeCheckBox" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Unescape Unicode before"/>
+            </properties>
+          </component>
+          <component id="74c84" class="javax.swing.JCheckBox" binding="escapeAfter">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Escape Non-ASCII after"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="bc6e0" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="5d47" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Unescaped Unicode hex by character:"/>
+            </properties>
+          </component>
+          <component id="8333" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="8add6" class="javax.swing.JPanel" binding="myHexaPreviewPanel" custom-create="true">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <component id="d2d98" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="2"/>
+          <text value="Note: JRE 11 supports only Unicode 10.0.0"/>
+        </properties>
+      </component>
+      <grid id="3da32" binding="donatePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="20" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="order">
+      <member id="95de7"/>
+      <member id="dd0cb"/>
+    </group>
+    <group name="emptyLines">
+      <member id="8680"/>
+      <member id="ee9b0"/>
+    </group>
+    <group name="buttonGroup2">
+      <member id="b2a17"/>
+      <member id="7f653"/>
+    </group>
+    <group name="comparator">
+      <member id="2f9ae"/>
+      <member id="2f9ae"/>
+      <member id="8202"/>
+      <member id="cacd7"/>
+    </group>
+    <group name="sortStrategy">
+      <member id="6b5cc"/>
+      <member id="6b5cc"/>
+      <member id="62673"/>
+    </group>
+    <group name="type">
+      <member id="e9f4"/>
+      <member id="a6f"/>
+      <member id="36289"/>
+      <member id="297ee"/>
+      <member id="36701"/>
+      <member id="b53d7"/>
+      <member id="2a375"/>
+    </group>
+  </buttonGroups>
+</form>

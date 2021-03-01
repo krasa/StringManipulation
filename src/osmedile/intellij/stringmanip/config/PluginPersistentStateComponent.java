@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
+import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.styles.Style;
@@ -36,6 +37,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
 	private SortTokensModel sortTokensModel;
 	private boolean doNotAddSelection;
+	private NormalizationSettings normalizationSettings = new NormalizationSettings();
 
 	public PluginPersistentStateComponent() {
 	}
@@ -243,5 +245,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void setDoNotAddSelection(final boolean doNotAddSelection) {
 		this.doNotAddSelection = doNotAddSelection;
+	}
+
+	public void setNormalizeSettings(NormalizationSettings newSettings) {
+		normalizationSettings = newSettings;
+	}
+
+	public NormalizationSettings getNormalizeSettings() {
+		return normalizationSettings;
 	}
 }

@@ -261,33 +261,6 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 		validateLocale();
 		validateRegexp();
 
-		for (Field field : SortTypeDialog.class.getDeclaredFields()) {
-			try {
-				Object o = field.get(this);
-				if (o instanceof JToggleButton) {
-					JToggleButton button = (JToggleButton) o;
-					button.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							updateComponents();
-						}
-
-					});
-				}
-//				if (o instanceof JTextField) {
-//					JTextField jTextField = (JTextField) o;
-//					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
-//						@Override
-//						protected void textChanged(DocumentEvent e) {
-//							updateComponents();
-//						}
-//					});
-//				}
-			} catch (Throwable e) {
-				throw new RuntimeException(e);
-			}
-		}
-
 		switch (sortSettings.getBaseComparator()) {
 
 			case NORMAL:

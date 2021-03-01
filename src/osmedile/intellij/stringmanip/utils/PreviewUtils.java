@@ -31,7 +31,8 @@ public class PreviewUtils {
 				new TextRange(editor.logicalPositionToOffset(selectionStart),
 					editor.logicalPositionToOffset(selectionEnd)));
 
-			sb.append(text);
+			sb.append(text.trim());
+			sb.append("\n");
 			if (sb.length() > 10000) {
 				break;
 			}
