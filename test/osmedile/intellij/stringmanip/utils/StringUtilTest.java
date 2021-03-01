@@ -101,4 +101,11 @@ public class StringUtilTest extends CaseSwitchingTest {
         assertEquals("_foo bar 1_1_", StringUtil.replaceSeparatorBetweenLetters("_foo_bar_1_1_", '_', ' '));
 
     }
+
+    @Test
+    public void toSpringRelaxedBinding() {
+        assertEquals("ACME_MYPROJECT_PERSON_FIRSTNAME", StringUtil.toSpringEnvVariable("acme.my-project.person.first-name"));
+        assertEquals("ACME_MYPROJECT_PERSON_FIRSTNAME", StringUtil.toSpringEnvVariable("acme.myProject.person.firstName"));
+        assertEquals("ACME_MYPROJECT_PERSON_FIRSTNAME", StringUtil.toSpringEnvVariable("acme.my_project.person.first_name"));
+    }
 }
