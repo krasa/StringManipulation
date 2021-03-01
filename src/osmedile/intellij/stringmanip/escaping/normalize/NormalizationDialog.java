@@ -51,6 +51,7 @@ public class NormalizationDialog implements Disposable {
 	private JRadioButton convertDiacritics;
 	private LinkLabel stripAccentsLink;
 	private JRadioButton nothing;
+	private LinkLabel unicodeSupport;
 
 	private final Editor editor;
 	private DiffRequestPanel previewDiff;
@@ -70,6 +71,10 @@ public class NormalizationDialog implements Disposable {
 		stripAccentsLink.setListener(
 			(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
 			"http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#stripAccents-java.lang.String-");
+
+		unicodeSupport.setListener(
+			(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
+			"https://youtrack.jetbrains.com/issue/JBR-2875");
 
 		contentPane.setFocusTraversalPolicy(new ComponentsListFocusTraversalPolicy() {
 			@NotNull
