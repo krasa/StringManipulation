@@ -684,6 +684,7 @@
                 <li>To lower case</li>
                 <li>To UPPER CASE</li>
                 <li>Invert case</li>
+                <li>To Spring Boot System Env Variable</li>
 			</ul>
 			-'Switch case' action can be customized, or new ones can be added in settings<br>
             -when nothing is selected, then either nothing or whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
@@ -799,6 +800,7 @@
 	        <h4>Version 8.12</h4>
 	        <ul>
                 <li>Added: Unicode normalization</li>
+                <li>Added Switch Case: To Spring Boot System Env Variable</li>
             </ul>
 	    </div>    
 	    <div>

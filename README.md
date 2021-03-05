@@ -36,6 +36,7 @@ Provides actions for text manipulation:
                <li>To lower case</li>
             <li>To UPPER CASE</li>
             <li>Invert case</li>
+            <li>To Spring Boot System Env Variable</li>
         </ul>
 - 'Switch case' action can be customized, or new ones can be added in settings<br>
 - when nothing is selected, then either nothing or a whole line or a particular element is selected (report an issue if you find something to improve, each file type needs its own implementation to work flawlessly)</li>
