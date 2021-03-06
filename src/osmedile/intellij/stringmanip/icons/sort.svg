@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-sort" width="16" height="16"
-     viewBox="0 0 24 24" stroke-width="2" stroke="#9AA400" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z"/>
-    <path d="M3 9l4-4l4 4m-4 -4v14"/>
-    <path d="M21 15l-4 4l-4-4m4 4v-14"/>
+<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="5" y="11" width="2" height="8" transform="rotate(-180 5 11)" fill="#EDA200"/>
+<rect x="8" y="2" width="2" height="8" fill="#EDA200"/>
+<path d="M9 12L6 8L12 8L9 12Z" fill="#EDA200"/>
+<path d="M4 1L7 5H1L4 1Z" fill="#EDA200"/>
 </svg>
