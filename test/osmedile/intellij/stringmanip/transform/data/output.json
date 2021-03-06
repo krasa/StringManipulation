@@ -1,0 +1,30 @@
+{
+  "object": {
+    "key": "value",
+    "array": [
+      {
+        "null_value": null
+      },
+      {
+        "boolean": true
+      },
+      {
+        "integer": 1
+      },
+      {
+        "alias": "example alias value"
+      },
+      {
+        "alias": "example alias value"
+      }
+    ]
+  },
+  "paragraph": "Blank lines denote\n\nparagraph breaks\n",
+  "content": "Some\nmultiline\ncontent",
+  "alias": {
+    "bar": "baz"
+  },
+  "alias_reuse": {
+    "bar": "baz"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "object": {
+    "key": "value",
+    "array": [
+      {
+        "null_value": null
+      },
+      {
+        "boolean": true
+      },
+      {
+        "integer": 1
+      }
+    ]
+  },
+  "paragraph": "Blank lines denote\n\nparagraph breaks\n",
+  "content": "Some\nmultiline\ncontent"
+}

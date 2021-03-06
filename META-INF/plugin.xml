@@ -555,6 +555,12 @@
                         text="Minify JavaScript"
                         description="Using github.com/wro4j/wro4j (requires JRE 1.9+)">
                 </action>
+                <separator/>
+                <action id="StringManipulation.ConvertJsonYamlAction"
+                        class="osmedile.intellij.stringmanip.transform.ConvertJsonYamlAction"
+                        text="Convert Between JSON and YAML"
+                        description="TODO">
+                </action>
             </group>
 
             <group text="Align..."
