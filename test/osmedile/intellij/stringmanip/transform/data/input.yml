@@ -1,0 +1,22 @@
+---
+# a comment
+
+object:
+  key: value
+  array:
+    - null_value: null
+    - boolean: true
+    - integer: 1
+    - alias: &example example alias value
+    - alias: *example
+paragraph: |
+  Blank lines denote
+
+  paragraph breaks
+content: |-
+  Some
+  multiline
+  content
+alias: &foo
+  bar: baz
+alias_reuse: *foo
