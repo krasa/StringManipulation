@@ -492,8 +492,8 @@
                 </action>
             </group>
 
-            <group text="Filter/Remove/Trim/Minify..."
-                   description="Filter/Remove/Trim/Minify..."
+            <group text="Filter/Remove/Trim/Minify/Convert..."
+                   description="Filter/Remove/Trim/Minify/Convert..."
                    icon="/osmedile/intellij/stringmanip/icons/filter.svg"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
@@ -559,7 +559,7 @@
                 <action id="StringManipulation.ConvertJsonYamlAction"
                         class="osmedile.intellij.stringmanip.transform.ConvertJsonYamlAction"
                         text="Convert Between JSON and YAML"
-                        description="TODO">
+                        description="Detect whether the selection is JSON or YAML (1.2) and convert to the other">
                 </action>
             </group>
 
