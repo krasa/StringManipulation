@@ -12,18 +12,36 @@ import static org.junit.Assert.assertEquals;
 public class ConvertJsonYamlActionTest {
 
     @Test
-    public void jsonToYaml() {
-        String inputJson = readFile("input.json");
-        String outputYaml = readFile("output.yml");
+    public void jsonObjectToYaml() {
+        String inputJson = readFile("objectInput.json");
+        String outputYaml = readFile("objectOutput.yml");
 
         String yaml = new ConvertJsonYamlAction().jsonToYaml(inputJson);
         assertEquals(outputYaml, yaml);
     }
 
     @Test
-    public void yamlToJson() {
-        String inputYaml = readFile("input.yml");
-        String outputJson = readFile("output.json");
+    public void jsonArrayToYaml() {
+        String inputJson = readFile("array.json");
+        String outputYaml = readFile("array.yml");
+
+        String yaml = new ConvertJsonYamlAction().jsonToYaml(inputJson);
+        assertEquals(outputYaml, yaml);
+    }
+
+    @Test
+    public void yamlObjectToJson() {
+        String inputYaml = readFile("objectInput.yml");
+        String outputJson = readFile("objectOutput.json");
+
+        String json = new ConvertJsonYamlAction().yamlToJson(inputYaml);
+        assertEquals(outputJson, json);
+    }
+
+    @Test
+    public void yamlArrayToJson() {
+        String inputYaml = readFile("array.yml");
+        String outputJson = readFile("array.json");
 
         String json = new ConvertJsonYamlAction().yamlToJson(inputYaml);
         assertEquals(outputJson, json);
