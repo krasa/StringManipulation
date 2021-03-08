@@ -108,7 +108,7 @@ Provides actions for text manipulation:
         </ul>
     </p>
     <p>
-        Filter/Remove/Trim...:
+        Filter/Remove/Trim/Convert...:
         <ul>
             <li>Grep selected text, All lines not matching input text wil be removed.
                 (Does not work in column mode)
@@ -122,6 +122,7 @@ Provides actions for text manipulation:
             <li>Remove empty lines</li>
             <li>Remove all newlines</li>
             <li>Minify JSON</li>
+            <li>Convert Between JSON and YAML</li>
    </ul>
     </p>
     <p>
