@@ -10,7 +10,14 @@ public class DuplicateAndIncrementAction extends IncrementAction {
 
 	@Override
 	protected void applyChanges(Editor editor, CaretModel caretModel, int line, int column,
-			SelectionModel selectionModel, boolean hasSelection, String selectedText, String newText, int caretOffset) {
+								SelectionModel selectionModel, boolean hasSelection, String selectedText, String newText, int caretOffset) {
+
+		if (!hasSelection) {
+			if (!newText.endsWith("\n")) {
+				newText = "\n" + newText;
+			}
+		}
+
 		editor.getDocument().insertString(selectionModel.getSelectionEnd(), newText);
 
 		if (hasSelection) {

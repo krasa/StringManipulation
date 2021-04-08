@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.13.203.000.0</version>
+    <version>8.14.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -732,7 +732,7 @@
             Increment/Decrement:
 			<ul>
 				<li>Increment/decrement all numbers found.</li>
-				<li>Duplicate line and increment/decrement all numbers found.</li>
+				<li>Duplicate selection and increment/decrement all numbers found.</li>
 				<li>Create sequence - Keep first number, replace all other by incrementing</li>
 				<li>Increment duplicate numbers</li>
             </ul>
@@ -803,6 +803,12 @@
     <change-notes>
         <![CDATA[
 	<p>        
+	    <div>
+	        <h4>Version 8.14</h4>
+	        <ul>
+                <li>NPE fix</li>
+            </ul>
+	    </div>     
 	    <div>
 	        <h4>Version 8.13</h4>
 	        <ul>

@@ -78,7 +78,7 @@ Provides actions for text manipulation:
         Increment/Decrement:
         <ul>
             <li>Increment/decrement all numbers found.</li>
-            <li>Duplicate line and increment/decrement all numbers found.</li>	
+            <li>Duplicate selection and increment/decrement all numbers found.</li>	
             <li>Create sequence - Keep first number, replace all other by incrementing</li>	
             <li>Increment duplicate numbers</li>	
         </ul>
