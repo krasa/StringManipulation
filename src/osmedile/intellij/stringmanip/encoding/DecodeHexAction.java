@@ -23,105 +23,101 @@ import java.util.Map;
 
 public class DecodeHexAction extends AbstractStringManipAction<Charset> {
 
-    private JComboBox<String> charsetComboBox;
-    private Color defaultColor;
+	@NotNull
+	@Override
+	public Pair<Boolean, Charset> beforeWriteAction(Editor editor, DataContext dataContext) {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(new String[]{
+			"UTF-8",
+			"ASCII",
+			"CP1256",
+			"ISO-8859-1",
+			"ISO-8859-2",
+			"ISO-8859-6",
+			"ISO-8859-15",
+			"Windows-1252"});
+		JComboBox<String> charsetComboBox = new ComboBox<>(model, 20);
+		charsetComboBox.setEditable(true);
+		charsetComboBox.setOpaque(true);
+		Color defaultColor = charsetComboBox.getForeground();
+		charsetComboBox.setSelectedItem("UTF-8");
+		final ComboBoxEditor comboBoxEditor = charsetComboBox.getEditor();
+		final JTextComponent tc = (JTextComponent) comboBoxEditor.getEditorComponent();
+		tc.getDocument().addDocumentListener(new DocumentAdapter() {
+			@Override
+			protected void textChanged(DocumentEvent documentEvent) {
+				JTextField editorJComp = (JTextField) comboBoxEditor.getEditorComponent();
+				try {
+					Charset.forName(getCharset(charsetComboBox));
+					editorJComp.setForeground(defaultColor);
+				} catch (Exception ee) {
+					editorJComp.setForeground(JBColor.RED);
+				}
+			}
+		});
 
-    public DecodeHexAction() {
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(new String[]{
-                "UTF-8",
-                "ASCII",
-                "CP1256",
-                "ISO-8859-1",
-                "ISO-8859-2",
-                "ISO-8859-6",
-                "ISO-8859-15",
-                "Windows-1252"});
-        charsetComboBox = new ComboBox<>(model, 20);
-        charsetComboBox.setEditable(true);
-        charsetComboBox.setOpaque(true);
-        defaultColor = charsetComboBox.getForeground();
-        charsetComboBox.setSelectedItem("UTF-8");
-        final JTextComponent tc = (JTextComponent) charsetComboBox.getEditor().getEditorComponent();
+		String dimensionServiceKey = getDimensionServiceKey();
+		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
+			{
+				init();
+				setTitle("Choose Charset");
+			}
 
-        tc.getDocument().addDocumentListener(new DocumentAdapter() {
-            @Override
-            protected void textChanged(DocumentEvent documentEvent) {
-                JTextField editorJComp = (JTextField) charsetComboBox.getEditor().getEditorComponent();
-                try {
-                    Charset.forName(getCharset());
-                    editorJComp.setForeground(defaultColor);
-                } catch (Exception ee) {
-                    editorJComp.setForeground(JBColor.RED);
-                }
-            }
-        });
-    }
+			@Nullable
+			@Override
+			public JComponent getPreferredFocusedComponent() {
+				return charsetComboBox;
+			}
 
-    @NotNull
-    protected String getCharset() {
-        final JTextComponent tc = (JTextComponent) charsetComboBox.getEditor().getEditorComponent();
-        return tc.getText().trim();
-    }
+			@Nullable
+			@Override
+			protected String getDimensionServiceKey() {
+				return dimensionServiceKey;
+			}
 
-    @NotNull
-    @Override
-    public Pair<Boolean, Charset> beforeWriteAction(Editor editor, DataContext dataContext) {
-        String dimensionServiceKey = getDimensionServiceKey();
-        DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
-            {
-                init();
-                setTitle("Choose Charset");
-            }
+			@Nullable
+			@Override
+			protected JComponent createCenterPanel() {
+				return charsetComboBox;
+			}
 
-            @Nullable
-            @Override
-            public JComponent getPreferredFocusedComponent() {
-                return charsetComboBox;
-            }
+			@Override
+			protected void doOKAction() {
+				super.doOKAction();
+			}
+		};
 
-            @Nullable
-            @Override
-            protected String getDimensionServiceKey() {
-                return dimensionServiceKey;
-            }
+		boolean b = dialogWrapper.showAndGet();
+		if (!b) {
+			return stopExecution();
+		}
 
-            @Nullable
-            @Override
-            protected JComponent createCenterPanel() {
-                return charsetComboBox;
-            }
+		try {
+			Charset charset = Charset.forName(getCharset(charsetComboBox));
+			return continueExecution(charset);
+		} catch (Exception e) {
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			return stopExecution();
+		}
+	}
 
-            @Override
-            protected void doOKAction() {
-                super.doOKAction();
-            }
-        };
+	@NotNull
+	protected String getCharset(JComboBox<String> charsetComboBox) {
+		ComboBoxEditor comboBoxEditor = charsetComboBox.getEditor();
+		final JTextComponent tc = (JTextComponent) comboBoxEditor.getEditorComponent();
+		return tc.getText().trim();
+	}
 
-        boolean b = dialogWrapper.showAndGet();
-        if (!b) {
-            return stopExecution();
-        }
+	@Override
+	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String s, Charset charset) {
+		return new String(Hex.decode(s.getBytes(charset)), charset);
+	}
 
-        try {
-            Charset charset = Charset.forName(getCharset());
-            return continueExecution(charset);
-        } catch (Exception e) {
-            Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
-            return stopExecution();
-        }
-    }
+	@Override
+	public String transformByLine(Map<String, Object> actionContext, String s) {
+		throw new NotImplementedException();
+	}
 
-    @Override
-    protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String s, Charset charset) {
-        return new String(Hex.decode(s.getBytes(charset)), charset);
-    }
-
-    @Override
-    public String transformByLine(Map<String, Object> actionContext, String s) {
-        throw new NotImplementedException();
-    }
-
-    protected String getDimensionServiceKey() {
-        return "StringManipulation.HexDecodingDialog";
-    }
+	protected String getDimensionServiceKey() {
+		return "StringManipulation.HexDecodingDialog";
+	}
 }
