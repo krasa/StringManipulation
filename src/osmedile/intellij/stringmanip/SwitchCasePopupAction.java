@@ -17,8 +17,6 @@ public class SwitchCasePopupAction extends PopupChoiceAction {
 			@NotNull
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
-				WhatsNewPopup.whatsNewCheck(editor);
-
 				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.SwitchCase"),
 					dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
 

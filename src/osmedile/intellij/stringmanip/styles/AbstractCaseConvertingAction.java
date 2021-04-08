@@ -1,11 +1,13 @@
 package osmedile.intellij.stringmanip.styles;
 
+import com.intellij.ide.highlighter.JavaFileType;
+import com.intellij.lang.properties.PropertiesFileType;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
+import com.intellij.openapi.fileTypes.PlainTextFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
@@ -43,13 +45,13 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			}
 			FileType fileType = psiFile.getFileType();
 			boolean handled = false;
-			if (fileType.equals(StdFileTypes.JAVA) && isJavaInstalled()) {
+			if (isJava(fileType)) {
 				handled = javaHandling(editor, dataContext, selectionModel, psiFile);
 			}
-			if (!handled && fileType.equals(StdFileTypes.PROPERTIES)) {
+			if (!handled && isProperties(fileType)) {
 				handled = propertiesHandling(editor, dataContext, selectionModel, psiFile);
 			}
-			if (!handled && fileType.equals(StdFileTypes.PLAIN_TEXT)) {
+			if (!handled && fileType.equals(PlainTextFileType.INSTANCE)) {
 				handled = super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
 			}
 			if (!handled) {
@@ -62,19 +64,25 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 		}
 	}
 
-	private boolean isJavaInstalled() {
-		boolean javaInstalled;
+	private boolean isProperties(FileType fileType) {
+		try {
+			return fileType.equals(PropertiesFileType.INSTANCE);
+		} catch (Throwable exception) {
+			return false;
+		}
+	}
+
+	private boolean isJava(FileType fileType) {
 		try {
 			Class.forName("com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl");
-			javaInstalled = true;
-		} catch (ClassNotFoundException e) {
-			javaInstalled = false;
+			return fileType.equals(JavaFileType.INSTANCE);
+		} catch (Throwable e) {
+			return false;
 		}
-		return javaInstalled;
 	}
 
 	private boolean propertiesHandling(Editor editor, DataContext dataContext, SelectionModel selectionModel,
-			PsiFile psiFile) {
+									   PsiFile psiFile) {
 		PsiElement elementAtCaret = PsiUtilBase.getElementAtCaret(editor);
 		if (elementAtCaret instanceof PsiWhiteSpace) {
 			return false;
