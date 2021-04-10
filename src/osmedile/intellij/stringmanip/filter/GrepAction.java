@@ -29,11 +29,11 @@ public class GrepAction extends MyEditorAction {
 
 	protected static final GrepFilter GREP_FILTER = new GrepFilter() {
 		@Override
-		public boolean execute(String text, Pair<String, Boolean> grepos) {
-			if (grepos.second) {
-				return Pattern.compile(grepos.first).matcher(text).find();
+		public boolean execute(String text, Pair<String, Boolean> options) {
+			if (options.second) {
+				return Pattern.compile(options.first).matcher(text).find();
 			} else {
-				return text.contains(grepos.first);
+				return text.contains(options.first);
 			}
 		}
 	};
@@ -43,66 +43,65 @@ public class GrepAction extends MyEditorAction {
 	}
 
 	interface GrepFilter {
-		boolean execute(String text, Pair<String, Boolean> grepos);
+		boolean execute(String text, Pair<String, Boolean> options);
 	}
 
-	public GrepAction(final GrepFilter shouldAdd) {
+	public GrepAction(final GrepFilter grepFilter) {
 		super(null);
 		setupHandler(new MyEditorWriteActionHandler<Pair<String, Boolean>>(getActionClass()) {
 			@NotNull
 			@Override
 			protected Pair<Boolean, Pair<String, Boolean>> beforeWriteAction(Editor editor, DataContext dataContext) {
-				final SelectionModel selectionModel = editor.getSelectionModel();
-				if (selectionModel.hasSelection()) {
-					InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, "", new MyInputValidator() {
-						@Nullable
-						@Override
-						public String getErrorText(String inputString) {
-							if (isChecked()) {
-								try {
-									Pattern.compile(inputString);
-									return null;
-								} catch (Exception e) {
-									return "Incorrect regular expression";
-								}
-							}
-
-							return null;
-						}
-
-						@Override
-						public boolean checkInput(String inputString) {
-							return check(inputString);
-						}
-
-						@Override
-						public boolean canClose(String inputString) {
-							return check(inputString);
-						}
-
-						protected boolean check(String inputString) {
-							if (isChecked()) {
-								try {
-									Pattern.compile(inputString);
-									return true;
-								} catch (Exception e) {
-									return false;
-								}
-							} else {
-								return !StringUtil.isEmptyOrSpaces(inputString);
+				SelectionModel selectionModel = editor.getSelectionModel();
+				if (!selectionModel.hasSelection()) {
+					selectionModel.setSelection(0, editor.getDocument().getTextLength());
+				}
+				InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, "", new MyInputValidator() {
+					@Nullable
+					@Override
+					public String getErrorText(String inputString) {
+						if (isChecked()) {
+							try {
+								Pattern.compile(inputString);
+								return null;
+							} catch (Exception e) {
+								return "Incorrect regular expression";
 							}
 						}
 
-					});
-
-					dialog.show();
-					Pair<String, Boolean> stringBooleanPair = Pair.create(dialog.getInputString(), dialog.isChecked());
-					String grepos = stringBooleanPair.first;
-					if (!StringUtil.isEmptyOrSpaces(grepos)) {
-						return continueExecution(stringBooleanPair);
+						return null;
 					}
-				} else {
-					Messages.showInfoMessage(editor.getProject(), "Please select text, before using grep", "Grep");
+
+					@Override
+					public boolean checkInput(String inputString) {
+						return check(inputString);
+					}
+
+					@Override
+					public boolean canClose(String inputString) {
+						return check(inputString);
+					}
+
+					protected boolean check(String inputString) {
+						if (isChecked()) {
+							try {
+								Pattern.compile(inputString);
+								return true;
+							} catch (Exception e) {
+								return false;
+							}
+						} else {
+							return !StringUtil.isEmptyOrSpaces(inputString);
+						}
+					}
+
+				});
+
+				dialog.show();
+				Pair<String, Boolean> stringBooleanPair = Pair.create(dialog.getInputString(), dialog.isChecked());
+				String grepos = stringBooleanPair.first;
+				if (!StringUtil.isEmptyOrSpaces(grepos)) {
+					return continueExecution(stringBooleanPair);
 				}
 				return stopExecution();
 			}
@@ -126,7 +125,7 @@ public class GrepAction extends MyEditorAction {
 					Collection<String> result = new ArrayList<String>();
 
 					for (String textPart : textParts) {
-						if (shouldAdd.execute(textPart, grepos)) {
+						if (grepFilter.execute(textPart, grepos)) {
 							result.add(textPart);
 						}
 					}
