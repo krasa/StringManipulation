@@ -1,7 +1,6 @@
 package osmedile.intellij.stringmanip;
 
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +22,7 @@ public class RepeatAction extends MyEditorAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable Object additionalParameter) {
+			protected void executeWriteAction(Editor editor, DataContext dataContext, @Nullable Object additionalParameter) {
 
 			}
 		});

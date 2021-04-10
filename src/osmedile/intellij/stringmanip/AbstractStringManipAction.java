@@ -8,7 +8,6 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 				}
 
 				@Override
-				protected void executeWriteAction(Editor editor, @Nullable Caret caret, final DataContext dataContext, final T additionalParam) {
+				protected void executeWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
 					executeMyWriteAction(editor, dataContext, additionalParam);
 				}
 

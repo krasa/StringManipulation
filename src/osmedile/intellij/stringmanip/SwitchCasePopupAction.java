@@ -3,7 +3,6 @@ package osmedile.intellij.stringmanip;
 import com.intellij.ide.ui.customization.CustomActionsSchema;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.ListPopup;
@@ -25,7 +24,7 @@ public class SwitchCasePopupAction extends PopupChoiceAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable Object additionalParameter) {
+			protected void executeWriteAction(Editor editor, DataContext dataContext, @Nullable Object additionalParameter) {
 
 			}
 		});

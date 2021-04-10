@@ -1,12 +1,14 @@
 package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Caret;
+import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.ui.InputValidatorEx;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;
@@ -19,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -52,11 +55,18 @@ public class GrepAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair<Boolean, Pair<String, Boolean>> beforeWriteAction(Editor editor, DataContext dataContext) {
+				String initialValue = "";
 				SelectionModel selectionModel = editor.getSelectionModel();
 				if (!selectionModel.hasSelection()) {
 					selectionModel.setSelection(0, editor.getDocument().getTextLength());
+				} else {
+					String selectedText = selectionModel.getSelectedText(true);
+					if (!selectedText.contains("\n")) {
+						initialValue = selectedText;
+						selectionModel.setSelection(0, editor.getDocument().getTextLength());
+					}
 				}
-				InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, "", new MyInputValidator() {
+				InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, initialValue, new MyInputValidator() {
 					@Nullable
 					@Override
 					public String getErrorText(String inputString) {
@@ -107,19 +117,18 @@ public class GrepAction extends MyEditorAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, Pair<String, Boolean> grepos) {
-				// Column mode not supported
-				if (editor.isColumnMode()) {
+			protected void executeWriteAction(Editor editor, DataContext dataContext, Pair<String, Boolean> grepos) {
+				if (StringUtil.isEmptyOrSpaces(grepos.first)) {
 					return;
 				}
+				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+				for (CaretState caretsAndSelection : caretsAndSelections) {
+					LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
+					LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
 
-				final SelectionModel selectionModel = editor.getSelectionModel();
-				if (selectionModel.hasSelection()) {
-
-					if (StringUtil.isEmptyOrSpaces(grepos.first)) {
-						return;
-					}
-					final String selectedText = selectionModel.getSelectedText();
+					int startOffset = editor.logicalPositionToOffset(selectionStart);
+					int endOffset = editor.logicalPositionToOffset(selectionEnd);
+					final String selectedText = editor.getDocument().getText(new TextRange(startOffset, endOffset));
 
 					String[] textParts = selectedText.split("\n");
 					Collection<String> result = new ArrayList<String>();
@@ -133,7 +142,7 @@ public class GrepAction extends MyEditorAction {
 					String[] res = result.toArray(new String[result.size()]);
 
 					final String s = StringUtils.join(res, '\n');
-					editor.getDocument().replaceString(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd(), s);
+					editor.getDocument().replaceString(startOffset, endOffset, s);
 				}
 
 			}

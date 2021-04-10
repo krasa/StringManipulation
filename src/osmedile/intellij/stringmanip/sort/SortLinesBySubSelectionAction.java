@@ -52,7 +52,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 
 
 				@Override
-				protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SortSettings sortSettings) {
+				protected void executeWriteAction(Editor editor, DataContext dataContext, SortSettings sortSettings) {
 					List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 					IdeUtils.sort(caretsAndSelections);
 					filterCarets(editor, caretsAndSelections);
