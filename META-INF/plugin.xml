@@ -807,6 +807,7 @@
 	        <h4>Version 8.15</h4>
 	        <ul>
                 <li>Filter/Trim actions will select the whole file if there is no selection</li>
+                <li>Capitalize action fix #134</li>
             </ul>
 	    </div>    
 	    <div>
