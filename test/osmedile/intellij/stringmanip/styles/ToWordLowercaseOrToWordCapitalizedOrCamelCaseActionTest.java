@@ -10,6 +10,7 @@ public class ToWordLowercaseOrToWordCapitalizedOrCamelCaseActionTest extends Cas
     public void transformByLine() throws Exception {
         Assert.assertEquals("foo bar", ACTION.transformByLine("fooBar"));
         Assert.assertEquals("fooBar", ACTION.transformByLine("foo bar"));
+        Assert.assertEquals("david w t. brown", ACTION.transformByLine("DAVID W.T. BROWN"));
     }
 
 }

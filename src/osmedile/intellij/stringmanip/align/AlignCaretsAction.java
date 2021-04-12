@@ -34,7 +34,7 @@ public class AlignCaretsAction extends MyEditorAction {
 		}
 
 		@Override
-		protected void executeWriteAction(Editor editor, @Nullable Caret mainCaret, DataContext dataContext, @Nullable Object additionalParameter) {
+		protected void executeWriteAction(Editor editor, DataContext dataContext, @Nullable Object additionalParameter) {
 			Document document = editor.getDocument();
 			CaretModel caretModel = editor.getCaretModel();
 

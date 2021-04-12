@@ -40,7 +40,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 			@Override
 			public void run() {
 				try {
-					executeWriteAction(editor, caret, dataContext, additionalParameter.second);
+					executeWriteAction(editor, dataContext, additionalParameter.second);
 				} catch (SortException e) {
 					SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), e.getMessage(), "Error"));
 				}
@@ -55,7 +55,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	}
 
 
-	protected abstract void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter);
+	protected abstract void executeWriteAction(Editor editor, DataContext dataContext, @Nullable T additionalParameter);
 
 	@NotNull
 	protected Pair<Boolean, T> beforeWriteAction(Editor editor, DataContext dataContext) {

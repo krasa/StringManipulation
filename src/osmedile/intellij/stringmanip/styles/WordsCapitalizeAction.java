@@ -15,6 +15,6 @@ public class WordsCapitalizeAction extends AbstractCaseConvertingAction {
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		return WordUtils.capitalizeFully(s);
+		return WordUtils.capitalizeFully(s, new char[]{' ', '.'});
 	}
 }

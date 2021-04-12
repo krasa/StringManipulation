@@ -1,11 +1,9 @@
 package osmedile.intellij.stringmanip.swap;
 
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 
@@ -32,7 +30,7 @@ public class SwapAction extends MyEditorAction {
 			}
 
 			@Override
-			protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, SwapActionExecutor swapActionExecutor) {
+			protected void executeWriteAction(Editor editor, DataContext dataContext, SwapActionExecutor swapActionExecutor) {
 				swapActionExecutor.execute();
 			}
 

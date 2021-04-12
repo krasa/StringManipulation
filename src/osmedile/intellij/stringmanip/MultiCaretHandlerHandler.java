@@ -19,7 +19,7 @@ public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHan
 	}
 
 	@Override
-	protected void executeWriteAction(Editor editor, @Nullable Caret caret, DataContext dataContext, @Nullable T additionalParameter) {
+	protected void executeWriteAction(Editor editor, DataContext dataContext, @Nullable T additionalParameter) {
 		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 		if (caretsAndSelections.size() > 1) {
 			multiSelection(editor, caretsAndSelections, additionalParameter);

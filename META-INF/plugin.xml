@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.14.203.000.0</version>
+    <version>8.15.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -804,6 +804,14 @@
         <![CDATA[
 	<p>        
 	    <div>
+	        <h4>Version 8.15</h4>
+	        <ul>
+                <li>Filter/Trim actions will select the whole file if there is no selection</li>
+                <li>Grep improvements</li>
+                <li>Capitalize action fix #134</li>
+            </ul>
+	    </div>    
+	    <div>
 	        <h4>Version 8.14</h4>
 	        <ul>
                 <li>NPE fix</li>
@@ -835,83 +843,6 @@
                 <li>Added: Minify JS</li>
                 <li>Minify JSON - fixed order</li>
                 <li>New option: Do not add selection.</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.9</h4>
-	        <ul>
-                <li>Added: Minify JSON</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.8</h4>
-	        <ul>
-                <li>Added: To snake_case</li>
-                <li>Added: To SCREAMING_SNAKE_CASE</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.7</h4>
-	        <ul>
-                <li>Quote shifting: search outwards for the quotes if they're not included in the selection<li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.6</h4>
-	        <ul>
-				<li>Align/Sort by Columns - SBC case workaround</li>
-                <li>ISO Timestamp to Epoch Milliseconds</li>
-                <li>Epoch Milliseconds to ISO Timestamp</li>
-				<li>Encode selected text to SHA-256 Hex</li>
-				<li>Encode selected text to SHA-512 Hex</li>
-				<li>Encode selected text to SHA3-256 Hex</li>
-				<li>Encode selected text to SHA3-512 Hex</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.5</h4>
-	        <ul>
-                <li>Un/Escape selected C# text (regular, verbatim, interpolated)<li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.4</h4>
-	        <ul>
-                <li>Base64 zipping<li>
-                <li>Base64 inflating/deflating<li>
-                <li>Sort dialog error handling<li>
-                <li>Icons from <a href="https://tablericons.com/">https://tablericons.com/</a><li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.3</h4>
-	        <ul>
-                <li>Added: Align Carets/Selections<li>
-                <li>Improved: Align by columns<li>
-                <li>Escape HTML - added ' escaping to &#39;<li>
-                <li>Added: Swap " and ' (not shift)<li>
-                <li>Persisting of the last action for repeating<li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.2</h4>
-	        <ul>
-                <li>More universal incrementing/decrementing<li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.1</h4>
-	        <ul>
-                <li>Added: hierarchical sort, sorting by groups separated by a blank line</li>
-                <li>Added previews for sorting<li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.0</h4>
-	        <ul>
-                <li>More universal case switching</li>
-                <li>All carets and lines should now switch to the same case</li>
-                <li>Added: Sort tokens (delimited text)</li>
             </ul>
 	    </div>
 	</p>
