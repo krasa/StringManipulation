@@ -1,7 +1,5 @@
 package osmedile.intellij.stringmanip.styles;
 
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.lang.properties.PropertiesFileType;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
@@ -20,7 +18,9 @@ import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import java.util.Map;
 
-/** todo write some tests for this shit */
+/**
+ * todo write some tests
+ */
 public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction<Object> {
 	public static final String FROM = "from";
 	private final Logger LOG = Logger.getInstance("#" + getClass().getCanonicalName());
@@ -66,7 +66,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 
 	private boolean isProperties(FileType fileType) {
 		try {
-			return fileType.equals(PropertiesFileType.INSTANCE);
+			return "Properties".equals(fileType.getName());
 		} catch (Throwable exception) {
 			return false;
 		}
@@ -74,8 +74,8 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 
 	private boolean isJava(FileType fileType) {
 		try {
-			Class.forName("com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl");
-			return fileType.equals(JavaFileType.INSTANCE);
+			//noinspection ConstantConditions
+			return "JAVA".equals(fileType.getName()) && Class.forName("com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl") != null;
 		} catch (Throwable e) {
 			return false;
 		}
