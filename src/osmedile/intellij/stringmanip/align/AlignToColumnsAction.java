@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.align;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +29,11 @@ public class AlignToColumnsAction extends MyEditorAction {
 				@NotNull
 				@Override
                 protected Pair<Boolean, ColumnAlignerModel> beforeWriteAction(Editor editor, DataContext dataContext) {
+					SelectionModel selectionModel = editor.getSelectionModel();
+					if (!selectionModel.hasSelection()) {
+						selectionModel.setSelection(0, editor.getDocument().getTextLength());
+					}
+
 					PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
 					final AlignToColumnsForm alignToColumnsForm = new AlignToColumnsForm(stateComponent.guessModel(editor), editor);
 					DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {

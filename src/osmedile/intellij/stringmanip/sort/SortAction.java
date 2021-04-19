@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.sort;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +37,10 @@ public class SortAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
+				SelectionModel selectionModel = editor.getSelectionModel();
+				if (!selectionModel.hasSelection()) {
+					selectionModel.setSelection(0, editor.getDocument().getTextLength());
+				}
 				SortSettings settings = getSortSettings(editor);
 				if (settings == null) return stopExecution();
 
