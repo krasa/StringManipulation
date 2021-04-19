@@ -649,12 +649,6 @@
         </group>
 
     </actions>
-    <application-components>
-        <!-- Add your application components here -->
-        <component>
-            <implementation-class>osmedile.intellij.stringmanip.MyApplicationService</implementation-class>
-        </component>
-    </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.MyApplicationService"/>
