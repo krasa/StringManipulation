@@ -21,21 +21,6 @@ import java.util.Map;
 public class ConvertJsonYamlAction extends AbstractStringManipAction<Object> {
     private static final Logger LOG = Logger.getInstance(ConvertJsonYamlAction.class);
 
-    private final Dump yamlDump;
-    private final Gson gson;
-
-    public ConvertJsonYamlAction() {
-        DumpSettings yamlDumpSettings = DumpSettings.builder()
-            .setDefaultFlowStyle(FlowStyle.BLOCK)
-            .build();
-        yamlDump = new Dump(yamlDumpSettings);
-
-        gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .serializeNulls()
-            .create();
-    }
-
     @Override
     protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, Object additionalParam) {
         try {
@@ -60,18 +45,34 @@ public class ConvertJsonYamlAction extends AbstractStringManipAction<Object> {
             obj = jsonArray.toList();
         }
 
-        return yamlDump.dumpToString(obj).trim();
+        return getYamlDump().dumpToString(obj).trim();
     }
 
     protected String yamlToJson(String selectedText) {
         Yaml yaml = new Yaml();
         Object obj = yaml.load(selectedText);
 
-        return gson.toJson(obj).trim();
+        return getGson().toJson(obj).trim();
     }
 
     @Override
     public String transformByLine(Map<String, Object> actionContext, String s) {
         throw new RuntimeException();
+    }
+
+    private Dump getYamlDump() {
+        DumpSettings yamlDumpSettings = DumpSettings.builder()
+            .setDefaultFlowStyle(FlowStyle.BLOCK)
+            .build();
+        Dump yamlDump = new Dump(yamlDumpSettings);
+        return yamlDump;
+    }
+
+    private Gson getGson() {
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
+        return gson;
     }
 }
