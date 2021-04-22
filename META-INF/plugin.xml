@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.15.203.000.0</version>
+    <version>8.15.203.000.2</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -13,7 +13,10 @@
     <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
 
     <depends>com.intellij.modules.platform</depends>
-    <depends optional="true" config-file="">com.intellij.modules.java</depends>
+    <!--suppress PluginXmlValidity -->
+    <depends optional="true">com.intellij.modules.java</depends>
+    <!--suppress PluginXmlValidity -->
+    <depends optional="true">com.intellij.properties</depends>
 
 
     <actions>
@@ -806,8 +809,7 @@
 	    <div>
 	        <h4>Version 8.15</h4>
 	        <ul>
-                <li>Filter/Trim actions will select the whole file if there is no selection</li>
-                <li>Grep improvements</li>
+                <li>Filter/Trim actions usability improvements</li>
                 <li>Capitalize action fix #134</li>
             </ul>
 	    </div>    
