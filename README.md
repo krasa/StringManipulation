@@ -1,7 +1,11 @@
 String Manipulation [![Donate][badge-paypal-img]][badge-paypal]
-==================
-IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162 
+==================  
+[![Version](http://phpstorm.espend.de/badge/2162/version)](https://plugins.jetbrains.com/plugin/2162)
+[![Downloads](http://phpstorm.espend.de/badge/2162/downloads)](https://plugins.jetbrains.com/plugin/2162)
 
+IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162
+
+---    
 
 ![](images/case.gif)
 
@@ -10,6 +14,19 @@ IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162
 ![](images/alignCarets.gif)
 
 ![](images/alignColumns.gif)
+
+
+---                    
+
+### Sponsored by
+
+<p><a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner"><img src="https://alt-images.codestream.com/codestream_logo_vojta_string.png"></a><br>
+Manage pull requests and conduct code reviews in your IDE with full source-tree context. Comment on any line, not just the diffs. Use jump-to-definition, your favorite keybindings, and code intelligence with more of your workflow.<br>
+<a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner">Learn More</a></p>   
+
+***    
+
+## Main features
 
 Provides actions for text manipulation:
 
