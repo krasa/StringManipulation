@@ -1,7 +1,7 @@
-String Manipulation [![Donate][badge-paypal-img]][badge-paypal]
-==================  
-[![Version](http://phpstorm.espend.de/badge/2162/version)](https://plugins.jetbrains.com/plugin/2162)
+String Manipulation [![Donate][badge-paypal-img]][badge-paypal] [![Version](http://phpstorm.espend.de/badge/2162/version)](https://plugins.jetbrains.com/plugin/2162)
 [![Downloads](http://phpstorm.espend.de/badge/2162/downloads)](https://plugins.jetbrains.com/plugin/2162)
+==================  
+
 
 IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162
 
