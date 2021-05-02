@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.15.203.000.2</version>
+    <version>8.15.203.000.3</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -649,12 +649,6 @@
         </group>
 
     </actions>
-    <application-components>
-        <!-- Add your application components here -->
-        <component>
-            <implementation-class>osmedile.intellij.stringmanip.MyApplicationService</implementation-class>
-        </component>
-    </application-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.MyApplicationService"/>
@@ -670,7 +664,14 @@
 
     <description><![CDATA[
        Case switching, sorting, filtering, incrementing, aligning to columns, grepping, escaping, encoding...<br><br>
+        Sponsored by:<br> 
+<p><a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner"><img src="https://alt-images.codestream.com/codestream_logo_vojta_string.png"></a><br>
+Manage pull requests and conduct code reviews in your IDE with full source-tree context. Comment on any line, not just the diffs. Use jump-to-definition, your favorite keybindings, and code intelligence with more of your workflow.<br>
+<a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner">Learn More</a></p>   
+       
+<br>
       <p>
+        Features:              
         <p>
             Case switching:
 			<ul>
@@ -797,7 +798,7 @@
 			<br>Popup can be customized in File | Settings | Appearance & Behavior | Menus and Toolbars.
 		</p>
         <br> <br>
-        <a href="https://www.paypal.me/VojtechKrasa">Donations are welcomed.</a>
+        <a href="https://www.paypal.me/VojtechKrasa">Donations</a> | <a href="https://github.com/krasa/StringManipulation/">GitHub</a> | <a href="https://github.com/krasa/StringManipulation/issues">Issues</a>
 	</p>
        ]]>
     </description>
