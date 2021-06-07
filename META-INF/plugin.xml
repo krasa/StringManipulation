@@ -548,6 +548,12 @@
                         description="Remove all spaces in selected text">
                 </action>
                 <separator/>
+                <action id="osmedile.intellij.stringmanip.swap.SwapCharacterToFromIntAction"
+                        class="osmedile.intellij.stringmanip.swap.SwapCharacterToFromIntAction"
+                        text="Convert Between Char and Int"
+                        description="Convert between char and int">
+                </action>
+                <separator/>
                 <action id="StringManipulation.MinifyJsonAction"
                         class="osmedile.intellij.stringmanip.transform.MinifyJsonAction"
                         text="Minify JSON"
@@ -664,14 +670,14 @@
 
     <description><![CDATA[
        Case switching, sorting, filtering, incrementing, aligning to columns, grepping, escaping, encoding...<br><br>
-        Sponsored by:<br> 
+        Sponsored by:<br>
 <p><a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner"><img src="https://alt-images.codestream.com/codestream_logo_vojta_string.png"></a><br>
 Manage pull requests and conduct code reviews in your IDE with full source-tree context. Comment on any line, not just the diffs. Use jump-to-definition, your favorite keybindings, and code intelligence with more of your workflow.<br>
-<a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner">Learn More</a></p>   
-       
+<a title="Try CodeStream" href="https://sponsorlink.codestream.com/?utm_source=jbmarket&amp;utm_campaign=vojta_string&amp;utm_medium=banner">Learn More</a></p>
+
 <br>
       <p>
-        Features:              
+        Features:
         <p>
             Case switching:
 			<ul>
@@ -806,40 +812,40 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 
     <change-notes>
         <![CDATA[
-	<p>        
+	<p>
 	    <div>
 	        <h4>Version 8.15</h4>
 	        <ul>
                 <li>Filter/Trim actions usability improvements</li>
                 <li>Capitalize action fix #134</li>
             </ul>
-	    </div>    
+	    </div>
 	    <div>
 	        <h4>Version 8.14</h4>
 	        <ul>
                 <li>NPE fix</li>
             </ul>
-	    </div>     
+	    </div>
 	    <div>
 	        <h4>Version 8.13</h4>
 	        <ul>
                 <li>New icons</li>
                 <li>Added: Convert Between JSON and YAML</li>
             </ul>
-	    </div>    
+	    </div>
 	    <div>
 	        <h4>Version 8.12</h4>
 	        <ul>
                 <li>Added: Unicode normalization</li>
                 <li>Added Switch Case: To Spring Boot System Env Variable</li>
             </ul>
-	    </div>    
+	    </div>
 	    <div>
 	        <h4>Version 8.11</h4>
 	        <ul>
                 <li>Exception fix for IJ 2021</li>
             </ul>
-	    </div>  
+	    </div>
 	    <div>
 	        <h4>Version 8.10</h4>
 	        <ul>
@@ -853,4 +859,4 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     </change-notes>
 
 </idea-plugin>
-    
+
