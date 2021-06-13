@@ -32,7 +32,6 @@ public class SwapCharacterToFromIntAction extends AbstractStringManipAction<Obje
         } else if (isNumber.matcher(s).matches()) {
             return toChar(s);
         }
-//        char i = '\f';
         return s;
     }
 
@@ -72,7 +71,7 @@ public class SwapCharacterToFromIntAction extends AbstractStringManipAction<Obje
         return null;
     }
 
-    private static String escapeJava(String str) {
+    static String escapeJava(String str) {
         return escapeJavaStyleString(str);
     }
 

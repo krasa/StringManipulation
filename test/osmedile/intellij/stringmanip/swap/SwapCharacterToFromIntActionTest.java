@@ -6,9 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import osmedile.intellij.stringmanip.CharacterSwitchingSettings;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +33,7 @@ public class SwapCharacterToFromIntActionTest {
         SwapCharacterToFromIntAction action = new SwapCharacterToFromIntAction();
         Object[][] values = new Object[256][];
         for (int i = 0; i < 256; i++) {
-            values[i] = new Object[]{action, "'" + "" + StringEscapeUtils.escapeEcmaScript("" + (char) i) + "'", "" + i, "'" + (i == 39 ? "\\'" : StringEscapeUtils.escapeJava("" + (char) i)) + "'", "'" + (i == 39 ? "\\'" : escapeJava("" + (char) i)) + "'"};
+            values[i] = new Object[]{action, "'" + "" + StringEscapeUtils.escapeEcmaScript("" + (char) i) + "'", "" + i, "'" + (i == 39 ? "\\'" : StringEscapeUtils.escapeJava("" + (char) i)) + "'", "'" + (i == 39 ? "\\'" : SwapCharacterToFromIntAction.escapeJava("" + (char) i)) + "'"};
         }
         return Arrays.asList(values);
     }
@@ -63,92 +60,6 @@ public class SwapCharacterToFromIntActionTest {
 
     private String transform(String input) {
         return action.transformSelection(null, null, null, input, null);
-    }
-
-
-    private static String escapeJava(String str) {
-        return escapeJavaStyleString(str);
-    }
-
-    private static String escapeJavaStyleString(String str) {
-        if (str == null) {
-            return null;
-        } else {
-            try {
-                StringWriter writer = new StringWriter(str.length() * 2);
-                escapeJavaStyleString(writer, str);
-                return writer.toString();
-            } catch (IOException var3) {
-                var3.printStackTrace();
-                return null;
-            }
-        }
-    }
-
-    private static void escapeJavaStyleString(Writer out, String str) throws IOException {
-        if (out == null) {
-            throw new IllegalArgumentException("The Writer must not be null");
-        } else if (str != null) {
-            int sz = str.length();
-
-            for (int i = 0; i < sz; ++i) {
-                char ch = str.charAt(i);
-                if (ch > 127) {
-                    out.write("\\" + oct(ch));
-                } else if (ch < 32) {
-                    switch (ch) {
-                        case '\b':
-                            out.write(92);
-                            out.write(98);
-                            break;
-                        case '\t':
-                            out.write(92);
-                            out.write(116);
-                            break;
-                        case '\n':
-                            out.write(92);
-                            out.write(110);
-                            break;
-                        case '\u000b':
-                        default:
-                            out.write("\\" + oct(ch));
-                            break;
-                        case '\f':
-                            out.write(92);
-                            out.write(102);
-                            break;
-                        case '\r':
-                            out.write(92);
-                            out.write(114);
-                    }
-                } else {
-                    switch (ch) {
-                        case '"':
-                            out.write(92);
-                            out.write(34);
-                            break;
-                        case '\'':
-                            out.write(92);
-                            out.write(39);
-                            break;
-                        case '/':
-                            out.write(92);
-                            out.write(47);
-                            break;
-                        case '\\':
-                            out.write(92);
-                            out.write(92);
-                            break;
-                        default:
-                            out.write(ch);
-                    }
-                }
-            }
-        }
-    }
-
-    private static String oct(char ch) {
-        return Integer.toString(ch, 8);
     }
 
 }
