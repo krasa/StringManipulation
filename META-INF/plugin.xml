@@ -344,7 +344,7 @@
                         description="Toggle: dot.case / camelCase">
                 </action>
                 <action id="StringManipulation.ToPascalCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.ToPascalCaseOrCamelCaseAction"
                         text="PascalCase / camelCase"
                         description="Toggle: PascalCase / camelCase">
                 </action>
@@ -375,6 +375,11 @@
                         class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
                         text="To snake__case"
                         description="To snake_case">
+                </action>
+                <action id="StringManipulation.ToPascalCase"
+                        class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
+                        text="To PascalCase"
+                        description="To PascalCase">
                 </action>
                 <action id="StringManipulation.ToScreamingSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
@@ -695,6 +700,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Toggle: Capitalized Words / camelCase</li>
                 <li>To camelCase</li>
                 <li>To snake_case</li>
+                <li>To PascalCase</li>
                 <li>To SCREAMING_SNAKE_CASE</li>
                 <li>Capitalize</li>
                 <li>To lower case</li>
@@ -818,6 +824,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 8.16</h4>
 	        <ul>
                 <li>Added: Switching between an int value and either Unicode character escape sequence or Octal character escape sequence (according to settings).</li>
+                <li>Added: To PascalCase</li>
             </ul>
 	    </div>
 	    <div>
