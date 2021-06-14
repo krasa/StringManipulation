@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.15.203.000.3</version>
+    <version>8.16.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -551,7 +551,7 @@
                 <action id="osmedile.intellij.stringmanip.swap.SwapCharacterToFromIntAction"
                         class="osmedile.intellij.stringmanip.swap.SwapCharacterToFromIntAction"
                         text="Convert Between Char and Int"
-                        description="Convert between char and int">
+                        description="Switching between an int value and either Unicode character escape sequence or Octal character escape sequence (according to settings).">
                 </action>
                 <separator/>
                 <action id="StringManipulation.MinifyJsonAction"
@@ -784,6 +784,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Keep only duplicate lines</li>
 				<li>Remove empty lines</li>
 				<li>Remove all newlines</li>
+				<li>Convert Between Char and Int</li>
 				<li>Minify JSON</li>
 				<li>Minify JavaScript</li>
 				<li>Convert Between JSON and YAML</li>
@@ -813,6 +814,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.16</h4>
+	        <ul>
+                <li>Added: Switching between an int value and either Unicode character escape sequence or Octal character escape sequence (according to settings).</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.15</h4>
 	        <ul>
