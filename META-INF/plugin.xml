@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.16.203.000.0</version>
+    <version>8.17.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -616,6 +616,10 @@
             <!--            <group text="Transform..."-->
             <!--                   description="Group of String manipulation transform actions"-->
             <!--                   popup="true">  -->
+            <action id="osmedile.intellij.stringmanip.swap.SwapWordsAction"
+                    class="osmedile.intellij.stringmanip.swap.SwapWordsAction" text="Swap Words"
+                    description="Swap Words - camelCase, kebab-case, snake_case...">
+            </action>
             <action id="osmedile.intellij.stringmanip.swap.SwapAction"
                     class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
                     description="Depending on what is selected or how many carets there are">
@@ -800,6 +804,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
             Other:
 			<ul>
 				<li>Reverse Letters</li>
+				<li>Swap Words - camelCase, kebab-case, snake_case...</li>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
 				<li>Wrap or shift double quotes to single quotes to backticks</li>
 				<li>Swap between double quotes and single quotes</li>
@@ -820,6 +825,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.17</h4>
+	        <ul>
+                <li>Added: Swap Words - camelCase, kebab-case, snake_case...</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.16</h4>
 	        <ul>

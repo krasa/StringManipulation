@@ -148,10 +148,10 @@ public enum Style {
 		boolean noUpperCase = noUpperCase(s);
 		boolean noLowerCase = noLowerCase(s);
 //		boolean containsOnlyLettersAndDigits = containsOnlyLettersAndDigits(s);
-		boolean noSeparators = noSeparatorsBetweenLetters(s, '.', '-', '_', ' ');
-		boolean noSpecialSeparators = noSeparatorsBetweenLetters(s, '.', '-', '_');
+		boolean noSeparators = noSeparators(s, '.', '-', '_', ' ');
+		boolean noSpecialSeparators = noSeparators(s, '.', '-', '_');
 		boolean containsUpperCaseAfterLowerCase = containsUpperCaseAfterLowerCase(s);
-		boolean noSpace = noSeparatorsBetweenLetters(s, ' ');
+		boolean noSpace = noSeparators(s, ' ');
 		boolean dot = containsSeparatorBetweenLetters(s, '.');
 		boolean hyphen = containsSeparatorBetweenLetters(s, '-');
 		boolean noDot = !dot;
@@ -184,10 +184,10 @@ public enum Style {
 		if (startsWithUppercase && noSeparators && !containsUpperCase(s.substring(1))) {
 			return _SINGLE_WORD_CAPITALIZED;
 		}
-		if (startsWithUppercase && noSeparators) {
+		if (startsWithUppercase && noSeparators && noSpace) {
 			return PASCAL_CASE;
 		}
-		if (containsUpperCaseAfterLowerCase && noSeparators) {
+		if (containsUpperCaseAfterLowerCase && noSeparators && noSpace) {
 			return CAMEL_CASE;
 		}
 

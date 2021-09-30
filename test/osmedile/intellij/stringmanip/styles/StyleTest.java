@@ -21,6 +21,8 @@ public class StyleTest {
 	public void name() {
 		assertEquals(Style._SINGLE_WORD_CAPITALIZED, Style.from("Foo,bar"));
 		assertEquals(Style.PASCAL_CASE, Style.from("Foo,Bar"));
+		assertEquals(Style.PASCAL_CASE, Style.from("   FooBar   "));
+		assertEquals(Style.CAMEL_CASE, Style.from("   fooBar   "));
 		assertEquals(Style.WORD_CAPITALIZED, Style.from("Foo Bar "));
 		assertEquals("FOO_BAR ", Style.SCREAMING_SNAKE_CASE.transform("Foo Bar "));
 		assertEquals(" fooBar1_1 ", Style.CAMEL_CASE.transform(" foo bar 1_1 "));

@@ -694,20 +694,22 @@ public class StringUtil {
 		return false;
 	}
 
-	public static boolean noSeparatorsBetweenLetters(String s, char... delimiters) {
+	public static boolean noSeparators(String s, char... delimiters) {
 		if (s.length() == 0) {
 			return true;
 		}
 		Set<Integer> delimiterSet = generateDelimiterSet(delimiters);
-
-		char previous = '?';
+		boolean letterFound = false;
 		char[] charArray = s.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
-			if (delimiterSet.contains((int)c)&& isLetterOrDigit(previous) && nextIsLetterOrDigit(s, i)) {
+			if (isLetterOrDigit(c)) {
+				letterFound = true;
+				continue;
+			}
+			if (letterFound && delimiterSet.contains((int) c)) {
 				return false;
 			}
-			previous = c;
 		}
 		return true;
 	}

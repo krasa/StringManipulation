@@ -17,9 +17,9 @@ public class ToPascalCaseActionTest extends CaseSwitchingTest {
 		assertEquals("HelloWorld", action.transformByLine("hello.world"));
 		assertEquals("HelloWorld", action.transformByLine("hello world"));
 		assertEquals("HelloWorld", action.transformByLine("Hello World"));
-		assertEquals("helloWorld", action.transformByLine("HelloWorld"));
+		assertEquals("HelloWorld", action.transformByLine("HelloWorld"));
 		assertEquals("HelloWorld", action.transformByLine("helloWorld"));
 		assertEquals("Foo", action.transformByLine("FOO"));
-		assertEquals("foo", action.transformByLine("Foo"));
+		assertEquals("Foo", action.transformByLine("foo"));
     }
 }
