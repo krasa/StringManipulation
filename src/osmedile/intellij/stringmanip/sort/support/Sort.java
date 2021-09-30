@@ -26,6 +26,11 @@ public enum Sort {
 		public Comparator<Sortable> adapter(Comparator<String> comparator) {
 			return new Comparator<Sortable>() {
 				@Override
+				public String toString() {
+					return "CASE_SENSITIVE_A_Z";
+				}
+
+				@Override
 				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
@@ -33,11 +38,17 @@ public enum Sort {
 					return comparator.compare(o1.getTextForComparison(), o2.getTextForComparison());
 				}
 			};
+
 		}
 	}),
 	CASE_SENSITIVE_Z_A(new ComparatorAdapterFactory() {
 		public Comparator<Sortable> adapter(Comparator<String> comparator) {
 			return new Comparator<Sortable>() {
+				@Override
+				public String toString() {
+					return "CASE_SENSITIVE_Z_A";
+				}
+
 				@Override
 				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
@@ -53,6 +64,11 @@ public enum Sort {
 		public Comparator<Sortable> adapter(Comparator<String> comparator) {
 			return new Comparator<Sortable>() {
 				@Override
+				public String toString() {
+					return "CASE_INSENSITIVE_A_Z";
+				}
+
+				@Override
 				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o1.getTextForComparison().compareToIgnoreCase(o2.getTextForComparison());
@@ -66,6 +82,11 @@ public enum Sort {
 		public Comparator<Sortable> adapter(Comparator<String> comparator) {
 			return new Comparator<Sortable>() {
 				@Override
+				public String toString() {
+					return "CASE_INSENSITIVE_Z_A";
+				}
+
+				@Override
 				public int compare(Sortable o1, Sortable o2) {
 					if (comparator == null) {
 						return o2.getTextForComparison().compareToIgnoreCase(o1.getTextForComparison());
@@ -77,11 +98,21 @@ public enum Sort {
 	}),
 	LINE_LENGTH_SHORT_LONG(new Comparator<Sortable>() {
 		@Override
+		public String toString() {
+			return "LINE_LENGTH_SHORT_LONG";
+		}
+
+		@Override
 		public int compare(Sortable o1, Sortable o2) {
 			return o1.getTextForComparison().length() - o2.getTextForComparison().length();
 		}
 	}),
 	LINE_LENGTH_LONG_SHORT(new Comparator<Sortable>() {
+		@Override
+		public String toString() {
+			return "LINE_LENGTH_LONG_SHORT";
+		}
+
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
 			return o2.getTextForComparison().length() - o1.getTextForComparison().length();
@@ -89,6 +120,11 @@ public enum Sort {
 		}
 	}),
 	HEXA(new Comparator<Sortable>() {
+		@Override
+		public String toString() {
+			return "HEXA";
+		}
+
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
 			try {
@@ -157,12 +193,12 @@ public enum Sort {
 					Collator instance = Collator.getInstance(Locale.forLanguageTag(languageTag));
 					String rules = ((RuleBasedCollator) instance).getRules();
 					Character[] chars = new Character[]{
-						(char) 0x0009,//  9	Horizontal tab	HT
-						(char) 0x000B,//  11	Vertical tab	VT
-						(char) 0x000C,//  12	Form feed	FF
-						(char) 0x000D,//  13	Carriage return	CR
-						(char) 0x002D,//  45	Hyphen-minus	0014
-						(char) ' ',//  
+							(char) 0x0009,//  9	Horizontal tab	HT
+							(char) 0x000B,//  11	Vertical tab	VT
+							(char) 0x000C,//  12	Form feed	FF
+							(char) 0x000D,//  13	Carriage return	CR
+							(char) 0x002D,//  45	Hyphen-minus	0014
+							(char) ' ',//  
 					};
 					StringBuilder sb = new StringBuilder();
 					for (Character aChar : chars) {

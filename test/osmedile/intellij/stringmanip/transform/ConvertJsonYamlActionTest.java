@@ -35,7 +35,7 @@ public class ConvertJsonYamlActionTest {
         String outputJson = readFile("objectOutput.json");
 
         String json = new ConvertJsonYamlAction().yamlToJson(inputYaml);
-        assertEquals(outputJson, json);
+        assertEquals(outputJson, json.replace("\r", ""));
     }
 
     @Test
@@ -49,7 +49,8 @@ public class ConvertJsonYamlActionTest {
 
     private String readFile(String fileName) {
         try {
-            return FileUtils.readFileToString(new File("test/osmedile/intellij/stringmanip/transform/data/" + fileName), StandardCharsets.UTF_8);
+            String s = FileUtils.readFileToString(new File("test/osmedile/intellij/stringmanip/transform/data/" + fileName), StandardCharsets.UTF_8);
+            return s.replace("\r", "");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

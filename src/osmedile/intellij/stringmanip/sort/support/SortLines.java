@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SortLines {
-	private boolean endsWithNewLine;
-	private List<String> originalLines;
+	private final boolean endsWithNewLine;
+	private final List<String> originalLines;
 	private final SortSettings sortSettings;
 
 
@@ -25,6 +25,7 @@ public class SortLines {
 	public SortLines(List<String> text, SortSettings sortSettings) {
 		originalLines = text;
 		this.sortSettings = sortSettings;
+		endsWithNewLine = false;
 	}
 
 	public String sort() {
