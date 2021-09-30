@@ -113,8 +113,9 @@ Provides actions for text manipulation:
             <li>Sort hexadecimally</li>
             <li>Sort lines by subselection - only one selection/caret per line is handled</li>
             <li>Sort tokens (delimited text)</li>
-	    <li><a href="https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort/">Hierarchical sort</a></li>
-        </ul>
+            <li><a href="https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort/">Hierarchical sort</a></li>
+            <li>Shuffle Characters</li>
+       </ul>
     </p>
     <p>
         Align:

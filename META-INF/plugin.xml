@@ -498,6 +498,12 @@
                         text="Shuffle Lines"
                         description="Shuffle lines">
                 </action>
+                <separator/>
+                <action id="StringManipulation.ShuffleCharacters"
+                        class="osmedile.intellij.stringmanip.sort.ShuffleCharactersAction"
+                        text="Shuffle Characters"
+                >
+                </action>
             </group>
 
             <group text="Filter/Remove/Trim/Minify/Convert..."
@@ -775,6 +781,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Sort hexadecimally</li>
 				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
 				<li>Sort tokens (delimited text)</li>
+				<li>Shuffle Characters</li>
 			</ul>
 		</p>
 		<p>
@@ -836,6 +843,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Added: Swap Words</li>
                 <li>Added: Group by Grep - matched lines will be separated from not matched</li>
+                <li>Added: Shuffle Characters</li>
             </ul>
 	    </div>
 	    <div>
