@@ -7,7 +7,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.util.Computable;
 import com.intellij.ui.DocumentAdapter;
-import io.netty.util.concurrent.DefaultThreadFactory;
 import org.apache.commons.text.StringEscapeUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
@@ -16,6 +15,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -46,10 +46,10 @@ class DelimitedListDialog implements Disposable {
 
 		//max 1 concurrent task + max 1 in queue
 		executor = new ThreadPoolExecutor(1, 1,
-			60, TimeUnit.SECONDS,
-			new ArrayBlockingQueue<Runnable>(1),
-			new DefaultThreadFactory("StringManipulation.DelimitedListDialog", true),
-			new ThreadPoolExecutor.DiscardOldestPolicy());
+				60, TimeUnit.SECONDS,
+				new ArrayBlockingQueue<Runnable>(1),
+				new MyThreadFactory(),
+				new ThreadPoolExecutor.DiscardOldestPolicy());
 
 
 		this.previewEditor = IdeUtils.createEditorPreview("", false);
@@ -85,6 +85,15 @@ class DelimitedListDialog implements Disposable {
 			}
 		});
 		renderPreview();
+	}
+
+	static class MyThreadFactory implements ThreadFactory {
+		public synchronized Thread newThread(Runnable r) {
+			Thread t = new Thread(r);
+			t.setName("StringManipulation.DelimitedListDialog");
+			t.setDaemon(true);
+			return t;
+		}
 	}
 
 	private void renderPreview() {
