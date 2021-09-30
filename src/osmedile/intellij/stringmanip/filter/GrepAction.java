@@ -130,23 +130,27 @@ public class GrepAction extends MyEditorAction {
 					int endOffset = editor.logicalPositionToOffset(selectionEnd);
 					final String selectedText = editor.getDocument().getText(new TextRange(startOffset, endOffset));
 
-					String[] textParts = selectedText.split("\n");
-					Collection<String> result = new ArrayList<String>();
-
-					for (String textPart : textParts) {
-						if (grepFilter.execute(textPart, grepos)) {
-							result.add(textPart);
-						}
-					}
-
-					String[] res = result.toArray(new String[result.size()]);
-
-					final String s = StringUtils.join(res, '\n');
+					final String s = transform(grepos, selectedText, grepFilter);
 					editor.getDocument().replaceString(startOffset, endOffset, s);
 				}
 
 			}
 		});
+	}
+
+	protected String transform(Pair<String, Boolean> grepos, String selectedText, GrepFilter grepFilter) {
+		String[] textParts = selectedText.split("\n");
+		Collection<String> result = new ArrayList<String>();
+
+		for (String textPart : textParts) {
+			if (grepFilter.execute(textPart, grepos)) {
+				result.add(textPart);
+			}
+		}
+
+		String[] res = result.toArray(new String[result.size()]);
+
+		return StringUtils.join(res, '\n');
 	}
 
 

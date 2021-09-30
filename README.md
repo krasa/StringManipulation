@@ -131,6 +131,7 @@ Provides actions for text manipulation:
                 (Does not work in column mode)
             </li>
             <li>Inverted Grep</li>
+            <li>Group by Grep - matched lines will be separated from not matched</li>
             <li>Trim</li>
             <li>Replace whitespaces with a single space char</li>
             <li>Remove all spaces</li>
@@ -146,6 +147,7 @@ Provides actions for text manipulation:
         Other:
         <ul>
             <li>Reverse Letters</li>
+            <li>Swap Words</li>
             <li>Swap Characters/Selections/Lines/Tokens</li>
             <li>Wrap or shift double quotes to single quotes to backticks</li>
             <li>Swap between double quotes and single quotes</li>

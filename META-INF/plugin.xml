@@ -514,6 +514,11 @@
                         text="Inverted Grep"
                         description="Inverted Grep on selected text">
                 </action>
+                <action id="StringManipulation.GroupByGrep"
+                        class="osmedile.intellij.stringmanip.filter.GroupByGrepAction"
+                        text="Group by Grep"
+                        description="Matched lines will be separated from not matched">
+                </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
@@ -787,6 +792,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 					(Does not work in column mode)
 				</li>
 				<li>Inverted Grep</li>
+				<li>Group by Grep - matched lines will be separated from not matched</li>
 				<li>Trim</li>
 				<li>Replace whitespaces with a single space char</li>
 				<li>Remove all spaces</li>
@@ -804,7 +810,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
             Other:
 			<ul>
 				<li>Reverse Letters</li>
-				<li>Swap Words - camelCase, kebab-case, snake_case...</li>
+				<li>Swap Words</li>
 				<li>Swap Characters/Selections/Lines/Tokens</li>
 				<li>Wrap or shift double quotes to single quotes to backticks</li>
 				<li>Swap between double quotes and single quotes</li>
@@ -828,7 +834,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	    <div>
 	        <h4>Version 8.17</h4>
 	        <ul>
-                <li>Added: Swap Words - camelCase, kebab-case, snake_case...</li>
+                <li>Added: Swap Words</li>
+                <li>Added: Group by Grep - matched lines will be separated from not matched</li>
             </ul>
 	    </div>
 	    <div>
