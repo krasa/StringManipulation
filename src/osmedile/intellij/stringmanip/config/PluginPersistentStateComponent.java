@@ -15,6 +15,7 @@ import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.CharacterSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
+import osmedile.intellij.stringmanip.filter.GrepSettings;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.styles.Style;
@@ -40,6 +41,8 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private SortTokensModel sortTokensModel;
 	private boolean doNotAddSelection;
 	private NormalizationSettings normalizationSettings = new NormalizationSettings();
+
+	private List<GrepSettings> grepHistory = new ArrayList<>();
 
 	public PluginPersistentStateComponent() {
 	}
@@ -264,4 +267,51 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	public NormalizationSettings getNormalizeSettings() {
 		return normalizationSettings;
 	}
+
+
+	@Transient
+	public void addToHistory(GrepSettings grepSettings) {
+		List<GrepSettings> newList = new ArrayList<>(grepHistory.size() + 1);
+
+		int startIndex = grepHistory.size() >= LIMIT ? 1 : 0;
+		for (int i = startIndex; i < grepHistory.size(); i++) {
+			GrepSettings settings = grepHistory.get(i);
+			if (!settings.equals(grepSettings)) {
+				newList.add(settings);
+			}
+		}
+
+		grepSettings.setAdded(new Date());
+		newList.add(grepSettings);
+
+		grepHistory = newList;
+	}
+
+	@NotNull
+	@Transient
+	public GrepSettings guessSettings(String text) {
+		GrepSettings settings = new GrepSettings();
+		if (grepHistory.size() > 0) {
+			settings = grepHistory.get(grepHistory.size() - 1);
+			for (int i = grepHistory.size() - 1; i >= 0; i--) {
+				GrepSettings s = grepHistory.get(i);
+				if (text.equals(s.getPattern())) {
+					settings = s;
+					break;
+				}
+			}
+		} else {
+			settings.setPattern(text);
+		}
+		return settings;
+	}
+
+	public void setGrepHistory(List<GrepSettings> grepHistory) {
+		this.grepHistory = grepHistory;
+	}
+
+	public List<GrepSettings> getGrepHistory() {
+		return grepHistory;
+	}
+
 }

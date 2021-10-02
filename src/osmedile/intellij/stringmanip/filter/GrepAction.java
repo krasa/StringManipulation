@@ -5,56 +5,35 @@ import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.ui.InputValidatorEx;
-import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.utils.Cloner;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- * @author Olivier Smedile
- * @version $Id: GrepAction.java 60 2008-04-18 06:51:03Z osmedile $
- */
 public class GrepAction extends MyEditorAction {
+	public static final String STORE_KEY = "StringManipulation.GrepAction.GrepSettings";
+	private String storeKey = STORE_KEY;
 
-	protected static final GrepFilter GREP_FILTER = new GrepFilter() {
-		@Override
-		public boolean execute(String text, Pair<String, Boolean> options) {
-			if (options.second) {
-				return Pattern.compile(options.first).matcher(text).find();
-			} else {
-				return text.contains(options.first);
-			}
-		}
-	};
 
 	public GrepAction() {
-		this(GREP_FILTER);
-	}
-
-	interface GrepFilter {
-		boolean execute(String text, Pair<String, Boolean> options);
-	}
-
-	public GrepAction(final GrepFilter grepFilter) {
 		super(null);
-		setupHandler(new MyEditorWriteActionHandler<Pair<String, Boolean>>(getActionClass()) {
+		setupHandler(new MyEditorWriteActionHandler<GrepSettings>(getActionClass()) {
 			@NotNull
 			@Override
-			protected Pair<Boolean, Pair<String, Boolean>> beforeWriteAction(Editor editor, DataContext dataContext) {
+			protected Pair<Boolean, GrepSettings> beforeWriteAction(Editor editor, DataContext dataContext) {
 				String initialValue = "";
 				SelectionModel selectionModel = editor.getSelectionModel();
 				if (!selectionModel.hasSelection()) {
@@ -66,59 +45,16 @@ public class GrepAction extends MyEditorAction {
 						selectionModel.setSelection(0, editor.getDocument().getTextLength());
 					}
 				}
-				InputDialogWithCheckbox dialog = new InputDialogWithCheckbox("", "Grep Text", "Regex", false, true, null, initialValue, new MyInputValidator() {
-					@Nullable
-					@Override
-					public String getErrorText(String inputString) {
-						if (isChecked()) {
-							try {
-								Pattern.compile(inputString);
-								return null;
-							} catch (Exception e) {
-								return "Incorrect regular expression";
-							}
-						}
+				GrepSettings settings = getSettings(editor, initialValue);
+				if (settings == null) return stopExecution();
 
-						return null;
-					}
-
-					@Override
-					public boolean checkInput(String inputString) {
-						return check(inputString);
-					}
-
-					@Override
-					public boolean canClose(String inputString) {
-						return check(inputString);
-					}
-
-					protected boolean check(String inputString) {
-						if (isChecked()) {
-							try {
-								Pattern.compile(inputString);
-								return true;
-							} catch (Exception e) {
-								return false;
-							}
-						} else {
-							return !StringUtil.isEmptyOrSpaces(inputString);
-						}
-					}
-
-				});
-
-				dialog.show();
-				Pair<String, Boolean> stringBooleanPair = Pair.create(dialog.getInputString(), dialog.isChecked());
-				String grepos = stringBooleanPair.first;
-				if (!StringUtil.isEmptyOrSpaces(grepos)) {
-					return continueExecution(stringBooleanPair);
-				}
-				return stopExecution();
+				return continueExecution(settings);
 			}
 
+
 			@Override
-			protected void executeWriteAction(Editor editor, DataContext dataContext, Pair<String, Boolean> grepos) {
-				if (StringUtil.isEmptyOrSpaces(grepos.first)) {
+			protected void executeWriteAction(Editor editor, DataContext dataContext, GrepSettings settings) {
+				if (StringUtil.isEmptyOrSpaces(settings.getPattern())) {
 					return;
 				}
 				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
@@ -130,7 +66,7 @@ public class GrepAction extends MyEditorAction {
 					int endOffset = editor.logicalPositionToOffset(selectionEnd);
 					final String selectedText = editor.getDocument().getText(new TextRange(startOffset, endOffset));
 
-					final String s = transform(grepos, selectedText, grepFilter);
+					final String s = transform(settings, selectedText);
 					editor.getDocument().replaceString(startOffset, endOffset, s);
 				}
 
@@ -138,74 +74,147 @@ public class GrepAction extends MyEditorAction {
 		});
 	}
 
-	protected String transform(Pair<String, Boolean> grepos, String selectedText, GrepFilter grepFilter) {
-		String[] textParts = selectedText.split("\n");
-		Collection<String> result = new ArrayList<String>();
-
-		for (String textPart : textParts) {
-			if (grepFilter.execute(textPart, grepos)) {
-				result.add(textPart);
+	private GrepSettings getSettings(Editor editor, String initialValue) {
+		final GrepDialog dialog = new GrepDialog(this, getGrepSettings(initialValue), editor);
+		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
+			{
+				init();
+				setTitle("Grep");
 			}
+
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
+			}
+
+			@Nullable
+			@Override
+			public JComponent getPreferredFocusedComponent() {
+				return dialog.pattern;
+			}
+
+			@Nullable
+			@Override
+			protected String getDimensionServiceKey() {
+				return "StringManipulation.GrepDialog";
+			}
+
+			@Nullable
+			@Override
+			protected JComponent createCenterPanel() {
+				return dialog.contentPane;
+			}
+
+
+			@Override
+			protected void doOKAction() {
+				super.doOKAction();
+			}
+		};
+
+		boolean b = dialogWrapper.showAndGet();
+		if (!b) {
+			return null;
 		}
+		GrepSettings newSettings = dialog.getSettings();
+		storeGrepSettings(newSettings);
+		return newSettings;
 
-		String[] res = result.toArray(new String[result.size()]);
+	}
 
-		return StringUtils.join(res, '\n');
+	protected GrepSettings getGrepSettings(String initialValue) {
+		GrepSettings sortSettings = PluginPersistentStateComponent.getInstance().guessSettings(initialValue);
+		return Cloner.deepClone(sortSettings);
+	}
+
+	protected void storeGrepSettings(GrepSettings newSettings) {
+		PluginPersistentStateComponent.getInstance().addToHistory(newSettings);
+	}
+
+	protected String transform(GrepSettings settings, String selectedText) {
+		MyGrepFilter grepFilter = new MyGrepFilter(settings);
+		if (settings.isGroupMatching()) {
+			String[] textParts = selectedText.split("\n");
+			Collection<String> match = new ArrayList<String>();
+			Collection<String> notMatch = new ArrayList<String>();
+
+			for (String textPart : textParts) {
+				if (grepFilter.execute(textPart)) {
+					if (!StringUtils.isBlank(textPart)) {
+						match.add(textPart);
+					}
+				} else {
+					if (!StringUtils.isBlank(textPart)) {
+						notMatch.add(textPart);
+					}
+				}
+			}
+
+			String matchS = StringUtils.join(match, '\n');
+
+			StringBuilder sb = new StringBuilder(matchS);
+			sb.append("\n");
+			if (notMatch.size() > 0) {
+				sb.append("\n");
+				sb.append("\n");
+				sb.append("\n");
+				String notMatchS = StringUtils.join(notMatch, '\n');
+				sb.append(notMatchS);
+			}
+			return sb.toString();
+		} else {
+			String[] textParts = selectedText.split("\n");
+			Collection<String> result = new ArrayList<String>();
+
+			for (String textPart : textParts) {
+				if (grepFilter.execute(textPart)) {
+					result.add(textPart);
+				}
+			}
+
+			String[] res = result.toArray(new String[result.size()]);
+
+			return StringUtils.join(res, '\n');
+		}
 	}
 
 
-	class InputDialogWithCheckbox extends Messages.InputDialog {
-		private JCheckBox myCheckBox;
+	private static class MyGrepFilter {
 
-		InputDialogWithCheckbox(String message,
-								@Nls(capitalization = Nls.Capitalization.Title) String title,
-								String checkboxText,
-								boolean checked,
-								boolean checkboxEnabled,
-								@Nullable Icon icon,
-								@Nullable String initialValue,
-								@Nullable MyInputValidator validator) {
-			super(message, title, icon, initialValue, validator);
-			myCheckBox.setText(checkboxText);
-			myCheckBox.setSelected(checked);
-			myCheckBox.setEnabled(checkboxEnabled);
-			if (validator != null) {
-				validator.setCheckBox(myCheckBox);
+		private final GrepSettings settings;
+		private Pattern compile;
+
+		public MyGrepFilter(GrepSettings settings) {
+			this.settings = settings;
+			String pattern = this.settings.getPattern();
+
+			if (settings.isRegex()) {
+				if (settings.isFullWords()) {
+					pattern = "\\b" + pattern + "\\b";
+				}
+			} else {
+				if (settings.isFullWords()) {
+					pattern = "\\b" + Pattern.quote(pattern) + "\\b";
+				} else {
+					pattern = Pattern.quote(pattern);
+				}
+			}
+
+			if (settings.isCaseSensitive()) {
+				compile = Pattern.compile(pattern);
+			} else {
+				compile = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 			}
 		}
 
-		@NotNull
-		@Override
-		protected JPanel createMessagePanel() {
-			JPanel messagePanel = new JPanel(new BorderLayout());
-			if (myMessage != null) {
-				JComponent textComponent = createTextComponent();
-				messagePanel.add(textComponent, BorderLayout.NORTH);
+		public boolean execute(String text) {
+			boolean result = compile.matcher(text).find();
+			if (settings.isInverted()) {
+				result = !result;
 			}
-
-			myField = createTextFieldComponent();
-			messagePanel.add(createScrollableTextComponent(), BorderLayout.CENTER);
-
-			myCheckBox = new JCheckBox();
-			messagePanel.add(myCheckBox, BorderLayout.SOUTH);
-
-			return messagePanel;
+			return result;
 		}
 
-		public Boolean isChecked() {
-			return myCheckBox.isSelected();
-		}
-	}
-
-	abstract class MyInputValidator implements InputValidatorEx {
-		private JCheckBox myCheckBox;
-
-		public void setCheckBox(JCheckBox myCheckBox) {
-			this.myCheckBox = myCheckBox;
-		}
-
-		public boolean isChecked() {
-			return myCheckBox != null && myCheckBox.isSelected();
-		}
 	}
 }

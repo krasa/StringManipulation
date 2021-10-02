@@ -19,7 +19,7 @@ public class SettingsForm {
 	private CharacterSwitchingSettingsForm characterSwitchingSettingsForm;
 
 	public SettingsForm() {
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+		donatePanel.add(Donate.newDonateButton());
 	}
 
 	public JPanel getRoot() {

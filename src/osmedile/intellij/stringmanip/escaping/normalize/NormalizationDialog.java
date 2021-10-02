@@ -95,7 +95,7 @@ public class NormalizationDialog implements Disposable {
 			}
 		});
 		updateComponents();
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+		donatePanel.add(Donate.newDonateButton());
 
 		addPreviewListeners(this);
 	}

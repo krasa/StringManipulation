@@ -170,7 +170,7 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 			}
 		});
 		updateComponents();
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+		donatePanel.add(Donate.newDonateButton());
 
 		if (this.editor != null) {
 			addPreviewListeners(this);

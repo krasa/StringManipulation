@@ -9,21 +9,19 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.ui.DocumentAdapter;
 import org.apache.commons.text.StringEscapeUtils;
 import org.jetbrains.annotations.NotNull;
+import osmedile.intellij.stringmanip.filter.PreviewDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Philipp Menke
  */
-class DelimitedListDialog implements Disposable {
+@Deprecated
+class DelimitedListDialog extends PreviewDialog implements Disposable {
 	private final DelimitedListAction action;
 	private final Editor editor;
 	private final EditorImpl previewEditor;
@@ -38,19 +36,9 @@ class DelimitedListDialog implements Disposable {
 	private JTextField unquote;
 	private JPanel previewPanel;
 
-	private ThreadPoolExecutor executor;
-
 	DelimitedListDialog(DelimitedListAction action, Editor editor) {
 		this.action = action;
 		this.editor = editor;
-
-		//max 1 concurrent task + max 1 in queue
-		executor = new ThreadPoolExecutor(1, 1,
-				60, TimeUnit.SECONDS,
-				new ArrayBlockingQueue<Runnable>(1),
-				new MyThreadFactory(),
-				new ThreadPoolExecutor.DiscardOldestPolicy());
-
 
 		this.previewEditor = IdeUtils.createEditorPreview("", false);
 		this.previewPanel.add(previewEditor.getComponent());
@@ -72,9 +60,9 @@ class DelimitedListDialog implements Disposable {
 		destDelimiter.getDocument().addDocumentListener(documentAdapter);
 		quote.getDocument().addDocumentListener(documentAdapter);
 		unquote.getDocument().addDocumentListener(documentAdapter);
-		sourceClipboard.addChangeListener(e -> renderPreview());
-		sourceSelection.addChangeListener(e -> renderPreview());
-		autoQuote.addChangeListener(e -> renderPreview());
+		sourceClipboard.addActionListener(e -> renderPreview());
+		sourceSelection.addActionListener(e -> renderPreview());
+		autoQuote.addActionListener(e -> renderPreview());
 		autoQuote.addChangeListener(e -> {
 			quote.setEditable(!autoQuote.isSelected());
 			if (quote.isEditable()) {
@@ -85,15 +73,6 @@ class DelimitedListDialog implements Disposable {
 			}
 		});
 		renderPreview();
-	}
-
-	static class MyThreadFactory implements ThreadFactory {
-		public synchronized Thread newThread(Runnable r) {
-			Thread t = new Thread(r);
-			t.setName("StringManipulation.DelimitedListDialog");
-			t.setDaemon(true);
-			return t;
-		}
 	}
 
 	private void renderPreview() {
@@ -125,14 +104,14 @@ class DelimitedListDialog implements Disposable {
 
 	private String computePreviewText(String sourceText, DelimitedListAction.Settings settings) {
 		return action.transformText(sourceText, settings)
-			.replace("\r", "");//remove all \r, which are not allowed in the Editor
+				.replace("\r", "");//remove all \r, which are not allowed in the Editor
 	}
 
-	private void setPreviewTextOnEDT(String s) {
+	protected void setPreviewTextOnEDT(String s) {
 		ApplicationManager.getApplication().invokeLater(() -> setPreviewText(s), ModalityState.any());
 	}
 
-	private void setPreviewText(String previewText) {
+	protected void setPreviewText(String previewText) {
 		ApplicationManager.getApplication().runWriteAction(() -> {
 			previewEditor.getDocument().setText(previewText);
 			previewPanel.validate();
@@ -150,18 +129,4 @@ class DelimitedListDialog implements Disposable {
 		return settings;
 	}
 
-	/**
-	 * Editor cannot handle too much
-	 */
-	private String limitLength(String val) {
-		if (val.length() > 10_000) {
-			return val.substring(0, 10_000) + "\n...";
-		}
-		return val;
-	}
-
-	@Override
-	public void dispose() {
-		executor.shutdown();
-	}
 }

@@ -59,7 +59,7 @@ public class AlignToColumnsForm {
 
 	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
 		this.editor = editor;
-		donatePanel.add(Donate.newDonateButton(donatePanel));
+		donatePanel.add(Donate.newDonateButton());
 		resetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

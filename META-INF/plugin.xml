@@ -24,7 +24,7 @@
                 class="osmedile.intellij.stringmanip.SwitchCasePopupAction"
                 text="Switch Case..."
                 description="Popup Switch Case String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/icons/case.svg">
+                icon="/icons/case.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
         </action>
 
@@ -32,7 +32,7 @@
                 class="osmedile.intellij.stringmanip.PopupChoiceAction"
                 text="Popup String Manipulation ..."
                 description="Popup String Manipulation ..."
-                icon="/osmedile/intellij/stringmanip/icons/edit.svg">
+                icon="/icons/edit.svg">
             <add-to-group group-id="EditMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift M"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt M"/>
@@ -41,7 +41,7 @@
         <group id="StringManipulation.Group.Main" text="String Manipulation"
                description="Group of String manipulation"
                popup="true"
-               icon="/osmedile/intellij/stringmanip/icons/edit.svg"
+               icon="/icons/edit.svg"
         >
             <add-to-group group-id="EditMenu" anchor="last"/>
 
@@ -309,7 +309,7 @@
 
             <group id="StringManipulation.Group.SwitchCase" text="Switch Case..."
                    description="Group of String manipulation Switch case actions"
-                   icon="/osmedile/intellij/stringmanip/icons/case.svg"
+                   icon="/icons/case.svg"
                    popup="true">
                 <!--                dynamically registered-->
                 <!--                <action id="StringManipulation.SwitchStyleAction"-->
@@ -422,51 +422,51 @@
 
             <group text="Increment/Decrement..."
                    description="Increment, decrement, create sequence, unique numbers"
-                   icon="/osmedile/intellij/stringmanip/icons/calc/calc.svg"
+                   icon="/icons/calc/calc.svg"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.IncrementAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementAction"
                         text="Increment"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/plus.svg"
+                        icon="/icons/calc/plus.svg"
                         description="Increment numbers inside selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndIncrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndIncrementAction"
                         text="Duplicate and Increment"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/plusCircle.svg"
+                        icon="/icons/calc/plusCircle.svg"
                         description="Duplicate and increment numbers inside selected text">
                 </action>
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.DecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DecrementAction"
                         text="Decrement"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/minus.svg"
+                        icon="/icons/calc/minus.svg"
                         description="Decrement numbers inside selected text">
                 </action>
                 <action id="osmedile.intellij.stringmanip.DuplicateAndDecrementAction"
                         class="osmedile.intellij.stringmanip.increment.DuplicateAndDecrementAction"
                         text="Duplicate and Decrement"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/minusCircle.svg"
+                        icon="/icons/calc/minusCircle.svg"
                         description="Duplicate and decrement numbers inside selected text">
                 </action>
                 <separator/>
                 <action id="StringManipulation.CreateSequenceAction"
                         class="osmedile.intellij.stringmanip.increment.CreateSequenceAction"
                         text="Create Sequence"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/sequence.svg"
+                        icon="/icons/calc/sequence.svg"
                         description="Keep first number, replace all other by incrementing">
                 </action>
                 <action id="StringManipulation.IncrementDuplicateNumbersAction"
                         class="osmedile.intellij.stringmanip.increment.IncrementDuplicateNumbersAction"
                         text="Increment Duplicates"
-                        icon="/osmedile/intellij/stringmanip/icons/calc/dup.svg"
+                        icon="/icons/calc/dup.svg"
                         description="Increment duplicate numbers">
                 </action>
             </group>
 
             <group text="Sort..."
                    description="Sort lines, delimited text"
-                   icon="/osmedile/intellij/stringmanip/icons/sort.svg"
+                   icon="/icons/sort.svg"
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
@@ -508,22 +508,12 @@
 
             <group text="Filter/Remove/Trim/Minify/Convert..."
                    description="Filter/Remove/Trim/Minify/Convert..."
-                   icon="/osmedile/intellij/stringmanip/icons/filter.svg"
+                   icon="/icons/filter.svg"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.GrepAction"
                         class="osmedile.intellij.stringmanip.filter.GrepAction"
                         text="Grep"
-                        description="Grep on selected text">
-                </action>
-                <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
-                        class="osmedile.intellij.stringmanip.filter.InvertedGrepAction"
-                        text="Inverted Grep"
-                        description="Inverted Grep on selected text">
-                </action>
-                <action id="StringManipulation.GroupByGrep"
-                        class="osmedile.intellij.stringmanip.filter.GroupByGrepAction"
-                        text="Group by Grep"
-                        description="Matched lines will be separated from not matched">
+                        description="Grep, inverted grep, group by grep">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
@@ -590,7 +580,7 @@
 
             <group text="Align..."
                    description="Text and columns alignment"
-                   icon="/osmedile/intellij/stringmanip/icons/align/align.svg"
+                   icon="/icons/align/align.svg"
                    popup="true">
                 <reference ref="StringManipulation.AlignToColumns"/>
                 <separator/>
@@ -667,7 +657,7 @@
         <group id="StringManipulation.EditorPopupMenu" text="String Manipulation"
                description="String manipulation plugin"
                popup="false"
-               icon="/osmedile/intellij/stringmanip/icons/edit.svg">
+               icon="/icons/edit.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
 
             <separator/>
@@ -843,6 +833,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Added: Swap Words</li>
                 <li>Added: Group by Grep - matched lines will be separated from not matched</li>
+                <li>Added: Grep - History, Case Sensitive, Full Words options </li>
                 <li>Added: Shuffle Characters</li>
             </ul>
 	    </div>
