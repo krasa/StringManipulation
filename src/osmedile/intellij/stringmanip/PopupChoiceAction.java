@@ -9,6 +9,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
+import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -32,8 +33,11 @@ public class PopupChoiceAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
+				if (editor instanceof EditorEx) {
+					dataContext = ((EditorEx) editor).getDataContext();
+				}
 				ListPopup popup = JBPopupFactory.getInstance().createActionGroupPopup(null, (ActionGroup) CustomActionsSchema.getInstance().getCorrectedAction("StringManipulation.Group.Main"),
-					dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
+						dataContext, JBPopupFactory.ActionSelectionAid.ALPHA_NUMBERING, true);
 
 				popup.showInBestPositionFor(dataContext);
 				return stopExecution();
