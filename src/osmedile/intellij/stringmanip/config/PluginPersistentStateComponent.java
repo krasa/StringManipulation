@@ -283,7 +283,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 			}
 		}
 
-		grepSettings.setAdded(new Date());
 		newList.add(grepSettings);
 
 		grepHistory = newList;

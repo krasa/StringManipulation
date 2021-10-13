@@ -1,16 +1,19 @@
 package osmedile.intellij.stringmanip.filter;
 
-import java.util.Date;
+import java.util.Objects;
 
 public class GrepSettings {
 
 	private boolean inverted;
 	private boolean groupMatching;
 	private boolean regex;
-	private Date added;
 	private String pattern;
 	private boolean caseSensitive;
 	private boolean fullWords;
+
+	/**
+	 * UPDATE EQUALS
+	 */
 
 	public boolean isInverted() {
 		return inverted;
@@ -26,14 +29,6 @@ public class GrepSettings {
 
 	public void setGroupMatching(boolean groupMatching) {
 		this.groupMatching = groupMatching;
-	}
-
-	public void setAdded(Date added) {
-		this.added = added;
-	}
-
-	public Date getAdded() {
-		return added;
 	}
 
 	public String getPattern() {
@@ -65,10 +60,21 @@ public class GrepSettings {
 	}
 
 	public void setFullWords(final boolean fullWords) {
-
 		this.fullWords = fullWords;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		GrepSettings that = (GrepSettings) o;
+		return inverted == that.inverted && groupMatching == that.groupMatching && regex == that.regex && caseSensitive == that.caseSensitive && fullWords == that.fullWords && Objects.equals(pattern, that.pattern);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(inverted, groupMatching, regex, pattern, caseSensitive, fullWords);
+	}
 
 	@Override
 	public String toString() {
