@@ -9,6 +9,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.intellij.util.xmlb.annotations.Transient;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
@@ -21,6 +22,7 @@ import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
+import osmedile.intellij.stringmanip.utils.Cloner;
 import osmedile.intellij.stringmanip.utils.PreviewUtils;
 
 import java.util.*;
@@ -300,10 +302,12 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 					break;
 				}
 			}
-		} else {
-			settings.setPattern(text);
 		}
-		return settings;
+		GrepSettings clone = Cloner.deepClone(settings);
+		if (StringUtils.isNotEmpty(text)) {
+			clone.setPattern(text);
+		}
+		return clone;
 	}
 
 	public void setGrepHistory(List<GrepSettings> grepHistory) {

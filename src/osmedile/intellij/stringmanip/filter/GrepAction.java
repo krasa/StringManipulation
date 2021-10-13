@@ -15,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
-import osmedile.intellij.stringmanip.utils.Cloner;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -75,7 +74,8 @@ public class GrepAction extends MyEditorAction {
 	}
 
 	private GrepSettings getSettings(Editor editor, String initialValue) {
-		final GrepDialog dialog = new GrepDialog(this, getGrepSettings(initialValue), editor);
+		GrepSettings settings = PluginPersistentStateComponent.getInstance().guessSettings(initialValue);
+		final GrepDialog dialog = new GrepDialog(this, settings, editor);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
@@ -121,11 +121,6 @@ public class GrepAction extends MyEditorAction {
 		storeGrepSettings(newSettings);
 		return newSettings;
 
-	}
-
-	protected GrepSettings getGrepSettings(String initialValue) {
-		GrepSettings sortSettings = PluginPersistentStateComponent.getInstance().guessSettings(initialValue);
-		return Cloner.deepClone(sortSettings);
 	}
 
 	protected void storeGrepSettings(GrepSettings newSettings) {
