@@ -40,18 +40,23 @@ public class CreateSequenceAction extends MyEditorAction {
 				}
 
 				private void processCaret(Editor editor, Caret caret, AtomicReference<String> lastValue) {
-					if (!caret.hasSelection()) {
-						caret.selectLineAtCaret();
-					}
-
-					final String newText = processSelection(caret.getSelectedText(), lastValue);
+					final String newText = processSelection(caret, lastValue);
 
 					editor.getDocument().replaceString(caret.getSelectionStart(), caret.getSelectionEnd(), newText);
+					editor.getSelectionModel().setSelection(caret.getSelectionStart(), caret.getSelectionStart() + newText.length());
 				}
 
 			});
 
 		}
+	}
+
+	private String processSelection(Caret caret, AtomicReference<String> lastValue) {
+		String selectedText = caret.getSelectedText();
+		if (selectedText == null) {
+			selectedText = "0";
+		}
+		return processSelection(selectedText, lastValue);
 	}
 
 	protected String processSelection(String selectedText, AtomicReference<String> lastValue) {
