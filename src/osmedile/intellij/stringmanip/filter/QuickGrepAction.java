@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.VisualPosition;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 public class QuickGrepAction extends GrepAction {
@@ -22,6 +23,10 @@ public class QuickGrepAction extends GrepAction {
 	protected void postProcess(Editor editor, GrepSettings grepSettings) {
 		if (grepSettings.quick) {
 			editor.getSelectionModel().removeSelection();
+			VisualPosition visualPosition = grepSettings.visualPosition;
+			if (visualPosition != null) {
+				editor.getCaretModel().moveToVisualPosition(visualPosition);
+			}
 		}
 	}
 

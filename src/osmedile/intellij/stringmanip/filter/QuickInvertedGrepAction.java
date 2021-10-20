@@ -3,7 +3,7 @@ package osmedile.intellij.stringmanip.filter;
 import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
-public class QuickInvertedGrepAction extends GrepAction {
+public class QuickInvertedGrepAction extends QuickGrepAction {
 	@Override
 	protected GrepSettings getSettings(Editor editor, String initialValue) {
 		if (!GrepAction.INITIAL_VALUE.equals(initialValue)) {
@@ -16,13 +16,6 @@ public class QuickInvertedGrepAction extends GrepAction {
 			return grepSettings;
 		} else {
 			return super.getSettings(editor, initialValue);
-		}
-	}
-
-	@Override
-	protected void postProcess(Editor editor, GrepSettings grepSettings) {
-		if (grepSettings.quick) {
-			editor.getSelectionModel().removeSelection();
 		}
 	}
 

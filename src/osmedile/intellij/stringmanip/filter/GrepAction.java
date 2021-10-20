@@ -1,10 +1,7 @@
 package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.editor.CaretState;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.editor.*;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
@@ -32,20 +29,23 @@ public class GrepAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair<Boolean, GrepSettings> beforeWriteAction(Editor editor, DataContext dataContext) {
+				VisualPosition visualPosition = null;
 				String initialValue = INITIAL_VALUE;
 				SelectionModel selectionModel = editor.getSelectionModel();
 				if (!selectionModel.hasSelection()) {
 					selectionModel.setSelection(0, editor.getDocument().getTextLength());
 				} else {
 					String selectedText = selectionModel.getSelectedText(true);
-					if (!selectedText.contains("\n")) {
+					if (selectedText != null && !selectedText.contains("\n")) {
 						initialValue = selectedText;
+						visualPosition = editor.getCaretModel().getVisualPosition();
 						selectionModel.setSelection(0, editor.getDocument().getTextLength());
 					}
 				}
 				GrepSettings settings = getSettings(editor, initialValue);
 				if (settings == null) return stopExecution();
 
+				settings.visualPosition = visualPosition;
 				return continueExecution(settings);
 			}
 

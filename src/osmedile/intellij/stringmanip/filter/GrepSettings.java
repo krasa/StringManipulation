@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.filter;
 
+import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.util.xmlb.annotations.Transient;
 
 import java.util.Objects;
@@ -14,6 +15,8 @@ public class GrepSettings {
 	private boolean fullWords;
 	@Transient
 	public transient boolean quick;
+	@Transient
+	public transient VisualPosition visualPosition;
 
 	/**
 	 * UPDATE EQUALS

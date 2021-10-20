@@ -272,8 +272,6 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	@Transient
 	public void addToHistory(GrepSettings grepSettings) {
-		grepSettings.quick = false;
-
 		List<GrepSettings> newList = new ArrayList<>(grepHistory.size() + 1);
 
 		int startIndex = grepHistory.size() >= LIMIT ? 1 : 0;
@@ -307,6 +305,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		if (StringUtils.isNotEmpty(text)) {
 			clone.setPattern(text);
 		}
+		clone.quick = false;
 		return clone;
 	}
 
@@ -344,6 +343,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 			clone.setPattern(text);
 		}
 		clone.setInverted(inverted);
+		clone.quick = false;
 		return clone;
 	}
 
