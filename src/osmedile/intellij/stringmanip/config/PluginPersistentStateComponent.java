@@ -273,6 +273,8 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	@Transient
 	public void addToHistory(GrepSettings grepSettings) {
+		grepSettings.quick = false;
+
 		List<GrepSettings> newList = new ArrayList<>(grepHistory.size() + 1);
 
 		int startIndex = grepHistory.size() >= LIMIT ? 1 : 0;
