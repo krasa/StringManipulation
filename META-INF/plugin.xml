@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.19.203.000.0</version>
+    <version>8.20.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -510,10 +510,21 @@
                    description="Filter/Remove/Trim/Minify/Convert..."
                    icon="/icons/filter.svg"
                    popup="true">
-                <action id="osmedile.intellij.stringmanip.GrepAction"
+                <action id="StringManipulation.Grep"
                         class="osmedile.intellij.stringmanip.filter.GrepAction"
-                        text="Grep"
-                        description="Grep, inverted grep, group by grep">
+                        text="Grep..."
+                        description="Grep, inverted grep, group by grep (with a dialog)">
+                </action>
+                <separator/>
+                <action id="osmedile.intellij.stringmanip.GrepAction"
+                        class="osmedile.intellij.stringmanip.filter.QuickGrepAction"
+                        text="Quick Grep"
+                        description="Grep by a selected text for the whole file without a dialog">
+                </action>
+                <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
+                        class="osmedile.intellij.stringmanip.filter.QuickInvertedGrepAction"
+                        text="Quick Inverted Grep"
+                        description="Inverted grep by a selected text for the whole file without a dialog">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"
@@ -785,9 +796,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 		<p>
             Filter/Remove/Trim/Minify/Convert...:
 			<ul>
-				<li>Grep selected text, All lines not matching input text wil be removed.
-					(Does not work in column mode)
-				</li>
+				<li>Grep</li>
 				<li>Inverted Grep</li>
 				<li>Group by Grep - matched lines will be separated from not matched</li>
 				<li>Trim</li>
@@ -828,6 +837,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.20</h4>
+	        <ul>
+                <li>Added: Quick Grep, Quick Inverted Grep - without a dialog</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.19</h4>
 	        <ul>

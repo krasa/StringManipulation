@@ -23,9 +23,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class GrepAction extends MyEditorAction {
-	public static final String STORE_KEY = "StringManipulation.GrepAction.GrepSettings";
-	private String storeKey = STORE_KEY;
 
+	public static final String INITIAL_VALUE = "";
 
 	public GrepAction() {
 		super(null);
@@ -33,7 +32,7 @@ public class GrepAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair<Boolean, GrepSettings> beforeWriteAction(Editor editor, DataContext dataContext) {
-				String initialValue = "";
+				String initialValue = INITIAL_VALUE;
 				SelectionModel selectionModel = editor.getSelectionModel();
 				if (!selectionModel.hasSelection()) {
 					selectionModel.setSelection(0, editor.getDocument().getTextLength());
@@ -67,14 +66,19 @@ public class GrepAction extends MyEditorAction {
 
 					final String s = transform(settings, selectedText);
 					editor.getDocument().replaceString(startOffset, endOffset, s);
+					postProcess(editor, settings);
 				}
 
 			}
 		});
 	}
 
-	private GrepSettings getSettings(Editor editor, String initialValue) {
-		GrepSettings settings = PluginPersistentStateComponent.getInstance().guessSettings(initialValue);
+	protected void postProcess(Editor editor, GrepSettings grepSettings) {
+
+	}
+
+	protected GrepSettings getSettings(Editor editor, String initialValue) {
+		GrepSettings settings = getSettings(initialValue);
 		final GrepDialog dialog = new GrepDialog(this, settings, editor);
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
@@ -121,6 +125,10 @@ public class GrepAction extends MyEditorAction {
 		storeGrepSettings(newSettings);
 		return newSettings;
 
+	}
+
+	protected GrepSettings getSettings(String initialValue) {
+		return PluginPersistentStateComponent.getInstance().guessSettings(initialValue);
 	}
 
 	protected void storeGrepSettings(GrepSettings newSettings) {

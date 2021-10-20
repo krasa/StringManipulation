@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.filter;
 
+import com.intellij.util.xmlb.annotations.Transient;
+
 import java.util.Objects;
 
 public class GrepSettings {
@@ -10,11 +12,12 @@ public class GrepSettings {
 	private String pattern;
 	private boolean caseSensitive;
 	private boolean fullWords;
+	@Transient
+	protected transient boolean quick;
 
 	/**
 	 * UPDATE EQUALS
 	 */
-
 	public boolean isInverted() {
 		return inverted;
 	}

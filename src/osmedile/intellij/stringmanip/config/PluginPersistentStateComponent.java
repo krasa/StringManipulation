@@ -309,6 +309,43 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		return clone;
 	}
 
+	@NotNull
+	@Transient
+	public GrepSettings guessSettings(String text, boolean inverted) {
+		GrepSettings settings = null;
+		//matching
+		if (grepHistory.size() > 0) {
+			for (int i = grepHistory.size() - 1; i >= 0; i--) {
+				GrepSettings s = grepHistory.get(i);
+				if (text.equals(s.getPattern()) && s.isInverted() == inverted) {
+					settings = s;
+					break;
+				}
+			}
+		}
+		//last
+		if (grepHistory.size() > 0) {
+			for (int i = grepHistory.size() - 1; i >= 0; i--) {
+				GrepSettings s = grepHistory.get(i);
+				if (s.isInverted() == inverted) {
+					settings = s;
+					break;
+				}
+			}
+		}
+
+		if (settings == null) {
+			settings = new GrepSettings();
+		}
+
+		GrepSettings clone = Cloner.deepClone(settings);
+		if (StringUtils.isNotEmpty(text)) {
+			clone.setPattern(text);
+		}
+		clone.setInverted(inverted);
+		return clone;
+	}
+
 	public void setGrepHistory(List<GrepSettings> grepHistory) {
 		this.grepHistory = grepHistory;
 	}

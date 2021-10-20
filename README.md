@@ -128,9 +128,7 @@ Provides actions for text manipulation:
     <p>
         Filter/Remove/Trim/Convert...:
         <ul>
-            <li>Grep selected text, All lines not matching input text wil be removed.
-                (Does not work in column mode)
-            </li>
+            <li>Grep</li>
             <li>Inverted Grep</li>
             <li>Group by Grep - matched lines will be separated from not matched</li>
             <li>Trim</li>
