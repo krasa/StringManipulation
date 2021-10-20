@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip.config;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.diagnostic.Logger;
@@ -163,7 +162,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 			}
 			return unitTestComponent;
 		}
-		return ServiceManager.getService(PluginPersistentStateComponent.class);
+		return ApplicationManager.getApplication().getService(PluginPersistentStateComponent.class);
 	}
 
 	@Nullable

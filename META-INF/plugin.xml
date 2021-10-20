@@ -518,13 +518,13 @@
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.GrepAction"
                         class="osmedile.intellij.stringmanip.filter.QuickGrepAction"
-                        text="Quick Grep"
-                        description="Grep by a selected text for the whole file without a dialog">
+                        text="Grep"
+                        description="Grep by a selected text for the whole file - without a dialog">
                 </action>
                 <action id="osmedile.intellij.stringmanip.InvertedGrepAction"
                         class="osmedile.intellij.stringmanip.filter.QuickInvertedGrepAction"
-                        text="Quick Inverted Grep"
-                        description="Inverted grep by a selected text for the whole file without a dialog">
+                        text="Inverted Grep"
+                        description="Inverted grep by a selected text for the whole file - without a dialog">
                 </action>
                 <separator/>
                 <action id="StringManipulation.RemoveDuplicateLines"

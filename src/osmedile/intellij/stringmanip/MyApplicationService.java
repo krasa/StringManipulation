@@ -3,7 +3,7 @@ package osmedile.intellij.stringmanip;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.ex.ActionManagerEx;
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ public class MyApplicationService {
 	private Map<Class, AnAction> classToActionMap;
 
 	public static MyApplicationService getInstance() {
-		return ServiceManager.getService(MyApplicationService.class);
+		return ApplicationManager.getApplication().getService(MyApplicationService.class);
 	}
 
 	public AnAction getAnAction() {

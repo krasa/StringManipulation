@@ -13,7 +13,7 @@ public class GrepSettings {
 	private boolean caseSensitive;
 	private boolean fullWords;
 	@Transient
-	protected transient boolean quick;
+	public transient boolean quick;
 
 	/**
 	 * UPDATE EQUALS
