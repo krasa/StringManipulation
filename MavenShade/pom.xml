@@ -7,6 +7,10 @@
     <groupId>MavenShade</groupId>
     <artifactId>MavenShade</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
     <packaging>jar</packaging>
 
     <dependencies>
