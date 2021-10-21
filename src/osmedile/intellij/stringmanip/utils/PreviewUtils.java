@@ -12,6 +12,8 @@ import java.util.List;
 
 public class PreviewUtils {
 
+	public static final int MAX_PREVIEW = 100_000;
+
 	@NotNull
 	public static List<String> getPreviewLines(Editor editor) {
 		String text = getTextForPreview(editor);
@@ -33,12 +35,12 @@ public class PreviewUtils {
 
 			sb.append(text.trim());
 			sb.append("\n");
-			if (sb.length() > 10000) {
+			if (sb.length() > MAX_PREVIEW) {
 				break;
 			}
 		}
 		String s = sb.toString();
-		s = s.substring(0, Math.min(10000, s.length()));
+		s = s.substring(0, Math.min(MAX_PREVIEW, s.length()));
 		return s;
 	}
 }

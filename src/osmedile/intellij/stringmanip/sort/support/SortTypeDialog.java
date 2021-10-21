@@ -36,7 +36,6 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 public class SortTypeDialog {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
 
-	public static final int MAX_PREVIEW_LENGTH = 10000;
 	public JPanel contentPane;
 
 	public JRadioButton insensitive;

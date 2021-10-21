@@ -31,7 +31,6 @@ import java.util.List;
 public class NormalizationDialog implements Disposable {
 	private static final Logger LOG = Logger.getInstance(NormalizationDialog.class);
 
-	public static final int MAX_PREVIEW_LENGTH = 10000;
 	public JPanel contentPane;
 
 	public JRadioButton formNFD;

@@ -50,7 +50,7 @@ public class GrepDialog extends PreviewDialog {
 		init(grepSettings);
 		this.action = action;
 		this.editor = editor;
-		sourceTextForPreview = limitLength(PreviewUtils.getTextForPreview(editor));
+		sourceTextForPreview = PreviewUtils.getTextForPreview(editor);
 
 		final DocumentAdapter documentAdapter = new DocumentAdapter() {
 			@Override
