@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.20.203.000.0</version>
+    <version>8.20.203.000.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -840,7 +840,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	    <div>
 	        <h4>Version 8.20</h4>
 	        <ul>
-                <li>Added: Quick Grep, Quick Inverted Grep - without a dialog</li>
+                <li>Added: Grep, Inverted Grep - without a dialog</li>
             </ul>
 	    </div>
 	    <div>
