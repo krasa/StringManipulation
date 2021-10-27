@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip.sort.support.tree;
 
-import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
@@ -46,22 +45,24 @@ public class HierarchicalSort {
 		List<LineNode> lineBreaks = new ArrayList<>();
 		int prevLevel = -1;
 		LineNode currentNode = null;
-		LineNode blankLine = null;
+		LineNode breakLine = null;
 
 		private List<LineNode> prepareTree(List<String> originalLines) {
 			String levelRegexp = sortSettings.getLevelRegex();
-			Pattern pattern = Pattern.compile(levelRegexp);
+			String groupSeparatorRegex = sortSettings.getGroupSeparatorRegex();
+			Pattern levelPattern = Pattern.compile(levelRegexp);
+			Pattern groupSeparatorRegexPattern = Pattern.compile(groupSeparatorRegex);
 
 			for (int i = 0; i < originalLines.size(); i++) {
 				String line = originalLines.get(i);
-				if (StringUtils.isBlank(line)) {
-					lineBreaks.add(blankLine = new LineNode(sortSettings, i, line, prevLevel));
+				if (groupSeparatorRegexPattern.matcher(line).matches()) {
+					lineBreaks.add(breakLine = new LineNode(sortSettings, i, line, prevLevel));
 					continue;
 				}
-				int level = SortLines.level(line, pattern);
+				int level = SortLines.level(line, levelPattern);
 
 				if (currentNode == null) {
-					addBlankLine(lineNodes);
+					addBreakLine(lineNodes);
 					lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
 					prevLevel = level;
 					continue;
@@ -70,24 +71,24 @@ public class HierarchicalSort {
 				if (prevLevel == level) {
 					LineNode parent = currentNode.parent;
 					if (parent == null) {
-						addBlankLine(lineNodes);
+						addBreakLine(lineNodes);
 						lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
 					} else {
-						addBlankLine(parent);
+						addBreakLine(parent);
 						parent.addChild(currentNode = new LineNode(sortSettings, i, line, level));
 					}
 				} else if (prevLevel < level) {
-					addBlankLine(currentNode);
+					addBreakLine(currentNode);
 					LineNode child = new LineNode(sortSettings, i, line, level);
 					currentNode.addChild(child);
 					currentNode = child;
 				} else if (level < prevLevel) {
 					LineNode parent = currentNode.findParentForLevel(level);
 					if (parent == null) {
-						addBlankLine(lineNodes);
+						addBreakLine(lineNodes);
 						lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
 					} else {
-						addBlankLine(parent);
+						addBreakLine(parent);
 						parent.addChild(currentNode = new LineNode(sortSettings, i, line, level));
 					}
 				}
@@ -98,17 +99,17 @@ public class HierarchicalSort {
 			return lineNodes;
 		}
 
-		private void addBlankLine(LineNode parent) {
-			if (blankLine != null) {
-				parent.addChild(blankLine);
-				blankLine = null;
+		private void addBreakLine(LineNode parent) {
+			if (breakLine != null) {
+				parent.addChild(breakLine);
+				breakLine = null;
 			}
 		}
 
-		private void addBlankLine(List<LineNode> lineNodes) {
-			if (blankLine != null) {
-				lineNodes.add(blankLine);
-				blankLine = null;
+		private void addBreakLine(List<LineNode> lineNodes) {
+			if (breakLine != null) {
+				lineNodes.add(breakLine);
+				breakLine = null;
 			}
 		}
 	}

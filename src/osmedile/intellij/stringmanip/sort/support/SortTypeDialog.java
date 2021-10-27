@@ -71,6 +71,9 @@ public class SortTypeDialog {
 	private MyJBTextField levelRegex;
 	private JLabel levelRegexLabel;
 	private LinkLabel linkLabel;
+	private MyJBTextField groupSeparatorRegex;
+	private JLabel groupSeparatorRegexLabel;
+	private JPanel sortStrategy2;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
@@ -84,8 +87,8 @@ public class SortTypeDialog {
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 //		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
-enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
-		hierarchicalSort);
+		enabledByAny(new JComponent[]{levelRegex, groupSeparatorRegex, groupSeparatorRegexLabel, levelRegexLabel}, groupSort,
+				hierarchicalSort);
 
 		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
 		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
@@ -106,6 +109,7 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 		removeBlank.setVisible(additionaloptions);
 		preserveBlank.setVisible(additionaloptions);
 		sortStrategy.setVisible(additionaloptions);
+		sortStrategy2.setVisible(additionaloptions);
 		previewParent.setVisible(editor != null);
 		languageTag.getDocument().addDocumentListener(new DocumentAdapter() {
 			@Override
@@ -120,36 +124,37 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 			@NotNull
 			@Override
 			protected java.util.List<Component> getOrderedComponents() {
-				List<Component> jRadioButtons = new ArrayList<Component>();
-				jRadioButtons.add(insensitive);
-				jRadioButtons.add(sensitive);
-				jRadioButtons.add(length);
-				jRadioButtons.add(hexa);
-				jRadioButtons.add(reverse);
-				jRadioButtons.add(shuffle);
+				List<Component> list = new ArrayList<Component>();
+				list.add(insensitive);
+				list.add(sensitive);
+				list.add(length);
+				list.add(hexa);
+				list.add(reverse);
+				list.add(shuffle);
 
-				jRadioButtons.add(asc);
-				jRadioButtons.add(desc);
+				list.add(asc);
+				list.add(desc);
 
-				jRadioButtons.add(comparatorDefault);
-				jRadioButtons.add(comparatorNaturalOrder);
-				jRadioButtons.add(comparatorCollator);
-				jRadioButtons.add(languageTag);
+				list.add(comparatorDefault);
+				list.add(comparatorNaturalOrder);
+				list.add(comparatorCollator);
+				list.add(languageTag);
 
-				jRadioButtons.add(normalSort);
-				jRadioButtons.add(hierarchicalSort);
-				jRadioButtons.add(groupSort);
-				jRadioButtons.add(levelRegex);
+				list.add(normalSort);
+				list.add(hierarchicalSort);
+				list.add(groupSort);
+				list.add(levelRegex);
+				list.add(groupSeparatorRegex);
 
-				jRadioButtons.add(ignoreLeadingSpaces);
-				jRadioButtons.add(preserveLeadingSpaces);
-				jRadioButtons.add(preserveTrailingSpecialCharacters);
-				jRadioButtons.add(trailingCharacters);
+				list.add(ignoreLeadingSpaces);
+				list.add(preserveLeadingSpaces);
+				list.add(preserveTrailingSpecialCharacters);
+				list.add(trailingCharacters);
 
-				jRadioButtons.add(removeBlank);
-				jRadioButtons.add(preserveBlank);
+				list.add(removeBlank);
+				list.add(preserveBlank);
 
-				return jRadioButtons;
+				return list;
 			}
 		});
 		ignoreLeadingSpaces.addChangeListener(new ChangeListener() {
@@ -218,6 +223,10 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 				return;
 			}
 
+			if (!validateRegexp2()) {
+				return;
+			}
+
 			String s;
 			try {
 				List<String> result = sort(editor, getSettings());
@@ -256,9 +265,11 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 		hierarchicalSort.setSelected(sortSettings.isHierarchicalSort());
 		groupSort.setSelected(sortSettings.isSortByGroups());
 		levelRegex.setText(sortSettings.getLevelRegex());
+		groupSeparatorRegex.setText(sortSettings.getGroupSeparatorRegex());
 
 		validateLocale();
 		validateRegexp();
+		validateRegexp2();
 
 		switch (sortSettings.getBaseComparator()) {
 
@@ -345,6 +356,22 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 			levelRegex.setToolTipText("invalid regex");
 			return false;
 		}
+
+	}
+
+	private boolean validateRegexp2() {
+		try {
+			String text = groupSeparatorRegex.getText();
+			Pattern.compile(text);
+			groupSeparatorRegex.setMyBorder(VALID_BORDER);
+			groupSeparatorRegex.setToolTipText("valid regex");
+			return true;
+		} catch (Throwable e) {
+			groupSeparatorRegex.setMyBorder(ERROR_BORDER);
+			groupSeparatorRegex.setToolTipText("invalid regex");
+			return false;
+		}
+
 	}
 
 
@@ -366,6 +393,7 @@ enabledByAny(new JComponent[]{levelRegex, levelRegexLabel}, groupSort,
 		sortSettings.setSortByGroups(groupSort.isSelected());
 		sortSettings.setHierarchicalSort(hierarchicalSort.isSelected());
 		sortSettings.setLevelRegex(levelRegex.getText());
+		sortSettings.setGroupSeparatorRegex(groupSeparatorRegex.getText());
 		return sortSettings;
 	}
 

@@ -9,6 +9,7 @@ public class SortSettings {
 
 	private String trailingChars = ",;";
 	private String levelRegex = "^[\\s]+";
+	private String groupSeparatorRegex = "(^[\\s]*$|^---.*$)";
 	private String collatorLanguageTag = Locale.getDefault().toString();
 	private BaseComparator baseComparator = BaseComparator.NATURAL;
 	private BlankLines blankLines = BlankLines.REMOVE;
@@ -204,6 +205,14 @@ public class SortSettings {
 		LOCALE_COLLATOR;
 	}
 
+	public String getGroupSeparatorRegex() {
+		return groupSeparatorRegex;
+	}
+
+	public void setGroupSeparatorRegex(String groupSeparatorRegex) {
+		this.groupSeparatorRegex = groupSeparatorRegex;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -219,6 +228,8 @@ public class SortSettings {
 		if (trailingChars != null ? !trailingChars.equals(that.trailingChars) : that.trailingChars != null)
 			return false;
 		if (levelRegex != null ? !levelRegex.equals(that.levelRegex) : that.levelRegex != null) return false;
+		if (groupSeparatorRegex != null ? !groupSeparatorRegex.equals(that.groupSeparatorRegex) : that.groupSeparatorRegex != null)
+			return false;
 		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
 			return false;
 		if (baseComparator != that.baseComparator) return false;
@@ -230,6 +241,7 @@ public class SortSettings {
 	public int hashCode() {
 		int result = trailingChars != null ? trailingChars.hashCode() : 0;
 		result = 31 * result + (levelRegex != null ? levelRegex.hashCode() : 0);
+		result = 31 * result + (groupSeparatorRegex != null ? groupSeparatorRegex.hashCode() : 0);
 		result = 31 * result + (collatorLanguageTag != null ? collatorLanguageTag.hashCode() : 0);
 		result = 31 * result + (baseComparator != null ? baseComparator.hashCode() : 0);
 		result = 31 * result + (blankLines != null ? blankLines.hashCode() : 0);

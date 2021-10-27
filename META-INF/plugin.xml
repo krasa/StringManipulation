@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.20.203.000.1</version>
+    <version>8.21.203.000.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -837,6 +837,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.21</h4>
+	        <ul>
+                <li>Hierarchical sort - added separator regex setting</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.20</h4>
 	        <ul>

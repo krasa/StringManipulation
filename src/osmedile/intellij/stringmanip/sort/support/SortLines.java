@@ -107,12 +107,13 @@ public class SortLines {
 
 	public static <T extends Sortable> List<T> groupSort(List<T> originalLines, SortSettings sortSettings) {
 		Pattern levelRegexp = Pattern.compile(sortSettings.getLevelRegex());
+		Pattern groupSeparatorRegex = Pattern.compile(sortSettings.getGroupSeparatorRegex());
 		boolean sortByLevel = true;
 		List<T> result = new ArrayList<>();
 
 		int from = 0;
 		while (from < originalLines.size()) {
-			Map<Integer, T> emptyLines = new TreeMap<>();
+			Map<Integer, T> breakLines = new TreeMap<>();
 			List<T> linesToSort = new ArrayList<>();
 			int prevLevel = -1;
 			int level;
@@ -125,10 +126,10 @@ public class SortLines {
 				if (sortByLevel && prevLevel != -1 && prevLevel != level) {
 					break;
 				}
-				if (StringUtils.isBlank(text)) {
+				if (groupSeparatorRegex.matcher(text).matches()) {
 					if (sortSettings.emptyLines() == SortSettings.BlankLines.PRESERVE || sortByLevel) {
 						from++;
-						emptyLines.put(i1, s);
+						breakLines.put(i1, s);
 					}
 					if (sortByLevel && !linesToSort.isEmpty()) {
 						break;
@@ -155,8 +156,8 @@ public class SortLines {
 				}
 			}
 
-			for (Map.Entry<Integer, T> emptyLine : emptyLines.entrySet()) {
-				result.add(emptyLine.getKey(), emptyLine.getValue());
+			for (Map.Entry<Integer, T> line : breakLines.entrySet()) {
+				result.add(line.getKey(), line.getValue());
 			}
 		}
 		return result;
