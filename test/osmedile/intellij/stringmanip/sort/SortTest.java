@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SortTest {
+
 	//@formatter:off
 	private static final String[] INPUT_1 = new String[]{
 		"Item 2",
@@ -436,4 +437,5 @@ public class SortTest {
 		List<String> sorted = new SortLines(list, sortSettings).sortLines();
 		Assert.assertArrayEquals(StringUtils.join(sorted.toArray(), '\n') + "\n", result, sorted.toArray());
 	}
+
 }
