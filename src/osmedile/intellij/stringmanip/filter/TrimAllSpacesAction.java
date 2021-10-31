@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public class TrimAllSpacesAction extends AbstractStringManipAction<Object> {
 	@Override
-	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
+	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
 		selectionModel.setSelection(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd() - 1);
 		return true;
 	}

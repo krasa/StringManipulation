@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.21.203.000.2</version>
+    <version>8.22.203.000.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.000"/>
 
@@ -640,6 +640,12 @@
                     class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Letters"
                     description="Reverse Letters: 'abc' -> 'cba'">
             </action>
+            <separator/>
+            <action id="StringManipulation.QuoteAction"
+                    class="osmedile.intellij.stringmanip.swap.QuoteAction"
+                    text="Quote/Unquote"
+            >
+            </action>
             <action id="StringManipulation.ShiftQuote"
                     class="osmedile.intellij.stringmanip.swap.ShiftQuoteAction"
                     text="Wrap or Shift Between &quot; and ' and `"
@@ -650,6 +656,7 @@
                     text="Swap &quot; and '"
             >
             </action>
+            <separator/>
             <action id="StringManipulation.SwitchFilePathSeparators"
                     class="osmedile.intellij.stringmanip.SwitchFilePathSeparators"
                     text="Switch File Path Separators: Windows&lt;-&gt;UNIX"

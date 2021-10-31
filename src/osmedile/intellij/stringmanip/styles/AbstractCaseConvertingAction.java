@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.styles;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileTypes.FileType;
@@ -33,34 +34,34 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 	}
 
 	@Override
-	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
+	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
 		try {
 			Project project = editor.getProject();
 			if (project == null) {
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.getDocument());
 			if (psiFile == null) {// select whole line in plaintext
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			FileType fileType = psiFile.getFileType();
 			boolean handled = false;
 			if (isJava(fileType)) {
-				handled = javaHandling(editor, dataContext, selectionModel, psiFile);
+				handled = javaHandling(editor, caret, dataContext, selectionModel, psiFile);
 			}
 			if (!handled && isProperties(fileType)) {
-				handled = propertiesHandling(editor, dataContext, selectionModel, psiFile);
+				handled = propertiesHandling(editor, caret, dataContext, selectionModel, psiFile);
 			}
 			if (!handled && fileType.equals(PlainTextFileType.INSTANCE)) {
-				handled = super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				handled = super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			if (!handled) {
-				handled = genericHandling(editor, dataContext, selectionModel, psiFile);
+				handled = genericHandling(editor, caret, dataContext, selectionModel, psiFile);
 			}
 			return handled;
 		} catch (Throwable e) {
 			LOG.error("please report this, so I can fix it :(", e);
-			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 		}
 	}
 
@@ -81,7 +82,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 		}
 	}
 
-	private boolean propertiesHandling(Editor editor, DataContext dataContext, SelectionModel selectionModel,
+	private boolean propertiesHandling(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel,
 									   PsiFile psiFile) {
 		PsiElement elementAtCaret = PsiUtilBase.getElementAtCaret(editor);
 		if (elementAtCaret instanceof PsiWhiteSpace) {
@@ -92,7 +93,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 					|| elementType.toString().equals("Properties:KEY_CHARACTERS")) {
 				TextRange textRange = elementAtCaret.getTextRange();
 				if (textRange.getLength() == 0) {
-					return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+					return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 				}
 				selectionModel.setSelection(textRange.getStartOffset(), textRange.getEndOffset());
 				return true;
@@ -101,7 +102,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 		return false;
 	}
 
-	private boolean javaHandling(Editor editor, DataContext dataContext, SelectionModel selectionModel, PsiFile psiFile) {
+	private boolean javaHandling(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel, PsiFile psiFile) {
 		boolean steppedLeft = false;
 		int caretOffset = editor.getCaretModel().getOffset();
 
@@ -136,7 +137,7 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			}
 			TextRange textRange = elementAtCaret.getTextRange();
 			if (textRange.getLength() == 0) {
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			selectionModel.setSelection(textRange.getStartOffset() + offset, textRange.getEndOffset() - offset);
 			if (caretOffset < selectionModel.getSelectionStart()) {
@@ -147,33 +148,33 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 			}
 			return true;
 		} else {
-			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 		}
 	}
 
-	private boolean genericHandling(Editor editor, DataContext dataContext, SelectionModel selectionModel,
-			PsiFile psiFile) {
+	private boolean genericHandling(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel,
+									PsiFile psiFile) {
 		int caretOffset = editor.getCaretModel().getOffset();
 		PsiElement elementAtCaret = PsiUtilBase.getElementAtCaret(editor);
 		if (elementAtCaret instanceof PsiPlainText) {
-			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 		} else if (elementAtCaret instanceof PsiWhiteSpace) {
 			elementAtCaret = PsiUtilBase.getElementAtOffset(psiFile, caretOffset - 1);
 		}
 
 		if (elementAtCaret == null || elementAtCaret instanceof PsiWhiteSpace) {
-			return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 		} else {
 			TextRange textRange = elementAtCaret.getTextRange();
 			if (textRange.getLength() == 0) {
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			selectionModel.setSelection(textRange.getStartOffset(), textRange.getEndOffset());
 			String selectedText = selectionModel.getSelectedText();
 
 			if (selectedText != null && selectedText.contains("\n")) {
 				selectionModel.removeSelection();
-				return super.selectSomethingUnderCaret(editor, dataContext, selectionModel);
+				return super.selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			}
 			if (StringUtil.isQuoted(selectedText)) {
 				selectionModel.setSelection(selectionModel.getSelectionStart() + 1,

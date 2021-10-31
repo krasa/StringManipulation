@@ -79,7 +79,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 		boolean noSelection = selectedText == null;
 		if (noSelection) {
-			selectSomethingUnderCaret(editor, dataContext, selectionModel);
+			selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
 			selectedText = selectionModel.getSelectedText();
 
 			if (selectedText == null) {
@@ -114,7 +114,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		return join;
 	}
 
-	protected boolean selectSomethingUnderCaret(Editor editor, DataContext dataContext, SelectionModel selectionModel) {
+	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
 		selectionModel.selectLineAtCaret();
 		String selectedText = selectionModel.getSelectedText();
 		if (selectedText != null && selectedText.endsWith("\n")) {
