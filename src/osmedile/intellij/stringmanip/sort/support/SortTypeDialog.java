@@ -76,6 +76,8 @@ public class SortTypeDialog {
 	private MyJBTextField groupSeparatorRegex;
 	private JLabel groupSeparatorRegexLabel;
 	private JPanel sortStrategy2;
+	private JButton resetGroupSeparator;
+	private JButton resetLevel;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
@@ -89,7 +91,7 @@ public class SortTypeDialog {
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 //		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
-		enabledByAny(new JComponent[]{levelRegex, groupSeparatorRegex, groupSeparatorRegexLabel, levelRegexLabel}, groupSort,
+		enabledByAny(new JComponent[]{resetLevel, resetGroupSeparator, levelRegex, groupSeparatorRegex, groupSeparatorRegexLabel, levelRegexLabel}, groupSort,
 				hierarchicalSort);
 
 		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
@@ -101,6 +103,7 @@ public class SortTypeDialog {
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		this(sortSettings, additionaloptions, null);
+
 	}
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions, Editor editor) {
@@ -119,6 +122,9 @@ public class SortTypeDialog {
 				validateLocale();
 			}
 		});
+
+		resetLevel.addActionListener(e -> levelRegex.setText(SortSettings.LEVEL_REGEX));
+		resetGroupSeparator.addActionListener(e -> groupSeparatorRegex.setText(SortSettings.GROUP_SEPARATOR_REGEX));
 
 		hierarchicalSort.addItemListener(new ItemListener() {
 			@Override

@@ -2,14 +2,19 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import com.intellij.openapi.diagnostic.Logger;
 
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class SortSettings {
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
+	public static final String GROUP_SEPARATOR_REGEX = "(^[\\s]*$|^---.*$)";
+	public static final String LEVEL_REGEX = "^[\\s]+";
 
 	private String trailingChars = ",;";
-	private String levelRegex = "^[\\s]+";
-	private String groupSeparatorRegex = "(^[\\s]*$|^---.*$)";
+	private String levelRegex = LEVEL_REGEX;
+	private String groupSeparatorRegex = GROUP_SEPARATOR_REGEX;
 	private String collatorLanguageTag = Locale.getDefault().toString();
 	private BaseComparator baseComparator = BaseComparator.NATURAL;
 	private BlankLines blankLines = BlankLines.REMOVE;
@@ -187,6 +192,7 @@ public class SortSettings {
 
 	public SortSettings sortByGroups(boolean sortByGroups) {
 		this.sortByGroups = sortByGroups;
+		Map<URL, String> stringMap = new HashMap<>();
 		return this;
 	}
 
