@@ -47,7 +47,7 @@ public class QuoteAction extends AbstractStringManipAction<Object> {
 
 	@Override
 	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
-		TextRange textRange = SelectWordUtil.getWordOrLexemeSelectionRange(editor, caret.getOffset(), c -> !Character.isWhitespace(c));
+		TextRange textRange = SelectWordUtil.getWordOrLexemeSelectionRange(editor, caret.getOffset(), c -> !(Character.isWhitespace(c) || c == '\"'));
 		if (textRange != null) {
 			caret.setSelection(textRange.getStartOffset(), textRange.getEndOffset());
 		}
