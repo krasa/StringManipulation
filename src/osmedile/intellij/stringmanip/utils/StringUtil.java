@@ -575,7 +575,7 @@ public class StringUtil {
 		return s;
 	}
 
-	private static boolean isSeparator(char c) {
+	public static boolean isSeparator(char c) {
 		return c == '.' || c == '-' || c == '_';
 	}
 

@@ -21,5 +21,8 @@ public class SwapperTest {
 	public void swap2() {
 		assertEquals("OLD_STATE CASE_ID", new Swapper("CASE_ID OLD_STATE", false).swap());
 		assertEquals("[ OLD_STATE - CASE_ID ]", new Swapper("[ CASE_ID - OLD_STATE ]", false).swap());
+		assertEquals("[OLD_STATE - CASE_ID]", new Swapper("[CASE_ID - OLD_STATE]", false).swap());
+		assertEquals("[OLD_STATE_ - _CASE_ID]", new Swapper("[_CASE_ID - OLD_STATE_]", false).swap());
+		assertEquals("[_STATE_CASE-ID_OLD_]", new Swapper("[_CASE_ID-OLD_STATE_]", false).swap());
 	}
 }

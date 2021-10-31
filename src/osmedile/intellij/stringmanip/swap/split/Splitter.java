@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.swap.split;
 
+import osmedile.intellij.stringmanip.utils.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Splitter {
 			char c = charArray[i];
 			if (Character.isWhitespace(c)) {
 				process(c, Type.SPACE);
-			} else if (Character.isLetterOrDigit(c) || splitOnlyByWhitespace) {
+			} else if (Character.isLetterOrDigit(c) || (splitOnlyByWhitespace && StringUtil.isSeparator(c))) {
 				if (splitByCase) {
 					if (Character.isUpperCase(c)) {
 						addToken();
