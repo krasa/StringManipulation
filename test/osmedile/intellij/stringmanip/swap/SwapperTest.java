@@ -15,4 +15,11 @@ public class SwapperTest {
 		assertEquals(" [  scaledMaxWidth  ] ", new Swapper(" [  maxWidthScaled  ] ", false).swap());
 		assertEquals(" [  ScaledMaxWidth  ] ", new Swapper(" [  MaxWidthScaled  ] ", false).swap());
 	}
+
+
+	@Test
+	public void swap2() {
+		assertEquals("OLD_STATE CASE_ID", new Swapper("CASE_ID OLD_STATE", false).swap());
+		assertEquals("[ OLD_STATE - CASE_ID ]", new Swapper("[ CASE_ID - OLD_STATE ]", false).swap());
+	}
 }

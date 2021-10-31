@@ -18,16 +18,20 @@ public class Swapper {
 
 	public Swapper(String selectedText, boolean splitByCase) {
 		this.selectedText = selectedText;
-		Splitter splitter = new Splitter(this.selectedText.toCharArray(), splitByCase);
+		Splitter splitter = new Splitter(this.selectedText.toCharArray(), splitByCase, false);
+		if (splitter.spacesBetweenWords > 0) {
+			splitter = new Splitter(this.selectedText.toCharArray(), splitByCase, true);
+		}
 
 		if (!splitByCase && onlyOneWord(splitter.tokens)) {
-			tokens = splitByCase(splitter.tokens);
+			tokens = splitByCase(splitter.tokens, false);
 		} else {
 			tokens = splitter.tokens;
 		}
 	}
 
-	private List<Token> splitByCase(List<Token> originalTokens) {
+
+	private List<Token> splitByCase(List<Token> originalTokens, boolean splitOnlyByWhitespace) {
 		List<Token> newTokens = new ArrayList<>();
 		for (int i = 0; i < originalTokens.size(); i++) {
 			Token token = originalTokens.get(i);
@@ -35,7 +39,7 @@ public class Swapper {
 				if (Style.from(token.content) == Style.CAMEL_CASE) {
 					swapCamel = true;
 				}
-				List<Token> tokens = new Splitter(token.content.toCharArray(), true).tokens;
+				List<Token> tokens = new Splitter(token.content.toCharArray(), true, splitOnlyByWhitespace).tokens;
 				newTokens.addAll(tokens);
 			} else {
 				newTokens.add(token);

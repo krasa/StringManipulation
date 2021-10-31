@@ -26,5 +26,4 @@ public class SwapWordsAction extends MyEditorAction {
 		});
 	}
 
-
 }

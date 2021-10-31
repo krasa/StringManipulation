@@ -36,4 +36,19 @@ public class Token {
 				", type=" + type +
 				'}';
 	}
+
+	public void reprocess() {
+		int i = 0;
+		if (type == Type.WORD) {
+			for (char c : content.toCharArray()) {
+				if (Character.isLetterOrDigit(c)) {
+					i++;
+					break;
+				}
+			}
+			if (i == 0) {
+				type = Type.DELIMITER;
+			}
+		}
+	}
 }
