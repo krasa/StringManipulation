@@ -15,12 +15,12 @@ public class Splitter {
 	public int spacesBetweenWords = 0;
 
 
-	public Splitter(char[] charArray, boolean splitByCase, boolean splitOnlyByWhitespace) {
+	public Splitter(char[] charArray, boolean splitByCase, boolean doNotSplitBySeparators) {
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
 			if (Character.isWhitespace(c)) {
 				process(c, Type.SPACE);
-			} else if (Character.isLetterOrDigit(c) || (splitOnlyByWhitespace && StringUtil.isSeparator(c))) {
+			} else if (Character.isLetterOrDigit(c) || (doNotSplitBySeparators && StringUtil.isSeparator(c))) {
 				if (splitByCase) {
 					if (Character.isUpperCase(c)) {
 						addToken();

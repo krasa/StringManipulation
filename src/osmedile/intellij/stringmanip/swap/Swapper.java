@@ -31,7 +31,7 @@ public class Swapper {
 	}
 
 
-	private List<Token> splitByCase(List<Token> originalTokens, boolean splitOnlyByWhitespace) {
+	private List<Token> splitByCase(List<Token> originalTokens, boolean doNotSplitBySeparators) {
 		List<Token> newTokens = new ArrayList<>();
 		for (int i = 0; i < originalTokens.size(); i++) {
 			Token token = originalTokens.get(i);
@@ -39,7 +39,7 @@ public class Swapper {
 				if (Style.from(token.content) == Style.CAMEL_CASE) {
 					swapCamel = true;
 				}
-				List<Token> tokens = new Splitter(token.content.toCharArray(), true, splitOnlyByWhitespace).tokens;
+				List<Token> tokens = new Splitter(token.content.toCharArray(), true, doNotSplitBySeparators).tokens;
 				newTokens.addAll(tokens);
 			} else {
 				newTokens.add(token);
