@@ -39,6 +39,9 @@ public abstract class PreviewDialog implements Disposable {
 	}
 
 	protected void submitRenderPreview() {
+		if (disposed) {
+			return;
+		}
 		executor.submit(() -> {
 			if (disposed) {
 				return;
@@ -70,8 +73,14 @@ public abstract class PreviewDialog implements Disposable {
 	}
 
 
-	public static void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel) {
+	protected void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel) {
+		if (disposed) {
+			return;
+		}
 		ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+			if (disposed) {
+				return;
+			}
 			previewEditor.getDocument().setText(text);
 			previewPanel.validate();
 			previewPanel.repaint();

@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AlignToColumnsHistoryForm {
+public class AlignToColumnsHistoryForm implements Disposable {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(AlignToColumnsHistoryForm.class);
 	private final Editor editor;
 
@@ -44,5 +45,10 @@ public class AlignToColumnsHistoryForm {
 
 	public ColumnAlignerModel getModel() {
 		return alignToColumnsForm.getModel();
+	}
+
+	@Override
+	public void dispose() {
+		alignToColumnsForm.dispose();
 	}
 }

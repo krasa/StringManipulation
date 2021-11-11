@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.sort.tokens;
 
 import com.google.common.base.Joiner;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.CaretState;
@@ -28,7 +29,7 @@ import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-public class SortTokensGui {
+public class SortTokensGui implements Disposable {
 	private static final Logger LOG = Logger.getInstance(SortTokensGui.class);
 
 	private final Editor editor;
@@ -287,5 +288,10 @@ public class SortTokensGui {
 		if (sortAllLinesTogether.isSelected() != data.isSortAllLinesTogether()) return true;
 		if (processEachLineSeparatellyRadioButton.isSelected() != data.isProcessEachLineSeparately()) return true;
 		return false;
+	}
+
+	@Override
+	public void dispose() {
+		sortTypeForm.dispose();
 	}
 }

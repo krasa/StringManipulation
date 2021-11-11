@@ -63,6 +63,12 @@ public class NormalizeUnicodeAction extends MyEditorAction {
 				setTitle("Unicode Normalization");
 			}
 
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
+			}
+
 			@Nullable
 			@Override
 			public JComponent getPreferredFocusedComponent() {

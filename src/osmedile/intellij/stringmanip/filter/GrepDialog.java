@@ -113,6 +113,7 @@ public class GrepDialog extends PreviewDialog {
 	public GrepDialog() {
 		previewParent.setVisible(false);
 		historyButton.setVisible(false);
+		donate.setVisible(false);
 	}
 
 	AtomicBoolean initting = new AtomicBoolean();

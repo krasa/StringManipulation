@@ -54,6 +54,12 @@ public class SortTokensAction extends MyEditorAction {
 				setTitle("Sort Tokens");
 			}
 
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
+			}
+
 			@Nullable
 			@Override
 			public JComponent getPreferredFocusedComponent() {

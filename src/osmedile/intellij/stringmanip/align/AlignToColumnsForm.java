@@ -87,6 +87,12 @@ public class AlignToColumnsForm extends PreviewDialog {
 						setTitle("History");
 					}
 
+					@Override
+					protected void dispose() {
+						super.dispose();
+						alignToColumnsHistoryForm.dispose();
+					}
+
 					@Nullable
 					@Override
 					protected String getDimensionServiceKey() {
@@ -148,6 +154,12 @@ public class AlignToColumnsForm extends PreviewDialog {
 				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		sortTypeForm.dispose();
 	}
 
 	private void updateComponents() {

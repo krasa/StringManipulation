@@ -70,6 +70,12 @@ public class SortAction extends MyEditorAction {
 				setTitle("Sort Lines");
 			}
 
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
+			}
+
 			@Nullable
 			@Override
 			public JComponent getPreferredFocusedComponent() {

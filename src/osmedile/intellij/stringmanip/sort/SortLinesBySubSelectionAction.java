@@ -91,6 +91,12 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 				setTitle("Sort Lines by Subselection");
 			}
 
+			@Override
+			protected void dispose() {
+				super.dispose();
+				dialog.dispose();
+			}
+
 			@Nullable
 			@Override
 			public JComponent getPreferredFocusedComponent() {
