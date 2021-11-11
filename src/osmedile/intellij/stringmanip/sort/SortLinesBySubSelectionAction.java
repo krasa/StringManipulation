@@ -71,7 +71,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 	protected SortSettings getSortSettings(final Editor editor) {
 		final SortTypeDialog dialog = new SortTypeDialog(PluginPersistentStateComponent.getInstance().getSortSettings(), false, editor) {
 			@Override
-			protected List<String> sort(Editor editor1, SortSettings settings) {
+			protected List<String> sortPreview(Editor editor1, SortSettings settings) {
 				List<CaretState> caretsAndSelections = editor1.getCaretModel().getCaretsAndSelections();
 				IdeUtils.sort(caretsAndSelections);
 				List<SubSelectionSortLine> lines = getLines(editor, getSettings(), caretsAndSelections);

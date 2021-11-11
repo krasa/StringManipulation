@@ -1,7 +1,6 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.google.common.base.Joiner;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
@@ -13,7 +12,7 @@ import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
-import osmedile.intellij.stringmanip.utils.PreviewUtils;
+import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -30,9 +29,10 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
-public class AlignToColumnsForm {
+public class AlignToColumnsForm extends PreviewDialog {
 	private static final Logger LOG = Logger.getInstance(AlignToColumnsForm.class);
 	private final Editor editor;
+	private final List<String> previewLines;
 	public JPanel root;
 	private JPanel textfields;
 	private JButton resetButton;
@@ -59,6 +59,7 @@ public class AlignToColumnsForm {
 
 	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
 		this.editor = editor;
+		previewLines = PreviewDialog.getPreviewLines(editor);
 		donatePanel.add(Donate.newDonateButton());
 		resetButton.addActionListener(new ActionListener() {
 			@Override
@@ -152,18 +153,16 @@ public class AlignToColumnsForm {
 	private void updateComponents() {
 		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines}, sortOnly);
 		enabledByAny(new JComponent[]{keepLeadingIndent}, trimValues, trimLines);
-		preview();
+		submitRenderPreview();
 	}
 
 
-	protected void preview() {
+	@Override
+	protected void renderPreview() {
 		String x = null;
 		try {
-			List<String> lines = PreviewUtils.getPreviewLines(editor);
-
-
 			ColumnAligner columnAligner = new ColumnAligner(getModel());
-			List<String> result = columnAligner.align(lines);
+			List<String> result = columnAligner.align(previewLines);
 
 			debugValues.removeAll();
 			List<String> debug = columnAligner.getDebugValues();
@@ -182,12 +181,7 @@ public class AlignToColumnsForm {
 			x = e.toString();
 		}
 
-		String finalS = x;
-		ApplicationManager.getApplication().runWriteAction(() -> {
-			myPreviewEditor.getDocument().setText(finalS);
-			myPreviewPanel.validate();
-			myPreviewPanel.repaint();
-		});
+		setPreviewTextOnEDT(x, myPreviewEditor, myPreviewPanel);
 	}
 
 	protected void init(ColumnAlignerModel lastSeparators) {
@@ -286,7 +280,7 @@ public class AlignToColumnsForm {
 					textfields.revalidate();
 					textfields.repaint();
 				}
-				preview();
+				submitRenderPreview();
 			}
 		});
 		panel.add(tf);

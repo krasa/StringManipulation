@@ -2,7 +2,6 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import com.google.common.base.Joiner;
 import com.intellij.ide.BrowserUtil;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
@@ -15,7 +14,7 @@ import org.apache.commons.lang3.LocaleUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
-import osmedile.intellij.stringmanip.utils.PreviewUtils;
+import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -35,7 +34,7 @@ import java.util.regex.Pattern;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
-public class SortTypeDialog {
+public class SortTypeDialog extends PreviewDialog {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
 
 	public JPanel contentPane;
@@ -97,7 +96,7 @@ public class SortTypeDialog {
 		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
 		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
 
-		preview();
+		submitRenderPreview();
 	}
 
 
@@ -234,40 +233,35 @@ public class SortTypeDialog {
 		}
 	}
 
-	protected void preview() {
-		if (this.editor != null) {
-			if (!validateRegexp()) {
-				return;
-			}
 
-			if (!validateRegexp2()) {
-				return;
-			}
-
-			String s;
-			try {
-				List<String> result = sort(editor, getSettings());
-				s = Joiner.on("\n").join(result);
-			} catch (SortException e) {
-				LOG.warn(e);
-				s = e.getMessage();
-			} catch (Throwable e) {
-				LOG.error(e);
-				s = e.toString();
-			}
-
-			String finalS = s;
-			ApplicationManager.getApplication().runWriteAction(() -> {
-				myPreviewEditor.getDocument().setText(finalS);
-				myPreviewPanel.validate();
-				myPreviewPanel.repaint();
-			});
+	@Override
+	protected void renderPreview() {
+		if (this.editor == null) {
+			return;
+		}
+		if (!validateRegexp()) {
+			return;
 		}
 
+		if (!validateRegexp2()) {
+			return;
+		}
+		String s;
+		try {
+			List<String> result = sortPreview(editor, getSettings());
+			s = Joiner.on("\n").join(result);
+		} catch (SortException e) {
+			LOG.warn(e);
+			s = e.getMessage();
+		} catch (Throwable e) {
+			LOG.error(e);
+			s = e.toString();
+		}
+		setPreviewTextOnEDT(s, myPreviewEditor, myPreviewPanel);
 	}
 
-	protected List<String> sort(Editor editor, SortSettings settings) {
-		List<String> lines = PreviewUtils.getPreviewLines(editor);
+	protected List<String> sortPreview(Editor editor, SortSettings settings) {
+		List<String> lines = PreviewDialog.getPreviewLines(editor);
 		List<String> result = new SortLines(lines, settings).sortLines();
 		return result;
 	}

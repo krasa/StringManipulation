@@ -22,7 +22,7 @@ import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 import osmedile.intellij.stringmanip.utils.Cloner;
-import osmedile.intellij.stringmanip.utils.PreviewUtils;
+import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
 import java.util.*;
 
@@ -107,7 +107,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	@NotNull
 	@Transient
 	public ColumnAlignerModel guessModel(Editor editor) {
-		String s = PreviewUtils.getTextForPreview(editor);
+		String s = PreviewDialog.getTextForPreview(editor);
 		if (columnAlignerHistory.size() > 0) {
 			for (int i = columnAlignerHistory.size() - 1; i >= 0; i--) {
 				ColumnAlignerModel columnAlignerModel = columnAlignerHistory.get(i);
@@ -222,7 +222,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	}
 
 	public SortTokensModel guessSortTokensModel(Editor editor) {
-		String s = PreviewUtils.getTextForPreview(editor);
+		String s = PreviewDialog.getTextForPreview(editor);
 
 		SortTokensModel model = sortTokensModel != null ? sortTokensModel : new SortTokensModel();
 		List<String> separators = model.getSeparators();

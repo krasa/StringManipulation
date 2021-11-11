@@ -9,6 +9,7 @@ import com.intellij.diff.requests.SimpleDiffRequest;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.ui.DocumentAdapter;
@@ -16,7 +17,7 @@ import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.Donate;
-import osmedile.intellij.stringmanip.utils.PreviewUtils;
+import osmedile.intellij.stringmanip.utils.PreviewDialog;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import javax.swing.*;
@@ -28,8 +29,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalizationDialog implements Disposable {
+public class NormalizationDialog extends PreviewDialog implements Disposable {
 	private static final Logger LOG = Logger.getInstance(NormalizationDialog.class);
+	private final List<String> previewLines;
 
 	public JPanel contentPane;
 
@@ -57,23 +59,25 @@ public class NormalizationDialog implements Disposable {
 	private DiffRequestPanel hexaDiff;
 
 	private void updateComponents() {
-		preview();
+		submitRenderPreview();
 	}
 
 	public NormalizationDialog(@NotNull NormalizationSettings settings, @NotNull Editor editor) {
 		this.editor = editor;
 		init(settings);
+		previewLines = PreviewDialog.getPreviewLines(editor);
+
 		linkLabel.setListener(
-			(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
-			"https://github.com/krasa/StringManipulation/blob/38a6af7385be0f17a9b3355b42a90a50d89f3cec/src/osmedile/intellij/stringmanip/escaping/DiacriticsToAsciiAction.java#L22-L93");
+				(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
+				"https://github.com/krasa/StringManipulation/blob/38a6af7385be0f17a9b3355b42a90a50d89f3cec/src/osmedile/intellij/stringmanip/escaping/DiacriticsToAsciiAction.java#L22-L93");
 
 		stripAccentsLink.setListener(
-			(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
-			"http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#stripAccents-java.lang.String-");
+				(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
+				"http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#stripAccents-java.lang.String-");
 
 		unicodeSupport.setListener(
-			(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
-			"https://youtrack.jetbrains.com/issue/JBR-2875");
+				(aSource, aLinkData) -> BrowserUtil.browse((String) aLinkData),
+				"https://youtrack.jetbrains.com/issue/JBR-2875");
 
 		contentPane.setFocusTraversalPolicy(new ComponentsListFocusTraversalPolicy() {
 			@NotNull
@@ -128,36 +132,23 @@ public class NormalizationDialog implements Disposable {
 		}
 	}
 
-	protected void preview() {
-		if (this.editor != null) {
-			try {
-				List<String> lines = PreviewUtils.getPreviewLines(editor);
-				List<String> normalized = Normalizator.normalizeLines(lines, getSettings());
+	@Override
+	protected void renderPreview() {
+		List<String> normalized = Normalizator.normalizeLines(previewLines, getSettings());
 
-				String originalText = Joiner.on("\n").join(lines);
-				String normalizedText = Joiner.on("\n").join(normalized);
+		String originalText = Joiner.on("\n").join(previewLines);
+		String normalizedText = Joiner.on("\n").join(normalized);
 
-				String originalHex = asciiToHex(lines);
-				String normalizedHex = asciiToHex(normalized);
+		String originalHex = asciiToHex(previewLines);
+		String normalizedHex = asciiToHex(normalized);
 
-				ApplicationManager.getApplication().runWriteAction(() -> {
-					DiffContentFactoryEx factoryEx = DiffContentFactoryEx.getInstanceEx();
+		ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+			DiffContentFactoryEx factoryEx = DiffContentFactoryEx.getInstanceEx();
 
-					previewDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalText), factoryEx.create(normalizedText), "Before", "After"));
+			previewDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalText), factoryEx.create(normalizedText), "Before", "After"));
 
-					hexaDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalHex), factoryEx.create(normalizedHex), "Before", "After"));
-
-//					myPreviewPanel.validate();
-//					myPreviewPanel.repaint();
-//
-//					myPreviewPanel.validate();
-//					myPreviewPanel.repaint();
-				});
-			} catch (Throwable e) {
-				LOG.error(e);
-			}
-		}
-
+			hexaDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalHex), factoryEx.create(normalizedHex), "Before", "After"));
+		}), ModalityState.any());
 	}
 
 	private String asciiToHex(List<String> lines) {

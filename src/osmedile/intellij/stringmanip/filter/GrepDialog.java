@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
-import osmedile.intellij.stringmanip.utils.PreviewUtils;
+import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -50,21 +50,21 @@ public class GrepDialog extends PreviewDialog {
 		init(grepSettings);
 		this.action = action;
 		this.editor = editor;
-		sourceTextForPreview = PreviewUtils.getTextForPreview(editor);
+		sourceTextForPreview = PreviewDialog.getTextForPreview(editor);
 
 		final DocumentAdapter documentAdapter = new DocumentAdapter() {
 			@Override
 			protected void textChanged(@NotNull DocumentEvent documentEvent) {
-				renderPreview();
+				submitRenderPreview();
 			}
 		};
 		pattern.getDocument().addDocumentListener(documentAdapter);
-		regexCheckBox.addActionListener(e -> renderPreview());
-		caseSensitive.addActionListener(e -> renderPreview());
-		grepRadioButton.addActionListener(e -> renderPreview());
-		groupMatching.addActionListener(e -> renderPreview());
-		invertedGrepRadioButton.addActionListener(e -> renderPreview());
-		fullWords.addActionListener(e -> renderPreview());
+		regexCheckBox.addActionListener(e -> submitRenderPreview());
+		caseSensitive.addActionListener(e -> submitRenderPreview());
+		grepRadioButton.addActionListener(e -> submitRenderPreview());
+		groupMatching.addActionListener(e -> submitRenderPreview());
+		invertedGrepRadioButton.addActionListener(e -> submitRenderPreview());
+		fullWords.addActionListener(e -> submitRenderPreview());
 
 		historyButton.addActionListener(new ActionListener() {
 			@Override
@@ -100,14 +100,14 @@ public class GrepDialog extends PreviewDialog {
 					GrepSettings model = historyForm.getModel();
 					if (model != null) {
 						init(model);
-						renderPreview();
+						submitRenderPreview();
 					}
 				}
 
 			}
 		});
 
-		renderPreview();
+		submitRenderPreview();
 	}
 
 	public GrepDialog() {
@@ -134,21 +134,20 @@ public class GrepDialog extends PreviewDialog {
 		initting.set(false);
 	}
 
-	private void renderPreview() {
+
+	@Override
+	protected void renderPreview() {
 		if (initting.get()) {
 			return;
 		}
-		final GrepSettings settings = getSettings();
-
-		executor.submit(() -> {
-			try {
-				String previewText = action.transform(settings, sourceTextForPreview);
-				setPreviewTextOnEDT(previewText);
-			} catch (Throwable e) {
-				setPreviewTextOnEDT(e.getMessage());
-				log.warn(e.getMessage(), e);
-			}
-		});
+		String previewText;
+		try {
+			previewText = action.transform(getSettings(), sourceTextForPreview);
+		} catch (Throwable e) {
+			previewText = e.getMessage();
+			log.warn(e.getMessage(), e);
+		}
+		setPreviewTextOnEDT(previewText);
 	}
 
 	public GrepSettings getSettings() {
