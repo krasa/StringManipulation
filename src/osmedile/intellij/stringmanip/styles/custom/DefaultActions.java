@@ -42,19 +42,20 @@ public class DefaultActions {
 		@NotNull
 		private static List<CustomActionModel.Step> getDefaultSteps() {
 			return new ArrayList<>(Arrays.asList(
-				new CustomActionModel.Step(false, _UNKNOWN),
-				new CustomActionModel.Step(true, CAMEL_CASE),
-				new CustomActionModel.Step(true, KEBAB_LOWERCASE),
-				new CustomActionModel.Step(true, KEBAB_UPPERCASE),
-				new CustomActionModel.Step(true, SNAKE_CASE),
-				new CustomActionModel.Step(false, _SINGLE_WORD_CAPITALIZED),
-				new CustomActionModel.Step(true, SCREAMING_SNAKE_CASE),
-				new CustomActionModel.Step(true, DOT),
-				new CustomActionModel.Step(false, _ALL_UPPER_CASE),
-				new CustomActionModel.Step(true, WORD_LOWERCASE),
-				new CustomActionModel.Step(true, SENTENCE_CASE),
-				new CustomActionModel.Step(true, WORD_CAPITALIZED),
-				new CustomActionModel.Step(true, PASCAL_CASE)
+					new CustomActionModel.Step(false, _UNKNOWN),
+					new CustomActionModel.Step(true, CAMEL_CASE),
+					new CustomActionModel.Step(true, KEBAB_LOWERCASE),
+					new CustomActionModel.Step(true, KEBAB_UPPERCASE),
+					new CustomActionModel.Step(true, SNAKE_CASE),
+					new CustomActionModel.Step(true, CAPITALIZED_SNAKE_CASE),
+					new CustomActionModel.Step(false, _SINGLE_WORD_CAPITALIZED),
+					new CustomActionModel.Step(true, SCREAMING_SNAKE_CASE),
+					new CustomActionModel.Step(true, DOT),
+					new CustomActionModel.Step(false, _ALL_UPPER_CASE),
+					new CustomActionModel.Step(true, WORD_LOWERCASE),
+					new CustomActionModel.Step(true, SENTENCE_CASE),
+					new CustomActionModel.Step(true, WORD_CAPITALIZED),
+					new CustomActionModel.Step(true, PASCAL_CASE)
 			));
 		}
 

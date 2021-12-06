@@ -30,6 +30,9 @@ public enum Style {
 	SNAKE_CASE("snake_case", "foo_bar") {
 		@Override
 		public String transform(Style style, String s) {
+			if (style == SNAKE_CASE || style == CAPITALIZED_SNAKE_CASE || style == SCREAMING_SNAKE_CASE) {
+				return s.toLowerCase();
+			}
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 		}
 	},

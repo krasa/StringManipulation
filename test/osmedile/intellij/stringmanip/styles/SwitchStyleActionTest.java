@@ -42,6 +42,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		input = transform(input, "\\my\\app-bundle\\app\\twig\\google-tag-manager-data-layer");
 		input = transform(input, "\\MY\\APP-BUNDLE\\APP\\TWIG\\GOOGLE-TAG-MANAGER-DATA-LAYER");
 		input = transform(input, "\\my\\app_bundle\\app\\twig\\google_tag_manager_data_layer");
+		input = transform(input, "\\my\\app_Bundle\\app\\twig\\google_Tag_Manager_Data_Layer");
 		input = transform(input, "\\MY\\APP_BUNDLE\\APP\\TWIG\\GOOGLE_TAG_MANAGER_DATA_LAYER");
 		input = transform(input, "\\my\\app.bundle\\app\\twig\\google.tag.manager.data.layer");
 		input = transform(input, "\\my\\app bundle\\app\\twig\\google tag manager data layer");
@@ -56,6 +57,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		input = transform(input, "foo-bar");
 		input = transform(input, "FOO-BAR");
 		input = transform(input, "foo_bar");
+		input = transform(input, "Foo_Bar");
 		input = transform(input, "FOO_BAR");
 		input = transform(input, "foo.bar");
 		input = transform(input, "foo bar");
@@ -75,6 +77,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 			input = transform(input, "foo-bar1a");
 			input = transform(input, "FOO-BAR1A");
 			input = transform(input, "foo_bar1a");
+			input = transform(input, "Foo_Bar1a");
 			input = transform(input, "FOO_BAR1A");
 			input = transform(input, "foo.bar1a");
 			input = transform(input, "foo bar1a");
@@ -103,6 +106,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		input = transform(input, "11-foo22-foo-bar33-bar44-foo55-x6-y7-z");
 		input = transform(input, "11-FOO22-FOO-BAR33-BAR44-FOO55-X6-Y7-Z");
 		input = transform(input, "11_foo22_foo_bar33_bar44_foo55_x6_y7_z");
+		input = transform(input, "11_Foo22_Foo_Bar33_Bar44_Foo55_X6_Y7_Z");
 		input = transform(input, "11_FOO22_FOO_BAR33_BAR44_FOO55_X6_Y7_Z");
 		input = transform(input, "11.foo22.foo.bar33.bar44.foo55.x6.y7.z");
 		input = transform(input, "11 foo22 foo bar33 bar44 foo55 x6 y7 z");
