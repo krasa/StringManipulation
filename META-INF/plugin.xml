@@ -386,6 +386,11 @@
                         text="To SCREAMING__SNAKE__CASE"
                         description="To SCREAMING_SNAKE_CASE">
                 </action>
+                <action id="StringManipulation.ToCapitalizedSnakeCase"
+                        class="osmedile.intellij.stringmanip.styles.ToCapitalizedSnakeCaseAction"
+                        text="To Capitalized__Snake__Case"
+                        description="To Capitalized_Snake_Case">
+                </action>
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
                         class="osmedile.intellij.stringmanip.styles.WordsCapitalizeAction"
                         text="Capitalize"
@@ -725,6 +730,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>To snake_case</li>
                 <li>To PascalCase</li>
                 <li>To SCREAMING_SNAKE_CASE</li>
+                <li>To Capitalized_Snake_Case</li>
                 <li>Capitalize</li>
                 <li>To lower case</li>
                 <li>To UPPER CASE</li>
@@ -848,6 +854,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 8.23</h4>
 	        <ul>
                 <li>Preview limits removed, computing on background</li>
+                <li>Added To Capitalized_Snake_Case</li>
             </ul>
 	    </div>
 	    <div>

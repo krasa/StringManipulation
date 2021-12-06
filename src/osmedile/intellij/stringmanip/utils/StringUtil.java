@@ -765,14 +765,31 @@ public class StringUtil {
 		return result;
 	}
 
-    public static String toSpringEnvVariable(String s) {
-        return Arrays.stream(split(s, "."))
-                .map(StringUtils::trim)
-                .map(str -> StringUtils.replaceChars(str, "-", ""))
-                .map(str -> StringUtils.replaceChars(str, "_", ""))
-                .collect(Collectors.joining("_"))
-                .toUpperCase();
-    }
+	public static String toSpringEnvVariable(String s) {
+		return Arrays.stream(split(s, "."))
+				.map(StringUtils::trim)
+				.map(str -> StringUtils.replaceChars(str, "-", ""))
+				.map(str -> StringUtils.replaceChars(str, "_", ""))
+				.collect(Collectors.joining("_"))
+				.toUpperCase();
+	}
+
+	public static boolean isCapitalizedFully(String s, char separator) {
+		boolean result = false;
+		char prev = 0;
+		for (char c1 : s.toCharArray()) {
+			boolean shouldBeUpper = (prev == 0 || prev == separator);
+			if (!isLetter(c1)) {
+				//skip
+			} else if ((shouldBeUpper && isUpperCase(c1)) || (!shouldBeUpper && isLowerCase(c1))) {
+				result = true;
+			} else {
+				return false;
+			}
+			prev = c1;
+		}
+		return result;
+	}
 
 
 	public static class Constants {

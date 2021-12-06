@@ -1,132 +1,156 @@
 1 KEBAB_LOWERCASE            -> KEBAB_LOWERCASE          : foo-bar -> foo-bar
 2 KEBAB_UPPERCASE            -> KEBAB_LOWERCASE          : FOO-BAR -> foo-bar
 3 SNAKE_CASE                 -> KEBAB_LOWERCASE          : foo_bar -> foo-bar
-4 SCREAMING_SNAKE_CASE       -> KEBAB_LOWERCASE          : FOO_BAR -> foo-bar
-5 PASCAL_CASE                -> KEBAB_LOWERCASE          : FooBar  -> foo-bar
+4 CAPITALIZED_SNAKE_CASE     -> KEBAB_LOWERCASE          : Foo_Bar -> foo-bar
+5 SCREAMING_SNAKE_CASE       -> KEBAB_LOWERCASE          : FOO_BAR -> foo-bar
 6 PASCAL_CASE                -> KEBAB_LOWERCASE          : FooBar  -> foo-bar
-7 CAMEL_CASE                 -> KEBAB_LOWERCASE          : fooBar  -> foo-bar
+7 PASCAL_CASE                -> KEBAB_LOWERCASE          : FooBar  -> foo-bar
 8 CAMEL_CASE                 -> KEBAB_LOWERCASE          : fooBar  -> foo-bar
-9 DOT                        -> KEBAB_LOWERCASE          : foo.bar -> foo-bar
-10 DOT                       -> KEBAB_LOWERCASE          : foo.Bar -> foo-bar
-11 WORD_LOWERCASE            -> KEBAB_LOWERCASE          : foo bar -> foo-bar
-12 SENTENCE_CASE             -> KEBAB_LOWERCASE          : Foo bar -> foo-bar
-13 WORD_CAPITALIZED          -> KEBAB_LOWERCASE          : Foo Bar -> foo-bar
-16 KEBAB_LOWERCASE           -> KEBAB_UPPERCASE          : foo-bar -> FOO-BAR
-17 KEBAB_UPPERCASE           -> KEBAB_UPPERCASE          : FOO-BAR -> FOO-BAR
-18 SNAKE_CASE                -> KEBAB_UPPERCASE          : foo_bar -> FOO-BAR
-19 SCREAMING_SNAKE_CASE      -> KEBAB_UPPERCASE          : FOO_BAR -> FOO-BAR
-20 PASCAL_CASE               -> KEBAB_UPPERCASE          : FooBar  -> FOO-BAR
-21 PASCAL_CASE               -> KEBAB_UPPERCASE          : FooBar  -> FOO-BAR
-22 CAMEL_CASE                -> KEBAB_UPPERCASE          : fooBar  -> FOO-BAR
-23 CAMEL_CASE                -> KEBAB_UPPERCASE          : fooBar  -> FOO-BAR
-24 DOT                       -> KEBAB_UPPERCASE          : foo.bar -> FOO-BAR
-25 DOT                       -> KEBAB_UPPERCASE          : foo.Bar -> FOO-BAR
-26 WORD_LOWERCASE            -> KEBAB_UPPERCASE          : foo bar -> FOO-BAR
-27 SENTENCE_CASE             -> KEBAB_UPPERCASE          : Foo bar -> FOO-BAR
-28 WORD_CAPITALIZED          -> KEBAB_UPPERCASE          : Foo Bar -> FOO-BAR
-31 KEBAB_LOWERCASE           -> SNAKE_CASE               : foo-bar -> foo_bar
-32 KEBAB_UPPERCASE           -> SNAKE_CASE               : FOO-BAR -> foo_bar
-33 SNAKE_CASE                -> SNAKE_CASE               : foo_bar -> foo_bar
-34 SCREAMING_SNAKE_CASE      -> SNAKE_CASE               : FOO_BAR -> foo_bar
-35 PASCAL_CASE               -> SNAKE_CASE               : FooBar  -> foo_bar
-36 PASCAL_CASE               -> SNAKE_CASE               : FooBar  -> foo_bar
-37 CAMEL_CASE                -> SNAKE_CASE               : fooBar  -> foo_bar
-38 CAMEL_CASE                -> SNAKE_CASE               : fooBar  -> foo_bar
-39 DOT                       -> SNAKE_CASE               : foo.bar -> foo_bar
-40 DOT                       -> SNAKE_CASE               : foo.Bar -> foo_bar
-41 WORD_LOWERCASE            -> SNAKE_CASE               : foo bar -> foo_bar
-42 SENTENCE_CASE             -> SNAKE_CASE               : Foo bar -> foo_bar
-43 WORD_CAPITALIZED          -> SNAKE_CASE               : Foo Bar -> foo_bar
-46 KEBAB_LOWERCASE           -> SCREAMING_SNAKE_CASE     : foo-bar -> FOO_BAR
-47 KEBAB_UPPERCASE           -> SCREAMING_SNAKE_CASE     : FOO-BAR -> FOO_BAR
-48 SNAKE_CASE                -> SCREAMING_SNAKE_CASE     : foo_bar -> FOO_BAR
-49 SCREAMING_SNAKE_CASE      -> SCREAMING_SNAKE_CASE     : FOO_BAR -> FOO_BAR
-50 PASCAL_CASE               -> SCREAMING_SNAKE_CASE     : FooBar  -> FOO_BAR
-51 PASCAL_CASE               -> SCREAMING_SNAKE_CASE     : FooBar  -> FOO_BAR
-52 CAMEL_CASE                -> SCREAMING_SNAKE_CASE     : fooBar  -> FOO_BAR
-53 CAMEL_CASE                -> SCREAMING_SNAKE_CASE     : fooBar  -> FOO_BAR
-54 DOT                       -> SCREAMING_SNAKE_CASE     : foo.bar -> FOO_BAR
-55 DOT                       -> SCREAMING_SNAKE_CASE     : foo.Bar -> FOO_BAR
-56 WORD_LOWERCASE            -> SCREAMING_SNAKE_CASE     : foo bar -> FOO_BAR
-57 SENTENCE_CASE             -> SCREAMING_SNAKE_CASE     : Foo bar -> FOO_BAR
-58 WORD_CAPITALIZED          -> SCREAMING_SNAKE_CASE     : Foo Bar -> FOO_BAR
-61 KEBAB_LOWERCASE           -> PASCAL_CASE              : foo-bar -> FooBar
-62 KEBAB_UPPERCASE           -> PASCAL_CASE              : FOO-BAR -> FooBar
-63 SNAKE_CASE                -> PASCAL_CASE              : foo_bar -> FooBar
-64 SCREAMING_SNAKE_CASE      -> PASCAL_CASE              : FOO_BAR -> FooBar
-65 PASCAL_CASE               -> PASCAL_CASE              : FooBar  -> FooBar
-66 PASCAL_CASE               -> PASCAL_CASE              : FooBar  -> FooBar
-67 CAMEL_CASE                -> PASCAL_CASE              : fooBar  -> FooBar
-68 CAMEL_CASE                -> PASCAL_CASE              : fooBar  -> FooBar
-69 DOT                       -> PASCAL_CASE              : foo.bar -> FooBar
-70 DOT                       -> PASCAL_CASE              : foo.Bar -> FooBar
-71 WORD_LOWERCASE            -> PASCAL_CASE              : foo bar -> FooBar
-72 SENTENCE_CASE             -> PASCAL_CASE              : Foo bar -> FooBar
-73 WORD_CAPITALIZED          -> PASCAL_CASE              : Foo Bar -> FooBar
-76 KEBAB_LOWERCASE           -> CAMEL_CASE               : foo-bar -> fooBar
-77 KEBAB_UPPERCASE           -> CAMEL_CASE               : FOO-BAR -> fooBar
-78 SNAKE_CASE                -> CAMEL_CASE               : foo_bar -> fooBar
-79 SCREAMING_SNAKE_CASE      -> CAMEL_CASE               : FOO_BAR -> fooBar
-80 PASCAL_CASE               -> CAMEL_CASE               : FooBar  -> fooBar
-81 PASCAL_CASE               -> CAMEL_CASE               : FooBar  -> fooBar
-82 CAMEL_CASE                -> CAMEL_CASE               : fooBar  -> fooBar
-83 CAMEL_CASE                -> CAMEL_CASE               : fooBar  -> fooBar
-84 DOT                       -> CAMEL_CASE               : foo.bar -> fooBar
-85 DOT                       -> CAMEL_CASE               : foo.Bar -> fooBar
-86 WORD_LOWERCASE            -> CAMEL_CASE               : foo bar -> fooBar
-87 SENTENCE_CASE             -> CAMEL_CASE               : Foo bar -> fooBar
-88 WORD_CAPITALIZED          -> CAMEL_CASE               : Foo Bar -> fooBar
-91 KEBAB_LOWERCASE           -> DOT                      : foo-bar -> foo.bar
-92 KEBAB_UPPERCASE           -> DOT                      : FOO-BAR -> foo.bar
-93 SNAKE_CASE                -> DOT                      : foo_bar -> foo.bar
-94 SCREAMING_SNAKE_CASE      -> DOT                      : FOO_BAR -> foo.bar
-95 PASCAL_CASE               -> DOT                      : FooBar  -> foo.bar
-96 PASCAL_CASE               -> DOT                      : FooBar  -> foo.bar
-97 CAMEL_CASE                -> DOT                      : fooBar  -> foo.bar
-98 CAMEL_CASE                -> DOT                      : fooBar  -> foo.bar
-99 DOT                       -> DOT                      : foo.bar -> foo.bar
-100 DOT                      -> DOT                      : foo.Bar -> foo.bar
-101 WORD_LOWERCASE           -> DOT                      : foo bar -> foo.bar
-102 SENTENCE_CASE            -> DOT                      : Foo bar -> foo.bar
-103 WORD_CAPITALIZED         -> DOT                      : Foo Bar -> foo.bar
-106 KEBAB_LOWERCASE          -> WORD_LOWERCASE           : foo-bar -> foo bar
-107 KEBAB_UPPERCASE          -> WORD_LOWERCASE           : FOO-BAR -> foo bar
-108 SNAKE_CASE               -> WORD_LOWERCASE           : foo_bar -> foo bar
-109 SCREAMING_SNAKE_CASE     -> WORD_LOWERCASE           : FOO_BAR -> foo bar
-110 PASCAL_CASE              -> WORD_LOWERCASE           : FooBar  -> foo bar
-111 PASCAL_CASE              -> WORD_LOWERCASE           : FooBar  -> foo bar
-112 CAMEL_CASE               -> WORD_LOWERCASE           : fooBar  -> foo bar
-113 CAMEL_CASE               -> WORD_LOWERCASE           : fooBar  -> foo bar
-114 DOT                      -> WORD_LOWERCASE           : foo.bar -> foo bar
-115 DOT                      -> WORD_LOWERCASE           : foo.Bar -> foo bar
-116 WORD_LOWERCASE           -> WORD_LOWERCASE           : foo bar -> foo bar
-117 SENTENCE_CASE            -> WORD_LOWERCASE           : Foo bar -> foo bar
-118 WORD_CAPITALIZED         -> WORD_LOWERCASE           : Foo Bar -> foo bar
-121 KEBAB_LOWERCASE          -> SENTENCE_CASE            : foo-bar -> Foo bar
-122 KEBAB_UPPERCASE          -> SENTENCE_CASE            : FOO-BAR -> Foo bar
-123 SNAKE_CASE               -> SENTENCE_CASE            : foo_bar -> Foo bar
-124 SCREAMING_SNAKE_CASE     -> SENTENCE_CASE            : FOO_BAR -> Foo bar
-125 PASCAL_CASE              -> SENTENCE_CASE            : FooBar  -> Foo bar
-126 PASCAL_CASE              -> SENTENCE_CASE            : FooBar  -> Foo bar
-127 CAMEL_CASE               -> SENTENCE_CASE            : fooBar  -> Foo bar
-128 CAMEL_CASE               -> SENTENCE_CASE            : fooBar  -> Foo bar
-129 DOT                      -> SENTENCE_CASE            : foo.bar -> Foo bar
-130 DOT                      -> SENTENCE_CASE            : foo.Bar -> Foo bar
-131 WORD_LOWERCASE           -> SENTENCE_CASE            : foo bar -> Foo bar
-132 SENTENCE_CASE            -> SENTENCE_CASE            : Foo bar -> Foo bar
-133 WORD_CAPITALIZED         -> SENTENCE_CASE            : Foo Bar -> Foo bar
-136 KEBAB_LOWERCASE          -> WORD_CAPITALIZED         : foo-bar -> Foo Bar
-137 KEBAB_UPPERCASE          -> WORD_CAPITALIZED         : FOO-BAR -> Foo Bar
-138 SNAKE_CASE               -> WORD_CAPITALIZED         : foo_bar -> Foo Bar
-139 SCREAMING_SNAKE_CASE     -> WORD_CAPITALIZED         : FOO_BAR -> Foo Bar
-140 PASCAL_CASE              -> WORD_CAPITALIZED         : FooBar  -> Foo Bar
-141 PASCAL_CASE              -> WORD_CAPITALIZED         : FooBar  -> Foo Bar
-142 CAMEL_CASE               -> WORD_CAPITALIZED         : fooBar  -> Foo Bar
-143 CAMEL_CASE               -> WORD_CAPITALIZED         : fooBar  -> Foo Bar
-144 DOT                      -> WORD_CAPITALIZED         : foo.bar -> Foo Bar
-145 DOT                      -> WORD_CAPITALIZED         : foo.Bar -> Foo Bar
-146 WORD_LOWERCASE           -> WORD_CAPITALIZED         : foo bar -> Foo Bar
-147 SENTENCE_CASE            -> WORD_CAPITALIZED         : Foo bar -> Foo Bar
-148 WORD_CAPITALIZED         -> WORD_CAPITALIZED         : Foo Bar -> Foo Bar
-164 _SINGLE_WORD_CAPITALIZED -> _SINGLE_WORD_CAPITALIZED : Foobar  -> Foobar
-180 _ALL_UPPER_CASE          -> _ALL_UPPER_CASE          : FOOBAR  -> FOOBAR
+9 CAMEL_CASE                 -> KEBAB_LOWERCASE          : fooBar  -> foo-bar
+10 DOT                       -> KEBAB_LOWERCASE          : foo.bar -> foo-bar
+11 DOT                       -> KEBAB_LOWERCASE          : foo.Bar -> foo-bar
+12 WORD_LOWERCASE            -> KEBAB_LOWERCASE          : foo bar -> foo-bar
+13 SENTENCE_CASE             -> KEBAB_LOWERCASE          : Foo bar -> foo-bar
+14 WORD_CAPITALIZED          -> KEBAB_LOWERCASE          : Foo Bar -> foo-bar
+17 KEBAB_LOWERCASE           -> KEBAB_UPPERCASE          : foo-bar -> FOO-BAR
+18 KEBAB_UPPERCASE           -> KEBAB_UPPERCASE          : FOO-BAR -> FOO-BAR
+19 SNAKE_CASE                -> KEBAB_UPPERCASE          : foo_bar -> FOO-BAR
+20 CAPITALIZED_SNAKE_CASE    -> KEBAB_UPPERCASE          : Foo_Bar -> FOO-BAR
+21 SCREAMING_SNAKE_CASE      -> KEBAB_UPPERCASE          : FOO_BAR -> FOO-BAR
+22 PASCAL_CASE               -> KEBAB_UPPERCASE          : FooBar  -> FOO-BAR
+23 PASCAL_CASE               -> KEBAB_UPPERCASE          : FooBar  -> FOO-BAR
+24 CAMEL_CASE                -> KEBAB_UPPERCASE          : fooBar  -> FOO-BAR
+25 CAMEL_CASE                -> KEBAB_UPPERCASE          : fooBar  -> FOO-BAR
+26 DOT                       -> KEBAB_UPPERCASE          : foo.bar -> FOO-BAR
+27 DOT                       -> KEBAB_UPPERCASE          : foo.Bar -> FOO-BAR
+28 WORD_LOWERCASE            -> KEBAB_UPPERCASE          : foo bar -> FOO-BAR
+29 SENTENCE_CASE             -> KEBAB_UPPERCASE          : Foo bar -> FOO-BAR
+30 WORD_CAPITALIZED          -> KEBAB_UPPERCASE          : Foo Bar -> FOO-BAR
+33 KEBAB_LOWERCASE           -> SNAKE_CASE               : foo-bar -> foo_bar
+34 KEBAB_UPPERCASE           -> SNAKE_CASE               : FOO-BAR -> foo_bar
+35 SNAKE_CASE                -> SNAKE_CASE               : foo_bar -> foo_bar
+36 CAPITALIZED_SNAKE_CASE    -> SNAKE_CASE               : Foo_Bar -> foo_bar
+37 SCREAMING_SNAKE_CASE      -> SNAKE_CASE               : FOO_BAR -> foo_bar
+38 PASCAL_CASE               -> SNAKE_CASE               : FooBar  -> foo_bar
+39 PASCAL_CASE               -> SNAKE_CASE               : FooBar  -> foo_bar
+40 CAMEL_CASE                -> SNAKE_CASE               : fooBar  -> foo_bar
+41 CAMEL_CASE                -> SNAKE_CASE               : fooBar  -> foo_bar
+42 DOT                       -> SNAKE_CASE               : foo.bar -> foo_bar
+43 DOT                       -> SNAKE_CASE               : foo.Bar -> foo_bar
+44 WORD_LOWERCASE            -> SNAKE_CASE               : foo bar -> foo_bar
+45 SENTENCE_CASE             -> SNAKE_CASE               : Foo bar -> foo_bar
+46 WORD_CAPITALIZED          -> SNAKE_CASE               : Foo Bar -> foo_bar
+49 KEBAB_LOWERCASE           -> CAPITALIZED_SNAKE_CASE   : foo-bar -> Foo_Bar
+50 KEBAB_UPPERCASE           -> CAPITALIZED_SNAKE_CASE   : FOO-BAR -> Foo_Bar
+51 SNAKE_CASE                -> CAPITALIZED_SNAKE_CASE   : foo_bar -> Foo_Bar
+52 CAPITALIZED_SNAKE_CASE    -> CAPITALIZED_SNAKE_CASE   : Foo_Bar -> Foo_Bar
+53 SCREAMING_SNAKE_CASE      -> CAPITALIZED_SNAKE_CASE   : FOO_BAR -> Foo_Bar
+54 PASCAL_CASE               -> CAPITALIZED_SNAKE_CASE   : FooBar  -> Foo_Bar
+55 PASCAL_CASE               -> CAPITALIZED_SNAKE_CASE   : FooBar  -> Foo_Bar
+56 CAMEL_CASE                -> CAPITALIZED_SNAKE_CASE   : fooBar  -> Foo_Bar
+57 CAMEL_CASE                -> CAPITALIZED_SNAKE_CASE   : fooBar  -> Foo_Bar
+58 DOT                       -> CAPITALIZED_SNAKE_CASE   : foo.bar -> Foo_Bar
+59 DOT                       -> CAPITALIZED_SNAKE_CASE   : foo.Bar -> Foo_Bar
+60 WORD_LOWERCASE            -> CAPITALIZED_SNAKE_CASE   : foo bar -> Foo_Bar
+61 SENTENCE_CASE             -> CAPITALIZED_SNAKE_CASE   : Foo bar -> Foo_Bar
+62 WORD_CAPITALIZED          -> CAPITALIZED_SNAKE_CASE   : Foo Bar -> Foo_Bar
+65 KEBAB_LOWERCASE           -> SCREAMING_SNAKE_CASE     : foo-bar -> FOO_BAR
+66 KEBAB_UPPERCASE           -> SCREAMING_SNAKE_CASE     : FOO-BAR -> FOO_BAR
+67 SNAKE_CASE                -> SCREAMING_SNAKE_CASE     : foo_bar -> FOO_BAR
+68 CAPITALIZED_SNAKE_CASE    -> SCREAMING_SNAKE_CASE     : Foo_Bar -> FOO_BAR
+69 SCREAMING_SNAKE_CASE      -> SCREAMING_SNAKE_CASE     : FOO_BAR -> FOO_BAR
+70 PASCAL_CASE               -> SCREAMING_SNAKE_CASE     : FooBar  -> FOO_BAR
+71 PASCAL_CASE               -> SCREAMING_SNAKE_CASE     : FooBar  -> FOO_BAR
+72 CAMEL_CASE                -> SCREAMING_SNAKE_CASE     : fooBar  -> FOO_BAR
+73 CAMEL_CASE                -> SCREAMING_SNAKE_CASE     : fooBar  -> FOO_BAR
+74 DOT                       -> SCREAMING_SNAKE_CASE     : foo.bar -> FOO_BAR
+75 DOT                       -> SCREAMING_SNAKE_CASE     : foo.Bar -> FOO_BAR
+76 WORD_LOWERCASE            -> SCREAMING_SNAKE_CASE     : foo bar -> FOO_BAR
+77 SENTENCE_CASE             -> SCREAMING_SNAKE_CASE     : Foo bar -> FOO_BAR
+78 WORD_CAPITALIZED          -> SCREAMING_SNAKE_CASE     : Foo Bar -> FOO_BAR
+81 KEBAB_LOWERCASE           -> PASCAL_CASE              : foo-bar -> FooBar
+82 KEBAB_UPPERCASE           -> PASCAL_CASE              : FOO-BAR -> FooBar
+83 SNAKE_CASE                -> PASCAL_CASE              : foo_bar -> FooBar
+84 CAPITALIZED_SNAKE_CASE    -> PASCAL_CASE              : Foo_Bar -> FooBar
+85 SCREAMING_SNAKE_CASE      -> PASCAL_CASE              : FOO_BAR -> FooBar
+86 PASCAL_CASE               -> PASCAL_CASE              : FooBar  -> FooBar
+87 PASCAL_CASE               -> PASCAL_CASE              : FooBar  -> FooBar
+88 CAMEL_CASE                -> PASCAL_CASE              : fooBar  -> FooBar
+89 CAMEL_CASE                -> PASCAL_CASE              : fooBar  -> FooBar
+90 DOT                       -> PASCAL_CASE              : foo.bar -> FooBar
+91 DOT                       -> PASCAL_CASE              : foo.Bar -> FooBar
+92 WORD_LOWERCASE            -> PASCAL_CASE              : foo bar -> FooBar
+93 SENTENCE_CASE             -> PASCAL_CASE              : Foo bar -> FooBar
+94 WORD_CAPITALIZED          -> PASCAL_CASE              : Foo Bar -> FooBar
+97 KEBAB_LOWERCASE           -> CAMEL_CASE               : foo-bar -> fooBar
+98 KEBAB_UPPERCASE           -> CAMEL_CASE               : FOO-BAR -> fooBar
+99 SNAKE_CASE                -> CAMEL_CASE               : foo_bar -> fooBar
+100 CAPITALIZED_SNAKE_CASE   -> CAMEL_CASE               : Foo_Bar -> fooBar
+101 SCREAMING_SNAKE_CASE     -> CAMEL_CASE               : FOO_BAR -> fooBar
+102 PASCAL_CASE              -> CAMEL_CASE               : FooBar  -> fooBar
+103 PASCAL_CASE              -> CAMEL_CASE               : FooBar  -> fooBar
+104 CAMEL_CASE               -> CAMEL_CASE               : fooBar  -> fooBar
+105 CAMEL_CASE               -> CAMEL_CASE               : fooBar  -> fooBar
+106 DOT                      -> CAMEL_CASE               : foo.bar -> fooBar
+107 DOT                      -> CAMEL_CASE               : foo.Bar -> fooBar
+108 WORD_LOWERCASE           -> CAMEL_CASE               : foo bar -> fooBar
+109 SENTENCE_CASE            -> CAMEL_CASE               : Foo bar -> fooBar
+110 WORD_CAPITALIZED         -> CAMEL_CASE               : Foo Bar -> fooBar
+113 KEBAB_LOWERCASE          -> DOT                      : foo-bar -> foo.bar
+114 KEBAB_UPPERCASE          -> DOT                      : FOO-BAR -> foo.bar
+115 SNAKE_CASE               -> DOT                      : foo_bar -> foo.bar
+116 CAPITALIZED_SNAKE_CASE   -> DOT                      : Foo_Bar -> foo.bar
+117 SCREAMING_SNAKE_CASE     -> DOT                      : FOO_BAR -> foo.bar
+118 PASCAL_CASE              -> DOT                      : FooBar  -> foo.bar
+119 PASCAL_CASE              -> DOT                      : FooBar  -> foo.bar
+120 CAMEL_CASE               -> DOT                      : fooBar  -> foo.bar
+121 CAMEL_CASE               -> DOT                      : fooBar  -> foo.bar
+122 DOT                      -> DOT                      : foo.bar -> foo.bar
+123 DOT                      -> DOT                      : foo.Bar -> foo.bar
+124 WORD_LOWERCASE           -> DOT                      : foo bar -> foo.bar
+125 SENTENCE_CASE            -> DOT                      : Foo bar -> foo.bar
+126 WORD_CAPITALIZED         -> DOT                      : Foo Bar -> foo.bar
+129 KEBAB_LOWERCASE          -> WORD_LOWERCASE           : foo-bar -> foo bar
+130 KEBAB_UPPERCASE          -> WORD_LOWERCASE           : FOO-BAR -> foo bar
+131 SNAKE_CASE               -> WORD_LOWERCASE           : foo_bar -> foo bar
+132 CAPITALIZED_SNAKE_CASE   -> WORD_LOWERCASE           : Foo_Bar -> foo bar
+133 SCREAMING_SNAKE_CASE     -> WORD_LOWERCASE           : FOO_BAR -> foo bar
+134 PASCAL_CASE              -> WORD_LOWERCASE           : FooBar  -> foo bar
+135 PASCAL_CASE              -> WORD_LOWERCASE           : FooBar  -> foo bar
+136 CAMEL_CASE               -> WORD_LOWERCASE           : fooBar  -> foo bar
+137 CAMEL_CASE               -> WORD_LOWERCASE           : fooBar  -> foo bar
+138 DOT                      -> WORD_LOWERCASE           : foo.bar -> foo bar
+139 DOT                      -> WORD_LOWERCASE           : foo.Bar -> foo bar
+140 WORD_LOWERCASE           -> WORD_LOWERCASE           : foo bar -> foo bar
+141 SENTENCE_CASE            -> WORD_LOWERCASE           : Foo bar -> foo bar
+142 WORD_CAPITALIZED         -> WORD_LOWERCASE           : Foo Bar -> foo bar
+145 KEBAB_LOWERCASE          -> SENTENCE_CASE            : foo-bar -> Foo bar
+146 KEBAB_UPPERCASE          -> SENTENCE_CASE            : FOO-BAR -> Foo bar
+147 SNAKE_CASE               -> SENTENCE_CASE            : foo_bar -> Foo bar
+148 CAPITALIZED_SNAKE_CASE   -> SENTENCE_CASE            : Foo_Bar -> Foo bar
+149 SCREAMING_SNAKE_CASE     -> SENTENCE_CASE            : FOO_BAR -> Foo bar
+150 PASCAL_CASE              -> SENTENCE_CASE            : FooBar  -> Foo bar
+151 PASCAL_CASE              -> SENTENCE_CASE            : FooBar  -> Foo bar
+152 CAMEL_CASE               -> SENTENCE_CASE            : fooBar  -> Foo bar
+153 CAMEL_CASE               -> SENTENCE_CASE            : fooBar  -> Foo bar
+154 DOT                      -> SENTENCE_CASE            : foo.bar -> Foo bar
+155 DOT                      -> SENTENCE_CASE            : foo.Bar -> Foo bar
+156 WORD_LOWERCASE           -> SENTENCE_CASE            : foo bar -> Foo bar
+157 SENTENCE_CASE            -> SENTENCE_CASE            : Foo bar -> Foo bar
+158 WORD_CAPITALIZED         -> SENTENCE_CASE            : Foo Bar -> Foo bar
+161 KEBAB_LOWERCASE          -> WORD_CAPITALIZED         : foo-bar -> Foo Bar
+162 KEBAB_UPPERCASE          -> WORD_CAPITALIZED         : FOO-BAR -> Foo Bar
+163 SNAKE_CASE               -> WORD_CAPITALIZED         : foo_bar -> Foo Bar
+164 CAPITALIZED_SNAKE_CASE   -> WORD_CAPITALIZED         : Foo_Bar -> Foo Bar
+165 SCREAMING_SNAKE_CASE     -> WORD_CAPITALIZED         : FOO_BAR -> Foo Bar
+166 PASCAL_CASE              -> WORD_CAPITALIZED         : FooBar  -> Foo Bar
+167 PASCAL_CASE              -> WORD_CAPITALIZED         : FooBar  -> Foo Bar
+168 CAMEL_CASE               -> WORD_CAPITALIZED         : fooBar  -> Foo Bar
+169 CAMEL_CASE               -> WORD_CAPITALIZED         : fooBar  -> Foo Bar
+170 DOT                      -> WORD_CAPITALIZED         : foo.bar -> Foo Bar
+171 DOT                      -> WORD_CAPITALIZED         : foo.Bar -> Foo Bar
+172 WORD_LOWERCASE           -> WORD_CAPITALIZED         : foo bar -> Foo Bar
+173 SENTENCE_CASE            -> WORD_CAPITALIZED         : Foo bar -> Foo Bar
+174 WORD_CAPITALIZED         -> WORD_CAPITALIZED         : Foo Bar -> Foo Bar
+191 _SINGLE_WORD_CAPITALIZED -> _SINGLE_WORD_CAPITALIZED : Foobar  -> Foobar
+208 _ALL_UPPER_CASE          -> _ALL_UPPER_CASE          : FOOBAR  -> FOOBAR

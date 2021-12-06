@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.styles;
 
+import org.apache.commons.text.WordUtils;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
@@ -30,6 +31,12 @@ public enum Style {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
+		}
+	},
+	CAPITALIZED_SNAKE_CASE("Capitalized_Snake_Case", "Foo_Bar") {
+		@Override
+		public String transform(Style style, String s) {
+			return WordUtils.capitalizeFully(SNAKE_CASE.transform(style, s), '_');
 		}
 	},
 	SCREAMING_SNAKE_CASE("SCREAMING_SNAKE_CASE", "FOO_BAR") {
@@ -163,6 +170,9 @@ public enum Style {
 		}
 		if (underscore && noLowerCase && noSpace && noDot && noHyphen) {
 			return SCREAMING_SNAKE_CASE;
+		}
+		if (underscore && noSpace && noDot && noHyphen && isCapitalizedFully(s, '_')) {
+			return CAPITALIZED_SNAKE_CASE;
 		}
 
 		if (hyphen && noUpperCase && noSpace && noDot && noUnderscore) {

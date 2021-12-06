@@ -49,6 +49,7 @@ Provides actions for text manipulation:
                <li>To camelCase</li>
                <li>To snake_case</li>
                <li>To SCREAMING_SNAKE_CASE</li>
+               <li>To Capitalized_Snake_Case</li>
                <li>Capitalize</li>
                <li>To lower case</li>
             <li>To UPPER CASE</li>
