@@ -687,6 +687,9 @@
             <reference ref="StringManipulation.Group.Main"></reference>
         </group>
 
+        <action id="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
+                class="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
+                text="Select All Occurrences For All Carets"/>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -855,6 +858,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Preview limits removed, computing on background</li>
                 <li>Added To Capitalized_Snake_Case</li>
+                <li>Added Action 'Select All Occurrences For All Carets' - <a href="https://youtrack.jetbrains.com/issue/IDEA-283466">IDEA-283466</a> - bind at Keymap</li>
             </ul>
 	    </div>
 	    <div>
