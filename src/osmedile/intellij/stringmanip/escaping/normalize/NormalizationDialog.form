@@ -25,7 +25,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Preview:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.preview1"/>
             </properties>
           </component>
           <component id="7e03e" class="javax.swing.JSeparator">
@@ -67,8 +67,8 @@
             <properties>
               <focusCycleRoot value="false"/>
               <selected value="false"/>
-              <text value="Form D (NFD)"/>
-              <toolTipText value="Canonical Decomposition"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.form.d.nfd"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="canonical.decomposition"/>
             </properties>
           </component>
           <component id="a6f" class="javax.swing.JRadioButton" binding="formNFC">
@@ -77,8 +77,8 @@
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="Form C (NFC)"/>
-              <toolTipText value="Canonical Decomposition, followed by Canonical Composition"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.form.c.nfc"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="canonical.decomposition.followed.by.canonical.composition"/>
             </properties>
           </component>
           <component id="36701" class="javax.swing.JRadioButton" binding="formNFKD">
@@ -87,8 +87,8 @@
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="Form KD (NFKD)"/>
-              <toolTipText value="Compatibility Decomposition"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.form.kd.nfkd"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="compatibility.decomposition"/>
             </properties>
           </component>
           <component id="b53d7" class="javax.swing.JRadioButton" binding="formNFKC">
@@ -98,8 +98,8 @@
             <properties>
               <focusCycleRoot value="false"/>
               <selected value="false"/>
-              <text value="Form KC (NFKC)"/>
-              <toolTipText value="Compatibility Decomposition, followed by Canonical Composition"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.form.kc.nfkc"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="compatibility.decomposition.followed.by.canonical.composition"/>
             </properties>
           </component>
           <component id="36289" class="javax.swing.JRadioButton" binding="stripAccents">
@@ -109,8 +109,8 @@
             <properties>
               <focusCycleRoot value="false"/>
               <selected value="false"/>
-              <text value="Strip accents"/>
-              <toolTipText value="Removes diacritics (~= accents) from a string. Using: org.apache.commons.lang3.StringUtils#stripAccents"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.strip.accents"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="removes.diacritics.accents.from.a.string.using.org.apache.commons.lang3.stringutils.stripaccents"/>
             </properties>
           </component>
           <component id="297ee" class="javax.swing.JRadioButton" binding="convertDiacritics">
@@ -120,8 +120,8 @@
             <properties>
               <focusCycleRoot value="false"/>
               <selected value="false"/>
-              <text value="Convert Diacritics (Accents) to ASCII"/>
-              <toolTipText value="Custom action"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.convert.diacritics.accents.to.ascii"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="custom.action"/>
             </properties>
           </component>
           <component id="fadb3" class="com.intellij.ui.components.labels.LinkLabel" binding="linkLabel">
@@ -129,7 +129,7 @@
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Link"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="link.link"/>
             </properties>
           </component>
           <component id="eebb" class="com.intellij.ui.components.labels.LinkLabel" binding="stripAccentsLink">
@@ -137,7 +137,7 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Link"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="link.link"/>
             </properties>
           </component>
           <component id="2a375" class="javax.swing.JRadioButton" binding="nothing">
@@ -147,8 +147,8 @@
             <properties>
               <focusCycleRoot value="false"/>
               <selected value="true"/>
-              <text value="Nothing"/>
-              <toolTipText value="Canonical Decomposition"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.nothing"/>
+              <toolTipText resource-bundle="messages/StringManipulationBundle" key="canonical.decomposition"/>
             </properties>
           </component>
           <component id="c0c79" class="javax.swing.JCheckBox" binding="unescapeBeforeCheckBox" default-binding="true">
@@ -156,7 +156,7 @@
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Unescape Unicode before"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="checkbox.unescape.unicode.before"/>
             </properties>
           </component>
           <component id="74c84" class="javax.swing.JCheckBox" binding="escapeAfter">
@@ -164,7 +164,7 @@
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Escape Non-ASCII after"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="checkbox.escape.non.ascii.after"/>
             </properties>
           </component>
         </children>
@@ -182,7 +182,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Unescaped Unicode hex by character:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.unescaped.unicode.hex.by.character"/>
             </properties>
           </component>
           <component id="8333" class="javax.swing.JSeparator">
@@ -225,7 +225,7 @@
             </constraints>
             <properties>
               <font style="2"/>
-              <text value="Note: JRE 11 supports only Unicode 10.0.0"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.note.jre.11.supports.only.unicode.10.0.0"/>
             </properties>
           </component>
           <component id="44f6a" class="com.intellij.ui.components.labels.LinkLabel" binding="unicodeSupport">
@@ -233,7 +233,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="JBR-2875"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="link.jbr.2875"/>
             </properties>
           </component>
           <hspacer id="23502">

@@ -18,6 +18,7 @@
     <!--suppress PluginXmlValidity -->
     <depends optional="true">com.intellij.properties</depends>
 
+    <resource-bundle>messages.StringManipulationBundle</resource-bundle>
 
     <actions>
         <action id="osmedile.intellij.stringmanip.SwitchCasePopup"
@@ -49,7 +50,7 @@
                     text="Repeat Last Action"/>
             <separator/>
 
-            <group text="Escape/Unescape..."
+            <group id="StringManipulation.Group.EscapeUnescape" text="Escape/Unescape..."
                    description="Group of String manipulation escape actions"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EscapeJavaAction"
@@ -75,7 +76,7 @@
                         description="org.apache.commons.text.StringEscapeUtils#unescapeEcmaScript">
                 </action>
                 <separator/>
-                <group text="Escape C#" popup="true">
+                <group id="StringManipulation.Group.EscapeC" text="Escape C#" popup="true">
                     <action id="osmedile.intellij.stringmanip.escaping.EscapeCSharpRegularAction"
                             class="osmedile.intellij.stringmanip.escaping.EscapeCSharpRegularAction"
                             text="C# Regular &quot;...&quot;"
@@ -97,7 +98,7 @@
                             description="C# interpolated verbatim @$&quot;...&quot;">
                     </action>
                 </group>
-                <group text="Unescape C#" popup="true">
+                <group id="StringManipulation.Group.UnescapeC" text="Unescape C#" popup="true">
                     <action id="osmedile.intellij.stringmanip.escaping.UnescapeCSharpRegularAction"
                             class="osmedile.intellij.stringmanip.escaping.UnescapeCSharpRegularAction"
                             text="C# Regular &quot;...&quot;"
@@ -214,7 +215,7 @@
                 <!--                 </action>-->
             </group>
 
-            <group text="Encode/Decode..."
+            <group id="StringManipulation.Group.EncodeDecode" text="Encode/Decode..."
                    description="Group of String manipulation encode/decode actions"
                    popup="true">
                 <action id="osmedile.intellij.stringmanip.EncodeMd5HexAction"
@@ -425,7 +426,8 @@
 
             <separator/>
 
-            <group text="Increment/Decrement..."
+            <group id="StringManipulation.Group.IncrementDecrement"
+                   text="Increment/Decrement..."
                    description="Increment, decrement, create sequence, unique numbers"
                    icon="/icons/calc/calc.svg"
                    popup="true">
@@ -469,7 +471,8 @@
                 </action>
             </group>
 
-            <group text="Sort..."
+            <group id="StringManipulation.Group.Sort"
+                   text="Sort..."
                    description="Sort lines, delimited text"
                    icon="/icons/sort.svg"
                    popup="true">
@@ -511,7 +514,8 @@
                 </action>
             </group>
 
-            <group text="Filter/Remove/Trim/Minify/Convert..."
+            <group id="StringManipulation.Group.Filter"
+                   text="Filter/Remove/Trim/Minify/Convert..."
                    description="Filter/Remove/Trim/Minify/Convert..."
                    icon="/icons/filter.svg"
                    popup="true">
@@ -594,7 +598,8 @@
                 </action>
             </group>
 
-            <group text="Align..."
+            <group id="StringManipulation.Group.Align"
+                   text="Align..."
                    description="Text and columns alignment"
                    icon="/icons/align/align.svg"
                    popup="true">

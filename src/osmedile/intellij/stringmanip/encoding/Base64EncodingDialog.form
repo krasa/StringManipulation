@@ -24,7 +24,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Zip before encoding"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="radio.button.zip.before.encoding"/>
           <toolTipText value=""/>
         </properties>
       </component>
@@ -42,7 +42,7 @@
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="Default"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.default"/>
             </properties>
           </component>
           <component id="53392" class="javax.swing.JRadioButton" binding="urlSafe">
@@ -50,7 +50,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="URL safe"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.url.safe"/>
             </properties>
           </component>
           <component id="a2729" class="javax.swing.JRadioButton" binding="urlSafeChunked">
@@ -58,7 +58,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="URL safe,  chunked"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.url.safe.chunked"/>
             </properties>
           </component>
           <component id="cf3e5" class="javax.swing.JRadioButton" binding="chunked">
@@ -66,7 +66,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Chunked"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.chunked"/>
             </properties>
           </component>
           <component id="82393" class="javax.swing.JSeparator">
@@ -82,8 +82,8 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Deflate before encoding"/>
-          <toolTipText value="Use 'Default' and 'CRLF' to be consistent with samltool.com. Using Java Deflater with nowrap=true."/>
+          <text resource-bundle="messages/StringManipulationBundle" key="radio.button.deflate.before.encoding"/>
+          <toolTipText resource-bundle="messages/StringManipulationBundle" key="use.default.and.crlf.to.be.consistent.with.samltool.com.using.java.deflater.with.nowrap.true"/>
         </properties>
       </component>
       <component id="75de7" class="javax.swing.JRadioButton" binding="noCompression">
@@ -92,7 +92,7 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text value="No compression"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="radio.button.no.compression"/>
           <toolTipText value=""/>
         </properties>
       </component>
@@ -110,7 +110,7 @@
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="LF - \n"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.lf.n"/>
               <toolTipText value=""/>
             </properties>
           </component>
@@ -120,7 +120,7 @@
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="CRLF - \r\n"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="radio.button.crlf.r.n"/>
               <toolTipText value=""/>
             </properties>
           </component>
@@ -129,7 +129,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Convert input:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.convert.input"/>
             </properties>
           </component>
         </children>

@@ -31,7 +31,7 @@
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Action detail:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.action.detail"/>
             </properties>
           </component>
           <vspacer id="f45b2">
@@ -60,7 +60,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Name"/>
+                  <text resource-bundle="messages/StringManipulationBundle" key="label.name"/>
                 </properties>
               </component>
               <component id="1a86e" class="javax.swing.JTextField" binding="name">
@@ -78,7 +78,7 @@
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Reset to default"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.reset.to.default"/>
             </properties>
           </component>
           <component id="4bdfb" class="javax.swing.JButton" binding="upStep">
@@ -88,7 +88,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="Move up"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.move.up"/>
             </properties>
           </component>
           <component id="b5af9" class="javax.swing.JButton" binding="downStep">
@@ -96,7 +96,7 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Move down"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.move.down"/>
             </properties>
           </component>
           <component id="e11e2" class="javax.swing.JButton" binding="help">
@@ -104,7 +104,7 @@
               <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Help"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="link.help"/>
             </properties>
           </component>
           <component id="71a67" class="javax.swing.JSeparator">
@@ -142,7 +142,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Custom case switching actions:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.custom.case.switching.actions"/>
             </properties>
           </component>
           <component id="3ec5a" class="javax.swing.JButton" binding="add">
@@ -150,7 +150,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Add"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.add"/>
             </properties>
           </component>
           <component id="850dd" class="javax.swing.JButton" binding="remove">
@@ -158,7 +158,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Remove"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.remove"/>
             </properties>
           </component>
           <component id="67f4" class="javax.swing.JButton" binding="resetDefaultActions">
@@ -166,7 +166,7 @@
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Reset default actions"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.reset.default.actions"/>
             </properties>
           </component>
           <component id="53f4e" class="javax.swing.JSeparator">
@@ -198,7 +198,7 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Test"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="button.test"/>
             </properties>
           </component>
           <grid id="904a8" binding="myPreviewPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -224,7 +224,7 @@
                 </constraints>
                 <properties>
                   <font style="1"/>
-                  <text value="Popups were customized. If actions are not visible or the order is wrong. Fix it manually here:"/>
+                  <text resource-bundle="messages/StringManipulationBundle" key="label.popups.were.customized.if.actions.are.not.visible.or.the.order.is.wrong.fix.it.manually.here"/>
                 </properties>
               </component>
               <hspacer id="408e7">
@@ -237,7 +237,7 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Menus and Toolbars"/>
+                  <text resource-bundle="messages/StringManipulationBundle" key="link.menus.and.toolbars"/>
                 </properties>
               </component>
             </children>
@@ -257,7 +257,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Popups can be customized here:"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="label.popups.can.be.customized.here"/>
             </properties>
           </component>
           <hspacer id="b714f">
@@ -270,7 +270,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Menus and Toolbars"/>
+              <text resource-bundle="messages/StringManipulationBundle" key="link.menus.and.toolbars"/>
             </properties>
           </component>
         </children>

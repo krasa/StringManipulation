@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Delimiter From / To"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="label.delimiter.from.to"/>
         </properties>
       </component>
       <component id="911ce" class="javax.swing.JTextField" binding="sourceDelimiter">
@@ -31,7 +31,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Source"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="label.source"/>
         </properties>
       </component>
       <component id="29860" class="javax.swing.JRadioButton" binding="sourceSelection">
@@ -40,7 +40,7 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text value="Selection"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="radio.button.selection"/>
         </properties>
       </component>
       <component id="10621" class="javax.swing.JRadioButton" binding="sourceClipboard">
@@ -48,7 +48,7 @@
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Clipboard"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="radio.button.clipboard"/>
         </properties>
       </component>
       <component id="d2718" class="javax.swing.JLabel">
@@ -56,7 +56,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Quote"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="label.quote"/>
         </properties>
       </component>
       <component id="21663" class="javax.swing.JCheckBox" binding="autoQuote">
@@ -65,7 +65,7 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text value="Automatic"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="checkbox.automatic"/>
         </properties>
       </component>
       <component id="c210e" class="javax.swing.JTextField" binding="quote">
@@ -76,7 +76,7 @@
         </constraints>
         <properties>
           <editable value="false"/>
-          <text value="&lt;auto&gt;"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="auto"/>
         </properties>
       </component>
       <component id="65f03" class="javax.swing.JTextField" binding="destDelimiter">
@@ -94,7 +94,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Unquote"/>
+          <text resource-bundle="messages/StringManipulationBundle" key="label.unquote"/>
         </properties>
       </component>
       <component id="a0fed" class="javax.swing.JTextField" binding="unquote">
