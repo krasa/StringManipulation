@@ -1,0 +1,1 @@
+This product includes code from IntelliJ IDEA Community Edition - https://github.com/JetBrains/intellij-community, under the Apache License 2.0
