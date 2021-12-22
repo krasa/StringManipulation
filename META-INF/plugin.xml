@@ -689,6 +689,10 @@
                     class="osmedile.intellij.stringmanip.actions.DuplicateAndReplaceAction"
                     text="Duplicate Line or Selection And Replace"
             />
+            <action id="StringManipulation.SelectWordInDifferentHumpsModeAction"
+                    class="osmedile.intellij.stringmanip.actions.SelectWordInDifferentHumpsModeAction"
+                    text="Extend Selection in Different &quot;CamelHumps&quot; Mode"
+            />
         </group>
 
 
@@ -852,7 +856,10 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Wrap or shift double quotes to single quotes to backticks</li>
 				<li>Swap between double quotes and single quotes</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
-			</ul>
+                <li>Select All Occurrences For All Carets</li>
+                <li>Duplicate Line or Selection And Replace</li>
+                <li>Extend Selection in Different "CamelHumps" Mode</li>
+                </ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
 			<br>You can setup your own shortcuts for better usability.

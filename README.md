@@ -1,7 +1,7 @@
-String Manipulation [![Donate][badge-paypal-img]][badge-paypal] [![Version](http://phpstorm.espend.de/badge/2162/version)](https://plugins.jetbrains.com/plugin/2162)
+String
+Manipulation [![Donate][badge-paypal-img]][badge-paypal] [![Version](http://phpstorm.espend.de/badge/2162/version)](https://plugins.jetbrains.com/plugin/2162)
 [![Downloads](http://phpstorm.espend.de/badge/2162/downloads)](https://plugins.jetbrains.com/plugin/2162)
-==================  
-
+==================
 
 IntelliJ plugin - https://plugins.jetbrains.com/plugin/2162
 
@@ -152,6 +152,9 @@ Provides actions for text manipulation:
             <li>Wrap or shift double quotes to single quotes to backticks</li>
             <li>Swap between double quotes and single quotes</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
+            <li>Select All Occurrences For All Carets</li>
+            <li>Duplicate Line or Selection And Replace</li>
+            <li>Extend Selection in Different "CamelHumps" Mode</li>
         </ul>
     </p>
     <p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
@@ -160,22 +163,22 @@ Provides actions for text manipulation:
     </p>
 </p>
 
-
 ## How to build and run
 
 1. Import the project into IDEA.
 
-2. In "File -> Project Structure" add an SDK. Choose IntelliJ Platform Plugin SDK, not JDK. It looks like this on Windows:
+2. In "File -> Project Structure" add an SDK. Choose IntelliJ Platform Plugin SDK, not JDK. It looks like this on
+   Windows:
 
-    ![](images/add-plugin-sdk-win.png)
+   ![](images/add-plugin-sdk-win.png)
 
-    And like this on a Mac:
+   And like this on a Mac:
 
-    ![](images/add-plugin-sdk-mac.png)
+   ![](images/add-plugin-sdk-mac.png)
 
 3. Choose the SDK root. Windows:
 
-    ![](images/select-sdk-root-win.png)
+   ![](images/select-sdk-root-win.png)
 
    Mac (select the `/Applications/IntelliJ IDEA/`):
 
@@ -190,7 +193,7 @@ Provides actions for text manipulation:
 6. To package a distribution:
 
    ![](images/deployment.png)
-   
+
    (StringManipulation.zip will be generated in the project root, which you can install to the main IDE)
 
 ------
@@ -207,4 +210,5 @@ and .NET applications.
 
 
 [badge-paypal-img]:       https://img.shields.io/badge/donate-paypal-green.svg
+
 [badge-paypal]:           https://www.paypal.me/VojtechKrasa
