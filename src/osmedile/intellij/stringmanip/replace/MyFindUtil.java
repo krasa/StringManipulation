@@ -1,7 +1,7 @@
 // Copyright 2000-2021 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 // Copyright 2000-2021 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 
-package osmedile.intellij.stringmanip.actions;
+package osmedile.intellij.stringmanip.replace;
 
 import com.intellij.find.FindBundle;
 import com.intellij.find.FindManager;
@@ -25,10 +25,10 @@ public final class MyFindUtil {
 	private MyFindUtil() {
 	}
 
-	public static void doReplace(@NotNull Project project,
-								 @NotNull FindModel aModel,
-								 int caretOffset,
-								 Document document) {
+	public static boolean doReplace(@NotNull Project project,
+									@NotNull FindModel aModel,
+									int caretOffset,
+									Document document) {
 		FindManager findManager = FindManager.getInstance(project);
 		final FindModel model = aModel.clone();
 		List<Pair<TextRange, String>> rangesToChange = new ArrayList<>();
@@ -89,14 +89,15 @@ public final class MyFindUtil {
 			});
 		}
 
+		return replaced;
 	}
 
 
-	public static TextRange doReplace(final Document document,
-									  @NotNull FindModel model,
-									  FindResult result,
-									  @NotNull String stringToReplace,
-									  List<? super Pair<TextRange, String>> rangesToChange) {
+	private static TextRange doReplace(final Document document,
+									   @NotNull FindModel model,
+									   FindResult result,
+									   @NotNull String stringToReplace,
+									   List<? super Pair<TextRange, String>> rangesToChange) {
 		final int startOffset = result.getStartOffset();
 		final int endOffset = result.getEndOffset();
 

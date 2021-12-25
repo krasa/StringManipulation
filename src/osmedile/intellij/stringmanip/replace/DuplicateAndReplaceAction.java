@@ -1,23 +1,25 @@
 /*
  * Copyright 2000-2017 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
  */
-package osmedile.intellij.stringmanip.actions;
+package osmedile.intellij.stringmanip.replace;
 
-import com.intellij.find.EditorSearchSession;
-import com.intellij.find.FindManager;
-import com.intellij.find.FindModel;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.editor.actions.DocumentGuardedTextUtil;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
-import com.intellij.openapi.editor.impl.DocumentImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.replace.gui.CompositeForm;
+import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
+import osmedile.intellij.stringmanip.toolwindow.StringManipulationToolWindowFactory;
+import osmedile.intellij.stringmanip.toolwindow.ToolWindowPanel;
 
 public class DuplicateAndReplaceAction extends MyEditorAction {
 
@@ -31,17 +33,34 @@ public class DuplicateAndReplaceAction extends MyEditorAction {
 		}
 
 		@Override
-		public void executeWriteAction(@NotNull Editor editor, @NotNull Caret caret, DataContext dataContext) {
-			FindManager findManager = FindManager.getInstance(editor.getProject());
-			FindModel model = findManager.createReplaceInFileModel();
-			if (model.getStringToFind().isBlank() || model.getStringToReplace().isBlank()) {
-				EditorSearchSession.start(editor, model, editor.getProject());
+		public void executeWriteAction(@NotNull Editor editor, Caret caret, DataContext dataContext) {
+			MyApplicationService.setAction(DuplicateAndReplaceAction.class);
+			Project project = editor.getProject();
+			if (project == null) {
 				return;
 			}
 
-			model = model.clone();
-			model.setGlobal(false);
-			duplicateLineOrSelectedBlockAtCaret(editor, model);
+			ToolWindowPanel toolWindowPanel = StringManipulationToolWindowFactory.getToolWindowPanel(project);
+			ReplaceCompositeModel model = null;
+			if (toolWindowPanel != null) {
+				CompositeForm compositeForm = toolWindowPanel.getReplacementCompositeForm();
+				if (compositeForm != null) {
+					model = compositeForm.getModel();
+				}
+			}
+			if (model != null) {
+				PluginPersistentStateComponent.getInstance().addToHistory(model);
+			}
+			if (model == null) {
+				model = PluginPersistentStateComponent.getInstance().getLastReplaceModel();
+			}
+
+			if (model == null) {
+				StringManipulationToolWindowFactory.showToolWindow(project);
+			} else {
+				duplicateLineOrSelectedBlockAtCaret(editor, model);
+			}
+
 		}
 
 		@Override
@@ -50,7 +69,7 @@ public class DuplicateAndReplaceAction extends MyEditorAction {
 		}
 	}
 
-	public static void duplicateLineOrSelectedBlockAtCaret(Editor editor, FindModel model) {
+	public static void duplicateLineOrSelectedBlockAtCaret(Editor editor, ReplaceCompositeModel model) {
 		Document document = editor.getDocument();
 		CaretModel caretModel = editor.getCaretModel();
 		ScrollingModel scrollingModel = editor.getScrollingModel();
@@ -70,17 +89,15 @@ public class DuplicateAndReplaceAction extends MyEditorAction {
 
 	}
 
-	private static String replace(Project project, String s, FindModel model) {
+	private static String replace(Project project, String s, ReplaceCompositeModel compositeModel) {
 		if (project == null) {
 			return s;
 		}
-		DocumentImpl document = new DocumentImpl(s);
-		MyFindUtil.doReplace(project, model, 0, document);
-		return document.getText();
+		return compositeModel.replace(project, s);
 	}
 
 	@Nullable
-	static Couple<Integer> duplicateLinesRange(Editor editor, Document document, VisualPosition rangeStart, VisualPosition rangeEnd, FindModel model) {
+	static Couple<Integer> duplicateLinesRange(Editor editor, Document document, VisualPosition rangeStart, VisualPosition rangeEnd, ReplaceCompositeModel model) {
 		Pair<LogicalPosition, LogicalPosition> lines = EditorUtil.calcSurroundingRange(editor, rangeStart, rangeEnd);
 		int offset = editor.getCaretModel().getOffset();
 

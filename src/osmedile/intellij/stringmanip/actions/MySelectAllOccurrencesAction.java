@@ -23,7 +23,6 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actions.EditorActionUtil;
 import com.intellij.openapi.editor.actions.SelectOccurrencesActionHandler;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
@@ -32,6 +31,8 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.MyApplicationService;
+import osmedile.intellij.stringmanip.MyEditorAction;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,7 +41,7 @@ import java.util.List;
 
 import static com.intellij.openapi.editor.actions.IncrementalFindAction.SEARCH_DISABLED;
 
-public class MySelectAllOccurrencesAction extends EditorAction {
+public class MySelectAllOccurrencesAction extends MyEditorAction {
 	protected MySelectAllOccurrencesAction() {
 		super(new Handler());
 	}
@@ -55,6 +56,8 @@ public class MySelectAllOccurrencesAction extends EditorAction {
 
 		@Override
 		public void doExecute(@NotNull final Editor editor, @Nullable Caret c, DataContext dataContext) {
+			MyApplicationService.setAction(MySelectAllOccurrencesAction.class);
+
 			HashSet<Pair<String, Boolean>> selectedTexts = new HashSet<>();
 			List<MyModel> models = new ArrayList<>();
 

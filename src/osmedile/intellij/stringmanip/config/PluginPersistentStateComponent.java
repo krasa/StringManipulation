@@ -16,6 +16,8 @@ import osmedile.intellij.stringmanip.CharacterSwitchingSettings;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
 import osmedile.intellij.stringmanip.filter.GrepSettings;
+import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
+import osmedile.intellij.stringmanip.replace.gui.ReplaceItemModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.tokens.SortTokensModel;
 import osmedile.intellij.stringmanip.styles.Style;
@@ -30,7 +32,7 @@ import java.util.*;
 public class PluginPersistentStateComponent implements PersistentStateComponent<PluginPersistentStateComponent> {
 	private static final Logger LOG = Logger.getInstance(PluginPersistentStateComponent.class);
 
-	public static final int LIMIT = 20;
+	public static final int MAX_HISTORY = 20;
 	private List<ColumnAlignerModel> columnAlignerHistory = new ArrayList<ColumnAlignerModel>();
 	private List<CustomActionModel> customActionModels = DefaultActions.defaultActions();
 
@@ -44,6 +46,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private NormalizationSettings normalizationSettings = new NormalizationSettings();
 
 	private List<GrepSettings> grepHistory = new ArrayList<>();
+	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
 
 	public PluginPersistentStateComponent() {
 	}
@@ -139,7 +142,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	public void addToHistory(ColumnAlignerModel columnAlignerModel) {
 		List<ColumnAlignerModel> newList = new ArrayList<ColumnAlignerModel>(columnAlignerHistory.size() + 1);
 
-		int startIndex = columnAlignerHistory.size() >= LIMIT ? 1 : 0;
+		int startIndex = columnAlignerHistory.size() >= MAX_HISTORY ? 1 : 0;
 		for (int i = startIndex; i < columnAlignerHistory.size(); i++) {
 			ColumnAlignerModel alignerModel = columnAlignerHistory.get(i);
 			if (!alignerModel.equals(columnAlignerModel)) {
@@ -274,7 +277,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	public void addToHistory(GrepSettings grepSettings) {
 		List<GrepSettings> newList = new ArrayList<>(grepHistory.size() + 1);
 
-		int startIndex = grepHistory.size() >= LIMIT ? 1 : 0;
+		int startIndex = grepHistory.size() >= MAX_HISTORY ? 1 : 0;
 		for (int i = startIndex; i < grepHistory.size(); i++) {
 			GrepSettings settings = grepHistory.get(i);
 			if (!settings.equals(grepSettings)) {
@@ -353,6 +356,43 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public List<GrepSettings> getGrepHistory() {
 		return grepHistory;
+	}
+
+	public List<ReplaceCompositeModel> getReplaceHistory() {
+		return replaceHistory;
+	}
+
+	public void setReplaceHistory(List<ReplaceCompositeModel> replaceHistory) {
+		this.replaceHistory = replaceHistory;
+	}
+
+	public List<ReplaceItemModel> getReplaceModels() {
+		ArrayList<ReplaceItemModel> replaceItemModels = new ArrayList<>();
+		for (ReplaceCompositeModel replaceCompositeModel : replaceHistory) {
+			replaceItemModels.addAll(replaceCompositeModel.getItems());
+		}
+		return replaceItemModels;
+	}
+
+
+	public void addToHistory(ReplaceCompositeModel compositeModel) {
+		if (!compositeModel.isValid()) {
+			return;
+		}
+		compositeModel.setDate(new Date());
+		compositeModel.removeEmpty();
+		replaceHistory.removeIf(m -> Objects.equals(m.getItems(), compositeModel.getItems()));
+		replaceHistory.add(compositeModel);
+		while (replaceHistory.size() > MAX_HISTORY) {
+			replaceHistory.remove(0);
+		}
+	}
+
+	public ReplaceCompositeModel getLastReplaceModel() {
+		if (!replaceHistory.isEmpty()) {
+			return replaceHistory.get(replaceHistory.size() - 1);
+		}
+		return null;
 	}
 
 }

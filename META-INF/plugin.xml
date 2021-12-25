@@ -1,9 +1,9 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.24.203.000.1</version>
+    <version>8.24.203.5981.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
-    <idea-version since-build="203.000"/>
+    <idea-version since-build="203.5981.155"/>
 
     <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
     <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
@@ -46,8 +46,10 @@
         >
             <add-to-group group-id="EditMenu" anchor="last"/>
 
-            <action id="osmedile.intellij.stringmanip.RepeatAction" class="osmedile.intellij.stringmanip.RepeatAction"
-                    text="Repeat Last Action"/>
+            <group id="StringManipulation.RepeatActionGroup"
+                   class="osmedile.intellij.stringmanip.actions.RepeatActionGroup"
+                   text="Repeat Last Action">
+            </group>
             <separator/>
 
             <group id="StringManipulation.Group.EscapeUnescape" text="Escape/Unescape..."
@@ -680,19 +682,32 @@
             <!--            </group>-->
 
             <separator/>
-            <action id="StringManipulation.SelectAllOccurrencesAction"
-                    class="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
-                    text="Select All Occurrences For All Carets"
-            />
 
-            <action id="StringManipulation.DuplicateAndReplaceAction"
-                    class="osmedile.intellij.stringmanip.actions.DuplicateAndReplaceAction"
-                    text="Duplicate Line or Selection And Replace"
-            />
-            <action id="StringManipulation.SelectWordInDifferentHumpsModeAction"
-                    class="osmedile.intellij.stringmanip.actions.SelectWordInDifferentHumpsModeAction"
-                    text="Extend Selection in Different &quot;CamelHumps&quot; Mode"
-            />
+            <group id="StringManipulation.Group.Misc"
+                   text="Misc..."
+                   description="Miscellaneous editor actions"
+                   popup="true">
+                <action id="StringManipulation.SelectWordInDifferentHumpsModeAction"
+                        class="osmedile.intellij.stringmanip.actions.SelectWordInDifferentHumpsModeAction"
+                        text="Extend Selection in Different &quot;CamelHumps&quot; Mode"
+                />
+                <action id="StringManipulation.SelectAllOccurrencesAction"
+                        class="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
+                        text="Select All Occurrences For All Carets"
+                        description="The default one works only for the last caret"
+                />
+                <separator/>
+                <action id="StringManipulation.DuplicateAndReplaceAction"
+                        class="osmedile.intellij.stringmanip.replace.DuplicateAndReplaceAction"
+                        text="Duplicate Line or Selection and Special Replace"
+                        description="Configure with 'String Manipulation' tool window"
+                />
+                <action id="StringManipulation.ReplaceAction"
+                        class="osmedile.intellij.stringmanip.replace.ReplaceAction"
+                        text="Special Replace"
+                        description="Configure with 'String Manipulation' tool window"
+                />
+            </group>
         </group>
 
 
@@ -706,12 +721,70 @@
             <reference ref="StringManipulation.Group.Main"></reference>
         </group>
 
-        <action id="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
-                class="osmedile.intellij.stringmanip.actions.MySelectAllOccurrencesAction"
-                text="Select All Occurrences For All Carets"/>
+
+        <group id="StringManipulation.ToolWindow.Replace"
+               text="String Manipulation ToolWindow - Replace">
+
+            <action id="StringManipulation.ToolWindow.Replace.SaveAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.SaveAction"
+                    text="Save"
+                    icon="/actions/menu-saveall.svg"
+            />
+
+            <action id="StringManipulation.ToolWindow.Replace.LoadIntelliJReplaceModelAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.LoadIntelliJReplaceModelAction"
+                    text="Load IDE's Model"
+                    icon="AllIcons.Actions.Download"
+            />
+
+            <action id="StringManipulation.ToolWindow.Replace.HistoryAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.HistoryAction"
+                    text="History"
+                    icon="AllIcons.Vcs.History"
+            />
+
+            <action id="StringManipulation.ToolWindow.Replace.ResetAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.ResetAction"
+                    text="Reset"
+                    icon="AllIcons.Actions.GC"
+            />
+            <!--            <action id="StringManipulation.ToolWindow.Replace.Help"-->
+            <!--                    class="osmedile.intellij.stringmanip.toolwindow.replace.actions.HelpAction"-->
+            <!--                    text="Help"-->
+            <!--                    icon="AllIcons.Actions.Help"-->
+            <!--            />-->
+
+        </group>
+        <group id="StringManipulation.ToolWindow.Replace.Item"
+               text="String Manipulation ToolWindow - Replace - Item">
+
+            <action id="StringManipulation.ToolWindow.Replace.Item.MoveUpAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.item.MoveUpAction"
+                    text="Move Up"
+                    icon="AllIcons.Actions.MoveUp"
+            />
+
+            <action id="StringManipulation.ToolWindow.Replace.Item.MoveDownAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.item.MoveDownAction"
+                    text="Move Down"
+                    icon="AllIcons.Actions.MoveDown"
+            />
+            <action id="StringManipulation.ToolWindow.Replace.Item.RemoveAction"
+                    class="osmedile.intellij.stringmanip.replace.gui.actions.item.RemoveAction"
+                    text="Remove"
+                    icon="AllIcons.Actions.GC"
+            />
+
+        </group>
+
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
+
+        <toolWindow id="String Manipulation" icon="/icons/edit.svg" anchor="right" canCloseContents="true"
+                    doNotActivateOnStart="true"
+                    factoryClass="osmedile.intellij.stringmanip.toolwindow.StringManipulationToolWindowFactory"/>
+
         <applicationService serviceImplementation="osmedile.intellij.stringmanip.MyApplicationService"/>
 
         <postStartupActivity implementation="osmedile.intellij.stringmanip.ShortcutStartupActivity"/>
@@ -856,9 +929,11 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Wrap or shift double quotes to single quotes to backticks</li>
 				<li>Swap between double quotes and single quotes</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
+             <br>
                 <li>Select All Occurrences For All Carets</li>
-                <li>Duplicate Line or Selection And Replace</li>
                 <li>Extend Selection in Different "CamelHumps" Mode</li>
+                <li>Special Replace</li>
+                <li>Duplicate Line or Selection And Special Replace</li>
                 </ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
@@ -878,8 +953,11 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	    <div>
 	        <h4>Version 8.24</h4>
 	        <ul>
-                <li>Chinese translation <a href="https://github.com/krasa/StringManipulation/issues/162">#162</a></li>
-                <li>Added: Duplicate Line or Selection And Replace</li>
+                <li>Support for Chinese localization <a href="https://github.com/krasa/StringManipulation/issues/162">#162</a></li>
+                <li>Added: Extend Selection in Different "CamelHumps" Mode</li>
+                <li>Added: Set shortcut - under the Repeat action</li>
+                <li>Added: Special Replace - with a toolwindow for configuration of multiple replacements</li>
+                <li>Added: Duplicate Line or Selection and Special Replace</li>
             </ul>
 	    </div>
 	    <div>
@@ -901,81 +979,6 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 8.21</h4>
 	        <ul>
                 <li>Hierarchical sort - added separator regex setting</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.20</h4>
-	        <ul>
-                <li>Added: Grep, Inverted Grep - without a dialog</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.19</h4>
-	        <ul>
-                <li>Create Sequence - carets without a selection will add a number</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.18</h4>
-	        <ul>
-                <li>Small fixes</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.17</h4>
-	        <ul>
-                <li>Added: Swap Words</li>
-                <li>Added: Partition by Grep - matched lines will be separated from not matched</li>
-                <li>Added: Grep - History, Case Sensitive, Full Words options </li>
-                <li>Added: Shuffle Characters action</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.16</h4>
-	        <ul>
-                <li>Added: Switching between an int value and either Unicode character escape sequence or Octal character escape sequence (according to settings).</li>
-                <li>Added: To PascalCase</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.15</h4>
-	        <ul>
-                <li>Filter/Trim actions usability improvements</li>
-                <li>Capitalize action fix #134</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.14</h4>
-	        <ul>
-                <li>NPE fix</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.13</h4>
-	        <ul>
-                <li>New icons</li>
-                <li>Added: Convert Between JSON and YAML</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.12</h4>
-	        <ul>
-                <li>Added: Unicode normalization</li>
-                <li>Added Switch Case: To Spring Boot System Env Variable</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.11</h4>
-	        <ul>
-                <li>Exception fix for IJ 2021</li>
-            </ul>
-	    </div>
-	    <div>
-	        <h4>Version 8.10</h4>
-	        <ul>
-                <li>Added: Minify JS</li>
-                <li>Minify JSON - fixed order</li>
-                <li>New option: Do not add selection.</li>
             </ul>
 	    </div>
 	</p>
