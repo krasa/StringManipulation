@@ -5,17 +5,17 @@ import com.intellij.openapi.project.DumbAware;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.RepeatAction;
-import osmedile.intellij.stringmanip.RepeatActionSetShortcut;
+import osmedile.intellij.stringmanip.ShortcutsAction;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 public class RepeatActionGroup extends ActionGroup implements DumbAware, UpdateInBackground {
 
 	private final RepeatAction repeatAction;
-	private final RepeatActionSetShortcut addShortcut;
+	private final ShortcutsAction addShortcut;
 
 	public RepeatActionGroup() {
 		repeatAction = new RepeatAction();
-		addShortcut = new RepeatActionSetShortcut(StringManipulationBundle.message("action.set.shortcut.text"));
+		addShortcut = new ShortcutsAction(StringManipulationBundle.message("action.set.shortcut.text"));
 	}
 
 	@Override

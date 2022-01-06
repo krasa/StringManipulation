@@ -10,27 +10,23 @@ import com.intellij.openapi.util.NlsActions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RepeatActionSetShortcut extends AnAction implements DumbAware {
-	public RepeatActionSetShortcut() {
+public class ShortcutsAction extends AnAction implements DumbAware {
+	public ShortcutsAction() {
 	}
 
-	public RepeatActionSetShortcut(@Nullable @NlsActions.ActionText String text) {
+	public ShortcutsAction(@Nullable @NlsActions.ActionText String text) {
 		super(text);
 	}
 
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 		AnAction anAction = MyApplicationService.getInstance().getAnAction();
+		String id = "StringManipulation.Group.Main";
 		if (anAction != null) {
-			String id = ActionManager.getInstance().getId(anAction);
-			EditKeymapsDialog dialog = new EditKeymapsDialog(null, id);
-			ApplicationManager.getApplication().invokeLater(dialog::show);
+			id = ActionManager.getInstance().getId(anAction);
 		}
+		EditKeymapsDialog dialog = new EditKeymapsDialog(null, id);
+		ApplicationManager.getApplication().invokeLater(dialog::show);
 	}
 
-	@Override
-	public void update(@NotNull AnActionEvent e) {
-		AnAction anAction = MyApplicationService.getInstance().getAnAction();
-		e.getPresentation().setVisible(anAction != null);
-	}
 }

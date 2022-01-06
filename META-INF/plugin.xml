@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.24.203.5981.2</version>
+    <version>8.24.203.5981.3</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -46,10 +46,8 @@
         >
             <add-to-group group-id="EditMenu" anchor="last"/>
 
-            <group id="StringManipulation.RepeatActionGroup"
-                   class="osmedile.intellij.stringmanip.actions.RepeatActionGroup"
-                   text="Repeat Last Action">
-            </group>
+            <action id="osmedile.intellij.stringmanip.RepeatAction" class="osmedile.intellij.stringmanip.RepeatAction"
+                    text="Repeat Last Action"/>
             <separator/>
 
             <group id="StringManipulation.Group.EscapeUnescape" text="Escape/Unescape..."
@@ -708,6 +706,10 @@
                         description="Configure with 'String Manipulation' tool window"
                 />
             </group>
+
+            <action id="StringManipulation.Shortcuts" class="osmedile.intellij.stringmanip.ShortcutsAction"
+                    text="Shortcuts..."/>
+            <separator/>
         </group>
 
 
@@ -955,7 +957,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Support for Chinese localization <a href="https://github.com/krasa/StringManipulation/issues/162">#162</a></li>
                 <li>Added: Extend Selection in Different "CamelHumps" Mode</li>
-                <li>Added: Set shortcut - under the Repeat action</li>
+                <li>Added: Shortcuts...</li>
                 <li>Added: Special Replace - with a toolwindow for configuration of multiple replacements</li>
                 <li>Added: Duplicate Line or Selection and Special Replace</li>
             </ul>
