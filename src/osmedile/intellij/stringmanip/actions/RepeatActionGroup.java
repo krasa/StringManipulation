@@ -42,6 +42,7 @@ public class RepeatActionGroup extends ActionGroup implements DumbAware, UpdateI
 	@Override
 	public AnAction[] getChildren(@Nullable AnActionEvent anActionEvent) {
 		return new AnAction[]{
+				repeatAction,
 				addShortcut
 		};
 	}
