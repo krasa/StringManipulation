@@ -18,20 +18,21 @@ public class HierarchicalSort {
 
 	public List<String> sort() {
 		List<LineNode> roots = new TreeBuilder().prepareTree(originalLines);
+		TrailingCharacterTransformer trailingCharacterTransformer = new TrailingCharacterTransformer(sortSettings, roots);
 		roots = deepSort(roots);
-		return toTextLines(roots);
+		return toTextLines(roots, trailingCharacterTransformer);
 	}
 
-	private List<String> toTextLines(List<LineNode> roots) {
+	private List<String> toTextLines(List<LineNode> roots, TrailingCharacterTransformer trailingCharacterTransformer) {
 		List<String> result = new ArrayList<>();
 		for (LineNode root : roots) {
-			root.flatten(result);
+			root.flatten(result, trailingCharacterTransformer);
 		}
 		return result;
 	}
 
 	private List<LineNode> deepSort(List<LineNode> roots) {
-		LineNode virtualRoot = new LineNode(sortSettings, -1, "", -1);
+		LineNode virtualRoot = new LineNode(sortSettings, "", -1);
 		virtualRoot.children.addAll(roots);
 
 		virtualRoot.deepSort(sortSettings);
@@ -48,22 +49,33 @@ public class HierarchicalSort {
 		LineNode breakLine = null;
 
 		private List<LineNode> prepareTree(List<String> originalLines) {
-			String levelRegexp = sortSettings.getLevelRegex();
-			String groupSeparatorRegex = sortSettings.getGroupSeparatorRegex();
-			Pattern levelPattern = Pattern.compile(levelRegexp);
-			Pattern groupSeparatorRegexPattern = Pattern.compile(groupSeparatorRegex);
+			Pattern levelPattern = Pattern.compile(sortSettings.getLevelRegex());
+			Pattern groupSeparatorRegexPattern = Pattern.compile(sortSettings.getGroupSeparatorRegex());
+			Pattern groupClosingLineRegexPattern = null;
+			if (sortSettings.isGroupClosingLineRegexEnabled()) {
+				groupClosingLineRegexPattern = Pattern.compile(sortSettings.getGroupClosingLineRegex());
+			}
 
 			for (int i = 0; i < originalLines.size(); i++) {
 				String line = originalLines.get(i);
 				if (groupSeparatorRegexPattern.matcher(line).matches()) {
-					lineBreaks.add(breakLine = new LineNode(sortSettings, i, line, prevLevel));
+					lineBreaks.add(breakLine = new LineNode(sortSettings, line, prevLevel));
 					continue;
 				}
 				int level = SortLines.level(line, levelPattern);
 
+
+				if (currentNode != null && groupClosingLineRegexPattern != null && groupClosingLineRegexPattern.matcher(line).matches()) {
+					LineNode node = currentNode.findNodeForLevel(level);
+					node.setClosingLine(new LineNode(sortSettings, line, prevLevel));
+					currentNode = node;
+					prevLevel = currentNode.getLevel();
+					continue;
+				}
+
 				if (currentNode == null) {
 					addBreakLine(lineNodes);
-					lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
+					lineNodes.add(currentNode = new LineNode(sortSettings, line, level));
 					prevLevel = level;
 					continue;
 				}
@@ -72,24 +84,24 @@ public class HierarchicalSort {
 					LineNode parent = currentNode.parent;
 					if (parent == null) {
 						addBreakLine(lineNodes);
-						lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
+						lineNodes.add(currentNode = new LineNode(sortSettings, line, level));
 					} else {
 						addBreakLine(parent);
-						parent.addChild(currentNode = new LineNode(sortSettings, i, line, level));
+						parent.addChild(currentNode = new LineNode(sortSettings, line, level));
 					}
 				} else if (prevLevel < level) {
 					addBreakLine(currentNode);
-					LineNode child = new LineNode(sortSettings, i, line, level);
+					LineNode child = new LineNode(sortSettings, line, level);
 					currentNode.addChild(child);
 					currentNode = child;
 				} else if (level < prevLevel) {
-					LineNode parent = currentNode.findParentForLevel(level);
+					LineNode parent = currentNode.findParentOfLevel(level);
 					if (parent == null) {
 						addBreakLine(lineNodes);
-						lineNodes.add(currentNode = new LineNode(sortSettings, i, line, level));
+						lineNodes.add(currentNode = new LineNode(sortSettings, line, level));
 					} else {
 						addBreakLine(parent);
-						parent.addChild(currentNode = new LineNode(sortSettings, i, line, level));
+						parent.addChild(currentNode = new LineNode(sortSettings, line, level));
 					}
 				}
 				prevLevel = level;

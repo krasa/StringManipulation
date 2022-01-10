@@ -30,6 +30,22 @@ public class HierarchicalSortTest {
 		assertEquals(expected, Joiner.on("\n").join(result));
 	}
 
+	@Test
+	public void HierarchicalSortJsonTest() throws Exception {
+		String input = readFile("hiearchicalSort.json");
+
+		SortSettings sortSettings = new SortSettings();
+		sortSettings.setPreserveTrailingSpecialCharacters(true);
+		sortSettings.setHierarchicalSort(true);
+		sortSettings.setSortByGroups(true);
+		HierarchicalSort hierarchicalSort = new HierarchicalSort(List.of(input.split("\n")), sortSettings);
+		List<String> result = hierarchicalSort.sort();
+
+		String expected = readFile("hiearchicalSort_result.json");
+
+		assertEquals(expected, Joiner.on("\n").join(result));
+	}
+
 
 	private String readFile(String fileName) {
 		try {

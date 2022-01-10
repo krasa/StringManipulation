@@ -42,10 +42,6 @@ public class SortLine implements Sortable {
 		return textForComparison;
 	}
 
-	public String transformFrom(String originalLine) {
-		return transform(originalLine, text);
-	}
-
 	public SortLine transformTo(SortLine to) {
 		return new SortLine(transform(text, to.text), sortSettings);
 	}

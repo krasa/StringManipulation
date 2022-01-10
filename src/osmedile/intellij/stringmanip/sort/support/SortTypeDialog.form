@@ -3,7 +3,7 @@
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="752" height="552"/>
+      <xy x="48" y="54" width="752" height="562"/>
     </constraints>
     <properties>
       <focusCycleRoot value="false"/>
@@ -178,7 +178,7 @@
                   </component>
                 </children>
               </grid>
-              <grid id="95f64" binding="sortStrategy2" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="95f64" binding="sortStrategy2" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -186,7 +186,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="cbcdf" class="javax.swing.JLabel" binding="groupSeparatorRegexLabel">
+                  <component id="cbcdf" class="javax.swing.JLabel" binding="groupSeparatorRegex_label">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -195,7 +195,7 @@
                       <toolTipText resource-bundle="messages/StringManipulationBundle" key="matchings.lines.will.act.as.separators"/>
                     </properties>
                   </component>
-                  <component id="c4b92" class="javax.swing.JLabel" binding="levelRegexLabel">
+                  <component id="c4b92" class="javax.swing.JLabel" binding="levelRegex_label">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -225,7 +225,7 @@
                       <toolTipText resource-bundle="messages/StringManipulationBundle" key="matchings.lines.will.act.as.separators"/>
                     </properties>
                   </component>
-                  <component id="9355b" class="javax.swing.JButton" binding="resetGroupSeparator">
+                  <component id="9355b" class="javax.swing.JButton" binding="groupSeparatorRegex_reset">
                     <constraints>
                       <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -234,13 +234,65 @@
                       <toolTipText resource-bundle="messages/StringManipulationBundle" key="default.blank.line.or.starting.with"/>
                     </properties>
                   </component>
-                  <component id="45a9a" class="javax.swing.JButton" binding="resetLevel">
+                  <component id="45a9a" class="javax.swing.JButton" binding="levelRegex_reset">
                     <constraints>
                       <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text resource-bundle="messages/StringManipulationBundle" key="button.reset"/>
                       <toolTipText resource-bundle="messages/StringManipulationBundle" key="default.whitespaces"/>
+                    </properties>
+                  </component>
+                  <component id="95a27" class="osmedile.intellij.stringmanip.sort.support.MyJBTextField" binding="groupClosingLineRegex">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="50" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                      <toolTipText resource-bundle="messages/StringManipulationBundle" key="matchings.lines.will.act.as.separators"/>
+                    </properties>
+                  </component>
+                  <component id="c7ccb" class="javax.swing.JButton" binding="groupClosingLineRegex_reset">
+                    <constraints>
+                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="messages/StringManipulationBundle" key="button.reset"/>
+                      <toolTipText resource-bundle="messages/StringManipulationBundle" key="default.blank.line.or.starting.with"/>
+                    </properties>
+                  </component>
+                  <component id="8ceae" class="javax.swing.JButton" binding="groupClosingLineRegex_highlight">
+                    <constraints>
+                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Highlight"/>
+                    </properties>
+                  </component>
+                  <component id="c149d" class="javax.swing.JButton" binding="groupSeparatorRegex_highlight">
+                    <constraints>
+                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Highlight"/>
+                    </properties>
+                  </component>
+                  <component id="a83c7" class="javax.swing.JButton" binding="levelRegex_highlight">
+                    <constraints>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Highlight"/>
+                    </properties>
+                  </component>
+                  <component id="a63ed" class="javax.swing.JCheckBox" binding="groupClosingLineRegex_checkbox">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Group closing line regex"/>
                     </properties>
                   </component>
                 </children>

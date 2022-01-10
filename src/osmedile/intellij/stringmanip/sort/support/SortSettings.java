@@ -2,15 +2,15 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import com.intellij.openapi.diagnostic.Logger;
 
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class SortSettings {
+
 	private static final Logger LOG = Logger.getInstance(SortSettings.class);
-	public static final String GROUP_SEPARATOR_REGEX = "(^[\\s]*$|^---.*$)";
+
 	public static final String LEVEL_REGEX = "^[\\s]+";
+	public static final String GROUP_SEPARATOR_REGEX = "(^[\\s]*$|^---.*$)";
+	public static final String GROUP_CLOSING_LINE_REGEX = "^[\\s]*[)\\]}],?[\\s]*$";
 
 	private String trailingChars = ",;";
 	private String levelRegex = LEVEL_REGEX;
@@ -25,6 +25,9 @@ public class SortSettings {
 	private boolean hierarchicalSort = false;
 	private boolean sortByGroups = false;
 
+	private String groupClosingLineRegex = GROUP_CLOSING_LINE_REGEX;
+	private boolean groupClosingLineRegexEnabled = true;
+
 	public static SortSettings allFeaturesDisabled(Sort sort) {
 		return new SortSettings(sort).ignoreLeadingSpaces(false).preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
 	}
@@ -34,6 +37,14 @@ public class SortSettings {
 
 	public SortSettings(Sort sort) {
 		this.sortType = sort;
+	}
+
+	public boolean isGroupClosingLineRegexEnabled() {
+		return groupClosingLineRegexEnabled;
+	}
+
+	public void setGroupClosingLineRegexEnabled(boolean groupClosingLineRegexEnabled) {
+		this.groupClosingLineRegexEnabled = groupClosingLineRegexEnabled;
 	}
 
 	public SortSettings ignoreLeadingSpaces(final boolean ignoreLeadingSpaces) {
@@ -192,7 +203,6 @@ public class SortSettings {
 
 	public SortSettings sortByGroups(boolean sortByGroups) {
 		this.sortByGroups = sortByGroups;
-		Map<URL, String> stringMap = new HashMap<>();
 		return this;
 	}
 
@@ -215,6 +225,14 @@ public class SortSettings {
 		return groupSeparatorRegex;
 	}
 
+	public String getGroupClosingLineRegex() {
+		return groupClosingLineRegex;
+	}
+
+	public void setGroupClosingLineRegex(String groupClosingLineRegex) {
+		this.groupClosingLineRegex = groupClosingLineRegex;
+	}
+
 	public void setGroupSeparatorRegex(String groupSeparatorRegex) {
 		this.groupSeparatorRegex = groupSeparatorRegex;
 	}
@@ -226,6 +244,7 @@ public class SortSettings {
 
 		SortSettings that = (SortSettings) o;
 
+		if (groupClosingLineRegexEnabled != that.groupClosingLineRegexEnabled) return false;
 		if (ignoreLeadingSpaces != that.ignoreLeadingSpaces) return false;
 		if (preserveLeadingSpaces != that.preserveLeadingSpaces) return false;
 		if (preserveTrailingSpecialCharacters != that.preserveTrailingSpecialCharacters) return false;
@@ -235,6 +254,8 @@ public class SortSettings {
 			return false;
 		if (levelRegex != null ? !levelRegex.equals(that.levelRegex) : that.levelRegex != null) return false;
 		if (groupSeparatorRegex != null ? !groupSeparatorRegex.equals(that.groupSeparatorRegex) : that.groupSeparatorRegex != null)
+			return false;
+		if (groupClosingLineRegex != null ? !groupClosingLineRegex.equals(that.groupClosingLineRegex) : that.groupClosingLineRegex != null)
 			return false;
 		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
 			return false;
@@ -248,6 +269,8 @@ public class SortSettings {
 		int result = trailingChars != null ? trailingChars.hashCode() : 0;
 		result = 31 * result + (levelRegex != null ? levelRegex.hashCode() : 0);
 		result = 31 * result + (groupSeparatorRegex != null ? groupSeparatorRegex.hashCode() : 0);
+		result = 31 * result + (groupClosingLineRegex != null ? groupClosingLineRegex.hashCode() : 0);
+		result = 31 * result + (groupClosingLineRegexEnabled ? 1 : 0);
 		result = 31 * result + (collatorLanguageTag != null ? collatorLanguageTag.hashCode() : 0);
 		result = 31 * result + (baseComparator != null ? baseComparator.hashCode() : 0);
 		result = 31 * result + (blankLines != null ? blankLines.hashCode() : 0);

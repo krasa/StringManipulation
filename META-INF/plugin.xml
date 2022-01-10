@@ -959,6 +959,13 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
         <![CDATA[
 	<p>
 	    <div>
+	        <h4>Version 8.25</h4>
+	        <ul>
+                <li>Sort: hierarchical sort is able to sort JSON like formats</li>
+                <li>Added: Misc / Paste as PHP Array</li>
+            </ul>
+	    </div>
+	    <div>
 	        <h4>Version 8.24</h4>
 	        <ul>
                 <li>Support for Chinese localization <a href="https://github.com/krasa/StringManipulation/issues/162">#162</a></li>

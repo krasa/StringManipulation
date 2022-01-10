@@ -1,10 +1,14 @@
 package osmedile.intellij.stringmanip.sort.support;
 
 import com.google.common.base.Joiner;
+import com.intellij.execution.filters.Filter;
+import com.intellij.execution.impl.EditorHyperlinkSupport;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.editor.markup.TextAttributes;
+import com.intellij.openapi.project.Project;
 import com.intellij.ui.ColoredSideBorder;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
@@ -29,6 +33,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
@@ -36,6 +42,9 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog extends PreviewDialog {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(null, JBColor.ORANGE, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(null, JBColor.PINK, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_LEVEL = new TextAttributes(null, JBColor.CYAN, null, null, 0);
 
 	public JPanel contentPane;
 
@@ -70,13 +79,19 @@ public class SortTypeDialog extends PreviewDialog {
 	private JPanel previewParent;
 	public JPanel coreWithoutPreview;
 	private MyJBTextField levelRegex;
-	private JLabel levelRegexLabel;
+	private JLabel levelRegex_label;
 	private LinkLabel linkLabel;
 	private MyJBTextField groupSeparatorRegex;
-	private JLabel groupSeparatorRegexLabel;
+	private JLabel groupSeparatorRegex_label;
 	private JPanel sortStrategy2;
-	private JButton resetGroupSeparator;
-	private JButton resetLevel;
+	private JButton groupSeparatorRegex_reset;
+	private JButton levelRegex_reset;
+	private MyJBTextField groupClosingLineRegex;
+	private JButton groupClosingLineRegex_reset;
+	private JCheckBox groupClosingLineRegex_checkbox;
+	private JButton groupClosingLineRegex_highlight;
+	private JButton levelRegex_highlight;
+	private JButton groupSeparatorRegex_highlight;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
@@ -85,15 +100,28 @@ public class SortTypeDialog extends PreviewDialog {
 	public static final ColoredSideBorder VALID_BORDER = new ColoredSideBorder(
 			JBColor.GREEN, JBColor.GREEN, JBColor.GREEN, JBColor.GREEN, 1);
 
+	private Runnable activeHighlight;
+	private int lastHighlights;
+
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 //		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
-		enabledByAny(new JComponent[]{resetLevel, resetGroupSeparator, levelRegex, groupSeparatorRegex, groupSeparatorRegexLabel, levelRegexLabel}, groupSort,
+		enabledByAny(new JComponent[]{
+						groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
+						levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
+
+				}, groupSort,
 				hierarchicalSort);
 
-		disableByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
+		enabledByAny(new JComponent[]{
+						groupClosingLineRegex, groupClosingLineRegex_checkbox, groupClosingLineRegex_reset, groupClosingLineRegex_highlight
+
+				},
+				hierarchicalSort);
+
+		disableByAny(new JComponent[]{preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
 		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
 
 		submitRenderPreview();
@@ -122,8 +150,13 @@ public class SortTypeDialog extends PreviewDialog {
 			}
 		});
 
-		resetLevel.addActionListener(e -> levelRegex.setText(SortSettings.LEVEL_REGEX));
-		resetGroupSeparator.addActionListener(e -> groupSeparatorRegex.setText(SortSettings.GROUP_SEPARATOR_REGEX));
+		levelRegex_reset.addActionListener(e -> levelRegex.setText(SortSettings.LEVEL_REGEX));
+		groupSeparatorRegex_reset.addActionListener(e -> groupSeparatorRegex.setText(SortSettings.GROUP_SEPARATOR_REGEX));
+		groupClosingLineRegex_reset.addActionListener(e -> groupClosingLineRegex.setText(SortSettings.GROUP_CLOSING_LINE_REGEX));
+
+		groupClosingLineRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_CLOSING_LINE, groupClosingLineRegex, true)));
+		groupSeparatorRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE, groupSeparatorRegex, true)));
+		levelRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_LEVEL, levelRegex, false)));
 
 		hierarchicalSort.addItemListener(new ItemListener() {
 			@Override
@@ -161,6 +194,8 @@ public class SortTypeDialog extends PreviewDialog {
 				list.add(groupSort);
 				list.add(levelRegex);
 				list.add(groupSeparatorRegex);
+				list.add(groupClosingLineRegex_checkbox);
+				list.add(groupClosingLineRegex);
 
 				list.add(ignoreLeadingSpaces);
 				list.add(preserveLeadingSpaces);
@@ -203,6 +238,45 @@ public class SortTypeDialog extends PreviewDialog {
 				"https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort");
 	}
 
+	private void highlight(TextAttributes attributes, MyJBTextField regex, boolean wholeLine) {
+		AtomicInteger matched = new AtomicInteger();
+		Pattern compile = null;
+		try {
+			compile = Pattern.compile(regex.getText());
+		} catch (Exception e) {
+			return;
+		}
+
+		Project project = editor.getProject();
+		myPreviewEditor.getMarkupModel().removeAllHighlighters();
+		EditorHyperlinkSupport myHyperlinks = new EditorHyperlinkSupport(myPreviewEditor, project);
+		int lineCount = myPreviewEditor.getDocument().getLineCount();
+		if (lineCount > 0) {
+			Pattern finalCompile = compile;
+			myHyperlinks.highlightHyperlinks((s, i) -> {
+				int length = s.length();
+				if (wholeLine) {
+					if (finalCompile.matcher(s).matches()) {
+						matched.incrementAndGet();
+						return new Filter.Result(i - length, i, null, attributes);
+					}
+				} else {
+					Matcher matcher = finalCompile.matcher(s);
+					if (matcher.find()) {
+						matched.incrementAndGet();
+
+						final int start = matcher.start();
+						final int end = matcher.end();
+						int offset = i - length;
+						return new Filter.Result(offset + start, offset + end, null, attributes);
+					}
+				}
+				return null;
+			}, 0, lineCount - 1);
+		}
+		lastHighlights = matched.get();
+	}
+
 	private void addPreviewListeners(Object object) {
 		for (Field field : object.getClass().getDeclaredFields()) {
 			try {
@@ -239,13 +313,8 @@ public class SortTypeDialog extends PreviewDialog {
 		if (this.editor == null) {
 			return;
 		}
-		if (!validateRegexp()) {
-			return;
-		}
+		if (!validateRegexp()) return;
 
-		if (!validateRegexp2()) {
-			return;
-		}
 		String s;
 		try {
 			List<String> result = sortPreview(editor, getSettings());
@@ -259,6 +328,15 @@ public class SortTypeDialog extends PreviewDialog {
 		}
 		setPreviewTextOnEDT(s, myPreviewEditor, myPreviewPanel);
 	}
+
+	@Override
+	protected void inPreviewWriteAction(EditorImpl previewEditor) {
+		previewEditor.getMarkupModel().removeAllHighlighters();
+		if (activeHighlight != null) {
+			activeHighlight.run();
+		}
+	}
+
 
 	protected List<String> sortPreview(Editor editor, SortSettings settings) {
 		List<String> lines = PreviewDialog.getPreviewLines(editor);
@@ -277,10 +355,11 @@ public class SortTypeDialog extends PreviewDialog {
 		groupSort.setSelected(sortSettings.isSortByGroups());
 		levelRegex.setText(sortSettings.getLevelRegex());
 		groupSeparatorRegex.setText(sortSettings.getGroupSeparatorRegex());
+		groupClosingLineRegex_checkbox.setSelected(sortSettings.isGroupClosingLineRegexEnabled());
+		groupClosingLineRegex.setText(sortSettings.getGroupClosingLineRegex());
 
 		validateLocale();
 		validateRegexp();
-		validateRegexp2();
 
 		switch (sortSettings.getBaseComparator()) {
 
@@ -356,33 +435,44 @@ public class SortTypeDialog extends PreviewDialog {
 	}
 
 	private boolean validateRegexp() {
+		boolean result = true;
 		try {
 			String text = levelRegex.getText();
 			Pattern.compile(text);
 			levelRegex.setMyBorder(VALID_BORDER);
 			levelRegex.setToolTipText("valid regex");
-			return true;
 		} catch (Throwable e) {
 			levelRegex.setMyBorder(ERROR_BORDER);
 			levelRegex.setToolTipText("invalid regex");
-			return false;
+			result = false;
 		}
 
-	}
-
-	private boolean validateRegexp2() {
 		try {
 			String text = groupSeparatorRegex.getText();
 			Pattern.compile(text);
 			groupSeparatorRegex.setMyBorder(VALID_BORDER);
 			groupSeparatorRegex.setToolTipText("valid regex");
-			return true;
 		} catch (Throwable e) {
 			groupSeparatorRegex.setMyBorder(ERROR_BORDER);
 			groupSeparatorRegex.setToolTipText("invalid regex");
-			return false;
+			result = false;
+
 		}
 
+		try {
+			String text = groupClosingLineRegex.getText();
+			Pattern.compile(text);
+			groupClosingLineRegex.setMyBorder(VALID_BORDER);
+			groupClosingLineRegex.setToolTipText("valid regex");
+
+		} catch (Throwable e) {
+			groupClosingLineRegex.setMyBorder(ERROR_BORDER);
+			groupClosingLineRegex.setToolTipText("invalid regex");
+			result = false;
+
+		}
+
+		return result;
 	}
 
 
@@ -405,6 +495,8 @@ public class SortTypeDialog extends PreviewDialog {
 		sortSettings.setHierarchicalSort(hierarchicalSort.isSelected());
 		sortSettings.setLevelRegex(levelRegex.getText());
 		sortSettings.setGroupSeparatorRegex(groupSeparatorRegex.getText());
+		sortSettings.setGroupClosingLineRegex(groupClosingLineRegex.getText());
+		sortSettings.setGroupClosingLineRegexEnabled(groupClosingLineRegex_checkbox.isSelected());
 		return sortSettings;
 	}
 
@@ -445,4 +537,23 @@ public class SortTypeDialog extends PreviewDialog {
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}
 
+	private class HighlightListener implements ActionListener {
+		private final Runnable runnable;
+
+		public HighlightListener(Runnable runnable) {
+			this.runnable = runnable;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (lastHighlights > 0 && activeHighlight == runnable) {
+				lastHighlights = 0;
+				activeHighlight = null;
+				myPreviewEditor.getMarkupModel().removeAllHighlighters();
+				return;
+			}
+			activeHighlight = runnable;
+			activeHighlight.run();
+		}
+	}
 }

@@ -82,9 +82,15 @@ public abstract class PreviewDialog implements Disposable {
 				return;
 			}
 			previewEditor.getDocument().setText(text);
+
+			inPreviewWriteAction(previewEditor);
+
 			previewPanel.validate();
 			previewPanel.repaint();
 		}), ModalityState.any());
+	}
+
+	protected void inPreviewWriteAction(EditorImpl previewEditor) {
 	}
 
 	@NotNull
