@@ -251,7 +251,6 @@
                     </constraints>
                     <properties>
                       <text value=""/>
-                      <toolTipText resource-bundle="messages/StringManipulationBundle" key="matchings.lines.will.act.as.separators"/>
                     </properties>
                   </component>
                   <component id="c7ccb" class="javax.swing.JButton" binding="groupClosingLineRegex_reset">
@@ -260,7 +259,6 @@
                     </constraints>
                     <properties>
                       <text resource-bundle="messages/StringManipulationBundle" key="button.reset"/>
-                      <toolTipText resource-bundle="messages/StringManipulationBundle" key="default.blank.line.or.starting.with"/>
                     </properties>
                   </component>
                   <component id="8ceae" class="javax.swing.JButton" binding="groupClosingLineRegex_highlight">
@@ -268,7 +266,7 @@
                       <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Highlight"/>
+                      <text resource-bundle="messages/StringManipulationBundle" key="button.highlight"/>
                     </properties>
                   </component>
                   <component id="c149d" class="javax.swing.JButton" binding="groupSeparatorRegex_highlight">
@@ -276,7 +274,7 @@
                       <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Highlight"/>
+                      <text resource-bundle="messages/StringManipulationBundle" key="button.highlight"/>
                     </properties>
                   </component>
                   <component id="a83c7" class="javax.swing.JButton" binding="levelRegex_highlight">
@@ -284,7 +282,7 @@
                       <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Highlight"/>
+                      <text resource-bundle="messages/StringManipulationBundle" key="button.highlight"/>
                     </properties>
                   </component>
                   <component id="a63ed" class="javax.swing.JCheckBox" binding="groupClosingLineRegex_checkbox">
@@ -292,7 +290,7 @@
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Group closing line regex"/>
+                      <text resource-bundle="messages/StringManipulationBundle" key="checkbox.group.closing.line.regex"/>
                     </properties>
                   </component>
                 </children>
