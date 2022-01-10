@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.sort.support.SortException;
@@ -170,7 +171,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 
 
 	@Override
-	protected void renderPreview() {
+	protected void renderPreviewAsync() {
 		String x = null;
 		try {
 			ColumnAligner columnAligner = new ColumnAligner(getModel());
@@ -193,7 +194,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 			x = e.toString();
 		}
 
-		setPreviewTextOnEDT(x, myPreviewEditor, myPreviewPanel);
+		setPreviewTextOnEDT(x, myPreviewEditor, myPreviewPanel, null);
 	}
 
 	protected void init(ColumnAlignerModel lastSeparators) {
@@ -321,11 +322,18 @@ public class AlignToColumnsForm extends PreviewDialog {
 		return strings;
 	}
 
+	@NotNull
 	public JComponent getPreferredFocusedComponent() {
 		JComponent component = (JComponent) textfields.getComponent(0);
 		component = (JComponent) component.getComponent(0);
 		return component;
 
+	}
+
+	@NotNull
+	@Override
+	public JComponent getRoot() {
+		return root;
 	}
 
 	public ColumnAlignerModel getModel() {

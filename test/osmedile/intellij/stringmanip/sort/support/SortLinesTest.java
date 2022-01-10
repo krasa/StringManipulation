@@ -40,7 +40,7 @@ public class SortLinesTest {
 				"a:1\n" +
 				"b:1\n" +
 				"c:1\n";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class SortLinesTest {
 				"a:1\n" +
 				"b:1\n" +
 				"c:1\n";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class SortLinesTest {
 				"  12\n" +
 				"  14\n" +
 				"  a\n";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -161,7 +161,7 @@ public class SortLinesTest {
 				" a2b2\n" +
 				"   a2b2c1\n" +
 				"   a2b2c2\n";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -225,7 +225,7 @@ public class SortLinesTest {
 				"   a1b3c1\n" +
 				"   a1b3c2\n" +
 				"   a1b3c3\n";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -246,7 +246,7 @@ public class SortLinesTest {
 				"  a1b1c1\n" +
 				"  a1b1c3\n" +
 				"";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -269,7 +269,7 @@ public class SortLinesTest {
 				"  a1b1c1\n" +
 				"  a1b1c3\n" +
 				"";
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -290,7 +290,7 @@ public class SortLinesTest {
 				"";
 
 
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
@@ -311,55 +311,55 @@ public class SortLinesTest {
 				"";
 
 
-		Assert.assertEquals(expected, new SortLines(input, sortSettings).sort());
+		Assert.assertEquals(expected, new SortLines(null, input, sortSettings).sort());
 	}
 
 	@Test
 	public void sort() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z);
-		List<String> result = new SortLines(input, sortSettings).sortLines();
+		List<String> result = new SortLines(null, input, sortSettings).sortLines();
 		Assert.assertEquals(expected, result);
 	}
 
 	@Test
 	public void preserveTrailing() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).preserveTrailingSpecialCharacters(true);
-		List<String> result = new SortLines(input, sortSettings).sortLines();
+		List<String> result = new SortLines(null, input, sortSettings).sortLines();
 		Assert.assertEquals(expected_preserveTrailing, result);
 	}
 
 	@Test
 	public void ignoreLeadingSpace() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true);
-		List<String> result = new SortLines(inputWithLeadingSpace, sortSettings).sortLines();
+		List<String> result = new SortLines(null, inputWithLeadingSpace, sortSettings).sortLines();
 		Assert.assertEquals(expectedWithLeadingSpace_ignoreLeading, result);
 	}
 
 	@Test
 	public void ignoreLeadingSpace_preserveLeading() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true).preserveLeadingSpaces(true);
-		List<String> result = new SortLines(inputWithLeadingSpace, sortSettings).sortLines();
+		List<String> result = new SortLines(null, inputWithLeadingSpace, sortSettings).sortLines();
 		Assert.assertEquals(expectedWithLeadingSpace_ignoreLeading_preserveLeading, result);
 	}
 
 	@Test
 	public void ignoreLeadingSpace_preserveLeading_preserveTrailing() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).ignoreLeadingSpaces(true).preserveLeadingSpaces(true).preserveTrailingSpecialCharacters(true);
-		List<String> result = new SortLines(inputWithLeadingSpace, sortSettings).sortLines();
+		List<String> result = new SortLines(null, inputWithLeadingSpace, sortSettings).sortLines();
 		Assert.assertEquals("input: " + inputWithLeadingSpace, expectedWithLeadingSpace_preserveLeading_preserveTrailing, result);
 	}
 
 	@Test
 	public void not_ignoreLeadingSpace() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z);
-		List<String> result = new SortLines(inputWithLeadingSpace, sortSettings).sortLines();
+		List<String> result = new SortLines(null, inputWithLeadingSpace, sortSettings).sortLines();
 		Assert.assertEquals(expectedWithLeadingSpace, result);
 	}
 
 	@Test
 	public void not_ignoreLeadingSpace_preserveLeading() throws Exception {
 		SortSettings sortSettings = allFeaturesDisabled(Sort.CASE_SENSITIVE_A_Z).preserveLeadingSpaces(true);
-		List<String> result = new SortLines(inputWithLeadingSpace, sortSettings).sortLines();
+		List<String> result = new SortLines(null, inputWithLeadingSpace, sortSettings).sortLines();
 		Assert.assertEquals(expectedWithLeadingSpace, result);
 	}
 

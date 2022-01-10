@@ -2,18 +2,15 @@ package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
-import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.util.text.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,45 +77,8 @@ public class GrepAction extends MyEditorAction {
 	protected GrepSettings getSettings(Editor editor, String initialValue) {
 		GrepSettings settings = getSettings(initialValue);
 		final GrepDialog dialog = new GrepDialog(this, settings, editor);
-		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
-			{
-				init();
-				setTitle("Grep");
-			}
 
-			@Override
-			protected void dispose() {
-				super.dispose();
-				dialog.dispose();
-			}
-
-			@Nullable
-			@Override
-			public JComponent getPreferredFocusedComponent() {
-				return dialog.pattern;
-			}
-
-			@Nullable
-			@Override
-			protected String getDimensionServiceKey() {
-				return "StringManipulation.GrepDialog";
-			}
-
-			@Nullable
-			@Override
-			protected JComponent createCenterPanel() {
-				return dialog.contentPane;
-			}
-
-
-			@Override
-			protected void doOKAction() {
-				super.doOKAction();
-			}
-		};
-
-		boolean b = dialogWrapper.showAndGet();
-		if (!b) {
+		if (!dialog.showAndGet(editor.getProject(), "Grep", "StringManipulation.GrepDialog")) {
 			return null;
 		}
 		GrepSettings newSettings = dialog.getSettings();

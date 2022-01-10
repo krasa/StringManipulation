@@ -1,9 +1,5 @@
 package osmedile.intellij.stringmanip.utils;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import com.intellij.application.options.colors.ColorAndFontOptions;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Document;
@@ -13,6 +9,14 @@ import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class IdeUtils {
 	public static void sort(List<CaretState> caretsAndSelections) {
@@ -47,4 +51,21 @@ public class IdeUtils {
 		return (EditorImpl) editor;
 	}
 
+	public static String stacktraceToString(Throwable e) {
+		StringWriter writer = new StringWriter();
+		StackTraceElement[] trace = e.getStackTrace();
+		printStackTrace(writer, trace);
+		String s1 = writer.toString();
+		return s1;
+	}
+
+	public static void printStackTrace(@NotNull Writer f, StackTraceElement[] stackTraceElements) {
+		try {
+			for (StackTraceElement element : stackTraceElements) {
+				f.write("\tat " + element + "\n");
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

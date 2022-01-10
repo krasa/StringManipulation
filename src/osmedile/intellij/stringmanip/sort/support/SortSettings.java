@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import com.intellij.openapi.diagnostic.Logger;
 
+import java.util.Comparator;
 import java.util.Locale;
 
 public class SortSettings {
@@ -24,6 +25,7 @@ public class SortSettings {
 	private boolean preserveTrailingSpecialCharacters = false;
 	private boolean hierarchicalSort = false;
 	private boolean sortByGroups = false;
+	private boolean jsonSort;
 
 	private String groupClosingLineRegex = GROUP_CLOSING_LINE_REGEX;
 	private boolean groupClosingLineRegexEnabled = true;
@@ -209,6 +211,18 @@ public class SortSettings {
 	public SortSettings hierarchicalSort(boolean hiearchicalSort) {
 		this.hierarchicalSort = hiearchicalSort;
 		return this;
+	}
+
+	public boolean isJsonSort() {
+		return jsonSort;
+	}
+
+	public void setJsonSort(boolean jsonSort) {
+		this.jsonSort = jsonSort;
+	}
+
+	public Comparator<Sortable> getSortLineComparator() {
+		return getSortType().getSortLineComparator(getBaseComparator(), getCollatorLanguageTag());
 	}
 
 	public static enum BlankLines {

@@ -178,59 +178,59 @@ public class SortTest {
 	@Test
 	public void testCollator() throws Exception {
 		Character[] cs = new Character[]{
-			0x0009,      //	9	Horizontal tab	HT
+				0x0009,      //	9	Horizontal tab	HT
 //			0x000A,       //	10	Line feed	LF
-			0x000B,      //	11	Vertical tab	VT
-			0x000C,      //	12	Form feed	FF
-			0x000D,       //	13	Carriage return	CR
+				0x000B,      //	11	Vertical tab	VT
+				0x000C,      //	12	Form feed	FF
+				0x000D,       //	13	Carriage return	CR
 
-			0x0020,    //	 	32	Space	0001
-			0x0021,    //	!	33	Exclamation mark	0002
-			0x0022,    //	"	34	Quotation mark	0003
-			0x0023,    //	#	35	Number sign, Hashtag, Octothorpe, Sharp	0004
-			0x0024,    //	$	36	Dollar sign	0005
-			0x0025,    //	%	37	Percent sign	0006
-			0x0026,    //	&	38	Ampersand	0007
-			0x0027,    //	'	39	Apostrophe	0008
-			0x0028,    //	(	40	Left parenthesis	0009
-			0x0029,    //	)	41	Right parenthesis	0010
-			0x002A,    //	*	42	Asterisk	0011
-			0x002B,    //	+	43	Plus sign	0012
-			0x002C,    //	,	44	Comma	0013
-			0x002D,    //	-	45	Hyphen-minus	0014
-			0x002E,    //	.	46	Full stop	0015
-			0x002F,    //	/	47	Slash (Solidus)	0016
+				0x0020,    //	 	32	Space	0001
+				0x0021,    //	!	33	Exclamation mark	0002
+				0x0022,    //	"	34	Quotation mark	0003
+				0x0023,    //	#	35	Number sign, Hashtag, Octothorpe, Sharp	0004
+				0x0024,    //	$	36	Dollar sign	0005
+				0x0025,    //	%	37	Percent sign	0006
+				0x0026,    //	&	38	Ampersand	0007
+				0x0027,    //	'	39	Apostrophe	0008
+				0x0028,    //	(	40	Left parenthesis	0009
+				0x0029,    //	)	41	Right parenthesis	0010
+				0x002A,    //	*	42	Asterisk	0011
+				0x002B,    //	+	43	Plus sign	0012
+				0x002C,    //	,	44	Comma	0013
+				0x002D,    //	-	45	Hyphen-minus	0014
+				0x002E,    //	.	46	Full stop	0015
+				0x002F,    //	/	47	Slash (Solidus)	0016
 
-			0x003A,    // :	58	Colon	0027
-			0x003B,    // ;	59	Semicolon	0028
-			0x003C,    // <	60	Less-than sign	0029
-			0x003D,    // =	61	Equal sign	0030
-			0x003E,    // >	62	Greater-than sign	0031
-			0x003F,    // ?	63	Question mark	0032
-			0x0040,    // @	64	At sign	0033
+				0x003A,    // :	58	Colon	0027
+				0x003B,    // ;	59	Semicolon	0028
+				0x003C,    // <	60	Less-than sign	0029
+				0x003D,    // =	61	Equal sign	0030
+				0x003E,    // >	62	Greater-than sign	0031
+				0x003F,    // ?	63	Question mark	0032
+				0x0040,    // @	64	At sign	0033
 
-			0x005B,    // [	91	Left Square Bracket	0060
-			0x005C,    // \	92	Backslash	0061
-			0x005D,    // ]	93	Right Square Bracket	0062
-			0x005E,    // ^	94	Circumflex accent	0063
-			0x005F,    // _	95	Low line	0064
-			0x0060,    // `	96	Grave accent	0065
+				0x005B,    // [	91	Left Square Bracket	0060
+				0x005C,    // \	92	Backslash	0061
+				0x005D,    // ]	93	Right Square Bracket	0062
+				0x005E,    // ^	94	Circumflex accent	0063
+				0x005F,    // _	95	Low line	0064
+				0x0060,    // `	96	Grave accent	0065
 
-			0x007B,    //{	123	Left Curly Bracket	0092
-			0x007C,    //|	124	Vertical bar	0093
-			0x007D,    //}	125	Right Curly Bracket	0094
-			0x007E    //~	126	Tilde	0095
+				0x007B,    //{	123	Left Curly Bracket	0092
+				0x007C,    //|	124	Vertical bar	0093
+				0x007D,    //}	125	Right Curly Bracket	0094
+				0x007E    //~	126	Tilde	0095
 		};
 		for (Character c : cs) {
 			String[] input = new String[]{
-				"Theme",
-				"The" + c + "a",
-				"The" + c + "x",
+					"Theme",
+					"The" + c + "a",
+					"The" + c + "x",
 			};
 			String[] result = new String[]{
-				"The" + c + "a",
-				"The" + c + "x",
-				"Theme",
+					"The" + c + "a",
+					"The" + c + "x",
+					"Theme",
 			};
 			//takes too long
 //			Locale[] availableLocales = Locale.getAvailableLocales();
@@ -434,7 +434,7 @@ public class SortTest {
 	private void assertSort(String[] input, SortSettings sortSettings, String... result) {
 		List<String> list = new ArrayList<String>();
 		list.addAll(Arrays.asList(input));
-		List<String> sorted = new SortLines(list, sortSettings).sortLines();
+		List<String> sorted = new SortLines(null, list, sortSettings).sortLines();
 		Assert.assertArrayEquals(StringUtils.join(sorted.toArray(), '\n') + "\n", result, sorted.toArray());
 	}
 

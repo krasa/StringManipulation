@@ -5,7 +5,6 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
@@ -84,46 +83,14 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 				}
 				return result;
 			}
-		};
-		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
-			{
-				init();
-				setTitle("Sort Lines by Subselection");
-			}
 
-			@Override
-			protected void dispose() {
-				super.dispose();
-				dialog.dispose();
-			}
-
-			@Nullable
+			@NotNull
 			@Override
 			public JComponent getPreferredFocusedComponent() {
-				return dialog.insensitive;
+				return insensitive;
 			}
-
-			@Nullable
-			@Override
-			protected String getDimensionServiceKey() {
-				return "StringManipulation.SortLinesBySubSelection";
-			}
-
-			@Nullable
-			@Override
-			protected JComponent createCenterPanel() {
-				return dialog.contentPane;
-			}
-
-			@Override
-			protected void doOKAction() {
-				super.doOKAction();
-			}
-
 		};
-
-		boolean b = dialogWrapper.showAndGet();
-		if (!b) {
+		if (!dialog.showAndGet(editor.getProject(), "Sort Lines by Subselection", "StringManipulation.SortLinesBySubSelection")) {
 			return null;
 		}
 		SortSettings sortSettings = dialog.getSettings().preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);

@@ -116,6 +116,7 @@ Provides actions for text manipulation:
             <li>Sort tokens (delimited text)</li>
             <li><a href="https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort/">Hierarchical sort</a></li>
             <li>Shuffle Characters</li>
+            <li>JSON sort</li>
        </ul>
     </p>
     <p>

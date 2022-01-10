@@ -215,7 +215,7 @@ public class ColumnAligner {
 			} else {
 				linesToSort = lines;
 			}
-			Comparator<Sortable> comparator = sortSettings.getSortType().getSortLineComparator(sortSettings.getBaseComparator(), sortSettings.getCollatorLanguageTag());
+			Comparator<Sortable> comparator = sortSettings.getSortLineComparator();
 
 			linesToSort.sort(new Comparator<ColumnAlignerLine>() {
 				@Override

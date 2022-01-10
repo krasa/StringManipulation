@@ -47,7 +47,7 @@ public class HierarchicalSortTest {
 	}
 
 
-	private String readFile(String fileName) {
+	public static String readFile(String fileName) {
 		try {
 			String s = FileUtils.readFileToString(new File("test/osmedile/intellij/stringmanip/sort/data/" + fileName), StandardCharsets.UTF_8);
 			String replace = s.replace("\r", "");

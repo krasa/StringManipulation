@@ -899,6 +899,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Sort lines by subselection - only one selection/caret per line is handled</li>
 				<li>Sort tokens (delimited text)</li>
 				<li>Shuffle Characters</li>
+				<li>JSON sort</li>
+                <li><a href="https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort/">Hierarchical sort</a></li>
 			</ul>
 		</p>
 		<p>
@@ -961,8 +963,9 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	    <div>
 	        <h4>Version 8.25</h4>
 	        <ul>
-                <li>Sort: hierarchical sort is able to sort JSON like formats</li>
                 <li>Added: Misc / Paste as PHP Array</li>
+                <li>Added: JSON sort type</li>
+                <li>Hierarchical sort is able to sort JSON like formats</li>
             </ul>
 	    </div>
 	    <div>

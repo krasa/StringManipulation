@@ -1,7 +1,9 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import com.intellij.openapi.project.Project;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.sort.support.tree.HierarchicalSort;
 
 import java.util.*;
@@ -11,10 +13,13 @@ import java.util.regex.Pattern;
 public class SortLines {
 	private final boolean endsWithNewLine;
 	private final List<String> originalLines;
+	@Nullable
+	private Project project;
 	private final SortSettings sortSettings;
 
 
-	public SortLines(String text, SortSettings sortSettings) {
+	public SortLines(@Nullable Project project, String text, SortSettings sortSettings) {
+		this.project = project;
 		this.sortSettings = sortSettings;
 		this.endsWithNewLine = text.endsWith("\n");
 
@@ -22,7 +27,8 @@ public class SortLines {
 		originalLines = Arrays.asList(split);
 	}
 
-	public SortLines(List<String> text, SortSettings sortSettings) {
+	public SortLines(@Nullable Project project, List<String> text, SortSettings sortSettings) {
+		this.project = project;
 		originalLines = text;
 		this.sortSettings = sortSettings;
 		endsWithNewLine = false;
@@ -40,6 +46,10 @@ public class SortLines {
 	public List<String> sortLines() {
 		if (sortSettings.isHierarchicalSort()) {
 			return new HierarchicalSort(originalLines, sortSettings).sort();
+		}
+
+		if (sortSettings.isJsonSort()) {
+			return new JsonSort(project, originalLines, sortSettings).sort();
 		}
 
 		List<Sortable> originalLines = toSortables(this.originalLines);

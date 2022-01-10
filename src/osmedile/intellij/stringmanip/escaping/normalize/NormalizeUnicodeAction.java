@@ -2,8 +2,6 @@ package osmedile.intellij.stringmanip.escaping.normalize;
 
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +10,6 @@ import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.utils.Cloner;
 
-import javax.swing.*;
 import java.util.List;
 
 public class NormalizeUnicodeAction extends MyEditorAction {
@@ -57,47 +54,7 @@ public class NormalizeUnicodeAction extends MyEditorAction {
 	@Nullable
 	protected NormalizationSettings getNormalizeSettings(final Editor editor) {
 		final NormalizationDialog dialog = new NormalizationDialog(getNormalizeSettings(storeKey), editor);
-		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
-			{
-				init();
-				setTitle("Unicode Normalization");
-			}
-
-			@Override
-			protected void dispose() {
-				super.dispose();
-				dialog.dispose();
-			}
-
-			@Nullable
-			@Override
-			public JComponent getPreferredFocusedComponent() {
-				return dialog.contentPane;
-			}
-
-			@Nullable
-			@Override
-			protected String getDimensionServiceKey() {
-				return "StringManipulation.NormalizationDialog";
-			}
-
-			@Nullable
-			@Override
-			protected JComponent createCenterPanel() {
-				return dialog.contentPane;
-			}
-
-
-			@Override
-			protected void doOKAction() {
-				super.doOKAction();
-			}
-		};
-
-		boolean b = dialogWrapper.showAndGet();
-		Disposer.dispose(dialog);
-
-		if (!b) {
+		if (!dialog.showAndGet(editor.getProject(), "Unicode Normalization", "StringManipulation.NormalizationDialog")) {
 			return null;
 		}
 		NormalizationSettings newSettings = dialog.getSettings();

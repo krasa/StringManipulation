@@ -73,18 +73,30 @@ class DelimitedListDialog extends PreviewDialog implements Disposable {
 	}
 
 	@Override
-	protected void renderPreview() {
+	protected void renderPreviewAsync() {
 		final DelimitedListAction.Settings settings = toSettings();
 		//Reads of large clipboards can take a second to complete
 		String sourceText = getSourceText(settings);
 
 		if (settings.isClipboard() && sourceText.isEmpty()) {
-			setPreviewTextOnEDT("Clipboard doesn't contain usable data", previewEditor, previewPanel);
+			setPreviewTextOnEDT("Clipboard doesn't contain usable data", previewEditor, previewPanel, settings);
 			return;
 		}
 
 		String previewText = computePreviewText(sourceText, settings);
-		setPreviewTextOnEDT(previewText, previewEditor, previewPanel);
+		setPreviewTextOnEDT(previewText, previewEditor, previewPanel, settings);
+	}
+
+	@NotNull
+	@Override
+	public JComponent getPreferredFocusedComponent() {
+		return contentPane;
+	}
+
+	@NotNull
+	@Override
+	public JComponent getRoot() {
+		return contentPane;
 	}
 
 	private String getSourceText(DelimitedListAction.Settings settings) {

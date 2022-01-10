@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
-public class SortTypeDialog extends PreviewDialog {
+public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(null, JBColor.ORANGE, null, null, 0);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(null, JBColor.PINK, null, null, 0);
@@ -92,6 +92,7 @@ public class SortTypeDialog extends PreviewDialog {
 	private JButton groupClosingLineRegex_highlight;
 	private JButton levelRegex_highlight;
 	private JButton groupSeparatorRegex_highlight;
+	private JRadioButton jsonSort;
 	private EditorImpl myPreviewEditor;
 
 	private final Editor editor;
@@ -102,6 +103,7 @@ public class SortTypeDialog extends PreviewDialog {
 
 	private Runnable activeHighlight;
 	private int lastHighlights;
+	private List<String> sourceTextForPreview;
 
 	private void updateComponents() {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
@@ -109,11 +111,10 @@ public class SortTypeDialog extends PreviewDialog {
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 //		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
 		enabledByAny(new JComponent[]{
-						groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
-						levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
+				groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
+				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
 
-				}, groupSort,
-				hierarchicalSort);
+		}, groupSort, hierarchicalSort);
 
 		enabledByAny(new JComponent[]{
 						groupClosingLineRegex, groupClosingLineRegex_checkbox, groupClosingLineRegex_reset, groupClosingLineRegex_highlight
@@ -121,8 +122,11 @@ public class SortTypeDialog extends PreviewDialog {
 				},
 				hierarchicalSort);
 
-		disableByAny(new JComponent[]{preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, hierarchicalSort);
-		disableByAny(new JComponent[]{preserveBlank}, hierarchicalSort, groupSort);
+		disableByAny(new JComponent[]{preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, jsonSort, hierarchicalSort);
+		disableByAny(new JComponent[]{preserveBlank}, jsonSort, hierarchicalSort, groupSort);
+
+		disableByAny(new JComponent[]{shuffle, reverse, length, hexa, preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank, groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
+				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight, groupSort}, jsonSort);
 
 		submitRenderPreview();
 	}
@@ -130,11 +134,12 @@ public class SortTypeDialog extends PreviewDialog {
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
 		this(sortSettings, additionaloptions, null);
-
 	}
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions, Editor editor) {
 		this.editor = editor;
+		sourceTextForPreview = getPreviewLines(editor);
+
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
@@ -191,6 +196,7 @@ public class SortTypeDialog extends PreviewDialog {
 
 				list.add(normalSort);
 				list.add(hierarchicalSort);
+				list.add(jsonSort);
 				list.add(groupSort);
 				list.add(levelRegex);
 				list.add(groupSeparatorRegex);
@@ -307,17 +313,18 @@ public class SortTypeDialog extends PreviewDialog {
 		}
 	}
 
-
 	@Override
-	protected void renderPreview() {
+	protected void renderPreviewAsync() {
 		if (this.editor == null) {
 			return;
 		}
 		if (!validateRegexp()) return;
 
 		String s;
+		SortSettings settings = null;
 		try {
-			List<String> result = sortPreview(editor, getSettings());
+			settings = getSettings();
+			List<String> result = sortPreview(editor, settings);
 			s = Joiner.on("\n").join(result);
 		} catch (SortException e) {
 			LOG.warn(e);
@@ -325,23 +332,42 @@ public class SortTypeDialog extends PreviewDialog {
 		} catch (Throwable e) {
 			LOG.error(e);
 			s = e.toString();
+			String s1 = IdeUtils.stacktraceToString(e);
+			s += "\n\n" + s1;
 		}
-		setPreviewTextOnEDT(s, myPreviewEditor, myPreviewPanel);
+		setPreviewTextOnEDT(s, myPreviewEditor, myPreviewPanel, settings);
+	}
+
+	@NotNull
+	@Override
+	public JComponent getPreferredFocusedComponent() {
+		return insensitive;
+	}
+
+	@NotNull
+	@Override
+	public JComponent getRoot() {
+		return contentPane;
 	}
 
 	@Override
-	protected void inPreviewWriteAction(EditorImpl previewEditor) {
+	protected void inPreviewWriteAction(EditorImpl previewEditor, SortSettings settings) {
 		previewEditor.getMarkupModel().removeAllHighlighters();
-		if (activeHighlight != null) {
+		if (activeHighlight != null && (groupClosingLineRegex_highlight.isEnabled() || groupSeparatorRegex_highlight.isEnabled() || levelRegex_highlight.isEnabled())) {
 			activeHighlight.run();
+		}
+		if (settings != null && settings.isJsonSort()) {
+//			CommandProcessor.getInstance().executeCommand(editor.getProject(), () -> {
+			String text = myPreviewEditor.getDocument().getText();
+			String reformat = JsonSort.reformat(text, editor.getProject());
+			myPreviewEditor.getDocument().setText(reformat);
+//			},"StringManipulation", myPreviewEditor.getComponent());
 		}
 	}
 
 
 	protected List<String> sortPreview(Editor editor, SortSettings settings) {
-		List<String> lines = PreviewDialog.getPreviewLines(editor);
-		List<String> result = new SortLines(lines, settings).sortLines();
-		return result;
+		return new SortLines(editor.getProject(), sourceTextForPreview, settings).sortLines();
 	}
 
 	public void init(SortSettings sortSettings) {
@@ -352,6 +378,7 @@ public class SortTypeDialog extends PreviewDialog {
 		languageTag.setText(sortSettings.getCollatorLanguageTag());
 		normalSort.setSelected(!sortSettings.isHierarchicalSort());
 		hierarchicalSort.setSelected(sortSettings.isHierarchicalSort());
+		jsonSort.setSelected(sortSettings.isJsonSort());
 		groupSort.setSelected(sortSettings.isSortByGroups());
 		levelRegex.setText(sortSettings.getLevelRegex());
 		groupSeparatorRegex.setText(sortSettings.getGroupSeparatorRegex());
@@ -493,6 +520,7 @@ public class SortTypeDialog extends PreviewDialog {
 		sortSettings.setCollatorLanguageTag(languageTag.getText());
 		sortSettings.setSortByGroups(groupSort.isSelected());
 		sortSettings.setHierarchicalSort(hierarchicalSort.isSelected());
+		sortSettings.setJsonSort(jsonSort.isSelected());
 		sortSettings.setLevelRegex(levelRegex.getText());
 		sortSettings.setGroupSeparatorRegex(groupSeparatorRegex.getText());
 		sortSettings.setGroupClosingLineRegex(groupClosingLineRegex.getText());

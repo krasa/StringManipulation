@@ -4,14 +4,18 @@ package osmedile.intellij.stringmanip.utils;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.util.ui.EDT;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.align.AlignToColumnsForm;
 
 import javax.swing.*;
@@ -23,9 +27,10 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public abstract class PreviewDialog implements Disposable {
+public abstract class PreviewDialog<T> implements Disposable {
 	private static final com.intellij.openapi.diagnostic.Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(AlignToColumnsForm.class);
 	protected final ThreadPoolExecutor executor;
+	public boolean shown;
 	private boolean disposed;
 
 	public PreviewDialog() {
@@ -38,23 +43,92 @@ public abstract class PreviewDialog implements Disposable {
 				new ThreadPoolExecutor.DiscardOldestPolicy());
 	}
 
-	protected void submitRenderPreview() {
+	@Nullable
+	public boolean showAndGet(@Nullable Project project, String title, String dimensions) {
+		return new MyDialogWrapper(this, title, dimensions, project).showAndGet();
+	}
+
+	public static class MyDialogWrapper extends DialogWrapper {
+
+		private final PreviewDialog previewDialog;
+		private String string;
+
+		public MyDialogWrapper(PreviewDialog previewDialog, String title, String dimensions, @Nullable Project project) {
+			super(project);
+			this.previewDialog = previewDialog;
+			init();
+			setTitle(title);
+			string = dimensions;
+		}
+
+		@Override
+		protected void dispose() {
+			super.dispose();
+			this.previewDialog.dispose();
+		}
+
+		@Nullable
+		@Override
+		public JComponent getPreferredFocusedComponent() {
+			return previewDialog.getPreferredFocusedComponent();
+		}
+
+		@Nullable
+		@Override
+		protected String getDimensionServiceKey() {
+			return string;
+		}
+
+
+		@Nullable
+		@Override
+		protected JComponent createCenterPanel() {
+			return previewDialog.getRoot();
+		}
+
+		@Override
+		public void show() {
+			this.previewDialog.shown = true;
+			this.previewDialog.submitRenderPreview();
+			super.show();
+		}
+
+		@Override
+		protected void doOKAction() {
+			super.doOKAction();
+		}
+	}
+
+	public void submitRenderPreview() {
+		if (!shown) {
+			return;
+		}
 		if (disposed) {
 			return;
 		}
+		renderPreview();
+	}
+
+	protected void renderPreview() {
 		executor.submit(() -> {
 			if (disposed) {
 				return;
 			}
 			try {
-				renderPreview();
+				renderPreviewAsync();
 			} catch (Throwable e) {
 				LOG.error(e);
 			}
 		});
 	}
 
-	protected abstract void renderPreview();
+	protected abstract void renderPreviewAsync();
+
+	@NotNull
+	public abstract JComponent getPreferredFocusedComponent();
+
+	@NotNull
+	public abstract JComponent getRoot();
 
 
 	static class MyThreadFactory implements ThreadFactory {
@@ -72,25 +146,27 @@ public abstract class PreviewDialog implements Disposable {
 		executor.shutdown();
 	}
 
-
-	protected void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel) {
+	protected void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel, T settings) {
 		if (disposed) {
 			return;
 		}
-		ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+
+		ApplicationManager.getApplication().invokeLater(() -> WriteCommandAction.runWriteCommandAction(previewEditor.getProject(), () -> {
+
 			if (disposed) {
 				return;
 			}
 			previewEditor.getDocument().setText(text);
 
-			inPreviewWriteAction(previewEditor);
+			inPreviewWriteAction(previewEditor, settings);
 
 			previewPanel.validate();
 			previewPanel.repaint();
-		}), ModalityState.any());
+		}), ModalityState.stateForComponent(previewPanel));
 	}
 
-	protected void inPreviewWriteAction(EditorImpl previewEditor) {
+
+	protected void inPreviewWriteAction(EditorImpl previewEditor, T settings) {
 	}
 
 	@NotNull

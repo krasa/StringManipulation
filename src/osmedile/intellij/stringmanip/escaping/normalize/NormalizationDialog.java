@@ -133,7 +133,7 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 	}
 
 	@Override
-	protected void renderPreview() {
+	protected void renderPreviewAsync() {
 		List<String> normalized = Normalizator.normalizeLines(previewLines, getSettings());
 
 		String originalText = Joiner.on("\n").join(previewLines);
@@ -149,6 +149,18 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 
 			hexaDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalHex), factoryEx.create(normalizedHex), "Before", "After"));
 		}), ModalityState.any());
+	}
+
+	@NotNull
+	@Override
+	public JComponent getPreferredFocusedComponent() {
+		return contentPane;
+	}
+
+	@NotNull
+	@Override
+	public JComponent getRoot() {
+		return contentPane;
 	}
 
 	private String asciiToHex(List<String> lines) {

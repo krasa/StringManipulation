@@ -1,0 +1,49 @@
+[
+  {
+    "name": "@bennycode/my-package",
+    "version": "1.1.2",
+    "description": "Calculates the average.",
+    "main": "index.js",
+    "scripts": {
+      "build": "tsc",
+      "tscinit": "tsc --init",
+      "prebenny": "echo before benny",
+      "benny": "echo benny",
+      "pretest": "echo before test",
+      "test": "node getAverage.test.js",
+      "posttest": "echo after test"
+    },
+    "author": "bennycode",
+    "license": "MIT",
+    "dependencies": {
+      "ml-array-max": "1.x"
+    },
+    "devDependencies": {
+      "typescript": "4.4.x"
+    }
+  },
+  {
+    "name": "@bennycode/my-package",
+    "version": "1.1.2",
+    "description": "Calculates the average.",
+    "main": "index.js",
+    "scripts": {
+      "build": "tsc",
+      "tscinit": "tsc --init",
+      "prebenny": "echo before benny",
+      "benny": "echo benny",
+      "pretest": "echo before test",
+      "test": "node getAverage.test.js",
+      "posttest": "echo after test"
+    },
+    "author": "bennycode",
+    "license": "MIT",
+    "dependencies": {
+      "ml-array-max": "1.x"
+    },
+    "devDependencies": {
+      "typescript": "4.4.x"
+    }
+  },
+  "Fiat"
+]

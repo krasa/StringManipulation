@@ -137,7 +137,7 @@ public class GrepDialog extends PreviewDialog {
 
 
 	@Override
-	protected void renderPreview() {
+	protected void renderPreviewAsync() {
 		if (initting.get()) {
 			return;
 		}
@@ -149,6 +149,18 @@ public class GrepDialog extends PreviewDialog {
 			log.warn(e.getMessage(), e);
 		}
 		setPreviewTextOnEDT(previewText);
+	}
+
+	@NotNull
+	@Override
+	public JComponent getPreferredFocusedComponent() {
+		return pattern;
+	}
+
+	@NotNull
+	@Override
+	public JComponent getRoot() {
+		return contentPane;
 	}
 
 	public GrepSettings getSettings() {
