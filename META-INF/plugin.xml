@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.24.203.5981.3</version>
+    <version>8.25.203.5981.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -704,6 +704,12 @@
                         class="osmedile.intellij.stringmanip.replace.ReplaceAction"
                         text="Special Replace"
                         description="Configure with 'String Manipulation' tool window"
+                />
+                <separator/>
+                <action id="StringManipulation.PasteAsPhpArray"
+                        class="osmedile.intellij.stringmanip.paste.PasteAsPhpArrayAction"
+                        text="Paste as PHP Array"
+
                 />
             </group>
 
