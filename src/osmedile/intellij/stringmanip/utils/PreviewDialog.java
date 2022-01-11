@@ -27,13 +27,15 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public abstract class PreviewDialog<T> implements Disposable {
+public abstract class PreviewDialog<SettingsType, InputType> implements Disposable {
 	private static final com.intellij.openapi.diagnostic.Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(AlignToColumnsForm.class);
 	protected final ThreadPoolExecutor executor;
+	protected final Editor editor;
 	public boolean shown;
 	private boolean disposed;
 
-	public PreviewDialog() {
+	public PreviewDialog(Editor editor) {
+		this.editor = editor;
 
 		//max 1 concurrent task + max 1 in queue
 		executor = new ThreadPoolExecutor(1, 1,
@@ -110,19 +112,26 @@ public abstract class PreviewDialog<T> implements Disposable {
 	}
 
 	protected void renderPreview() {
+		InputType input = preparePreviewInput(this.editor);
 		executor.submit(() -> {
 			if (disposed) {
 				return;
 			}
 			try {
-				renderPreviewAsync();
+				renderPreviewAsync(input);
 			} catch (Throwable e) {
 				LOG.error(e);
 			}
 		});
 	}
 
-	protected abstract void renderPreviewAsync();
+	protected InputType preparePreviewInput(Editor editor) {
+		return null;
+	}
+
+	;
+
+	protected abstract void renderPreviewAsync(InputType input);
 
 	@NotNull
 	public abstract JComponent getPreferredFocusedComponent();
@@ -146,7 +155,7 @@ public abstract class PreviewDialog<T> implements Disposable {
 		executor.shutdown();
 	}
 
-	protected void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel, T settings) {
+	protected void setPreviewTextOnEDT(String text, EditorImpl previewEditor, JPanel previewPanel, SettingsType settings) {
 		if (disposed) {
 			return;
 		}
@@ -166,14 +175,16 @@ public abstract class PreviewDialog<T> implements Disposable {
 	}
 
 
-	protected void inPreviewWriteAction(EditorImpl previewEditor, T settings) {
+	protected void inPreviewWriteAction(EditorImpl previewEditor, SettingsType settings) {
 	}
 
-	@NotNull
 	public static List<String> getPreviewLines(Editor editor) {
+		if (editor == null) {
+			return null;
+		}
 		String text = getTextForPreview(editor);
 		String[] split = text.split("\n");
-		return new ArrayList<String>(Arrays.asList(split));
+		return new ArrayList<>(Arrays.asList(split));
 	}
 
 	@NotNull

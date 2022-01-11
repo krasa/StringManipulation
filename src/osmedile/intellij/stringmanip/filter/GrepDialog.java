@@ -25,7 +25,6 @@ public class GrepDialog extends PreviewDialog {
 	private static final Logger log = LoggerFactory.getLogger(GrepDialog.class);
 
 	private GrepAction action;
-	private Editor editor;
 	private String sourceTextForPreview;
 	private EditorImpl myPreviewEditor;
 
@@ -45,11 +44,11 @@ public class GrepDialog extends PreviewDialog {
 	private JButton donate;
 
 	public GrepDialog(GrepAction action, GrepSettings grepSettings, Editor editor) {
+		super(editor);
 		Donate.initDonateButton(donate);
 
 		init(grepSettings);
 		this.action = action;
-		this.editor = editor;
 		sourceTextForPreview = PreviewDialog.getTextForPreview(editor);
 
 		final DocumentAdapter documentAdapter = new DocumentAdapter() {
@@ -111,6 +110,7 @@ public class GrepDialog extends PreviewDialog {
 	}
 
 	public GrepDialog() {
+		super(null);
 		previewParent.setVisible(false);
 		historyButton.setVisible(false);
 		donate.setVisible(false);
@@ -137,7 +137,7 @@ public class GrepDialog extends PreviewDialog {
 
 
 	@Override
-	protected void renderPreviewAsync() {
+	protected void renderPreviewAsync(Object input) {
 		if (initting.get()) {
 			return;
 		}

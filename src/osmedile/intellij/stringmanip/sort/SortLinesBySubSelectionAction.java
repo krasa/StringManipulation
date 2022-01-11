@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
@@ -18,7 +19,6 @@ import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,33 +68,12 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(PluginPersistentStateComponent.getInstance().getSortSettings(), false, editor) {
-			@Override
-			protected List<String> sortPreview(Editor editor1, SortSettings settings) {
-				List<CaretState> caretsAndSelections = editor1.getCaretModel().getCaretsAndSelections();
-				IdeUtils.sort(caretsAndSelections);
-				List<SubSelectionSortLine> lines = getLines(editor, getSettings(), caretsAndSelections);
-
-				List<SubSelectionSortLine> sortedLines = settings.getSortType().sortLines(lines, settings.getBaseComparator(), settings.getCollatorLanguageTag());
-
-				List<String> result = new ArrayList<>();
-				for (SubSelectionSortLine sortedLine : sortedLines) {
-					result.add(sortedLine.line);
-				}
-				return result;
-			}
-
-			@NotNull
-			@Override
-			public JComponent getPreferredFocusedComponent() {
-				return insensitive;
-			}
-		};
+		final SortTypeDialog dialog = new SortLinesBySubSelectionActionDialog(editor);
 		if (!dialog.showAndGet(editor.getProject(), "Sort Lines by Subselection", "StringManipulation.SortLinesBySubSelection")) {
 			return null;
 		}
 		SortSettings sortSettings = dialog.getSettings().preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);
-		PluginPersistentStateComponent.getInstance().setSortSettings(sortSettings);
+		PluginPersistentStateComponent.getInstance().storeSortSettings(STORE_KEY, sortSettings);
 		return sortSettings;
 	}
 
@@ -202,4 +181,29 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		}
 	}
 
+	private class SortLinesBySubSelectionActionDialog extends SortTypeDialog<List<SubSelectionSortLine>> {
+
+		public SortLinesBySubSelectionActionDialog(Editor editor) {
+			super(PluginPersistentStateComponent.getInstance().getSortSettings(SortLinesBySubSelectionAction.STORE_KEY), false, editor);
+		}
+
+		@Override
+		protected List<SubSelectionSortLine> preparePreviewInput(Editor editor) {
+			List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+			IdeUtils.sort(caretsAndSelections);
+			List<SubSelectionSortLine> lines = getLines(editor, getSettings(), caretsAndSelections);
+			return lines;
+		}
+
+		@Override
+		protected List<String> sortPreview(Editor editor1, SortSettings settings, List<SubSelectionSortLine> input, @Nullable Project project) {
+			List<SubSelectionSortLine> sortedLines = settings.getSortType().sortLines(input, settings.getBaseComparator(), settings.getCollatorLanguageTag());
+
+			List<String> result = new ArrayList<>();
+			for (SubSelectionSortLine sortedLine : sortedLines) {
+				result.add(sortedLine.line);
+			}
+			return result;
+		}
+	}
 }

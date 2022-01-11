@@ -54,7 +54,6 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 	private JRadioButton nothing;
 	private LinkLabel unicodeSupport;
 
-	private final Editor editor;
 	private DiffRequestPanel previewDiff;
 	private DiffRequestPanel hexaDiff;
 
@@ -63,7 +62,7 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 	}
 
 	public NormalizationDialog(@NotNull NormalizationSettings settings, @NotNull Editor editor) {
-		this.editor = editor;
+		super(editor);
 		init(settings);
 		previewLines = PreviewDialog.getPreviewLines(editor);
 
@@ -133,7 +132,7 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 	}
 
 	@Override
-	protected void renderPreviewAsync() {
+	protected void renderPreviewAsync(Object input) {
 		List<String> normalized = Normalizator.normalizeLines(previewLines, getSettings());
 
 		String originalText = Joiner.on("\n").join(previewLines);

@@ -32,7 +32,6 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class AlignToColumnsForm extends PreviewDialog {
 	private static final Logger LOG = Logger.getInstance(AlignToColumnsForm.class);
-	private final Editor editor;
 	private final List<String> previewLines;
 	public JPanel root;
 	private JPanel textfields;
@@ -59,7 +58,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 	private SortTypeDialog sortTypeForm;
 
 	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
-		this.editor = editor;
+		super(editor);
 		previewLines = PreviewDialog.getPreviewLines(editor);
 		donatePanel.add(Donate.newDonateButton());
 		resetButton.addActionListener(new ActionListener() {
@@ -171,7 +170,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 
 
 	@Override
-	protected void renderPreviewAsync() {
+	protected void renderPreviewAsync(Object input) {
 		String x = null;
 		try {
 			ColumnAligner columnAligner = new ColumnAligner(getModel());

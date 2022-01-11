@@ -67,18 +67,16 @@ public class SortAction extends MyEditorAction {
 			return null;
 		}
 		SortSettings newSettings = dialog.getSettings();
-		storeSortSettings(newSettings);
+		storeSortSettings(newSettings, storeKey);
 		return newSettings;
 	}
 
-	protected void storeSortSettings(SortSettings newSettings) {
-		PluginPersistentStateComponent.getInstance()
-				.setSortSettings(newSettings);
+	protected void storeSortSettings(SortSettings newSettings, String storeKey) {
+		PluginPersistentStateComponent.getInstance().storeSortSettings(storeKey, newSettings);
 	}
 
 	protected SortSettings getSortSettings(String storeKey) {
-		SortSettings sortSettings = PluginPersistentStateComponent.getInstance()
-				.getSortSettings();
+		SortSettings sortSettings = PluginPersistentStateComponent.getInstance().getSortSettings(storeKey);
 		return Cloner.deepClone(sortSettings);
 	}
 

@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Deprecated
 class DelimitedListDialog extends PreviewDialog implements Disposable {
 	private final DelimitedListAction action;
-	private final Editor editor;
 	private final EditorImpl previewEditor;
 
 	JPanel contentPane;
@@ -34,8 +33,8 @@ class DelimitedListDialog extends PreviewDialog implements Disposable {
 	private JPanel previewPanel;
 
 	DelimitedListDialog(DelimitedListAction action, Editor editor) {
+		super(editor);
 		this.action = action;
-		this.editor = editor;
 
 		this.previewEditor = IdeUtils.createEditorPreview("", false);
 		this.previewPanel.add(previewEditor.getComponent());
@@ -73,7 +72,7 @@ class DelimitedListDialog extends PreviewDialog implements Disposable {
 	}
 
 	@Override
-	protected void renderPreviewAsync() {
+	protected void renderPreviewAsync(Object input) {
 		final DelimitedListAction.Settings settings = toSettings();
 		//Reads of large clipboards can take a second to complete
 		String sourceText = getSourceText(settings);

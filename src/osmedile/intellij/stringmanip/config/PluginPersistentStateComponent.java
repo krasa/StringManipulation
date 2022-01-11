@@ -38,10 +38,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	private int lastSelectedAction = 0;
 	private int version = 0;
+	private Map<String, SortSettings> sortSettingsMap = new HashMap<>();
+	@Deprecated
 	private SortSettings sortSettings = new SortSettings();
+
 	private CaseSwitchingSettings caseSwitchingSettings = new CaseSwitchingSettings();
 	private CharacterSwitchingSettings characterSwitchingSettings = new CharacterSwitchingSettings();
-	private SortTokensModel sortTokensModel;
+	private SortTokensModel sortTokensModel = new SortTokensModel();
 	private boolean doNotAddSelection;
 	private NormalizationSettings normalizationSettings = new NormalizationSettings();
 
@@ -83,12 +86,48 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		this.characterSwitchingSettings = characterSwitchingSettings;
 	}
 
+	public Map<String, SortSettings> getSortSettingsMap() {
+		return sortSettingsMap;
+	}
+
+	public void setSortSettingsMap(Map<String, SortSettings> sortSettingsMap) {
+		this.sortSettingsMap = sortSettingsMap;
+	}
+
 	public SortSettings getSortSettings() {
 		return sortSettings;
 	}
 
 	public void setSortSettings(SortSettings sortSettings) {
 		this.sortSettings = sortSettings;
+	}
+
+	public SortTokensModel getSortTokensModel() {
+		return sortTokensModel;
+	}
+
+	public void setSortTokensModel(SortTokensModel sortTokensModel) {
+		this.sortTokensModel = sortTokensModel;
+	}
+
+	public NormalizationSettings getNormalizationSettings() {
+		return normalizationSettings;
+	}
+
+	public void setNormalizationSettings(NormalizationSettings normalizationSettings) {
+		this.normalizationSettings = normalizationSettings;
+	}
+
+	public SortSettings getSortSettings(String storeKey) {
+		SortSettings settings = sortSettingsMap.get(storeKey);
+		if (settings == null) {
+			return new SortSettings();
+		}
+		return settings;
+	}
+
+	public void storeSortSettings(String storeKey, SortSettings sortSettings) {
+		this.sortSettingsMap.put(storeKey, sortSettings);
 	}
 
 	public List<ColumnAlignerModel> getColumnAlignerHistory() {

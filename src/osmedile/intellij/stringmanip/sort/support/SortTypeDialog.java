@@ -16,9 +16,11 @@ import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
 import org.apache.commons.lang3.LocaleUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
+import osmedile.intellij.stringmanip.utils.ReflectionUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -39,7 +41,7 @@ import java.util.regex.Pattern;
 
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
-public class SortTypeDialog extends PreviewDialog<SortSettings> {
+public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, InputType> {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(null, JBColor.ORANGE, null, null, 0);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(null, JBColor.PINK, null, null, 0);
@@ -94,7 +96,6 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	private JRadioButton jsonSort;
 	private EditorImpl myPreviewEditor;
 
-	private final Editor editor;
 	public static final ColoredSideBorder ERROR_BORDER = new ColoredSideBorder(
 			JBColor.RED, JBColor.RED, JBColor.RED, JBColor.RED, 1);
 	public static final ColoredSideBorder VALID_BORDER = new ColoredSideBorder(
@@ -157,7 +158,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	}
 
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions, Editor editor) {
-		this.editor = editor;
+		super(editor);
 		sourceTextForPreview = getPreviewLines(editor);
 
 		preserveLeadingSpaces.setVisible(additionaloptions);
@@ -304,7 +305,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	}
 
 	private void addPreviewListeners(Object object) {
-		for (Field field : object.getClass().getDeclaredFields()) {
+		for (Field field : ReflectionUtils.getFieldsUpTo(object.getClass(), PreviewDialog.class)) {
 			try {
 				field.setAccessible(true);
 				Object o = field.get(object);
@@ -334,7 +335,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	}
 
 	@Override
-	protected void renderPreviewAsync() {
+	protected void renderPreviewAsync(InputType input) {
 		if (this.editor == null) {
 			return;
 		}
@@ -344,7 +345,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 		SortSettings settings = null;
 		try {
 			settings = getSettings();
-			List<String> result = sortPreview(editor, settings);
+			List<String> result = sortPreview(editor, settings, input, editor.getProject());
 			s = Joiner.on("\n").join(result);
 		} catch (SortException e) {
 			LOG.warn(e);
@@ -386,8 +387,8 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	}
 
 
-	protected List<String> sortPreview(Editor editor, SortSettings settings) {
-		return new SortLines(editor.getProject(), sourceTextForPreview, settings).sortLines();
+	protected List<String> sortPreview(Editor editor, SortSettings settings, InputType input, @Nullable Project project) {
+		return new SortLines(project, sourceTextForPreview, settings).sortLines();
 	}
 
 	public void init(SortSettings sortSettings) {
