@@ -37,7 +37,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog extends PreviewDialog<SortSettings> {
@@ -60,7 +59,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 
 	private JCheckBox ignoreLeadingSpaces;
 	private JCheckBox preserveLeadingSpaces;
-	private JCheckBox preserveTrailingSpecialCharacters;
+	private JCheckBox trailingCharacters_checkbox;
 	private JTextField trailingCharacters;
 	private JRadioButton removeBlank;
 	private JRadioButton preserveBlank;
@@ -109,7 +108,20 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 		enabledByAny(new JComponent[]{comparatorNaturalOrder, comparatorDefault, comparatorCollator}, insensitive, sensitive);
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
-//		enabledByAny(new JComponent[]{preserveTrailingSpecialCharacters, trailingCharacters,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank,preserveBlank}, normalSort);
+		enabledByAny(new JComponent[]{
+				shuffle,
+				reverse,
+				length,
+				hexa,
+				groupSort},
+				normalSort,hierarchicalSort);
+		enabledByAny(new JComponent[]{
+				trailingCharacters_checkbox,
+				trailingCharacters,
+				},
+				normalSort,hierarchicalSort);
+
+		enabledByAny(new JComponent[]{preserveBlank,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank}, normalSort);
 		enabledByAny(new JComponent[]{
 				groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
 				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
@@ -122,11 +134,19 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 				},
 				hierarchicalSort);
 
-		disableByAny(new JComponent[]{preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, jsonSort, hierarchicalSort);
-		disableByAny(new JComponent[]{preserveBlank}, jsonSort, hierarchicalSort, groupSort);
+//		disableByAny(new JComponent[]{preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank}, jsonSort, hierarchicalSort);
+//		disableByAny(new JComponent[]{preserveBlank}, jsonSort, hierarchicalSort, groupSort);
 
-		disableByAny(new JComponent[]{shuffle, reverse, length, hexa, preserveTrailingSpecialCharacters, trailingCharacters, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, preserveBlank, groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
-				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight, groupSort}, jsonSort);
+//		disableByAny(new JComponent[]{
+//				shuffle,
+//				reverse,
+//				length,
+//				hexa,
+//				trailingCharacters_checkbox,
+//				trailingCharacters,
+//				groupSort
+//				},
+//				jsonSort);
 
 		submitRenderPreview();
 	}
@@ -141,7 +161,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 		sourceTextForPreview = getPreviewLines(editor);
 
 		preserveLeadingSpaces.setVisible(additionaloptions);
-		preserveTrailingSpecialCharacters.setVisible(additionaloptions);
+		trailingCharacters_checkbox.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
 		removeBlank.setVisible(additionaloptions);
 		preserveBlank.setVisible(additionaloptions);
@@ -205,7 +225,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 
 				list.add(ignoreLeadingSpaces);
 				list.add(preserveLeadingSpaces);
-				list.add(preserveTrailingSpecialCharacters);
+				list.add(trailingCharacters_checkbox);
 				list.add(trailingCharacters);
 
 				list.add(removeBlank);
@@ -332,8 +352,8 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 		} catch (Throwable e) {
 			LOG.error(e);
 			s = e.toString();
-			String s1 = IdeUtils.stacktraceToString(e);
-			s += "\n\n" + s1;
+//			String s1 = IdeUtils.stacktraceToString(e);
+//			s += "\n\n" + s1;
 		}
 		setPreviewTextOnEDT(s, myPreviewEditor, myPreviewPanel, settings);
 	}
@@ -373,7 +393,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 	public void init(SortSettings sortSettings) {
 		ignoreLeadingSpaces.setSelected(sortSettings.isIgnoreLeadingSpaces());
 		preserveLeadingSpaces.setSelected(sortSettings.isPreserveLeadingSpaces());
-		preserveTrailingSpecialCharacters.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
+		trailingCharacters_checkbox.setSelected(sortSettings.isPreserveTrailingSpecialCharacters());
 		trailingCharacters.setText(sortSettings.getTrailingChars());
 		languageTag.setText(sortSettings.getCollatorLanguageTag());
 		normalSort.setSelected(!sortSettings.isHierarchicalSort());
@@ -515,7 +535,7 @@ public class SortTypeDialog extends PreviewDialog<SortSettings> {
 		} else {
 			sortSettings.setBaseComparator(SortSettings.BaseComparator.NORMAL);
 		}
-		sortSettings.setPreserveTrailingSpecialCharacters(preserveTrailingSpecialCharacters.isSelected());
+		sortSettings.setPreserveTrailingSpecialCharacters(trailingCharacters_checkbox.isSelected());
 		sortSettings.setTrailingChars(trailingCharacters.getText());
 		sortSettings.setCollatorLanguageTag(languageTag.getText());
 		sortSettings.setSortByGroups(groupSort.isSelected());

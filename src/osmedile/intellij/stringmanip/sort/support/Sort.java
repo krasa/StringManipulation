@@ -13,13 +13,13 @@ public enum Sort {
 
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
-			throw new RuntimeException();
+			throw new RuntimeException("SHUFFLE not supported");
 		}
 	}),
 	REVERSE(new Comparator<Sortable>() {
 		@Override
 		public int compare(Sortable o1, Sortable o2) {
-			throw new RuntimeException();
+			throw new RuntimeException("REVERSE not supported");
 		}
 	}),
 	CASE_SENSITIVE_A_Z(new ComparatorAdapterFactory() {

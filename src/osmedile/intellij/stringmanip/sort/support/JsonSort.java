@@ -50,8 +50,10 @@ public class JsonSort {
 				sortedJson = reformat(sortedJson, this.project);
 			}
 			return Arrays.asList(sortedJson.split("\r\n"));
-		} catch (Throwable e) {
-			throw new RuntimeException(e);
+		} catch (RuntimeException e) {
+			throw e;
+		}catch (Throwable e) {
+			throw new SortException(e);
 		}
 	}
 

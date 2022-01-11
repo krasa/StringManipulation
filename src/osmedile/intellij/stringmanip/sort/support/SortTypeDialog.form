@@ -90,7 +90,7 @@
                       <text resource-bundle="messages/StringManipulationBundle" key="checkbox.preserve.leading.whitespaces"/>
                     </properties>
                   </component>
-                  <component id="6cdb9" class="javax.swing.JCheckBox" binding="preserveTrailingSpecialCharacters">
+                  <component id="6cdb9" class="javax.swing.JCheckBox" binding="trailingCharacters_checkbox">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
