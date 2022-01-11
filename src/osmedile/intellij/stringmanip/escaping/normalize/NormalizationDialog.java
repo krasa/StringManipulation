@@ -17,6 +17,7 @@ import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.util.ui.table.ComponentsListFocusTraversalPolicy;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
@@ -144,9 +145,9 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 		ApplicationManager.getApplication().invokeLater(() -> ApplicationManager.getApplication().runWriteAction(() -> {
 			DiffContentFactoryEx factoryEx = DiffContentFactoryEx.getInstanceEx();
 
-			previewDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalText), factoryEx.create(normalizedText), "Before", "After"));
+			previewDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalText), factoryEx.create(normalizedText), StringManipulationBundle.message("label.before"), StringManipulationBundle.message("label.after")));
 
-			hexaDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalHex), factoryEx.create(normalizedHex), "Before", "After"));
+			hexaDiff.setRequest(new SimpleDiffRequest(null, factoryEx.create(originalHex), factoryEx.create(normalizedHex), StringManipulationBundle.message("label.before"), StringManipulationBundle.message("label.after")));
 		}), ModalityState.any());
 	}
 
@@ -242,7 +243,7 @@ public class NormalizationDialog extends PreviewDialog implements Disposable {
 	private DiffRequestPanel createDiff(String foo, String bar) {
 		DocumentContent documentContent = DiffContentFactoryEx.getInstanceEx().create(foo);
 		DocumentContent documentContent2 = DiffContentFactoryEx.getInstanceEx().create(bar);
-		SimpleDiffRequest simpleDiffRequest = new SimpleDiffRequest(null, documentContent, documentContent2, "Before", "After");
+		SimpleDiffRequest simpleDiffRequest = new SimpleDiffRequest(null, documentContent, documentContent2, StringManipulationBundle.message("label.before"), StringManipulationBundle.message("label.after"));
 		DiffRequestPanel requestPanel = DiffManagerEx.getInstance().createRequestPanel(editor.getProject(), this, null);
 		requestPanel.setRequest(simpleDiffRequest);
 		return requestPanel;

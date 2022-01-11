@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import java.io.ByteArrayOutputStream;
@@ -32,7 +33,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Encode Base64");
+				setTitle(StringManipulationBundle.message("dialog.title.encode.base64"));
 			}
 
 			@Nullable
@@ -68,7 +69,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		try {
 			Charset.forName(base64EncodingDialog.getCharset());
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.invalid.charset"));
 			return stopExecution();
 		}
 		return continueExecution(base64EncodingDialog);

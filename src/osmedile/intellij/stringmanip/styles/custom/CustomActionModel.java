@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.styles.custom;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.xmlb.annotations.Transient;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.styles.Style;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class CustomActionModel {
 	public CustomActionModel reverse() {
 		CustomActionModel customActionModel = new CustomActionModel();
 		customActionModel.setId(this.getId() + REVERSE);
-		customActionModel.setName(this.getName() + " - Reverse");
+		customActionModel.setName(this.getName() + " - " + StringManipulationBundle.message("reverse"));
 		ArrayList<Step> steps = new ArrayList<>(this.steps);
 		Collections.reverse(steps);
 		customActionModel.setSteps(steps);

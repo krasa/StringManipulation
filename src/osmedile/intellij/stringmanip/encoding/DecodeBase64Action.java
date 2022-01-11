@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
@@ -36,14 +37,14 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 		final Base64EncodingDialog base64EncodingDialog = new Base64EncodingDialog();
 		base64EncodingDialog.encodingOptions.setVisible(false);
 		base64EncodingDialog.lineEnd.setVisible(false);
-		base64EncodingDialog.zip.setText("Unzip after decoding");
-		base64EncodingDialog.inflateDeflate.setText("Inflate after decoding");
+		base64EncodingDialog.zip.setText(StringManipulationBundle.message("unzip.after.decoding"));
+		base64EncodingDialog.inflateDeflate.setText(StringManipulationBundle.message("inflate.after.decoding"));
 		base64EncodingDialog.inflateDeflate.setToolTipText("");
 
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Decode Base64");
+				setTitle(StringManipulationBundle.message("dialog.title.decode.base64"));
 			}
 
 			@Nullable
@@ -79,7 +80,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 			Charset charset = Charset.forName(base64EncodingDialog.getCharset());
 			return continueExecution(base64EncodingDialog);
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.invalid.charset"));
 			return stopExecution();
 		}
 	}
@@ -90,7 +91,7 @@ public class DecodeBase64Action extends AbstractStringManipAction<Base64Encoding
 			return transform(s, dialog);
 		} catch (Exception e) {
 			LOG.warn(e);
-			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Error"));
+			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.error")));
 			throw new ProcessCanceledException(e);
 		}
 	}

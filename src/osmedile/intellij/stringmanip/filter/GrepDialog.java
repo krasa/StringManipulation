@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
@@ -73,7 +74,7 @@ public class GrepDialog extends PreviewDialog {
 				DialogWrapper dialogWrapper = new DialogWrapper(GrepDialog.this.contentPane, false) {
 					{
 						init();
-						setTitle("History");
+						setTitle(StringManipulationBundle.message("history"));
 					}
 
 					@Nullable

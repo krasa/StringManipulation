@@ -42,6 +42,7 @@ import com.intellij.util.ui.UIUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceItemModel;
 
@@ -351,8 +352,8 @@ public abstract class MySearchTextArea extends JPanel implements PropertyChangeL
 		private final PopupState<JBPopup> myPopupState = PopupState.forPopup();
 
 		ShowHistoryAction() {
-			super("History",
-					"History",
+			super(StringManipulationBundle.message("history"),
+					StringManipulationBundle.message("history"),
 					AllIcons.Actions.SearchWithHistory);
 			registerCustomShortcutSet(KeymapUtil.getActiveKeymapShortcuts("ShowSearchHistory"), myTextArea);
 		}

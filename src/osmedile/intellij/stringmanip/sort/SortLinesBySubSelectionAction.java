@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLine;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
@@ -42,7 +43,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 					if (editor.getCaretModel().getCaretCount() > 1) {
 						settings = getSortSettings(editor);
 					} else {
-						Messages.showInfoMessage(editor.getProject(), "You must have multiple selections/carets on multiple lines.", "Sort By Subselection");
+						Messages.showInfoMessage(editor.getProject(), StringManipulationBundle.message("dialog.message.you.must.have.multiple.selections.carets.on.multiple.lines"), StringManipulationBundle.message("dialog.title.sort.by.subselection"));
 					}
 
 					if (settings == null) return stopExecution();
@@ -69,7 +70,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
 		final SortTypeDialog dialog = new SortLinesBySubSelectionActionDialog(editor);
-		if (!dialog.showAndGet(editor.getProject(), "Sort Lines by Subselection", "StringManipulation.SortLinesBySubSelection")) {
+		if (!dialog.showAndGet(editor.getProject(), StringManipulationBundle.message("sort.lines.by.subselection"), "StringManipulation.SortLinesBySubSelection")) {
 			return null;
 		}
 		SortSettings sortSettings = dialog.getSettings().preserveLeadingSpaces(false).preserveTrailingSpecialCharacters(false);

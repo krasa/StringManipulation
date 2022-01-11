@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class GrepAction extends MyEditorAction {
 		GrepSettings settings = getSettings(initialValue);
 		final GrepDialog dialog = new GrepDialog(this, settings, editor);
 
-		if (!dialog.showAndGet(editor.getProject(), "Grep", "StringManipulation.GrepDialog")) {
+		if (!dialog.showAndGet(editor.getProject(), StringManipulationBundle.message("grep"), "StringManipulation.GrepDialog")) {
 			return null;
 		}
 		GrepSettings newSettings = dialog.getSettings();

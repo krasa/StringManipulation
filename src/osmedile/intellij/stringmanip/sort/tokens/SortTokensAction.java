@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import javax.swing.*;
@@ -51,7 +52,7 @@ public class SortTokensAction extends MyEditorAction {
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Sort Tokens");
+				setTitle(StringManipulationBundle.message("dialog.title.sort.tokens"));
 			}
 
 			@Override

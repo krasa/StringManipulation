@@ -11,6 +11,7 @@ import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MyApplicationService;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -162,7 +163,7 @@ public class DelimitedListAction extends EditorAction {
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Delimited List Options");
+				setTitle(StringManipulationBundle.message("dialog.title.delimited.list.options"));
 			}
 
 			@Override

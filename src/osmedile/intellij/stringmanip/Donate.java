@@ -22,7 +22,7 @@ public class Donate {
 	}
 
 	public static void initDonateButton(JButton donate) {
-		donate.setText("Donate");
+		donate.setText(StringManipulationBundle.message("donate"));
 		donate.setIcon(ICON);
 		donate.addActionListener(new ActionListener() {
 			@Override

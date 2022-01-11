@@ -7,6 +7,7 @@ import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class AlignToColumnsAction extends MyEditorAction {
 					PluginPersistentStateComponent stateComponent = PluginPersistentStateComponent.getInstance();
 					final AlignToColumnsForm alignToColumnsForm = new AlignToColumnsForm(stateComponent.guessModel(editor), editor);
 
-					if (!alignToColumnsForm.showAndGet(editor.getProject(), "Align to Columns", "StringManipulation.AlignToColumnsAction")) {
+					if (!alignToColumnsForm.showAndGet(editor.getProject(), StringManipulationBundle.message("align.to.columns"), "StringManipulation.AlignToColumnsAction")) {
 						return stopExecution();
 					}
 					ColumnAlignerModel model = alignToColumnsForm.getModel();

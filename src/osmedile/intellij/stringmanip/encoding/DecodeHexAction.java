@@ -13,6 +13,7 @@ import org.bouncycastle.util.encoders.Hex;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -59,7 +60,7 @@ public class DecodeHexAction extends AbstractStringManipAction<Charset> {
 		DialogWrapper dialogWrapper = new DialogWrapper(editor.getProject()) {
 			{
 				init();
-				setTitle("Choose Charset");
+				setTitle(StringManipulationBundle.message("dialog.title.choose.charset"));
 			}
 
 			@Nullable
@@ -95,7 +96,7 @@ public class DecodeHexAction extends AbstractStringManipAction<Charset> {
 			Charset charset = Charset.forName(getCharset(charsetComboBox));
 			return continueExecution(charset);
 		} catch (Exception e) {
-			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Invalid Charset");
+			Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.invalid.charset"));
 			return stopExecution();
 		}
 	}

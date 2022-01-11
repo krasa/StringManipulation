@@ -10,6 +10,7 @@ import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
@@ -84,7 +85,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 				DialogWrapper dialogWrapper = new DialogWrapper(AlignToColumnsForm.this.root, false) {
 					{
 						init();
-						setTitle("History");
+						setTitle(StringManipulationBundle.message("history"));
 					}
 
 					@Override
@@ -281,7 +282,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 			}
 		});
 
-		JButton remove = new JButton("Remove");
+		JButton remove = new JButton(StringManipulationBundle.message("remove"));
 		remove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

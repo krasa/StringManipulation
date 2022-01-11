@@ -6,6 +6,7 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.ArrayList;
@@ -195,7 +196,7 @@ public class SwapActionExecutor {
 			}
 		}
 
-		String newSeparator = Messages.showInputDialog("Separator", "Split by separator and swap",
+		String newSeparator = Messages.showInputDialog(StringManipulationBundle.message("dialog.message.separator"), StringManipulationBundle.message("dialog.title.split.by.separator.swap"),
 				Messages.getQuestionIcon(), separator, null);
 		if (newSeparator != null) {
 			if (newSeparator.equals("")) {

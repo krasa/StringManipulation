@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.utils.Cloner;
 
@@ -54,7 +55,7 @@ public class NormalizeUnicodeAction extends MyEditorAction {
 	@Nullable
 	protected NormalizationSettings getNormalizeSettings(final Editor editor) {
 		final NormalizationDialog dialog = new NormalizationDialog(getNormalizeSettings(storeKey), editor);
-		if (!dialog.showAndGet(editor.getProject(), "Unicode Normalization", "StringManipulation.NormalizationDialog")) {
+		if (!dialog.showAndGet(editor.getProject(), StringManipulationBundle.message("unicode.normalization"), "StringManipulation.NormalizationDialog")) {
 			return null;
 		}
 		NormalizationSettings newSettings = dialog.getSettings();

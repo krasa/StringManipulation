@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
@@ -63,7 +64,7 @@ public class SortAction extends MyEditorAction {
 	protected SortSettings getSortSettings(final Editor editor) {
 		final SortTypeDialog dialog = new SortTypeDialog(getSortSettings(storeKey), true, editor);
 
-		if (!dialog.showAndGet(editor.getProject(), "Sort Lines", "StringManipulation.SortTypeDialog")) {
+		if (!dialog.showAndGet(editor.getProject(), StringManipulationBundle.message("sort.lines"), "StringManipulation.SortTypeDialog")) {
 			return null;
 		}
 		SortSettings newSettings = dialog.getSettings();

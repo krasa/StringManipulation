@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.replace.gui.CompositeForm;
 import osmedile.intellij.stringmanip.replace.gui.HistoryForm;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
@@ -29,7 +30,7 @@ public class HistoryAction extends DumbAwareAction {
 		DialogWrapper dialogWrapper = new DialogWrapper(myProject, false) {
 			{
 				init();
-				setTitle("History");
+				setTitle(StringManipulationBundle.message("history"));
 			}
 
 			@Nullable

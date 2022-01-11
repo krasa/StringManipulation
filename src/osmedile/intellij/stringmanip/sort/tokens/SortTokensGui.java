@@ -11,6 +11,7 @@ import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
@@ -206,7 +207,7 @@ public class SortTokensGui implements Disposable {
 			}
 		});
 
-		JButton remove = new JButton("Remove");
+		JButton remove = new JButton(StringManipulationBundle.message("remove"));
 		remove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

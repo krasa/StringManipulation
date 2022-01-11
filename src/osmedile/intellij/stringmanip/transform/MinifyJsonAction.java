@@ -7,6 +7,7 @@ import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.ui.Messages;
 import org.json.JSONObject;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class MinifyJsonAction extends AbstractStringManipAction<Object> {
 		try {
 			return new JSONObject(selectedText).toString();
 		} catch (Throwable e) {
-			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Minify JSON"));
+			SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.minify.json")));
 			LOG.info(e);
 			throw new ProcessCanceledException(e);
 		}

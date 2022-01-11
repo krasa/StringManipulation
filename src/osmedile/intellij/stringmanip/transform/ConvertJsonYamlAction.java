@@ -14,6 +14,7 @@ import org.snakeyaml.engine.v2.api.DumpSettings;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import javax.swing.*;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class ConvertJsonYamlAction extends AbstractStringManipAction<Object> {
                 ? jsonToYaml(selectedText)
                 : yamlToJson(selectedText);
         } catch (Throwable e) {
-            SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), "Convert Between JSON and YAML"));
+            SwingUtilities.invokeLater(() -> Messages.showErrorDialog(editor.getProject(), String.valueOf(e), StringManipulationBundle.message("dialog.title.convert.between.json.yaml")));
             LOG.info(e);
             throw new ProcessCanceledException(e);
         }

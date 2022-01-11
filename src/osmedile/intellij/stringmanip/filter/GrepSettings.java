@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.filter;
 
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.util.xmlb.annotations.Transient;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 import java.util.Objects;
 
@@ -84,6 +85,6 @@ public class GrepSettings {
 
 	@Override
 	public String toString() {
-		return pattern + (regex ? " (regex)" : "");
+		return pattern + (this.regex ? " (" + StringManipulationBundle.message("regex") + ")" : "");
 	}
 }

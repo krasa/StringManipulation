@@ -18,6 +18,7 @@ import org.apache.commons.lang3.LocaleUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
 import osmedile.intellij.stringmanip.utils.ReflectionUtils;
@@ -474,10 +475,10 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		Locale locale = Locale.forLanguageTag(languageTag.getText());
 		boolean availableLocale = LocaleUtils.isAvailableLocale(locale);
 		if (availableLocale) {
-			valid.setText("valid");
+			valid.setText(StringManipulationBundle.message("valid"));
 			valid.setForeground(JBColor.GREEN);
 		} else {
-			valid.setText("invalid");
+			valid.setText(StringManipulationBundle.message("invalid"));
 			valid.setForeground(JBColor.RED);
 		}
 	}
@@ -488,10 +489,10 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			String text = levelRegex.getText();
 			Pattern.compile(text);
 			levelRegex.setMyBorder(VALID_BORDER);
-			levelRegex.setToolTipText("valid regex");
+			levelRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
 		} catch (Throwable e) {
 			levelRegex.setMyBorder(ERROR_BORDER);
-			levelRegex.setToolTipText("invalid regex");
+			levelRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
 			result = false;
 		}
 
@@ -499,10 +500,10 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			String text = groupSeparatorRegex.getText();
 			Pattern.compile(text);
 			groupSeparatorRegex.setMyBorder(VALID_BORDER);
-			groupSeparatorRegex.setToolTipText("valid regex");
+			groupSeparatorRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
 		} catch (Throwable e) {
 			groupSeparatorRegex.setMyBorder(ERROR_BORDER);
-			groupSeparatorRegex.setToolTipText("invalid regex");
+			groupSeparatorRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
 			result = false;
 
 		}
@@ -511,11 +512,11 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			String text = groupClosingLineRegex.getText();
 			Pattern.compile(text);
 			groupClosingLineRegex.setMyBorder(VALID_BORDER);
-			groupClosingLineRegex.setToolTipText("valid regex");
+			groupClosingLineRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
 
 		} catch (Throwable e) {
 			groupClosingLineRegex.setMyBorder(ERROR_BORDER);
-			groupClosingLineRegex.setToolTipText("invalid regex");
+			groupClosingLineRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
 			result = false;
 
 		}
