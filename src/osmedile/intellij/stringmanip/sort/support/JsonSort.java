@@ -81,21 +81,22 @@ public class JsonSort {
 	}
 
 	private void sortList(Comparator<String> comparator, List<?> o1) {
-		o1.sort(new Comparator<Object>() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				if (o1 instanceof String && o2 instanceof String) {
-					return comparator.compare((String) o1, (String) o2);
-				}
-				if (o1 instanceof String) {
-					return -1;
-				}
-				if (o2 instanceof String) {
-					return 1;
-				}
-				return 0;
-			}
-		});
+		//do not sort arrays
+//		o1.sort(new Comparator<Object>() {
+//			@Override
+//			public int compare(Object o1, Object o2) {
+//				if (o1 instanceof String && o2 instanceof String) {
+//					return comparator.compare((String) o1, (String) o2);
+//				}
+//				if (o1 instanceof String) {
+//					return -1;
+//				}
+//				if (o2 instanceof String) {
+//					return 1;
+//				}
+//				return 0;
+//			}
+//		});
 		for (Object o : o1) {
 			sort(comparator, o);
 		}
