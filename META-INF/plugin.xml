@@ -472,7 +472,7 @@
             </group>
 
             <group id="StringManipulation.Group.Sort"
-                   text="Sort..."
+                   text="Sort/Shuffle/Reverse..."
                    description="Sort lines, delimited text"
                    icon="/icons/sort.svg"
                    popup="true">
@@ -507,6 +507,10 @@
                         description="Shuffle lines">
                 </action>
                 <separator/>
+                <action id="osmedile.intellij.stringmanip.swap.Reverse"
+                        class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Characters"
+                        description="Reverse Characters: 'abc' -> 'cba'">
+                </action>
                 <action id="StringManipulation.ShuffleCharacters"
                         class="osmedile.intellij.stringmanip.sort.ShuffleCharactersAction"
                         text="Shuffle Characters"
@@ -651,10 +655,6 @@
             <action id="osmedile.intellij.stringmanip.swap.SwapAction"
                     class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
                     description="Depending on what is selected or how many carets there are">
-            </action>
-            <action id="osmedile.intellij.stringmanip.swap.Reverse"
-                    class="osmedile.intellij.stringmanip.swap.ReverseAction" text="Reverse Letters"
-                    description="Reverse Letters: 'abc' -> 'cba'">
             </action>
             <separator/>
             <action id="StringManipulation.QuoteAction"
