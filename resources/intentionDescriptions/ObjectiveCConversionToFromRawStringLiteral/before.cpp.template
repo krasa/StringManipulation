@@ -1,0 +1,3 @@
+const char* s1 = "a\\b\\c\\d";
+
+const char* s2 = "\nHello\n  World\n";

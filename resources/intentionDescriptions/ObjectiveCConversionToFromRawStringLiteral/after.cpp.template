@@ -1,0 +1,6 @@
+const char *s1 = R"(a\b\c\d)";
+
+const char* s2 = R"(
+Hello
+  World
+)";

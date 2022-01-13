@@ -13,10 +13,8 @@
     <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
 
     <depends>com.intellij.modules.platform</depends>
-    <!--suppress PluginXmlValidity -->
-    <depends optional="true">com.intellij.modules.java</depends>
-    <!--suppress PluginXmlValidity -->
-    <depends optional="true">com.intellij.properties</depends>
+    <depends optional="true" config-file="plugin-java.xml">com.intellij.modules.java</depends>
+    <depends optional="true" config-file="plugin-properties.xml">com.intellij.properties</depends>
 
     <resource-bundle>messages.StringManipulationBundle</resource-bundle>
 
@@ -808,6 +806,12 @@
                 serviceImplementation="osmedile.intellij.stringmanip.config.PluginPersistentStateComponent"/>
         <applicationConfigurable instance="osmedile.intellij.stringmanip.config.MyConfigurable" id="StringManipulation"
                                  displayName="String Manipulation"/>
+
+        <intentionAction>
+            <className>osmedile.intellij.stringmanip.intentions.ObjectiveCConversionToFromRawStringLiteral</className>
+            <categoryKey>intentions.group.StringManipulation</categoryKey>
+            <!--              <descriptionDirectoryName>OCDeclareMethodInInterfaceIntentionAction</descriptionDirectoryName>-->
+        </intentionAction>
     </extensions>
 
     <description><![CDATA[
@@ -971,6 +975,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Added: Misc / Paste as PHP Array</li>
                 <li>Added: JSON sort type</li>
+                <li>Added Intention: C++ conversion to/from raw string literal</li>
                 <li>Hierarchical sort is able to sort JSON like formats</li>
             </ul>
 	    </div>
