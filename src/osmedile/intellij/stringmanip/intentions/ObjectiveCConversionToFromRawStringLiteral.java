@@ -19,13 +19,6 @@ public class ObjectiveCConversionToFromRawStringLiteral extends IntentionBase {
 	public static final @Nullable
 	Language OBJECTIVE_C = Language.findLanguageByID("ObjectiveC");
 
-	private PsiElementPredicate psiElementPredicate = element -> {
-		if (element instanceof TreeElement) {
-			return isStringLiteral((TreeElement) element) || isRawStringLiteral((TreeElement) element);
-		}
-		return false;
-	};
-
 	@Override
 	public @IntentionName
 	@NotNull
@@ -53,7 +46,15 @@ public class ObjectiveCConversionToFromRawStringLiteral extends IntentionBase {
 	@NotNull
 	@Override
 	protected PsiElementPredicate getElementPredicate() {
-		return psiElementPredicate;
+		return new PsiElementPredicate() {
+			@Override
+			public boolean satisfiedBy(@NotNull PsiElement element) {
+				if (element instanceof TreeElement) {
+					return ObjectiveCConversionToFromRawStringLiteral.this.isStringLiteral((TreeElement) element) || ObjectiveCConversionToFromRawStringLiteral.this.isRawStringLiteral((TreeElement) element);
+				}
+				return false;
+			}
+		};
 	}
 
 	private boolean isRawStringLiteral(TreeElement element) {
