@@ -13,6 +13,7 @@ import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.StringManipulationBundle;
 
 public class ObjectiveCConversionToFromRawStringLiteral extends IntentionBase {
 
@@ -23,13 +24,13 @@ public class ObjectiveCConversionToFromRawStringLiteral extends IntentionBase {
 	public @IntentionName
 	@NotNull
 	String getText() {
-		return "C++ conversion to/from raw string literal";
+		return StringManipulationBundle.message("intention.name.convert.to.from.raw.string.literal");
 	}
 
 	@Override
 	public @NotNull
 	@IntentionFamilyName String getFamilyName() {
-		return "C++ conversion to/from raw string literal";
+		return StringManipulationBundle.message("intention.family.name.c.conversion.to.from.raw.string.literal");
 	}
 
 	@Override
