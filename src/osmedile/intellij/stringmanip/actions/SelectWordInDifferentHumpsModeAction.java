@@ -1,9 +1,10 @@
 package osmedile.intellij.stringmanip.actions;
 
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorSettings;
-import com.intellij.openapi.editor.actions.SelectWordAtCaretAction;
+import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actions.TextComponentEditorAction;
 import com.intellij.openapi.project.DumbAware;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +20,8 @@ public class SelectWordInDifferentHumpsModeAction extends TextComponentEditorAct
 				boolean camelWords = settings.isCamelWords();
 				try {
 					settings.setCamelWords(!camelWords);
-					new SelectWordAtCaretAction().getHandler().execute(editor, null, dataContext);
+					EditorAction editorSelectWord = (EditorAction) ActionManager.getInstance().getAction("EditorSelectWord");
+					editorSelectWord.getHandler().execute(editor, null, dataContext);
 				} finally {
 					settings.setCamelWords(camelWords);
 				}
