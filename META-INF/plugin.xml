@@ -700,12 +700,12 @@
                 <separator/>
                 <action id="StringManipulation.DuplicateAndReplaceAction"
                         class="osmedile.intellij.stringmanip.replace.DuplicateAndReplaceAction"
-                        text="Duplicate Line or Selection and Special Replace"
+                        text="Duplicate Line or Selection and Multi Replace"
                         description="Configure with 'String Manipulation' tool window"
                 />
                 <action id="StringManipulation.ReplaceAction"
                         class="osmedile.intellij.stringmanip.replace.ReplaceAction"
-                        text="Special Replace"
+                        text="Multi Replace"
                         description="Configure with 'String Manipulation' tool window"
                 />
                 <separator/>
@@ -951,8 +951,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
              <br>
                 <li>Select All Occurrences For All Carets</li>
                 <li>Extend Selection in Different "CamelHumps" Mode</li>
-                <li>Special Replace</li>
-                <li>Duplicate Line or Selection And Special Replace</li>
+                <li>Multi Replace</li>
+                <li>Duplicate Line or Selection And Multi Replace</li>
                 </ul>
 		</p>
 		<p>Actions are available under Edit menu, or via the shortcut "alt M" and "alt shift M".
@@ -985,8 +985,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Support for Chinese localization <a href="https://github.com/krasa/StringManipulation/issues/162">#162</a></li>
                 <li>Added: Extend Selection in Different "CamelHumps" Mode</li>
                 <li>Added: Shortcuts...</li>
-                <li>Added: Special Replace - with a toolwindow for configuration of multiple replacements</li>
-                <li>Added: Duplicate Line or Selection and Special Replace</li>
+                <li>Added: Multi Replace - with a toolwindow for configuration of multiple replacements</li>
+                <li>Added: Duplicate Line or Selection and Multi Replace</li>
             </ul>
 	    </div>
 	    <div>
