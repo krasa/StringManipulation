@@ -18,7 +18,7 @@ import osmedile.intellij.stringmanip.utils.Cloner;
 import java.util.List;
 
 public class SortAction extends MyEditorAction {
-	public static final String STORE_KEY = "StringManipulation.SortAction.SortSettings";
+	public static final String STORE_KEY = "SortAction";
 	private String storeKey = STORE_KEY;
 
 	public SortAction(String storeKey) {

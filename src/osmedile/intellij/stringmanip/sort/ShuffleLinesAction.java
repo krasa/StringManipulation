@@ -4,7 +4,7 @@ import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 public class ShuffleLinesAction extends SortAction {
-	public static final String STORE_KEY = "StringManipulation.ShuffleLinesAction.SortSettings";
+	public static final String STORE_KEY = "ShuffleLinesAction";
 
 	public ShuffleLinesAction() {
 		super(STORE_KEY);

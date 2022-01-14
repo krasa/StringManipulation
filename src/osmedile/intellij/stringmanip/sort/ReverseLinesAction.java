@@ -4,7 +4,7 @@ import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 public class ReverseLinesAction extends SortAction {
-	public static final String STORE_KEY = "StringManipulation.ReverseLinesAction.SortSettings";
+	public static final String STORE_KEY = "ReverseLinesAction";
 
 	public ReverseLinesAction() {
 		super(STORE_KEY);
