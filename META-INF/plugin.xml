@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.25.203.5981.0</version>
+    <version>8.25.203.5981.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -974,9 +974,9 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <ul>
                 <li>Fixed: Extend Selection in Different "CamelHumps" Mode</li>
                 <li>Added: Misc / Paste as PHP Array</li>
-                <li>Added: JSON sort type</li>
+                <li>Added: JSON sort</li>
                 <li>Added Intention: C++ conversion to/from raw string literal</li>
-                <li>Hierarchical sort is able to sort JSON like formats</li>
+                <li>Hierarchical sort - added closing group regex, to be able to sort JSON like formats</li>
             </ul>
 	    </div>
 	    <div>
