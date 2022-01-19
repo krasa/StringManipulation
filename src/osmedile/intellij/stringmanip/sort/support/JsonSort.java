@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip.sort.support;
 
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.json.JsonLanguage;
 import com.intellij.openapi.application.ApplicationManager;
@@ -20,33 +22,37 @@ import java.util.*;
 public class JsonSort {
 	private static final Logger log = LoggerFactory.getLogger(JsonSort.class);
 
-	private Project project;
-	private String originalLines;
-	private final SortSettings sortSettings;
+	protected Project project;
+	protected final SortSettings sortSettings;
 
-	public JsonSort(Project project, List<String> originalLines, SortSettings sortSettings) {
+	public JsonSort(Project project, SortSettings sortSettings) {
 		this.project = project;
-		this.originalLines = StringUtils.join(originalLines.toArray(), '\n');
 		this.sortSettings = sortSettings;
 	}
 
-	public List<String> sort() {
+	public List<String> sort(List<String> originalLines) {
+		String text = StringUtils.join(originalLines.toArray(), '\n');
+		String sort = sort(text);
+		String[] split = sort.split("\n");
+		return Arrays.asList(split);
+	}
 
+	public String sort(String text) {
 		try {
 			Comparator<String> stringComparator = sortSettings.getStringComparator();
-			ObjectMapper mapper = new ObjectMapper();
-			Object o = mapper.readValue(originalLines, Object.class);
+			ObjectMapper mapper = getMapper();
+			Object o = mapper.readValue(text, Object.class);
 			sort(stringComparator, o);
-			String sortedJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
 
+			String sortedJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
 
 			if (project != null) {
 				sortedJson = reformat(sortedJson, this.project);
 			}
-			return Arrays.asList(sortedJson.split("\r\n"));
+			return sortedJson;
 		} catch (RuntimeException e) {
 			throw e;
-		}catch (Throwable e) {
+		} catch (Throwable e) {
 			throw new SortException(e);
 		}
 	}
@@ -66,7 +72,18 @@ public class JsonSort {
 		return document.getText();
 	}
 
-	private void sort(Comparator<String> comparator, Object o) {
+	@NotNull
+	protected ObjectMapper getMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		DefaultPrettyPrinter p = new DefaultPrettyPrinter();
+		DefaultPrettyPrinter.Indenter i = new DefaultIndenter("  ", "\n");
+		p.indentArraysWith(i);
+		p.indentObjectsWith(i);
+		mapper.setDefaultPrettyPrinter(p);
+		return mapper;
+	}
+
+	protected void sort(Comparator<String> comparator, Object o) {
 		if (o instanceof List) {
 			sortList(comparator, (List) o);
 		} else if (o instanceof Map) {
@@ -74,7 +91,7 @@ public class JsonSort {
 		}
 	}
 
-	private void sortList(Comparator<String> comparator, List<?> o1) {
+	protected void sortList(Comparator<String> comparator, List<?> o1) {
 		//do not sort arrays
 //		o1.sort(new Comparator<Object>() {
 //			@Override
@@ -96,7 +113,7 @@ public class JsonSort {
 		}
 	}
 
-	private void sortMap(Comparator<String> comparator, Map<String, Object> jsonMap) {
+	protected void sortMap(Comparator<String> comparator, Map<String, Object> jsonMap) {
 		Map<String, Object> treeMap = new TreeMap<>(comparator);
 		treeMap.putAll(jsonMap);
 

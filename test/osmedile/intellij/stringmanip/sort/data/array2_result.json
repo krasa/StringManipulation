@@ -1,45 +1,49 @@
-[ {
-  "author" : "bennycode",
-  "dependencies" : {
-    "ml-array-max" : "1.x"
+[
+  {
+    "author" : "bennycode",
+    "dependencies" : {
+      "ml-array-max" : "1.x"
+    },
+    "description" : "Calculates the average.",
+    "devDependencies" : {
+      "typescript" : "4.4.x"
+    },
+    "license" : "MIT",
+    "main" : "index.js",
+    "name" : "@bennycode/my-package",
+    "scripts" : {
+      "benny" : "echo benny",
+      "build" : "tsc",
+      "posttest" : "echo after test",
+      "prebenny" : "echo before benny",
+      "pretest" : "echo before test",
+      "test" : "node getAverage.test.js",
+      "tscinit" : "tsc --init"
+    },
+    "version" : "1.1.2"
   },
-  "description" : "Calculates the average.",
-  "devDependencies" : {
-    "typescript" : "4.4.x"
+  {
+    "author" : "bennycode",
+    "dependencies" : {
+      "ml-array-max" : "1.x"
+    },
+    "description" : "Calculates the average.",
+    "devDependencies" : {
+      "typescript" : "4.4.x"
+    },
+    "license" : "MIT",
+    "main" : "index.js",
+    "name" : "@bennycode/my-package",
+    "scripts" : {
+      "benny" : "echo benny",
+      "build" : "tsc",
+      "posttest" : "echo after test",
+      "prebenny" : "echo before benny",
+      "pretest" : "echo before test",
+      "test" : "node getAverage.test.js",
+      "tscinit" : "tsc --init"
+    },
+    "version" : "1.1.2"
   },
-  "license" : "MIT",
-  "main" : "index.js",
-  "name" : "@bennycode/my-package",
-  "scripts" : {
-    "benny" : "echo benny",
-    "build" : "tsc",
-    "posttest" : "echo after test",
-    "prebenny" : "echo before benny",
-    "pretest" : "echo before test",
-    "test" : "node getAverage.test.js",
-    "tscinit" : "tsc --init"
-  },
-  "version" : "1.1.2"
-}, {
-  "author" : "bennycode",
-  "dependencies" : {
-    "ml-array-max" : "1.x"
-  },
-  "description" : "Calculates the average.",
-  "devDependencies" : {
-    "typescript" : "4.4.x"
-  },
-  "license" : "MIT",
-  "main" : "index.js",
-  "name" : "@bennycode/my-package",
-  "scripts" : {
-    "benny" : "echo benny",
-    "build" : "tsc",
-    "posttest" : "echo after test",
-    "prebenny" : "echo before benny",
-    "pretest" : "echo before test",
-    "test" : "node getAverage.test.js",
-    "tscinit" : "tsc --init"
-  },
-  "version" : "1.1.2"
-}, "Fiat" ]
+  "Fiat"
+]

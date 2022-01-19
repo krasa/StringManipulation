@@ -49,7 +49,7 @@ public class SortLines {
 		}
 
 		if (sortSettings.isJsonSort()) {
-			return new JsonSort(project, originalLines, sortSettings).sort();
+			return new JsonSort(project, sortSettings).sort(originalLines);
 		}
 
 		List<Sortable> originalLines = toSortables(this.originalLines);
