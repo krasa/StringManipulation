@@ -225,6 +225,10 @@ public class SortSettings {
 		return getSortType().getSortLineComparator(getBaseComparator(), getCollatorLanguageTag());
 	}
 
+	public Comparator<String> getStringComparator() {
+		return getSortType().getStringComparator(getBaseComparator(), getCollatorLanguageTag());
+	}
+
 	public static enum BlankLines {
 		PRESERVE, REMOVE
 	}

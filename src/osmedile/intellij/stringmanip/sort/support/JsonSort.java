@@ -33,16 +33,10 @@ public class JsonSort {
 	public List<String> sort() {
 
 		try {
-			Comparator<Sortable> sortLineComparator = sortSettings.getSortLineComparator();
-			Comparator<String> comparator = new Comparator<String>() {
-				@Override
-				public int compare(String o1, String o2) {
-					return sortLineComparator.compare(new SortLine(o1, sortSettings), new SortLine(o2, sortSettings));
-				}
-			};
+			Comparator<String> stringComparator = sortSettings.getStringComparator();
 			ObjectMapper mapper = new ObjectMapper();
 			Object o = mapper.readValue(originalLines, Object.class);
-			sort(comparator, o);
+			sort(stringComparator, o);
 			String sortedJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
 
 

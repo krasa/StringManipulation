@@ -9,149 +9,211 @@ import java.util.*;
 
 public enum Sort {
 
-	SHUFFLE(new Comparator<Sortable>() {
+	SHUFFLE(new ComparatorFactory() {
+		@Override
+		Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "SHUFFLE");
+
+		}
 
 		@Override
-		public int compare(Sortable o1, Sortable o2) {
-			throw new RuntimeException("SHUFFLE not supported");
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					throw new RuntimeException("SHUFFLE not supported");
+				}
+			};
 		}
 	}),
-	REVERSE(new Comparator<Sortable>() {
+	REVERSE(new ComparatorFactory() {
 		@Override
-		public int compare(Sortable o1, Sortable o2) {
-			throw new RuntimeException("REVERSE not supported");
+		Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "REVERSE");
+		}
+
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
+				@Override
+				public int compare(String o1, String o2) {
+					throw new RuntimeException("REVERSE not supported");
+				}
+			};
 		}
 	}),
-	CASE_SENSITIVE_A_Z(new ComparatorAdapterFactory() {
-		public Comparator<Sortable> adapter(Comparator<String> comparator) {
-			return new Comparator<Sortable>() {
+	CASE_SENSITIVE_A_Z(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "CASE_SENSITIVE_A_Z");
+		}
+
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
 				@Override
 				public String toString() {
 					return "CASE_SENSITIVE_A_Z";
 				}
 
 				@Override
-				public int compare(Sortable o1, Sortable o2) {
+				public int compare(String o1, String o2) {
 					if (comparator == null) {
-						return o1.getTextForComparison().compareTo(o2.getTextForComparison());
+						return o1.compareTo(o2);
 					}
-					return comparator.compare(o1.getTextForComparison(), o2.getTextForComparison());
+					return comparator.compare(o1, o2);
 				}
 			};
-
 		}
 	}),
-	CASE_SENSITIVE_Z_A(new ComparatorAdapterFactory() {
-		public Comparator<Sortable> adapter(Comparator<String> comparator) {
-			return new Comparator<Sortable>() {
+	CASE_SENSITIVE_Z_A(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "CASE_SENSITIVE_Z_A");
+		}
+
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
 				@Override
 				public String toString() {
 					return "CASE_SENSITIVE_Z_A";
 				}
 
 				@Override
-				public int compare(Sortable o1, Sortable o2) {
+				public int compare(String o1, String o2) {
 					if (comparator == null) {
-						return o2.getTextForComparison().compareTo(o1.getTextForComparison());
+						return o2.compareTo(o1);
 					}
 
-					return comparator.compare(o2.getTextForComparison(), o1.getTextForComparison());
+					return comparator.compare(o2, o1);
 				}
 			};
 		}
 	}),
-	CASE_INSENSITIVE_A_Z(new ComparatorAdapterFactory() {
-		public Comparator<Sortable> adapter(Comparator<String> comparator) {
-			return new Comparator<Sortable>() {
+	CASE_INSENSITIVE_A_Z(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "CASE_INSENSITIVE_A_Z");
+		}
+
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
 				@Override
 				public String toString() {
 					return "CASE_INSENSITIVE_A_Z";
 				}
 
 				@Override
-				public int compare(Sortable o1, Sortable o2) {
+				public int compare(String o1, String o2) {
 					if (comparator == null) {
-						return o1.getTextForComparison().compareToIgnoreCase(o2.getTextForComparison());
+						return o1.compareToIgnoreCase(o2);
 					}
-					return comparator.compare(o1.getTextForComparison().toLowerCase(), o2.getTextForComparison().toLowerCase());
+					return comparator.compare(o1.toLowerCase(), o2.toLowerCase());
 				}
 			};
 		}
 	}),
-	CASE_INSENSITIVE_Z_A(new ComparatorAdapterFactory() {
-		public Comparator<Sortable> adapter(Comparator<String> comparator) {
-			return new Comparator<Sortable>() {
+	CASE_INSENSITIVE_Z_A(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "CASE_INSENSITIVE_Z_A");
+		}
+
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
 				@Override
 				public String toString() {
 					return "CASE_INSENSITIVE_Z_A";
 				}
 
 				@Override
-				public int compare(Sortable o1, Sortable o2) {
+				public int compare(String o1, String o2) {
 					if (comparator == null) {
-						return o2.getTextForComparison().compareToIgnoreCase(o1.getTextForComparison());
+						return o2.compareToIgnoreCase(o1);
 					}
-					return comparator.compare(o2.getTextForComparison().toLowerCase(), o1.getTextForComparison().toLowerCase());
+					return comparator.compare(o2.toLowerCase(), o1.toLowerCase());
 				}
 			};
 		}
 	}),
-	LINE_LENGTH_SHORT_LONG(new Comparator<Sortable>() {
-		@Override
-		public String toString() {
-			return "LINE_LENGTH_SHORT_LONG";
+	LINE_LENGTH_SHORT_LONG(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "LINE_LENGTH_SHORT_LONG");
 		}
 
 		@Override
-		public int compare(Sortable o1, Sortable o2) {
-			return o1.getTextForComparison().length() - o2.getTextForComparison().length();
-		}
-	}),
-	LINE_LENGTH_LONG_SHORT(new Comparator<Sortable>() {
-		@Override
-		public String toString() {
-			return "LINE_LENGTH_LONG_SHORT";
-		}
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
+				@Override
+				public String toString() {
+					return "LINE_LENGTH_SHORT_LONG";
+				}
 
-		@Override
-		public int compare(Sortable o1, Sortable o2) {
-			return o2.getTextForComparison().length() - o1.getTextForComparison().length();
-
+				@Override
+				public int compare(String o1, String o2) {
+					return o1.length() - o2.length();
+				}
+			};
 		}
 	}),
-	HEXA(new Comparator<Sortable>() {
-		@Override
-		public String toString() {
-			return "HEXA";
+	LINE_LENGTH_LONG_SHORT(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "LINE_LENGTH_LONG_SHORT");
 		}
 
 		@Override
-		public int compare(Sortable o1, Sortable o2) {
-			try {
-				return toHex(o1.getTextForComparison()).compareTo(toHex(o2.getTextForComparison()));
-			} catch (Throwable e) {
-				throw new SortException("Hexadecimal sort failed, select Hex text only! \n(" + e.toString() + ")", e);
-			}
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
+				@Override
+				public String toString() {
+					return "LINE_LENGTH_LONG_SHORT";
+				}
+
+				@Override
+				public int compare(String o1, String o2) {
+					return o2.length() - o1.length();
+
+				}
+			};
+		}
+	}),
+
+	HEXA(new ComparatorFactory() {
+		public Comparator<Sortable> sortable(Comparator<String> comparator) {
+			return new SortableComparator(string(comparator), "HEXA");
 		}
 
-		protected BigInteger toHex(String textForComparison) {
-			if (textForComparison == null) {
-				return BigInteger.ZERO;
-			}
-			textForComparison = textForComparison.trim().replaceAll("^0x", "");
+		@Override
+		Comparator<String> string(Comparator<String> comparator) {
+			return new Comparator<String>() {
+				@Override
+				public String toString() {
+					return "HEXA";
+				}
 
-			return new BigInteger(textForComparison, 16);
+				@Override
+				public int compare(String o1, String o2) {
+					try {
+						return toHex(o1).compareTo(toHex(o2));
+					} catch (Throwable e) {
+						throw new SortException("Hexadecimal sort failed, select Hex text only! \n(" + e.toString() + ")", e);
+					}
+				}
+
+				protected BigInteger toHex(String textForComparison) {
+					if (textForComparison == null) {
+						return BigInteger.ZERO;
+					}
+					textForComparison = textForComparison.trim().replaceAll("^0x", "");
+
+					return new BigInteger(textForComparison, 16);
+				}
+			};
 		}
 	});
 
-	private Comparator<Sortable> comparator;
-	private ComparatorAdapterFactory factory;
+	private ComparatorFactory factory;
 
-	Sort(Comparator<Sortable> comparator) {
-		this.comparator = comparator;
-	}
-
-	Sort(ComparatorAdapterFactory factory) {
+	Sort(ComparatorFactory factory) {
 		this.factory = factory;
 	}
 
@@ -171,15 +233,16 @@ public enum Sort {
 	}
 
 	public Comparator<Sortable> getSortLineComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
-		Comparator<String> baseComparator = getStringComparator(baseComparatorEnum, languageTag);
-		if (factory != null) {
-			return factory.adapter(baseComparator);
-		} else {
-			return comparator;
-		}
+		Comparator<String> baseComparator = getBaseStringComparator(baseComparatorEnum, languageTag);
+		return factory.sortable(baseComparator);
 	}
 
-	public static Comparator<String> getStringComparator(SortSettings.BaseComparator baseComparator, String languageTag) {
+	public Comparator<String> getStringComparator(SortSettings.BaseComparator baseComparatorEnum, String languageTag) {
+		Comparator<String> baseComparator = getBaseStringComparator(baseComparatorEnum, languageTag);
+		return factory.string(baseComparator);
+	}
+
+	private Comparator<String> getBaseStringComparator(SortSettings.BaseComparator baseComparator, String languageTag) {
 		Comparator comparator;
 		switch (baseComparator) {
 			case NORMAL:
@@ -219,8 +282,29 @@ public enum Sort {
 		return comparator;
 	}
 
-	static abstract class ComparatorAdapterFactory {
-		abstract Comparator<Sortable> adapter(Comparator<String> comparator);
+	static abstract class ComparatorFactory {
+		abstract Comparator<Sortable> sortable(Comparator<String> baseComparator);
+
+		abstract Comparator<String> string(Comparator<String> baseComparator);
 	}
 
+	private static class SortableComparator implements Comparator<Sortable> {
+		private final Comparator<String> stringComparator;
+		private String name;
+
+		public SortableComparator(Comparator<String> stringComparator, String name) {
+			this.name = name;
+			this.stringComparator = stringComparator;
+		}
+
+		@Override
+		public String toString() {
+			return name;
+		}
+
+		@Override
+		public int compare(Sortable o1, Sortable o2) {
+			return stringComparator.compare(o1.getTextForComparison(), o2.getTextForComparison());
+		}
+	}
 }
