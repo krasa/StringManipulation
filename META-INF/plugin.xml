@@ -475,22 +475,22 @@
                    popup="true">
                 <action id="StringManipulation.Sort"
                         class="osmedile.intellij.stringmanip.sort.SortAction"
-                        text="Sort Lines"
+                        text="Sort Lines..."
                         description="Universal lines sort with all kinds of features">
                 </action>
                 <action id="StringManipulation.SortTokens"
                         class="osmedile.intellij.stringmanip.sort.tokens.SortTokensAction"
-                        text="Sort Tokens"
+                        text="Sort Tokens..."
                         description="Sort delimited text">
                 </action>
                 <action id="StringManipulation.SortLinesBySubSelectionAction"
                         class="osmedile.intellij.stringmanip.sort.SortLinesBySubSelectionAction"
-                        text="Sort Lines by Subselection"
+                        text="Sort Lines by Subselection..."
                         description="Sort lines by subselection - only for multi carets">
                 </action>
                 <action id="StringManipulation.AlignToColumns"
                         class="osmedile.intellij.stringmanip.align.AlignToColumnsAction"
-                        text="Align/Sort Lines by Columns"
+                        text="Align/Sort Lines by Columns..."
                         description="Format selected text to columns/table by a chosen separator/delimiter">
                 </action>
                 <action id="StringManipulation.ReverseAction"
