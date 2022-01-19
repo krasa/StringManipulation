@@ -62,7 +62,8 @@ public class SortAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
-		final SortTypeDialog dialog = new SortTypeDialog(getSortSettings(storeKey), true, editor);
+		SortSettings sortSettings = loadSortSettings();
+		final SortTypeDialog dialog = new SortTypeDialog(sortSettings, true, editor);
 
 		if (!dialog.showAndGet(editor.getProject(), StringManipulationBundle.message("sort.lines"), "StringManipulation.SortTypeDialog")) {
 			return null;
@@ -76,7 +77,7 @@ public class SortAction extends MyEditorAction {
 		PluginPersistentStateComponent.getInstance().storeSortSettings(storeKey, newSettings);
 	}
 
-	protected SortSettings getSortSettings(String storeKey) {
+	protected SortSettings loadSortSettings() {
 		SortSettings sortSettings = PluginPersistentStateComponent.getInstance().getSortSettings(storeKey);
 		return Cloner.deepClone(sortSettings);
 	}

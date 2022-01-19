@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.sort;
 
+import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
@@ -11,8 +12,8 @@ public class ShuffleLinesAction extends SortAction {
 	}
 
 	@Override
-	protected SortSettings getSortSettings(String storeKey) {
-		SortSettings sortSettings = super.getSortSettings(storeKey);
+	protected SortSettings getSortSettings(Editor editor) {
+		SortSettings sortSettings = new SortSettings();
 		sortSettings.sortType(Sort.SHUFFLE);
 		return sortSettings;
 	}
