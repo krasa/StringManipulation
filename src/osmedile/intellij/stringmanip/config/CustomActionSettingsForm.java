@@ -323,10 +323,9 @@ public class CustomActionSettingsForm implements Disposable {
 		actionsList = createJBList(model);
 		stepList = createStepList();
 
-		myEditor = IdeUtils.createEditorPreview("", false);
+		myEditor = IdeUtils.createEditorPreview("", false, this);
 		myPreviewPanel = (JPanel) myEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
-
 	}
 
 	private CheckBoxList<CustomActionModel.Step> createStepList() {

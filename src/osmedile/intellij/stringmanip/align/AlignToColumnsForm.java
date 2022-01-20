@@ -215,7 +215,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 		debugValues.setLayout(new BoxLayout(debugValues, BoxLayout.Y_AXIS));
 		debugValues.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		myPreviewEditor = IdeUtils.createEditorPreview("", false);
+		myPreviewEditor = IdeUtils.createEditorPreview("", false, this);
 		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}

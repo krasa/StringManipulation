@@ -36,7 +36,7 @@ class DelimitedListDialog extends PreviewDialog implements Disposable {
 		super(editor);
 		this.action = action;
 
-		this.previewEditor = IdeUtils.createEditorPreview("", false);
+		this.previewEditor = IdeUtils.createEditorPreview("", false, this);
 		this.previewPanel.add(previewEditor.getComponent());
 		previewEditor.getComponent().setPreferredSize(new Dimension(0, 200));
 

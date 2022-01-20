@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.utils;
 
 import com.intellij.application.options.colors.ColorAndFontOptions;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.EditorFactory;
@@ -9,6 +10,7 @@ import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.impl.EditorImpl;
+import com.intellij.openapi.util.Disposer;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class IdeUtils {
 		});
 	}
 
-	public static EditorImpl createEditorPreview(String text, boolean editable) {
+	public static EditorImpl createEditorPreview(String text, boolean editable, Disposable disposable) {
 		EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
 		ColorAndFontOptions options = new ColorAndFontOptions();
 		options.reset();
@@ -47,7 +49,7 @@ public class IdeUtils {
 		settings.setAdditionalColumnsCount(0);
 		settings.setAdditionalLinesCount(0);
 		settings.setRightMarginShown(false);
-
+		Disposer.register(disposable, () -> EditorFactory.getInstance().releaseEditor(editor));
 		return (EditorImpl) editor;
 	}
 

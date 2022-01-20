@@ -140,7 +140,7 @@ public class SortTokensGui implements Disposable {
 		textfields.setLayout(new BoxLayout(textfields, BoxLayout.Y_AXIS));
 		textfields.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		myEditor = IdeUtils.createEditorPreview("", false);
+		myEditor = IdeUtils.createEditorPreview("", false, this);
 		myPreviewPanel = (JPanel) myEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}

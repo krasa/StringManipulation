@@ -214,7 +214,7 @@ public class GrepDialog extends PreviewDialog {
 	}
 
 	private void createUIComponents() {
-		myPreviewEditor = IdeUtils.createEditorPreview("", false);
+		myPreviewEditor = IdeUtils.createEditorPreview("", false, this);
 		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}
