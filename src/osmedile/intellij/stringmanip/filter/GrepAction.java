@@ -11,9 +11,11 @@ import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,9 @@ public class GrepAction extends MyEditorAction {
 					return;
 				}
 				List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+				IdeUtils.sort(caretsAndSelections);
+				Collections.reverse(caretsAndSelections);
+
 				for (CaretState caretsAndSelection : caretsAndSelections) {
 					LogicalPosition selectionStart = caretsAndSelection.getSelectionStart();
 					LogicalPosition selectionEnd = caretsAndSelection.getSelectionEnd();
