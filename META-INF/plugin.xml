@@ -972,7 +972,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	    <div>
 	        <h4>Version 8.26</h4>
 	        <ul>
-                <li>Sort actions without a dialog</li>
+                <li>Specific sort actions without a dialog</li>
+                <li>New settings: Repeat Last Action - use last settings without a dialog (hold ctrl/alt for showing the dialog anyway)</li>
             </ul>
 	    </div>
 	    <div>

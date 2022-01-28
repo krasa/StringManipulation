@@ -63,10 +63,12 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 	}
 
 	protected final Pair<Boolean, T> stopExecution() {
+		MyApplicationService.setAction(actionClass, null);
 		return new Pair<Boolean, T>(false, null);
 	}
 
 	protected final Pair<Boolean, T> continueExecution(T additionalParameter) {
+		MyApplicationService.setAction(actionClass, (Object) additionalParameter);
 		return new Pair<Boolean, T>(true, additionalParameter);
 	}
 

@@ -62,20 +62,20 @@ public class MyConfigurable implements SearchableConfigurable {
 
 	@Override
 	public boolean isModified() {
-		return gui != null && gui.isModified(instance);
+		return gui != null && gui._isModified(instance);
 	}
 
 	@Override
 	public void apply() throws ConfigurationException {
 		ShortcutStartupActivity.unRegisterActions(instance.getCustomActionModels());
 
-		gui.getData(instance);
+		gui._getData(instance);
 
 		ShortcutStartupActivity.registerActions();
 	}
 
 	@Override
 	public void reset() {
-		gui.setData(instance);
+		gui._setData(instance);
 	}
 }

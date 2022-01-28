@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.MultiCaretHandlerHandler;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.RepeatAction;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.sort.support.SortLines;
@@ -62,6 +63,10 @@ public class SortAction extends MyEditorAction {
 	@SuppressWarnings("Duplicates")
 	@Nullable
 	protected SortSettings getSortSettings(final Editor editor) {
+		if (RepeatAction.model instanceof SortSettings) {
+			return (SortSettings) RepeatAction.model;
+		}
+
 		SortSettings sortSettings = loadSortSettings();
 		final SortTypeDialog dialog = new SortTypeDialog(sortSettings, true, editor);
 

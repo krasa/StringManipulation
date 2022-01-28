@@ -1,12 +1,13 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.ex.ActionManagerEx;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
+import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
+import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 
 import java.util.HashMap;
@@ -14,39 +15,43 @@ import java.util.Map;
 
 public class MyApplicationService {
 	private static final Logger LOG = Logger.getInstance(MyApplicationService.class);
-	private static final String KEY = "osmedile.intellij.stringmanip.MyApplicationService.lastAction";
 
 	private Class lastAction;
-	private CustomActionModel lastCustomActionModel;
+	private Object lastCustomActionModel;
 	private Map<Class, AnAction> classToActionMap;
 
 	public static MyApplicationService getInstance() {
 		return ApplicationManager.getApplication().getService(MyApplicationService.class);
 	}
 
-	public AnAction getAnAction() {
-		if (lastCustomActionModel != null) {
-			return ActionManagerEx.getInstanceEx().getAction(lastCustomActionModel.getId());
-		}
-		if (lastAction == null) {
-			String value = PropertiesComponent.getInstance().getValue(KEY);
-			if (value != null) {
-				try {
-					lastAction = Class.forName(value);
-				} catch (Throwable e) {
-					LOG.debug(e);
-				}
+	public MyApplicationService() {
+		UniversalActionModel value = PluginPersistentStateComponent.getInstance().getLastAction();
+		if (value != null) {
+			try {
+				lastAction = Class.forName(value.getActionClassName());
+				lastCustomActionModel = value.getModelAsObject();
+			} catch (Throwable e) {
+				LOG.debug(e);
 			}
 		}
-		return getActionMap().get(lastAction);
 	}
 
-	public static void setAction(Class aClass, CustomActionModel customActionModel) {
+	@NotNull
+	public Pair<AnAction, Object> setAction() {
+		if (lastCustomActionModel instanceof CustomActionModel) {
+			AnAction action = ActionManagerEx.getInstanceEx().getAction(((CustomActionModel) lastCustomActionModel).getId());
+			return Pair.pair(action, lastCustomActionModel);
+		}
+
+		return Pair.pair(getActionMap().get(lastAction), lastCustomActionModel);
+	}
+
+	public static void setAction(Class aClass, Object customActionModel) {
 		if (aClass != null) {
 			MyApplicationService instance = getInstance();
 			instance.lastAction = aClass;
 			instance.lastCustomActionModel = customActionModel;
-			PropertiesComponent.getInstance().setValue(KEY, aClass.getCanonicalName());
+			PluginPersistentStateComponent.getInstance().setLastAction(new UniversalActionModel(aClass.getCanonicalName(), customActionModel));
 		}
 	}
 

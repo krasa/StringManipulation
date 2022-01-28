@@ -7,6 +7,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.util.NlsActions;
+import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +21,8 @@ public class ShortcutsAction extends AnAction implements DumbAware {
 
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-		AnAction anAction = MyApplicationService.getInstance().getAnAction();
+		Pair<AnAction, Object> pair = MyApplicationService.getInstance().setAction();
+		AnAction anAction = pair.getFirst();
 		String id = "StringManipulation.Group.Main";
 		if (anAction != null) {
 			id = ActionManager.getInstance().getId(anAction);

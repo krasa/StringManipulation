@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.CharacterSwitchingSettings;
+import osmedile.intellij.stringmanip.UniversalActionModel;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
 import osmedile.intellij.stringmanip.filter.GrepSettings;
@@ -35,6 +36,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	public static final int MAX_HISTORY = 20;
 	private List<ColumnAlignerModel> columnAlignerHistory = new ArrayList<ColumnAlignerModel>();
 	private List<CustomActionModel> customActionModels = DefaultActions.defaultActions();
+	private List<UniversalActionModel> universalActions = new ArrayList<>();
 
 	private int lastSelectedAction = 0;
 	private int version = 0;
@@ -50,6 +52,8 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	private List<GrepSettings> grepHistory = new ArrayList<>();
 	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
+	private UniversalActionModel lastAction;
+	private boolean repeatLastActionWithoutDialog = true;
 
 	public PluginPersistentStateComponent() {
 	}
@@ -434,4 +438,19 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		return null;
 	}
 
+	public UniversalActionModel getLastAction() {
+		return lastAction;
+	}
+
+	public void setLastAction(UniversalActionModel lastAction) {
+		this.lastAction = lastAction;
+	}
+
+	public boolean isRepeatLastActionWithoutDialog() {
+		return repeatLastActionWithoutDialog;
+	}
+
+	public void setRepeatLastActionWithoutDialog(final boolean repeatLastActionWithoutDialog) {
+		this.repeatLastActionWithoutDialog = repeatLastActionWithoutDialog;
+	}
 }
