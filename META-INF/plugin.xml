@@ -714,6 +714,11 @@
                         text="Paste as PHP Array"
 
                 />
+                <action id="StringManipulation.PasteCapitalized"
+                        class="osmedile.intellij.stringmanip.paste.PasteCapitalizedAction"
+                        text="Paste Un/Capitalized"
+                        description="Pasted content is either capitalized or uncapitalized to produce camelCased text"
+                />
             </group>
 
             <action id="StringManipulation.Shortcuts" class="osmedile.intellij.stringmanip.ShortcutsAction"

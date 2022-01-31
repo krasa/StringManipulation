@@ -38,10 +38,6 @@ public class PasteAsPhpArrayAction extends MyEditorAction {
 			}
 		}
 
-		@Override
-		public boolean isEnabledForCaret(@NotNull Editor editor, @NotNull Caret caret, DataContext dataContext) {
-			return !editor.isOneLineMode() || editor.getSelectionModel().hasSelection();
-		}
 	}
 
 	public static void pasteTransferable(final @NotNull Editor editor, @NotNull Transferable content) throws EditorCopyPasteHelper.TooLargeContentException {
