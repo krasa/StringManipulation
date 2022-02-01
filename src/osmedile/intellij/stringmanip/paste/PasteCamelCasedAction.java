@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
+import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import javax.swing.*;
@@ -18,10 +19,10 @@ import javax.swing.text.JTextComponent;
 import java.awt.datatransfer.Transferable;
 import java.util.Iterator;
 
-public class PasteCapitalizedAction extends MyEditorAction {
+public class PasteCamelCasedAction extends MyEditorAction {
 
-	protected PasteCapitalizedAction() {
-		super(new PasteCapitalizedAction.Handler());
+	protected PasteCamelCasedAction() {
+		super(new PasteCamelCasedAction.Handler());
 	}
 
 	private static class Handler extends EditorWriteActionHandler {
@@ -31,7 +32,7 @@ public class PasteCapitalizedAction extends MyEditorAction {
 
 		@Override
 		public void executeWriteAction(@NotNull Editor editor, Caret caret, DataContext dataContext) {
-			MyApplicationService.setAction(PasteCapitalizedAction.class);
+			MyApplicationService.setAction(PasteCamelCasedAction.class);
 			Transferable content = EditorModificationUtil.getContentsToPasteToEditor(null);
 			if (content != null) {
 				pasteTransferable(editor, content);
@@ -77,7 +78,7 @@ public class PasteCapitalizedAction extends MyEditorAction {
 				String normalizedText = TextBlockTransferable.convertLineSeparators(editor, segments.next());
 				int caretOffset = caret.getOffset();
 				normalizedText = trimTextIfNeeded(editor, normalizedText);
-				normalizedText = capitalize(editor, caretOffset, normalizedText);
+				normalizedText = transform(editor, caretOffset, normalizedText);
 				ranges[index[0]++] = new TextRange(caretOffset, caretOffset + normalizedText.length());
 				EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
 			});
@@ -86,21 +87,19 @@ public class PasteCapitalizedAction extends MyEditorAction {
 			int caretOffset = caretModel.getOffset();
 			String normalizedText = TextBlockTransferable.convertLineSeparators(editor, text);
 			normalizedText = trimTextIfNeeded(editor, normalizedText);
-			normalizedText = capitalize(editor, caretOffset, normalizedText);
+			normalizedText = transform(editor, caretOffset, normalizedText);
 			EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
 			return new TextRange[]{new TextRange(caretOffset, caretOffset + text.length())};
 		}
 	}
 
-	private static String capitalize(Editor editor, int caretOffset, String normalizedText) {
-		if (caretOffset == 0) {
-			return StringUtils.uncapitalize(normalizedText);
-		}
+	private static String transform(Editor editor, int caretOffset, String normalizedText) {
+		String s = Style.CAMEL_CASE.transform(normalizedText);
 		String text = editor.getDocument().getText(TextRange.create(caretOffset - 1, caretOffset));
 		if (StringUtil.containsOnlyLettersAndDigits(text)) {
-			return StringUtils.capitalize(normalizedText);
+			return StringUtils.capitalize(s);
 		} else {
-			return StringUtils.uncapitalize(normalizedText);
+			return StringUtils.uncapitalize(s);
 		}
 	}
 
