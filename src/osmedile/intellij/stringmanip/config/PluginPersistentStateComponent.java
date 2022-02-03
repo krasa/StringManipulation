@@ -56,6 +56,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private UniversalActionModel lastAction;
 	private boolean repeatLastActionWithoutDialog = true;
 	private BorderSettings borderSettings = new BorderSettings();
+	private boolean normalizeCaseSwitching = true;
 
 	public PluginPersistentStateComponent() {
 	}
@@ -462,5 +463,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void setBorderSettings(BorderSettings borderSettings) {
 		this.borderSettings = borderSettings;
+	}
+
+	public boolean isNormalizeCaseSwitching() {
+		return normalizeCaseSwitching;
+	}
+
+	public void setNormalizeCaseSwitching(final boolean normalizeCaseSwitching) {
+		this.normalizeCaseSwitching = normalizeCaseSwitching;
 	}
 }

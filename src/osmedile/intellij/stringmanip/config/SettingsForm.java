@@ -15,6 +15,7 @@ public class SettingsForm {
 	private JPanel donatePanel;
 	private JPanel charSwitchEncoding;
 	private JCheckBox repeatLastActionWithoutDialog;
+	private JCheckBox normalizeCaseSwitching;
 	private CaseSwitchingSettingsForm caseSwitchingSettingsForm;
 	private CustomActionSettingsForm customActionSettingsForm;
 	private CharacterSwitchingSettingsForm characterSwitchingSettingsForm;
@@ -67,16 +68,19 @@ public class SettingsForm {
 	public void setData(PluginPersistentStateComponent data) {
 		doNotAddSelection.setSelected(data.isDoNotAddSelection());
 		repeatLastActionWithoutDialog.setSelected(data.isRepeatLastActionWithoutDialog());
+		normalizeCaseSwitching.setSelected(data.isNormalizeCaseSwitching());
 	}
 
 	public void getData(PluginPersistentStateComponent data) {
 		data.setDoNotAddSelection(doNotAddSelection.isSelected());
 		data.setRepeatLastActionWithoutDialog(repeatLastActionWithoutDialog.isSelected());
+		data.setNormalizeCaseSwitching(normalizeCaseSwitching.isSelected());
 	}
 
 	public boolean isModified(PluginPersistentStateComponent data) {
 		if (doNotAddSelection.isSelected() != data.isDoNotAddSelection()) return true;
 		if (repeatLastActionWithoutDialog.isSelected() != data.isRepeatLastActionWithoutDialog()) return true;
+		if (normalizeCaseSwitching.isSelected() != data.isNormalizeCaseSwitching()) return true;
 		return false;
 	}
 }

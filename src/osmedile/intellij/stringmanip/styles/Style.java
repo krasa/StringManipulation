@@ -2,6 +2,7 @@ package osmedile.intellij.stringmanip.styles;
 
 import org.apache.commons.text.WordUtils;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.escaping.normalize.NormalizationType;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
@@ -13,21 +14,21 @@ import static osmedile.intellij.stringmanip.utils.StringUtil.*;
  * @see PluginPersistentStateComponent#fixActions()
  */
 public enum Style {
-	KEBAB_LOWERCASE("kebab-case", "foo-bar") {
+	KEBAB_LOWERCASE("kebab-case", true, "foo-bar") {
 		@Override
 		public String transform(Style style, String s) {
 			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 			return replaceSeparator(s1, '_', '-');
 		}
 	},
-	KEBAB_UPPERCASE("KEBAB-UPPERCASE", "FOO-BAR") {
+	KEBAB_UPPERCASE("KEBAB-UPPERCASE", true, "FOO-BAR") {
 		@Override
 		public String transform(Style style, String s) {
 			String s1 = wordsAndHyphenAndCamelToConstantCase(s);
 			return replaceSeparator(s1, '_', '-');
 		}
 	},
-	SNAKE_CASE("snake_case", "foo_bar") {
+	SNAKE_CASE("snake_case", true, "foo_bar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style == SNAKE_CASE || style == CAPITALIZED_SNAKE_CASE || style == SCREAMING_SNAKE_CASE) {
@@ -36,19 +37,19 @@ public enum Style {
 			return wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 		}
 	},
-	CAPITALIZED_SNAKE_CASE("Capitalized_Snake_Case", "Foo_Bar") {
+	CAPITALIZED_SNAKE_CASE("Capitalized_Snake_Case", true, "Foo_Bar") {
 		@Override
 		public String transform(Style style, String s) {
 			return WordUtils.capitalizeFully(SNAKE_CASE.transform(style, s), '_');
 		}
 	},
-	SCREAMING_SNAKE_CASE("SCREAMING_SNAKE_CASE", "FOO_BAR") {
+	SCREAMING_SNAKE_CASE("SCREAMING_SNAKE_CASE", true, "FOO_BAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return wordsAndHyphenAndCamelToConstantCase(s);
 		}
 	},
-	PASCAL_CASE("PascalCase", "FooBar", "FooBar") {
+	PASCAL_CASE("PascalCase", true, "FooBar", "FooBar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != CAMEL_CASE) {
@@ -57,7 +58,7 @@ public enum Style {
 			return capitalizeFirstWord2(s);
 		}
 	},
-	CAMEL_CASE("camelCase", "fooBar", "fooBar") {
+	CAMEL_CASE("camelCase", true, "fooBar", "fooBar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style == CAMEL_CASE) {
@@ -66,21 +67,21 @@ public enum Style {
 			return toCamelCase(s);
 		}
 	},
-	DOT("dot.case", "foo.bar", "foo.Bar") {
+	DOT("dot.case", true, "foo.bar", "foo.Bar") {
 		@Override
 		public String transform(Style style, String s) {
 			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 			return replaceSeparator(s1, '_', '.');
 		}
 	},
-	WORD_LOWERCASE("words lowercase", "foo bar") {
+	WORD_LOWERCASE("words lowercase", false, "foo bar") {
 		@Override
 		public String transform(Style style, String s) {
 			String s1 = wordsAndHyphenAndCamelToConstantCase(s).toLowerCase();
 			return replaceSeparator(s1, '_', ' ');
 		}
 	},
-	SENTENCE_CASE("First word capitalized", "Foo bar") {
+	SENTENCE_CASE("First word capitalized", false, "Foo bar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != WORD_LOWERCASE) {
@@ -90,7 +91,7 @@ public enum Style {
 			return capitalizeFirstWord(s, Constants.DELIMITERS);
 		}
 	},
-	WORD_CAPITALIZED("Words Capitalized", "Foo Bar") {
+	WORD_CAPITALIZED("Words Capitalized", false, "Foo Bar") {
 		@Override
 		public String transform(Style style, String s) {
 			if (style != WORD_LOWERCASE && style != WORD_CAPITALIZED) {
@@ -103,7 +104,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_SINGLE_WORD_CAPITALIZED("<Singlewordcapitalized>", "Foobar") {
+	_SINGLE_WORD_CAPITALIZED("<Singlewordcapitalized>", false, "Foobar") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -112,7 +113,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_ALL_UPPER_CASE("<ALLUPPERCASE>", "FOOBAR") {
+	_ALL_UPPER_CASE("<ALLUPPERCASE>", false, "FOOBAR") {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -121,7 +122,7 @@ public enum Style {
 	/**
 	 * never use that to transform
 	 */
-	_UNKNOWN("<unknown>") {
+	_UNKNOWN("<unknown>", false) {
 		@Override
 		public String transform(Style style, String s) {
 			return s;
@@ -135,10 +136,12 @@ public enum Style {
 	 */
 	public String[] example;
 	private String presentableName;
+	private boolean normalize;
 
-	Style(String presentableName, String... example) {
+	Style(String presentableName, boolean normalize, String... example) {
 		this.presentableName = presentableName;
 		this.example = example;
+		this.normalize = normalize;
 	}
 
 	public String getPresentableName() {
@@ -149,7 +152,11 @@ public enum Style {
 
 	public String transform(String s) {
 		Style from = from(s);
-		return this.transform(from, s);
+		String transform = this.transform(from, s);
+		if (normalize && PluginPersistentStateComponent.getInstance().isNormalizeCaseSwitching()) {
+			transform = NormalizationType.STRIP_ACCENTS.normalize(transform);
+		}
+		return transform;
 	}
 
 	public static Style from(String s) {
