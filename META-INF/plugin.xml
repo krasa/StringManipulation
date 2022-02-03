@@ -719,6 +719,12 @@
                         text="Paste - camelCased"
                         description="Capitalized if needed"
                 />
+                <separator/>
+                <action id="StringManipulation.AddBorder"
+                        class="osmedile.intellij.stringmanip.border.AddBorderAction"
+                        text="Add Border..."
+                >
+                </action>
             </group>
 
             <action id="StringManipulation.Shortcuts" class="osmedile.intellij.stringmanip.ShortcutsAction"

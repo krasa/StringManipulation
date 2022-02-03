@@ -15,6 +15,7 @@ import osmedile.intellij.stringmanip.CaseSwitchingSettings;
 import osmedile.intellij.stringmanip.CharacterSwitchingSettings;
 import osmedile.intellij.stringmanip.UniversalActionModel;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
+import osmedile.intellij.stringmanip.border.BorderSettings;
 import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
 import osmedile.intellij.stringmanip.filter.GrepSettings;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
@@ -54,6 +55,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
 	private UniversalActionModel lastAction;
 	private boolean repeatLastActionWithoutDialog = true;
+	private BorderSettings borderSettings = new BorderSettings();
 
 	public PluginPersistentStateComponent() {
 	}
@@ -452,5 +454,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void setRepeatLastActionWithoutDialog(final boolean repeatLastActionWithoutDialog) {
 		this.repeatLastActionWithoutDialog = repeatLastActionWithoutDialog;
+	}
+
+	public BorderSettings getBorderSettings() {
+		return borderSettings;
+	}
+
+	public void setBorderSettings(BorderSettings borderSettings) {
+		this.borderSettings = borderSettings;
 	}
 }
