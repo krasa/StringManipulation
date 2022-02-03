@@ -989,8 +989,10 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 8.26</h4>
 	        <ul>
                 <li>Added: Paste - camelCased</li>
-                <li>Specific sort actions without a dialog</li>
-                <li>New settings: Repeat Last Action - use last settings without a dialog (hold ctrl/alt for showing the dialog anyway)</li>
+                <li>Added: Paste - and Keep Selections</li>
+                <li>Added: Add Border...</li>
+                <li>Changed: specific sort actions not longer use a dialog</li>
+                <li>New settings for 'Repeat Last Action' - use last settings without a dialog (hold ctrl/alt for showing the dialog anyway)</li>
             </ul>
 	    </div>
 	    <div>
