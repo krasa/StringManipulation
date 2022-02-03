@@ -709,15 +709,19 @@
                         description="Configure with 'String Manipulation' tool window"
                 />
                 <separator/>
-                <action id="StringManipulation.PasteAsPhpArray"
-                        class="osmedile.intellij.stringmanip.paste.PasteAsPhpArrayAction"
-                        text="Paste as PHP Array"
-
-                />
                 <action id="StringManipulation.PasteCamelCased"
                         class="osmedile.intellij.stringmanip.paste.PasteCamelCasedAction"
                         text="Paste - camelCased"
                         description="Capitalized if needed"
+                />
+                <action id="StringManipulation.PasteAndKeepSelection"
+                        class="osmedile.intellij.stringmanip.paste.PasteAndKeepSelectionAction"
+                        text="Paste - and Keep Selections"
+                        description="For using Macros on the pasted text"
+                />
+                <action id="StringManipulation.PasteAsPhpArray"
+                        class="osmedile.intellij.stringmanip.paste.PasteAsPhpArrayAction"
+                        text="Paste as PHP Array"
                 />
                 <separator/>
                 <action id="StringManipulation.AddBorder"
