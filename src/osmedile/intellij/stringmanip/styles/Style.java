@@ -2,7 +2,7 @@ package osmedile.intellij.stringmanip.styles;
 
 import org.apache.commons.text.WordUtils;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
-import osmedile.intellij.stringmanip.escaping.normalize.NormalizationType;
+import osmedile.intellij.stringmanip.escaping.DiacriticsToAsciiAction;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
 
 import static osmedile.intellij.stringmanip.utils.StringUtil.*;
@@ -154,7 +154,7 @@ public enum Style {
 		Style from = from(s);
 		String transform = this.transform(from, s);
 		if (normalize && PluginPersistentStateComponent.getInstance().isNormalizeCaseSwitching()) {
-			transform = NormalizationType.STRIP_ACCENTS.normalize(transform);
+			transform = DiacriticsToAsciiAction.toPlain(transform);
 		}
 		return transform;
 	}
