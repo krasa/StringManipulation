@@ -32,14 +32,7 @@ public class PasteAndKeepSelectionAction extends MyEditorAction {
 			MyApplicationService.setAction(PasteAndKeepSelectionAction.class);
 			Transferable content = EditorModificationUtil.getContentsToPasteToEditor(null);
 			if (content != null) {
-				TextRange[] textRanges = pasteTransferable(editor, content);
-				if (textRanges != null) {
-					CaretModel caretModel = editor.getCaretModel();
-					for (TextRange textRange : textRanges) {
-						Caret caret1 = caretModel.addCaret(editor.offsetToVisualPosition(textRange.getStartOffset()));
-						caret1.setSelection(textRange.getStartOffset(), textRange.getEndOffset());
-					}
-				}
+				pasteTransferable(editor, content);
 			}
 		}
 	}
@@ -84,6 +77,7 @@ public class PasteAndKeepSelectionAction extends MyEditorAction {
 				normalizedText = trimTextIfNeeded(editor, normalizedText);
 				ranges[index[0]++] = new TextRange(caretOffset, caretOffset + normalizedText.length());
 				EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
+				caret.setSelection(caretOffset, caretOffset + normalizedText.length());
 			});
 			return ranges;
 		} else {
@@ -91,6 +85,7 @@ public class PasteAndKeepSelectionAction extends MyEditorAction {
 			String normalizedText = TextBlockTransferable.convertLineSeparators(editor, text);
 			normalizedText = trimTextIfNeeded(editor, normalizedText);
 			EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
+			caretModel.getPrimaryCaret().setSelection(caretOffset, caretOffset + text.length());
 			return new TextRange[]{new TextRange(caretOffset, caretOffset + text.length())};
 		}
 	}
