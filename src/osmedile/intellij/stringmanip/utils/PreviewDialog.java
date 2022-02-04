@@ -11,6 +11,7 @@ import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.util.ui.EDT;
@@ -66,7 +67,7 @@ public abstract class PreviewDialog<SettingsType, InputType> implements Disposab
 		@Override
 		protected void dispose() {
 			super.dispose();
-			this.previewDialog.dispose();
+			Disposer.dispose(previewDialog);
 		}
 
 		@Nullable

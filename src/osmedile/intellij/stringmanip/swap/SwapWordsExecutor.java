@@ -20,6 +20,7 @@ public class SwapWordsExecutor {
 		this.dataContext = dataContext;
 		document = editor.getDocument();
 		caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+		IdeUtils.sort(caretsAndSelections);
 	}
 
 	public SwapWordsExecutor() {

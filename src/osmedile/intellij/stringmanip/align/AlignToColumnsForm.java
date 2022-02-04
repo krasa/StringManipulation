@@ -5,6 +5,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +92,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 					@Override
 					protected void dispose() {
 						super.dispose();
-						alignToColumnsHistoryForm.dispose();
+						Disposer.dispose(alignToColumnsHistoryForm);
 					}
 
 					@Nullable

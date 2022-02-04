@@ -31,7 +31,7 @@ public class MyConfigurable implements SearchableConfigurable {
 	@Override
 	public void disposeUIResources() {
 		if (gui != null) {
-			gui.dispose();
+	gui.dispose();
 		}
 		gui = null;
 	}

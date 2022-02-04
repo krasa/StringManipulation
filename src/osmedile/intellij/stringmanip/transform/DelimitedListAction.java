@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -169,7 +170,7 @@ public class DelimitedListAction extends EditorAction {
 			@Override
 			protected void dispose() {
 				super.dispose();
-				dialog.dispose();
+				Disposer.dispose(dialog);
 			}
 
 			@Override

@@ -87,7 +87,7 @@
           <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Normalize case switched text for (camel/pascal/kebab/dot/snake case)- apply 'Convert Diacritics (Accents) to ASCII'"/>
+          <text value="Normalize case switched text for camel/pascal/kebab/dot/snake case - apply 'Convert Diacritics (Accents) to ASCII'"/>
         </properties>
       </component>
     </children>

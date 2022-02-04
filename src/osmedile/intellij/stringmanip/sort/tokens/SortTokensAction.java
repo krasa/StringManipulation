@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.sort.tokens;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +59,7 @@ public class SortTokensAction extends MyEditorAction {
 			@Override
 			protected void dispose() {
 				super.dispose();
-				dialog.dispose();
+				Disposer.dispose(dialog);
 			}
 
 			@Nullable
