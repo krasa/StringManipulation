@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BorderDialog extends PreviewDialog {
 	private static final Logger log = LoggerFactory.getLogger(BorderDialog.class);
 
-	private AddBorderAction action;
+	private CreateBorderAction action;
 	private String sourceTextForPreview;
 	private EditorImpl myPreviewEditor;
 
@@ -38,7 +38,7 @@ public class BorderDialog extends PreviewDialog {
 	private JRadioButton borderSingle;
 	private int tabSize;
 
-	public BorderDialog(AddBorderAction action, BorderSettings borderSettings, Editor editor) {
+	public BorderDialog(CreateBorderAction action, BorderSettings borderSettings, Editor editor) {
 		super(editor);
 		tabSize = EditorUtil.getTabSize(editor);
 		Donate.initDonateButton(donate);
