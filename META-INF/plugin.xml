@@ -992,7 +992,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Added: Paste - camelCased</li>
                 <li>Added: Paste - and Keep Selections</li>
                 <li>Added: Create Border...</li>
-                <li>Changed: specific sort actions not longer use a dialog</li>
+                <li>Changed: specific sort actions no longer use a dialog</li>
                 <li>New settings: Normalize case switched text for (camel/pascal/kebab/dot/snake case)- apply 'Convert Diacritics (Accents) to ASCII'</li>
                 <li>New settings: 'Repeat Last Action' - use last settings without a dialog (hold ctrl/alt for showing the dialog anyway)</li>
             </ul>
