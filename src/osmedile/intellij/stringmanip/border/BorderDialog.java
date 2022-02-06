@@ -1,20 +1,25 @@
 package osmedile.intellij.stringmanip.border;
 
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.ActionToolbar;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
 import com.intellij.openapi.editor.impl.EditorImpl;
-import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.CommonActionsPanel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.utils.DialogUtils;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -36,6 +41,14 @@ public class BorderDialog extends PreviewDialog {
 	private JTextField customBorder;
 	private JRadioButton borderCustom;
 	private JRadioButton borderSingle;
+	private JRadioButton fullBorder;
+	private JPanel paddingPanel;
+	private JPanel borderPanel;
+	private JRadioButton topAndBottomBorder;
+	private JRadioButton bottomBorder;
+	private JRadioButton fullPadding;
+	private JRadioButton sidePadding;
+	private JRadioButton topAndBottomPadding;
 	private int tabSize;
 
 	public BorderDialog(CreateBorderAction action, BorderSettings borderSettings, Editor editor) {
@@ -46,22 +59,112 @@ public class BorderDialog extends PreviewDialog {
 		this.action = action;
 		sourceTextForPreview = PreviewDialog.getTextForPreview(editor);
 
-		final DocumentAdapter documentAdapter = new DocumentAdapter() {
+		paddingPanel();
+		borderPanel();
 
+		DialogUtils.addListeners(this, this::updateComponents);
+
+		updateComponents();
+	}
+
+	private void updateComponents() {
+		submitRenderPreview();
+	}
+
+	private void borderPanel() {
+		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
 			@Override
-			protected void textChanged(@NotNull DocumentEvent documentEvent) {
-				submitRenderPreview();
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				try {
+					String text = borderWidth.getText();
+					i = Integer.parseInt(text);
+					i++;
+				} catch (Exception e) {
+					i = 1;
+				}
+				borderWidth.setText(String.valueOf(i));
 			}
 		};
+		plus.setContextComponent(borderPanel);
+		plus.addCustomUpdater(anActionEvent -> true);
 
-		borderSingle.addActionListener(e -> submitRenderPreview());
-		borderCustom.addActionListener(e -> submitRenderPreview());
-		borderDouble.addActionListener(e -> submitRenderPreview());
+		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+			@Override
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				try {
+					String text = borderWidth.getText();
+					i = Integer.parseInt(text);
+					i--;
+					if (i <= 0) {
+						i = 1;
+					}
+				} catch (Exception e) {
+					i = 1;
+				}
+				borderWidth.setText(String.valueOf(i));
+			}
+		};
+		minus.setContextComponent(borderPanel);
+		minus.addCustomUpdater(anActionEvent -> true);
 
-		padding.getDocument().addDocumentListener(documentAdapter);
-		borderWidth.getDocument().addDocumentListener(documentAdapter);
-		customBorder.getDocument().addDocumentListener(documentAdapter);
-		submitRenderPreview();
+		DefaultActionGroup actionGroup = new DefaultActionGroup();
+		ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
+		actionGroup.addAction(minus);
+		actionGroup.addAction(plus);
+		actionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
+		borderPanel.add(actionToolbar.getComponent(), BorderLayout.CENTER);
+	}
+
+	private void paddingPanel() {
+		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
+			@Override
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				try {
+					String text = padding.getText();
+					i = Integer.parseInt(text);
+					i++;
+				} catch (Exception e) {
+					i = 0;
+				}
+				padding.setText(String.valueOf(i));
+			}
+
+		};
+		plus.setContextComponent(paddingPanel);
+		plus.addCustomUpdater(anActionEvent -> true);
+
+		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+			@Override
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				try {
+					String text = padding.getText();
+					i = Integer.parseInt(text);
+					i--;
+					if (i < 0) {
+						i = 0;
+					}
+				} catch (Exception e) {
+					i = 0;
+				}
+				padding.setText(String.valueOf(i));
+			}
+
+		};
+		minus.addCustomUpdater(anActionEvent -> true);
+		minus.setContextComponent(paddingPanel);
+
+		DefaultActionGroup actionGroup = new DefaultActionGroup();
+		actionGroup.addAction(minus);
+		actionGroup.addAction(plus);
+
+		ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
+		actionToolbar.setTargetComponent(getRoot());
+		actionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
+		paddingPanel.add(actionToolbar.getComponent(), BorderLayout.CENTER);
 	}
 
 	public BorderDialog() {
@@ -133,14 +236,21 @@ public class BorderDialog extends PreviewDialog {
 		myPreviewPanel.setPreferredSize(new Dimension(0, 200));
 	}
 
-	public void
-	setData(BorderSettings data) {
+	public void setData(BorderSettings data) {
 		padding.setText(data.getPadding());
 		borderWidth.setText(data.getBorderWidth());
 		customBorder.setText(data.getCustomBorder());
 		borderCustom.setSelected(data.isBorderCustom());
 		borderSingle.setSelected(data.isBorderSingle());
 		borderDouble.setSelected(data.isBorderDouble());
+
+		fullBorder.setSelected(data.isFullBorder());
+		bottomBorder.setSelected(data.isBottomBorder());
+		topAndBottomBorder.setSelected(data.isTopAndBottomBorder());
+
+		fullPadding.setSelected(data.isFullPadding());
+		sidePadding.setSelected(data.isSidePadding());
+		topAndBottomPadding.setSelected(data.isTopAndBottomPadding());
 	}
 
 	public void getData(BorderSettings data) {
@@ -150,6 +260,15 @@ public class BorderDialog extends PreviewDialog {
 		data.setBorderCustom(borderCustom.isSelected());
 		data.setBorderSingle(borderSingle.isSelected());
 		data.setBorderDouble(borderDouble.isSelected());
+
+		data.setBottomBorder(bottomBorder.isSelected());
+		data.setFullBorder(fullBorder.isSelected());
+		data.setTopAndBottomBorder(topAndBottomBorder.isSelected());
+
+		data.setFullPadding(fullPadding.isSelected());
+		data.setSidePadding(sidePadding.isSelected());
+		data.setTopAndBottomPadding(topAndBottomPadding.isSelected());
+
 	}
 
 	public boolean isModified(BorderSettings data) {

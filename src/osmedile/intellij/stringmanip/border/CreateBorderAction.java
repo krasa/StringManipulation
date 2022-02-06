@@ -16,6 +16,7 @@ import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.MyEditorWriteActionHandler2;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.utils.ActionUtils;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.ArrayList;
@@ -34,19 +35,8 @@ public class CreateBorderAction extends MyEditorAction {
 			@NotNull
 			@Override
 			protected Pair<Boolean, BorderSettings> beforeWriteAction(Editor editor, DataContext dataContext) {
-				SelectionModel selectionModel = editor.getSelectionModel();
-				List<Caret> allCarets = editor.getCaretModel().getAllCarets();
-				if (allCarets.size() == 1) {
-					if (!selectionModel.hasSelection()) {
-						selectionModel.setSelection(0, editor.getDocument().getTextLength());
-					}
-				} else {
-					for (Caret allCaret : allCarets) {
-						if (!allCaret.hasSelection()) {
-							allCaret.selectLineAtCaret();
-						}
-					}
-				}
+				editor.getCaretModel().runForEachCaret(caret -> ActionUtils.selectSomethingUnderCaret(editor));
+
 				BorderSettings settings = configure(editor);
 				if (settings == null) return stopExecution();
 
@@ -163,7 +153,7 @@ public class CreateBorderAction extends MyEditorAction {
 	protected String transform(BorderSettings settings, String selectedText, int tabSize) {
 		String string = repeatSymbol(' ', tabSize);
 		selectedText = selectedText.replace("\t", string);
-
+		int topBottomPadding = 0;
 
 		for (int i = 0; i < settings.getBorderWidthAsInt(); i++) {
 			Collection<String> cell = Cell.of();
@@ -176,34 +166,94 @@ public class CreateBorderAction extends MyEditorAction {
 
 			SimpleTable simpleTable = SimpleTable.of()
 					.nextRow()
-					.nextCell(cell)
-					// Expand to current height + 5, adding new lines to TOP
-					//
-					.applyToCell(TOP_PAD.withHeight(cellHeight + padding))
-					// Expand to new-current-height + 5, adding new lines to the BOTTOM
-					//
-					.applyToCell(BOTTOM_PAD.withHeight(cellHeight + padding + padding))
-					// Expand to current width + 5, adding new lines to the LEFT
-					//
-					// Expand to new-current-width + 5, adding new lines to the RIGHT
-					//
-					.applyToCell(RIGHT_PAD.withWidth(cellWidth + padding))
-					.applyToCell(LEFT_PAD.withWidth(cellWidth + padding + padding));
+					.nextCell(cell);
+			// Expand to current height + 5, adding new lines to TOP
+			//
+
+			if (settings.isTopAndBottomPadding() || settings.isFullPadding()) {
+				topBottomPadding = padding;
+				simpleTable.applyToCell(TOP_PAD.withHeight(cellHeight + padding))
+						// Expand to new-current-height + 5, adding new lines to the BOTTOM
+						//
+						.applyToCell(BOTTOM_PAD.withHeight(cellHeight + padding + padding));
+			}
+			// Expand to current width + 5, adding new lines to the LEFT
+			//
+			// Expand to new-current-width + 5, adding new lines to the RIGHT
+			//
+
+			if (settings.isSidePadding() || settings.isFullPadding()) {
+				simpleTable.applyToCell(RIGHT_PAD.withWidth(cellWidth + padding))
+						.applyToCell(LEFT_PAD.withWidth(cellWidth + padding + padding));
+
+			}
+
 			GridTable g = simpleTable.toGrid();
 
-
-			if (settings.isBorderSingle()) {
-				g = Border.SINGLE_LINE.apply(g);
-			} else if (settings.isBorderDouble()) {
-				g = Border.DOUBLE_LINE.apply(g);
-			} else if (settings.isBorderCustom()) {
-				g = Border.of(Border.Chars.of(settings.getBorderChar(i))).apply(g);
+			if (settings.isFullBorder()) {
+				if (settings.isBorderSingle()) {
+					g = Border.SINGLE_LINE.apply(g);
+				} else if (settings.isBorderDouble()) {
+					g = Border.DOUBLE_LINE.apply(g);
+				} else if (settings.isBorderCustom()) {
+					g = Border.of(Border.Chars.of(settings.getBorderChar(i))).apply(g);
+				}
+			} else if (settings.isTopAndBottomBorder() || settings.isBottomBorder()) {
+				if (settings.isBorderSingle()) {
+					g = HorizontalBorder.of(HorizontalBorder.Chars.of('─')).apply(g);
+				} else if (settings.isBorderDouble()) {
+					g = HorizontalBorder.of(HorizontalBorder.Chars.of('═')).apply(g);
+				} else if (settings.isBorderCustom()) {
+					char intersect = settings.getBorderChar(i);
+					g = HorizontalBorder.of(HorizontalBorder.Chars.of(intersect)).apply(g);
+				}
 			}
 
 			selectedText = Util.asString(g);
 			selectedText = selectedText.replace("\r\n", "\n");
+			if (!settings.isFullBorder()) {
+				break;
+			}
 		}
+
+
+		if (settings.isTopAndBottomBorder()) {
+			String[] split = selectedText.split("\n");
+			ArrayList<String> lines = new ArrayList<>();
+
+			for (int i = 0; i < settings.getBorderWidthAsInt() - 1; i++) {
+				lines.add(normalizePadding(split[0]));
+			}
+
+			for (int i = 0; i < split.length; i++) {
+				lines.add(normalizePadding(split[i]));
+			}
+
+			for (int i = 0; i < settings.getBorderWidthAsInt() - 1; i++) {
+				lines.add(normalizePadding(split[split.length - 1]));
+			}
+
+			selectedText = StringUtils.join(lines, '\n');
+		} else if (settings.isBottomBorder()) {
+			String[] split = selectedText.split("\n");
+			ArrayList<String> lines = new ArrayList<>();
+
+			for (int i = 1 + topBottomPadding; i < split.length; i++) {
+				lines.add(normalizePadding(split[i]));
+			}
+
+			for (int i = 0; i < settings.getBorderWidthAsInt() - 1; i++) {
+				lines.add(normalizePadding(split[split.length - 1]));
+			}
+
+			selectedText = StringUtils.join(lines, '\n');
+		}
+
 		return selectedText;
+	}
+
+	private String normalizePadding(String s) {
+		return s.substring(1, s.length() - 1);
 	}
 
 

@@ -9,6 +9,7 @@ import com.intellij.openapi.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
+import osmedile.intellij.stringmanip.utils.ActionUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -115,16 +116,14 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	}
 
 	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
-		selectionModel.selectLineAtCaret();
-		String selectedText = selectionModel.getSelectedText();
-		if (selectedText != null && selectedText.endsWith("\n")) {
-			selectionModel.setSelection(selectionModel.getSelectionStart(), selectionModel.getSelectionEnd() - 1);
-		}
-		return true;
+		return ActionUtils.selectLineAtCaret(editor);
 	}
 
-	public final String transformByLine( String s) {
-		return transformByLine(new HashMap<>(),s );
+	/**
+	 * only for tests
+	 */
+	public final String transformByLine(String s) {
+		return transformByLine(new HashMap<>(), s);
 	}
 
 	public abstract String transformByLine(Map<String, Object> actionContext, String s);

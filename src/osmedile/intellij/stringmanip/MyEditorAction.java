@@ -18,6 +18,9 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
+/**
+ * use primarily {@link  osmedile.intellij.stringmanip.AbstractStringManipAction}
+ */
 public abstract class MyEditorAction extends EditorAction {
 
 

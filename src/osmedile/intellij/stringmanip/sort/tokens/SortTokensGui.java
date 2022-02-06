@@ -14,6 +14,7 @@ import com.intellij.ui.components.JBTextField;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
+import osmedile.intellij.stringmanip.utils.DialogUtils;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import javax.swing.*;
@@ -22,7 +23,6 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,40 +51,11 @@ public class SortTokensGui implements Disposable {
 		sortTypeForm.shuffle.setVisible(false);
 		sortSubPanel.add(sortTypeForm.coreWithoutPreview);
 		init(lastModel);
-		addPreviewListeners(this);
-		addPreviewListeners(sortTypeForm);
+		DialogUtils.addListeners(this, this::updateComponents);
+		DialogUtils.addListeners(sortTypeForm, this::updateComponents);
 //		donatePanel.add(Donate.newDonateButton(donatePanel));
 	}
 
-	private void addPreviewListeners(Object object) {
-		for (Field field : object.getClass().getDeclaredFields()) {
-			try {
-				field.setAccessible(true);
-				Object o = field.get(object);
-				if (o instanceof JToggleButton) {
-					JToggleButton button = (JToggleButton) o;
-					button.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							updateComponents();
-						}
-
-					});
-				}
-				if (o instanceof JTextField) {
-					JTextField jTextField = (JTextField) o;
-					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
-						@Override
-						protected void textChanged(DocumentEvent e) {
-							updateComponents();
-						}
-					});
-				}
-			} catch (Throwable e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
 
 	private void updateComponents() {
 		preview();

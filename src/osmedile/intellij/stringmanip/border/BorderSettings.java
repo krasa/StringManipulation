@@ -8,6 +8,61 @@ public class BorderSettings {
 	private boolean borderSingle;
 	private boolean borderDouble = true;
 	private boolean borderCustom;
+	private boolean fullBorder = true;
+	private boolean bottomBorder;
+	private boolean topAndBottomBorder;
+
+	private boolean fullPadding = true;
+	private boolean sidePadding;
+	private boolean topAndBottomPadding;
+
+	public boolean isFullPadding() {
+		return fullPadding;
+	}
+
+	public void setFullPadding(boolean fullPadding) {
+		this.fullPadding = fullPadding;
+	}
+
+	public boolean isSidePadding() {
+		return sidePadding;
+	}
+
+	public void setSidePadding(boolean sidePadding) {
+		this.sidePadding = sidePadding;
+	}
+
+	public boolean isTopAndBottomPadding() {
+		return topAndBottomPadding;
+	}
+
+	public void setTopAndBottomPadding(boolean topAndBottomPadding) {
+		this.topAndBottomPadding = topAndBottomPadding;
+	}
+
+	public boolean isFullBorder() {
+		return fullBorder;
+	}
+
+	public void setFullBorder(boolean fullBorder) {
+		this.fullBorder = fullBorder;
+	}
+
+	public boolean isBottomBorder() {
+		return bottomBorder;
+	}
+
+	public void setBottomBorder(boolean bottomBorder) {
+		this.bottomBorder = bottomBorder;
+	}
+
+	public boolean isTopAndBottomBorder() {
+		return topAndBottomBorder;
+	}
+
+	public void setTopAndBottomBorder(boolean topAndBottomBorder) {
+		this.topAndBottomBorder = topAndBottomBorder;
+	}
 
 	public boolean isBorderSingle() {
 		return borderSingle;

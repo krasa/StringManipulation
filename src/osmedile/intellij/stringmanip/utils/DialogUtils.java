@@ -1,8 +1,13 @@
 package osmedile.intellij.stringmanip.utils;
 
+import com.intellij.ui.DocumentAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 
 public class DialogUtils {
 
@@ -43,6 +48,36 @@ public class DialogUtils {
 		}
 		for (JComponent target : targets) {
 			target.setVisible(b);
+		}
+	}
+
+	public static void addListeners(Object object, final Runnable updateComponents) {
+		for (Field field : object.getClass().getDeclaredFields()) {
+			try {
+				field.setAccessible(true);
+				Object o = field.get(object);
+				if (o instanceof JToggleButton) {
+					JToggleButton button = (JToggleButton) o;
+					button.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							updateComponents.run();
+						}
+
+					});
+				}
+				if (o instanceof JTextField) {
+					JTextField jTextField = (JTextField) o;
+					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
+						@Override
+						protected void textChanged(DocumentEvent e) {
+							updateComponents.run();
+						}
+					});
+				}
+			} catch (Throwable e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }
