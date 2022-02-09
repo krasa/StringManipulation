@@ -78,7 +78,7 @@ public class PasteCamelCasedAction extends MyEditorAction {
 				String normalizedText = TextBlockTransferable.convertLineSeparators(editor, segments.next());
 				int caretOffset = caret.getOffset();
 				normalizedText = trimTextIfNeeded(editor, normalizedText);
-				normalizedText = transform(editor, caretOffset, normalizedText);
+				normalizedText = transform(editor, caretOffset, caret.getSelectionStart(), normalizedText);
 				ranges[index[0]++] = new TextRange(caretOffset, caretOffset + normalizedText.length());
 				EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
 			});
@@ -87,15 +87,18 @@ public class PasteCamelCasedAction extends MyEditorAction {
 			int caretOffset = caretModel.getOffset();
 			String normalizedText = TextBlockTransferable.convertLineSeparators(editor, text);
 			normalizedText = trimTextIfNeeded(editor, normalizedText);
-			normalizedText = transform(editor, caretOffset, normalizedText);
+			normalizedText = transform(editor, caretOffset, editor.getSelectionModel().getSelectionStart(), normalizedText);
 			EditorModificationUtil.insertStringAtCaret(editor, normalizedText, false, true);
 			return new TextRange[]{new TextRange(caretOffset, caretOffset + text.length())};
 		}
 	}
 
-	private static String transform(Editor editor, int caretOffset, String normalizedText) {
+	private static String transform(Editor editor, int caretOffset, int selectionStart, String normalizedText) {
 		String s = Style.CAMEL_CASE.transform(normalizedText);
-		String text = editor.getDocument().getText(TextRange.create(caretOffset - 1, caretOffset));
+		if (selectionStart >= 0 && caretOffset > selectionStart) {
+			caretOffset = selectionStart;
+		}
+		String text = caretOffset == 0 ? "-" : editor.getDocument().getText(TextRange.create(caretOffset - 1, caretOffset));
 		if (StringUtil.containsOnlyLettersAndDigits(text)) {
 			return StringUtils.capitalize(s);
 		} else {
