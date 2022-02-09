@@ -38,15 +38,23 @@ public class ActionUtils {
 			}
 			FileType fileType = psiFile.getFileType();
 			boolean handled = false;
-			if (isJava(fileType)) {
+
+			if (!handled) {
+				handled = commentHandling(editor, selectionModel, psiFile);
+			}
+
+			if (!handled && isJava(fileType)) {
 				handled = javaHandling(editor, selectionModel, psiFile);
 			}
+
 			if (!handled && isProperties(fileType)) {
 				handled = propertiesHandling(editor, selectionModel);
 			}
+
 			if (!handled && fileType.equals(PlainTextFileType.INSTANCE)) {
 				handled = selectLineAtCaret(editor);
 			}
+
 			if (!handled) {
 				handled = genericHandling(editor, selectionModel, psiFile);
 			}
@@ -55,6 +63,52 @@ public class ActionUtils {
 			LOG.error("please report this, so I can fix it :(", e);
 			return selectLineAtCaret(editor);
 		}
+	}
+
+	private static boolean commentHandling(Editor editor, SelectionModel selectionModel, PsiFile psiFile) {
+		boolean handled = false;
+		int caretOffset = editor.getCaretModel().getOffset();
+		PsiElement elementAtCaret = PsiUtilBase.getElementAtCaret(editor);
+		if (elementAtCaret instanceof PsiWhiteSpace) {
+			elementAtCaret = PsiUtilBase.getElementAtOffset(psiFile, caretOffset - 1);
+		}
+		if (elementAtCaret != null && elementAtCaret.getParent() instanceof PsiComment) {
+			elementAtCaret = elementAtCaret.getParent();
+		}
+		if (elementAtCaret instanceof PsiComment) {
+			PsiComment comment = (PsiComment) elementAtCaret;
+			selectLineAtCaret(editor);
+			String selectedText = selectionModel.getSelectedText();
+			int selectionStart = selectionModel.getSelectionStart();
+			int selectionEnd = selectionModel.getSelectionEnd();
+
+			String s = com.intellij.openapi.util.text.StringUtil.trimLeading(selectedText);
+			String type = comment.getTokenType().toString();
+
+			s = "line comment".equals(type) ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "//") : s;
+			s = "END_OF_LINE_COMMENT".equals(type) ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "//") : s;
+			s = "VGO_LINE_COMMENT".equals(type) ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "//") : s;
+			s = "Py:END_OF_LINE_COMMENT".equals(type) ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "#") : s;
+			boolean cStyle = isCStyle(type);
+			s = cStyle ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "/*") : s;
+			s = cStyle ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "*") : s;
+			s = com.intellij.openapi.util.text.StringUtil.trimLeading(s);
+
+			String s2 = selectedText;
+			s2 = cStyle ? com.intellij.openapi.util.text.StringUtil.trimEnd(s2, "*/") : s2;
+			s2 = com.intellij.openapi.util.text.StringUtil.trimTrailing(s2);
+			selectionModel.setSelection(selectionStart + (selectedText.length() - s.length()), selectionEnd - (selectedText.length() - s2.length()));
+			handled = true;
+		}
+		return handled;
+	}
+
+	private static boolean isCStyle(String type) {
+		return "C_STYLE_COMMENT".equals(type)
+				|| "C style comment".equals(type)
+				|| "PhpDocComment".equals(type)
+				//java parent
+				|| "DOC_COMMENT".equals(type);
 	}
 
 	public static boolean selectLineAtCaret(Editor editor) {
@@ -132,24 +186,6 @@ public class ActionUtils {
 			}
 		}
 
-		if (elementAtCaret instanceof PsiComment) {
-			PsiComment comment = (PsiComment) elementAtCaret;
-			selectLineAtCaret(editor);
-			String selectedText = selectionModel.getSelectedText();
-			int selectionStart = selectionModel.getSelectionStart();
-			int selectionEnd = selectionModel.getSelectionEnd();
-
-			String s = com.intellij.openapi.util.text.StringUtil.trimLeading(selectedText);
-			s = comment.getTokenType() == JavaTokenType.END_OF_LINE_COMMENT ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "//") : s;
-			s = comment.getTokenType() == JavaTokenType.C_STYLE_COMMENT ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "/*") : s;
-			s = comment.getTokenType() == JavaTokenType.C_STYLE_COMMENT ? com.intellij.openapi.util.text.StringUtil.trimStart(s, "*") : s;
-			s = com.intellij.openapi.util.text.StringUtil.trimLeading(s);
-
-			String s2 = comment.getTokenType() == JavaTokenType.C_STYLE_COMMENT ? com.intellij.openapi.util.text.StringUtil.trimEnd(selectedText, "*/") : selectedText;
-			s2 = com.intellij.openapi.util.text.StringUtil.trimTrailing(s2);
-			selectionModel.setSelection(selectionStart + (selectedText.length() - s.length()), selectionEnd - (selectedText.length() - s2.length()));
-			return true;
-		}
 
 		if (elementAtCaret instanceof PsiJavaToken) {
 			int offset = 0;
@@ -209,6 +245,14 @@ public class ActionUtils {
 				editor.getCaretModel().moveToOffset(selectionModel.getSelectionEnd());
 			}
 			return true;
+		}
+	}
+
+	public static int safeParse(String borderWidth, int defaultValue) {
+		try {
+			return Integer.parseInt(borderWidth);
+		} catch (Exception e) {
+			return defaultValue;
 		}
 	}
 }

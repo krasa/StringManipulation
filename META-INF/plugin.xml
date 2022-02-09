@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.26.203.5981.1</version>
+    <version>8.27.203.5981.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -730,9 +730,20 @@
                 </action>
             </group>
 
+            <separator/>
+
+            <!--            <group id="StringManipulation.Group.Custom"-->
+            <!--                   text="Custom"-->
+            <!--                   description="Custom actions"-->
+            <!--                   popup="true"-->
+            <!--                   compact="true"-->
+            <!--            >-->
+            <!--            </group>-->
+
             <action id="StringManipulation.Shortcuts" class="osmedile.intellij.stringmanip.ShortcutsAction"
                     text="Shortcuts..."/>
-            <separator/>
+            <!--            <action id="StringManipulation.SaveAsAction" class="osmedile.intellij.stringmanip.SaveAsAction"-->
+            <!--                    text="Save Last Action..."/>-->
         </group>
 
 
@@ -986,6 +997,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.27</h4>
+	        <ul>
+                <li>Improved: Create Border...</li>
+            </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.26</h4>
 	        <ul>

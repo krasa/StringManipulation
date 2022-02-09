@@ -23,8 +23,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static osmedile.intellij.stringmanip.utils.ActionUtils.safeParse;
+
 public class BorderDialog extends PreviewDialog {
 	private static final Logger log = LoggerFactory.getLogger(BorderDialog.class);
+	public static final int MAX_VALUE = 10;
 
 	private CreateBorderAction action;
 	private String sourceTextForPreview;
@@ -50,6 +53,8 @@ public class BorderDialog extends PreviewDialog {
 	private JRadioButton sidePadding;
 	private JRadioButton topAndBottomPadding;
 	private int tabSize;
+	private ActionToolbar borderActionToolbar;
+	private ActionToolbar paddingActionToolbar;
 
 	public BorderDialog(CreateBorderAction action, BorderSettings borderSettings, Editor editor) {
 		super(editor);
@@ -65,6 +70,12 @@ public class BorderDialog extends PreviewDialog {
 		DialogUtils.addListeners(this, this::updateComponents);
 
 		updateComponents();
+		borderActionToolbar.updateActionsImmediately();
+		paddingActionToolbar.updateActionsImmediately();
+		paddingPanel.revalidate();
+		borderPanel.revalidate();
+		paddingPanel.repaint();
+		borderPanel.repaint();
 	}
 
 	private void updateComponents() {
@@ -76,45 +87,40 @@ public class BorderDialog extends PreviewDialog {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
-				try {
-					String text = borderWidth.getText();
-					i = Integer.parseInt(text);
-					i++;
-				} catch (Exception e) {
-					i = 1;
+				i = safeParse(borderWidth.getText(), 1);
+				i++;
+				if (i > MAX_VALUE) {
+					i = MAX_VALUE;
 				}
 				borderWidth.setText(String.valueOf(i));
 			}
 		};
-		plus.setContextComponent(borderPanel);
+		plus.setContextComponent(getRoot());
 		plus.addCustomUpdater(anActionEvent -> true);
+//		plus.addCustomUpdater(anActionEvent -> safeParse(borderWidth.getText(), 1) < MAX_VALUE);
 
 		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
-				try {
-					String text = borderWidth.getText();
-					i = Integer.parseInt(text);
-					i--;
-					if (i <= 0) {
-						i = 1;
-					}
-				} catch (Exception e) {
+				i = safeParse(borderWidth.getText(), 1);
+				i--;
+				if (i <= 0) {
 					i = 1;
 				}
 				borderWidth.setText(String.valueOf(i));
 			}
 		};
-		minus.setContextComponent(borderPanel);
+		minus.setContextComponent(getRoot());
 		minus.addCustomUpdater(anActionEvent -> true);
+//		minus.addCustomUpdater(anActionEvent -> safeParse(borderWidth.getText(), 1) > 1);
 
 		DefaultActionGroup actionGroup = new DefaultActionGroup();
-		ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
+		borderActionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
 		actionGroup.addAction(minus);
 		actionGroup.addAction(plus);
-		actionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
-		borderPanel.add(actionToolbar.getComponent(), BorderLayout.CENTER);
+		borderActionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
+		borderPanel.add(borderActionToolbar.getComponent(), BorderLayout.CENTER);
 	}
 
 	private void paddingPanel() {
@@ -122,49 +128,44 @@ public class BorderDialog extends PreviewDialog {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
-				try {
-					String text = padding.getText();
-					i = Integer.parseInt(text);
-					i++;
-				} catch (Exception e) {
-					i = 0;
+				i = safeParse(padding.getText(), 0);
+				i++;
+				if (i > MAX_VALUE) {
+					i = MAX_VALUE;
 				}
 				padding.setText(String.valueOf(i));
 			}
 
 		};
-		plus.setContextComponent(paddingPanel);
+		plus.setContextComponent(getRoot());
 		plus.addCustomUpdater(anActionEvent -> true);
+//		plus.addCustomUpdater(anActionEvent -> safeParse(padding.getText(), 1)  < MAX_VALUE);
 
 		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
-				try {
-					String text = padding.getText();
-					i = Integer.parseInt(text);
-					i--;
-					if (i < 0) {
-						i = 0;
-					}
-				} catch (Exception e) {
+				i = safeParse(padding.getText(), 0);
+				i--;
+				if (i < 0) {
 					i = 0;
 				}
 				padding.setText(String.valueOf(i));
 			}
 
 		};
+		minus.setContextComponent(getRoot());
 		minus.addCustomUpdater(anActionEvent -> true);
-		minus.setContextComponent(paddingPanel);
+//		minus.addCustomUpdater(anActionEvent -> safeParse(padding.getText(), 1)> 0);
 
 		DefaultActionGroup actionGroup = new DefaultActionGroup();
 		actionGroup.addAction(minus);
 		actionGroup.addAction(plus);
 
-		ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
-		actionToolbar.setTargetComponent(getRoot());
-		actionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
-		paddingPanel.add(actionToolbar.getComponent(), BorderLayout.CENTER);
+		paddingActionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
+		paddingActionToolbar.setTargetComponent(getRoot());
+		paddingActionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
+		paddingPanel.add(paddingActionToolbar.getComponent(), BorderLayout.CENTER);
 	}
 
 	public BorderDialog() {
@@ -237,8 +238,9 @@ public class BorderDialog extends PreviewDialog {
 	}
 
 	public void setData(BorderSettings data) {
-		padding.setText(data.getPadding());
-		borderWidth.setText(data.getBorderWidth());
+		padding.setText(String.valueOf(data.getPaddingAsInt()));
+		borderWidth.setText(String.valueOf(data.getBorderWidthAsInt()));
+
 		customBorder.setText(data.getCustomBorder());
 		borderCustom.setSelected(data.isBorderCustom());
 		borderSingle.setSelected(data.isBorderSingle());

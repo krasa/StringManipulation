@@ -1,13 +1,17 @@
 package osmedile.intellij.stringmanip.border;
 
+import static osmedile.intellij.stringmanip.utils.ActionUtils.safeParse;
+
 public class BorderSettings {
 
 	private String padding = "0";
 	private String borderWidth = "1";
 	private String customBorder = "#";
-	private boolean borderSingle;
+
 	private boolean borderDouble = true;
+	private boolean borderSingle;
 	private boolean borderCustom;
+
 	private boolean fullBorder = true;
 	private boolean bottomBorder;
 	private boolean topAndBottomBorder;
@@ -94,19 +98,11 @@ public class BorderSettings {
 	}
 
 	public int getPaddingAsInt() {
-		try {
-			return Integer.parseInt(padding);
-		} catch (Throwable e) {
-			return 0;
-		}
+		return Math.min(BorderDialog.MAX_VALUE, safeParse(padding, 0));
 	}
 
 	public int getBorderWidthAsInt() {
-		try {
-			return Integer.parseInt(borderWidth);
-		} catch (Throwable e) {
-			return 0;
-		}
+		return Math.min(BorderDialog.MAX_VALUE, safeParse(borderWidth, 1));
 	}
 
 	public void setPadding(final String padding) {
