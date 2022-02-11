@@ -3,7 +3,6 @@ package osmedile.intellij.stringmanip.encoding;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
-import osmedile.intellij.stringmanip.utils.EncodingUtils;
 import osmedile.intellij.stringmanip.utils.TimestampUtils;
 
 import java.util.Map;

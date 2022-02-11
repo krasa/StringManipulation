@@ -11,7 +11,7 @@ import java.util.Map;
 public class EncodeHexAction extends DecodeHexAction {
 
     @Override
-    public String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Charset charset) {
+    protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Charset charset) {
         return new String(Hex.encode(s.getBytes(charset)), charset);
     }
 

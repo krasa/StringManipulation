@@ -8,8 +8,6 @@ import com.intellij.openapi.editor.SelectionModel;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.utils.ActionUtils;
 
-import java.util.Map;
-
 /**
  * todo write some tests
  */
@@ -29,12 +27,5 @@ public abstract class AbstractCaseConvertingAction extends AbstractStringManipAc
 		return ActionUtils.selectSomethingUnderCaret(editor);
 	}
 
-	protected Style getStyle(Map<String, Object> actionContext, String s) {
-		Style from = (Style) actionContext.get(FROM);
-		if (from == null) {
-			from = Style.from(s);
-			actionContext.put(FROM, from);
-		}
-		return from;
-	}
+
 }

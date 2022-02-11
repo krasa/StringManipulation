@@ -200,14 +200,15 @@ public enum Style {
 			return _ALL_UPPER_CASE;
 		}
 
-		boolean startsWithUppercase = startsWithUppercase(s);
-		if (startsWithUppercase && noSeparators && !containsUpperCase(s.substring(1))) {
+		boolean firstLetterUppercase = firstLetterUpperCase(s);
+		if (firstLetterUppercase && noSeparators && !containsUpperCase(s.substring(1))) {
 			return _SINGLE_WORD_CAPITALIZED;
 		}
-		if (startsWithUppercase && noSeparators && noSpace) {
+		if (firstLetterUppercase && noSeparators && noSpace && containsUpperCase(s.substring(1))) {
 			return PASCAL_CASE;
 		}
-		if (containsUpperCaseAfterLowerCase && noSeparators && noSpace) {
+		boolean firstLetterLowercase = firstLetterLowerCase(s);
+		if (firstLetterLowercase && containsUpperCaseAfterLowerCase && noSeparators && noSpace) {
 			return CAMEL_CASE;
 		}
 
@@ -217,7 +218,7 @@ public enum Style {
 		if (isCapitalizedFirstButNotAll(s) && !noSpace) {
 			return SENTENCE_CASE;
 		}
-		if (startsWithUppercase && !noSpace) {
+		if (firstLetterUppercase && !noSpace) {
 			return WORD_CAPITALIZED;
 		}
 		return _UNKNOWN;

@@ -318,7 +318,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 
 	private String transform(String fooBar, final String expected) {
 		String input = fooBar;
-		String result = switchStyleAction.transformByLine(input);
+		String result = switchStyleAction.test_transformByLine(input);
 		System.out.println(input + " -> " + result);
 		Assert.assertEquals(input + " -> " + result, expected, result);
 		return result;

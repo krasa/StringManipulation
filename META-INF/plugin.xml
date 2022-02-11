@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.27.203.5981.1</version>
+    <version>8.28.203.5981.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -317,48 +317,48 @@
                 <!--                </action>-->
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseOrCamelAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToScreamingSnakeCaseOrCamelCaseAction"
                         text="SCREAMING__SNAKE__CASE / camelCase"
                         description="Toggle: SCREAMING_SNAKE_CASE / camelCase">
                 </action>
                 <action id="StringManipulation.ToSnakeCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.ToSnakeCaseOrCamelAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToSnakeCaseOrCamelCaseAction"
                         text="snake__case / camelCase"
                         description="Toggle: snake_case / camelCase">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToHyphenCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToKebabOrSnakeCaseAction"
                         text="kebab-case / snake__case"
                         description="Toggle: kebab-case / snake_case">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.CamelCaseToHyphenLowerCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToKebabOrCamelCaseCaseAction"
                         text="kebab-case / camelCase"
                         description="Toggle: kebab-case / camelCase">
                 </action>
                 <action id="StringManipulation.ToDotStyleAction"
-                        class="osmedile.intellij.stringmanip.styles.ToDotStyleAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToDotStyleOrCamelCaseAction"
                         text="dot.case / camelCase"
                         description="Toggle: dot.case / camelCase">
                 </action>
                 <action id="StringManipulation.ToPascalCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.ToPascalCaseOrCamelCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToPascalCaseOrCamelCaseAction"
                         text="PascalCase / camelCase"
                         description="Toggle: PascalCase / camelCase">
                 </action>
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.styles.ToCamelCaseOrToWordLowercaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToWordLowercaseOrToCamelCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToWordLowercaseOrToCamelCaseAction"
                         text="lower case words / camelCase"
                         description="Toggle: lower case words / camelCase">
                 </action>
                 <action id="StringManipulation.ToSentenceCaseOrCamelCase"
-                        class="osmedile.intellij.stringmanip.styles.ToSentenceCaseOrCamelCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToSentenceCaseOrCamelCaseAction"
                         text="First word capitalized / camelCase"
                         description="Toggle: First word capitalized / camelCase">
                 </action>
                 <action id="osmedile.intellij.stringmanip.ToCamelCaseAction"
-                        class="osmedile.intellij.stringmanip.styles.ToWordCapitalizedOrCamelCaseAction"
+                        class="osmedile.intellij.stringmanip.styles.switching.ToWordCapitalizedOrCamelCaseAction"
                         text="Capitalized Words / camelCase"
                         description="Toggle: Capitalized Words / camelCase">
                 </action>
@@ -997,6 +997,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 8.28</h4>
+	        <ul>
+              <li>Improved switching for multicarets for: snake_case/camelCase and others</li>
+          </ul>
+	    </div>
 	    <div>
 	        <h4>Version 8.27</h4>
 	        <ul>

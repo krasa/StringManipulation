@@ -58,25 +58,25 @@ public class EscapeCSharpTest {
     @Theory
     public void escapeRegular(@FromDataPoints("regular") String[] rawEscaped) {
         EscapeCSharpRegularAction action = new EscapeCSharpRegularAction();
-        assertEquals(rawEscaped[1], action.transformByLine(rawEscaped[0]));
+        assertEquals(rawEscaped[1], action.test_transformByLine(rawEscaped[0]));
     }
 
     @Theory
     public void escapeVerbatim(@FromDataPoints("verbatim") String[] rawEscaped) {
         EscapeCSharpVerbatimAction action = new EscapeCSharpVerbatimAction();
-        assertEquals(rawEscaped[1], action.transformByLine(rawEscaped[0]));
+        assertEquals(rawEscaped[1], action.test_transformByLine(rawEscaped[0]));
     }
 
     @Theory
     public void escapeInterpolated(@FromDataPoints("interpolated") String[] rawEscaped) {
         EscapeCSharpInterpolatedAction action = new EscapeCSharpInterpolatedAction();
-        assertEquals(rawEscaped[1], action.transformByLine(rawEscaped[0]));
+        assertEquals(rawEscaped[1], action.test_transformByLine(rawEscaped[0]));
     }
 
     @Theory
     public void escapeInterpolatedVerbatim(@FromDataPoints("interpolatedVerbatim") String[] rawEscaped) {
         EscapeCSharpInterpolatedVerbatimAction action = new EscapeCSharpInterpolatedVerbatimAction();
-        assertEquals(rawEscaped[1], action.transformByLine(rawEscaped[0]));
+        assertEquals(rawEscaped[1], action.test_transformByLine(rawEscaped[0]));
     }
 
     //

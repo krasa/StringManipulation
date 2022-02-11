@@ -101,6 +101,8 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, T additionalParam) {
 		String[] textParts = selectedText.split("\n");
 
+		analyzeLines(actionContext, textParts);
+
 		for (int i = 0; i < textParts.length; i++) {
 			if (!StringUtils.isBlank(textParts[i])) {
 				textParts[i] = transformByLine(actionContext, textParts[i]);
@@ -115,16 +117,28 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		return join;
 	}
 
+	protected void analyzeLines(Map<String, Object> actionContext, String[] textParts) {
+
+	}
+
 	protected boolean selectSomethingUnderCaret(Editor editor, Caret caret, DataContext dataContext, SelectionModel selectionModel) {
 		return ActionUtils.selectLineAtCaret(editor);
+	}
+
+	public abstract String transformByLine(Map<String, Object> actionContext, String s);
+
+
+	/**
+	 * only for tests
+	 */
+	public final String test_transformByLine(String s) {
+		return transformByLine(new HashMap<>(), s);
 	}
 
 	/**
 	 * only for tests
 	 */
-	public final String transformByLine(String s) {
-		return transformByLine(new HashMap<>(), s);
+	public String test_transformSelection(String selectedText) {
+		return transformSelection(null, new HashMap<>(), null, selectedText, null);
 	}
-
-	public abstract String transformByLine(Map<String, Object> actionContext, String s);
 }

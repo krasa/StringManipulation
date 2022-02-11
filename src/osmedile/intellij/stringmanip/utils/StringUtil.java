@@ -191,7 +191,7 @@ public class StringUtil {
 			return false;
 		}
 		for (char c : word.toCharArray()) {
-			if (isDigit(c) || isLetter(c) ||isSeparator(c)) {
+			if (isDigit(c) || isLetter(c) || isSeparator(c)) {
 				return false;
 			}
 		}
@@ -248,9 +248,9 @@ public class StringUtil {
 			//  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {
 
 			//camelCase handling - add extra _
-			if (isLetter(c) && isLetter(previousChar) && (isUpperCaseAndPreviousIsLowerCase || (putSeparatorBetweenUppercases() &&  isUpperCaseAndPreviousIsUpperCase))) {
+			if (isLetter(c) && isLetter(previousChar) && (isUpperCaseAndPreviousIsLowerCase || (putSeparatorBetweenUppercases() && isUpperCaseAndPreviousIsUpperCase))) {
 				buf.append("_");
-			// extra _ after number
+				// extra _ after number
 			} else if ((isSeparatorAfterDigit() && isDigit(previousChar) && isLetter(c))
 					|| (isSeparatorBeforeDigit() && isDigit(c) && isLetter(previousChar))) {
 				buf.append('_');
@@ -258,8 +258,8 @@ public class StringUtil {
 
 
 			//replace separators by _
-			if ((isSeparator(c)||isWhitespace(c))&& isLetterOrDigit(previousChar) && nextIsLetterOrDigit(s, i)) {
-					buf.append('_');
+			if ((isSeparator(c) || isWhitespace(c)) && isLetterOrDigit(previousChar) && nextIsLetterOrDigit(s, i)) {
+				buf.append('_');
 			} else {
 				buf.append(Character.toUpperCase(c));
 			}
@@ -566,7 +566,7 @@ public class StringUtil {
 			if (!isLetterOrDigit(c) && !isWhitespace(c) && !isSeparator(c) && firstLetterOrDigitOrSeparator != -1) {
 				return s.substring(firstLetterOrDigitOrSeparator, i);
 			}
-			if (isLetterOrDigit(c) || isWhitespace(c) || isSeparator(c)){
+			if (isLetterOrDigit(c) || isWhitespace(c) || isSeparator(c)) {
 				if (firstLetterOrDigitOrSeparator == -1) {
 					firstLetterOrDigitOrSeparator = i;
 				}
@@ -637,7 +637,7 @@ public class StringUtil {
 		char[] charArray = s.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
-			if (isUpperCase(c)&& isLetter(previous) && isLowerCase(previous)) {
+			if (isUpperCase(c) && isLetter(previous) && isLowerCase(previous)) {
 				return true;
 			}
 			previous = c;
@@ -680,15 +680,31 @@ public class StringUtil {
 		return firstCapitalizedIndex != -1 && someUncapitalized;
 	}
 
-	public static boolean startsWithUppercase(String s) {
+	public static boolean firstLetterUpperCase(String s) {
 		char[] charArray = s.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
-			if (isLetter(c) && isLowerCase(c)) {
-				return false;
+			if (isLetter(c)) {
+				if (isLowerCase(c)) {
+					return false;
+				} else if (isUpperCase(c)) {
+					return true;
+				}
 			}
-			if (isLetter(c) && isUpperCase(c)) {
-				return true;
+		}
+		return false;
+	}
+
+	public static boolean firstLetterLowerCase(String s) {
+		char[] charArray = s.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			if (isLetter(c)) {
+				if (isLowerCase(c)) {
+					return true;
+				} else if (isUpperCase(c)) {
+					return false;
+				}
 			}
 		}
 		return false;
@@ -720,7 +736,7 @@ public class StringUtil {
 		char[] charArray = s.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			char c = charArray[i];
-			if (c==separator&& isLetterOrDigit(previous) && nextIsLetterOrDigit(s, i)) {
+			if (c == separator && isLetterOrDigit(previous) && nextIsLetterOrDigit(s, i)) {
 				return true;
 			}
 			previous = c;
@@ -742,7 +758,7 @@ public class StringUtil {
 					whiteSpaceBeginning = i;
 				}
 				if (tokenBeginning != -1) {
-					result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, i )));
+					result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, i)));
 					tokenBeginning = -1;
 				}
 			} else {
@@ -757,7 +773,7 @@ public class StringUtil {
 		}
 
 		if (tokenBeginning != -1) {
-			result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, chars.length )));
+			result.add(new String(Arrays.copyOfRange(chars, tokenBeginning, chars.length)));
 		}
 		if (whiteSpaceBeginning != -1) {
 			result.add(new String(Arrays.copyOfRange(chars, whiteSpaceBeginning, chars.length)));

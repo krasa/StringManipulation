@@ -6,8 +6,6 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import java.util.stream.IntStream;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Theories.class)
@@ -107,24 +105,24 @@ public class UnescapeCSharpTest {
     @Theory
     public void unescapeRegular(@FromDataPoints("regular") String[] escapedRaw) {
         UnescapeCSharpRegularAction action = new UnescapeCSharpRegularAction();
-        assertEquals(escapedRaw[1], action.transformByLine(escapedRaw[0]));
+        assertEquals(escapedRaw[1], action.test_transformByLine(escapedRaw[0]));
     }
 
     @Theory
     public void unescapeVerbatim(@FromDataPoints("verbatim") String[] escapedRaw) {
         UnescapeCSharpVerbatimAction action = new UnescapeCSharpVerbatimAction();
-        assertEquals(escapedRaw[1], action.transformByLine(escapedRaw[0]));
+		assertEquals(escapedRaw[1], action.test_transformByLine(escapedRaw[0]));
     }
 
     @Theory
     public void unescapeInterpolated(@FromDataPoints("interpolated") String[] escapedRaw) {
         UnescapeCSharpInterpolatedAction action = new UnescapeCSharpInterpolatedAction();
-        assertEquals(escapedRaw[1], action.transformByLine(escapedRaw[0]));
+		assertEquals(escapedRaw[1], action.test_transformByLine(escapedRaw[0]));
     }
 
     @Theory
     public void unescapeInterpolatedVerbatim(@FromDataPoints("interpolatedVerbatim") String[] escapedRaw) {
         UnescapeCSharpInterpolatedVerbatimAction action = new UnescapeCSharpInterpolatedVerbatimAction();
-        assertEquals(escapedRaw[1], action.transformByLine(escapedRaw[0]));
+		assertEquals(escapedRaw[1], action.test_transformByLine(escapedRaw[0]));
     }
 }

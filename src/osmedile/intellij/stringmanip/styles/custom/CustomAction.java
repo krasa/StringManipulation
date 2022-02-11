@@ -46,6 +46,15 @@ public class CustomAction extends AbstractCaseConvertingAction {
 		return sb.toString();
 	}
 
+	protected Style getStyle(Map<String, Object> actionContext, String s) {
+		Style from = (Style) actionContext.get(FROM);
+		if (from == null) {
+			from = Style.from(s);
+			actionContext.put(FROM, from);
+		}
+		return from;
+	}
+
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
 		List<CustomActionModel.Step> steps = customActionModel.getSteps();
@@ -67,7 +76,7 @@ public class CustomAction extends AbstractCaseConvertingAction {
 					if (!setupHandler) {
 						System.out.println("from " + from + " to " + step.getStyle());
 					}
-					return stepStyle.transform( s);
+					return stepStyle.transform(s);
 				}
 			}
 		}
@@ -82,7 +91,7 @@ public class CustomAction extends AbstractCaseConvertingAction {
 					if (!setupHandler) {
 						System.out.println("from " + from + " to " + step.getStyle());
 					}
-					return step.getStyleAsEnum().transform( s);
+					return step.getStyleAsEnum().transform(s);
 				}
 			}
 		}

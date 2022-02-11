@@ -9,17 +9,17 @@ public class ToPascalCaseActionTest extends CaseSwitchingTest {
 
     @Test
     public void testTransform() throws Exception {
-        action = new ToPascalCaseAction(false);
-		assertEquals("HelloWorld", action.transformByLine("hello-world"));
-		assertEquals("HelloWorld", action.transformByLine("HELLO-WORLD"));
-		assertEquals("HelloWorld", action.transformByLine("hello_world"));
-		assertEquals("HelloWorld", action.transformByLine("HELLO_WORLD"));
-		assertEquals("HelloWorld", action.transformByLine("hello.world"));
-		assertEquals("HelloWorld", action.transformByLine("hello world"));
-		assertEquals("HelloWorld", action.transformByLine("Hello World"));
-		assertEquals("HelloWorld", action.transformByLine("HelloWorld"));
-		assertEquals("HelloWorld", action.transformByLine("helloWorld"));
-		assertEquals("Foo", action.transformByLine("FOO"));
-		assertEquals("Foo", action.transformByLine("foo"));
-    }
+		action = new ToPascalCaseAction(false);
+		assertEquals("HelloWorld", action.test_transformByLine("hello-world"));
+		assertEquals("HelloWorld", action.test_transformByLine("HELLO-WORLD"));
+		assertEquals("HelloWorld", action.test_transformByLine("hello_world"));
+		assertEquals("HelloWorld", action.test_transformByLine("HELLO_WORLD"));
+		assertEquals("HelloWorld", action.test_transformByLine("hello.world"));
+		assertEquals("HelloWorld", action.test_transformByLine("hello world"));
+		assertEquals("HelloWorld", action.test_transformByLine("Hello World"));
+		assertEquals("HelloWorld", action.test_transformByLine("HelloWorld"));
+		assertEquals("HelloWorld", action.test_transformByLine("helloWorld"));
+		assertEquals("Foo", action.test_transformByLine("FOO"));
+		assertEquals("Foo", action.test_transformByLine("foo"));
+	}
 }

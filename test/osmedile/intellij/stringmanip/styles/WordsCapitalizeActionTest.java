@@ -11,21 +11,21 @@ public class WordsCapitalizeActionTest extends CaseSwitchingTest {
 	@Test
 	public void transformByLine() {
 		action = new WordsCapitalizeAction(false);
-		assertEquals("I Am.Fine", action.transformByLine("i aM.fine"));
+		assertEquals("I Am.Fine", action.test_transformByLine("i aM.fine"));
 
-		assertEquals("Foo", action.transformByLine("foo"));
-		assertEquals("Foo", action.transformByLine("FOO"));
+		assertEquals("Foo", action.test_transformByLine("foo"));
+		assertEquals("Foo", action.test_transformByLine("FOO"));
 
-		assertEquals("Foo Bar", action.transformByLine("foo bar"));
-		assertEquals("Foo Bar", action.transformByLine("FOO BAR"));
+		assertEquals("Foo Bar", action.test_transformByLine("foo bar"));
+		assertEquals("Foo Bar", action.test_transformByLine("FOO BAR"));
 
-		assertEquals("Foo-bar", action.transformByLine("foo-bar"));
-		assertEquals("Foo-bar", action.transformByLine("FOO-BAR"));
+		assertEquals("Foo-bar", action.test_transformByLine("foo-bar"));
+		assertEquals("Foo-bar", action.test_transformByLine("FOO-BAR"));
 
-		assertEquals("Foo.Bar", action.transformByLine("foo.bar"));
-		assertEquals("Foo.Bar", action.transformByLine("FOO.BAR"));
+		assertEquals("Foo.Bar", action.test_transformByLine("foo.bar"));
+		assertEquals("Foo.Bar", action.test_transformByLine("FOO.BAR"));
 
-		assertEquals("David W.T. Brown", action.transformByLine("DAVID W.T. BROWN"));
+		assertEquals("David W.T. Brown", action.test_transformByLine("DAVID W.T. BROWN"));
 
 	}
 }

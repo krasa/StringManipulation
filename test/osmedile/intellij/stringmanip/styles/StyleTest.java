@@ -19,6 +19,7 @@ public class StyleTest {
 
 	@Test
 	public void name() {
+		assertEquals(Style.WORD_LOWERCASE, Style.from("currency"));
 		assertEquals(Style._SINGLE_WORD_CAPITALIZED, Style.from("Foo,bar"));
 		assertEquals(Style.PASCAL_CASE, Style.from("Foo,Bar"));
 		assertEquals(Style.PASCAL_CASE, Style.from("   FooBar   "));

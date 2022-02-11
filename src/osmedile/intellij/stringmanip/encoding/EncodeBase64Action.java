@@ -76,7 +76,7 @@ public class EncodeBase64Action extends AbstractStringManipAction<Base64Encoding
 	}
 
 	@Override
-	public String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Base64EncodingDialog base64EncodingDialog) {
+	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, final String s, Base64EncodingDialog base64EncodingDialog) {
 		return transform(s, base64EncodingDialog);
 	}
 

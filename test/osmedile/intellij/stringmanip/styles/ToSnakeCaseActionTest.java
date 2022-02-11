@@ -15,6 +15,6 @@ public class ToSnakeCaseActionTest {
 
 	@Test
 	public void transformByLine() {
-		assertEquals("lorem_ipsum_dolor_sit", action.transformByLine("lorem.ipsum_dolor.sit"));
+		assertEquals("lorem_ipsum_dolor_sit", action.test_transformByLine("lorem.ipsum_dolor.sit"));
 	}
 }

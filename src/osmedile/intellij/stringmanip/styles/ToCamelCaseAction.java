@@ -12,9 +12,8 @@ public class ToCamelCaseAction extends AbstractCaseConvertingAction {
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getStyle(actionContext, s);
-		if (from != Style.CAMEL_CASE) {
-			return Style.CAMEL_CASE.transform( s);
+		if (Style.from(s) != Style.CAMEL_CASE) {
+			return Style.CAMEL_CASE.transform(s);
 		}
 		return s;
 	}
