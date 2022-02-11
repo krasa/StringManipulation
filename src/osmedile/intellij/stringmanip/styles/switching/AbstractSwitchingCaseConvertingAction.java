@@ -68,7 +68,9 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 	/**
 	 * can be reliably detected and transformed from
 	 */
-	public static final ArrayList<Style> MAIN_STYLES = new ArrayList<>(Arrays.asList(KEBAB_LOWERCASE,
+//	 @formatter:off
+	public static final ArrayList<Style> MAIN_STYLES = new ArrayList<>(Arrays.asList(
+			KEBAB_LOWERCASE,
 			KEBAB_UPPERCASE,
 			SNAKE_CASE,
 			CAPITALIZED_SNAKE_CASE,
@@ -78,6 +80,7 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 			DOT,
 			SENTENCE_CASE
 	));
+//	 @formatter:on
 
 	protected boolean containsAnyMainStyleExcept(Style except, Map<String, Object> actionContext) {
 		for (Style s : MAIN_STYLES) {
@@ -97,8 +100,7 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 
 	public static <T> boolean contains(final T[] array, final T v) {
 		for (final T e : array)
-			if (e == v || v != null && v.equals(e))
-				return true;
+			if (e == v || v != null && v.equals(e)) return true;
 
 		return false;
 	}
