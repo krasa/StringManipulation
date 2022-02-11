@@ -79,9 +79,9 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 			SENTENCE_CASE
 	));
 
-	protected boolean containsAnyMainStyleExcept(Style style, Map<String, Object> actionContext) {
+	protected boolean containsAnyMainStyleExcept(Style except, Map<String, Object> actionContext) {
 		for (Style s : MAIN_STYLES) {
-			if (s == style) {
+			if (s == except) {
 				continue;
 			}
 			if (actionContext.containsKey(s.name())) {
