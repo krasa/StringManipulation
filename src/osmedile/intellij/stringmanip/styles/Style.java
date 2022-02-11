@@ -211,11 +211,11 @@ public enum Style {
 		if (firstLetterLowercase && containsUpperCaseAfterLowerCase && noSeparators && noSpace) {
 			return CAMEL_CASE;
 		}
-
 		if (noUpperCase && noSpecialSeparators) {
 			return WORD_LOWERCASE;
 		}
-		if (isCapitalizedFirstButNotAll(s) && !noSpace) {
+		boolean hasSpace = s.contains(" ");//could be stricter
+		if (isCapitalizedFirstButNotAll(s) && hasSpace) {
 			return SENTENCE_CASE;
 		}
 		if (firstLetterUppercase && !noSpace) {

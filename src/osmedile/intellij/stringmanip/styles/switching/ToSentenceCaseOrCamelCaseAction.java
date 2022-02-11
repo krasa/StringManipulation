@@ -15,7 +15,7 @@ public class ToSentenceCaseOrCamelCaseAction extends AbstractSwitchingCaseConver
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		if (contains(Style.CAMEL_CASE, actionContext)) {
+		if (containsAnythingBut(Style.SENTENCE_CASE, actionContext)) {
 			return Style.SENTENCE_CASE.transform(s);
 		} else if (contains(Style.SENTENCE_CASE, actionContext) || contains(Style._SINGLE_WORD_CAPITALIZED, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);

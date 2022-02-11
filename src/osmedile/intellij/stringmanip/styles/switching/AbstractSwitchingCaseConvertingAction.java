@@ -11,8 +11,12 @@ import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.utils.ActionUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static osmedile.intellij.stringmanip.styles.Style.*;
 
 public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStringManipAction<Object> {
 
@@ -59,6 +63,32 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 			Style from = Style.from(s);
 			actionContext.put(from.name(), true);
 		}
+	}
+
+	/**
+	 * can be reliably detected and transformed to
+	 */
+	public static final ArrayList<Style> MAIN_STYLES = new ArrayList<>(Arrays.asList(KEBAB_LOWERCASE,
+			KEBAB_UPPERCASE,
+			SNAKE_CASE,
+			CAPITALIZED_SNAKE_CASE,
+			SCREAMING_SNAKE_CASE,
+			PASCAL_CASE,
+			CAMEL_CASE,
+			DOT,
+			SENTENCE_CASE
+	));
+
+	protected boolean containsAnythingBut(Style style, Map<String, Object> actionContext) {
+		for (Style s : MAIN_STYLES) {
+			if (s == style) {
+				continue;
+			}
+			if (actionContext.containsKey(s.name())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected boolean contains(Style style, Map<String, Object> actionContext) {
