@@ -15,7 +15,7 @@ public class ToKebabOrSnakeCaseAction extends AbstractSwitchingCaseConvertingAct
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		if (containsAnythingBut(Style.KEBAB_LOWERCASE, actionContext)) {
+		if (containsAnyMainStyleExcept(Style.KEBAB_LOWERCASE, actionContext)) {
 			return Style.KEBAB_LOWERCASE.transform(s);
 		} else if (contains(Style.KEBAB_LOWERCASE, actionContext)) {
 			return Style.SNAKE_CASE.transform(s);

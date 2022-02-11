@@ -79,7 +79,7 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 			SENTENCE_CASE
 	));
 
-	protected boolean containsAnythingBut(Style style, Map<String, Object> actionContext) {
+	protected boolean containsAnyMainStyleExcept(Style style, Map<String, Object> actionContext) {
 		for (Style s : MAIN_STYLES) {
 			if (s == style) {
 				continue;

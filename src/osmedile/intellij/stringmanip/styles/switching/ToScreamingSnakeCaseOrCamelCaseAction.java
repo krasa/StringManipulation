@@ -14,7 +14,7 @@ public class ToScreamingSnakeCaseOrCamelCaseAction extends AbstractSwitchingCase
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		if (containsAnythingBut(Style.SCREAMING_SNAKE_CASE, actionContext)) {
+		if (containsAnyMainStyleExcept(Style.SCREAMING_SNAKE_CASE, actionContext)) {
 			return Style.SCREAMING_SNAKE_CASE.transform(s);
 		} else if (contains(Style.SCREAMING_SNAKE_CASE, actionContext) || contains(Style._ALL_UPPER_CASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);

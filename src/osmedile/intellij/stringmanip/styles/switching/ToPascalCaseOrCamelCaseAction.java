@@ -14,7 +14,7 @@ public class ToPascalCaseOrCamelCaseAction extends AbstractSwitchingCaseConverti
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		if (containsAnythingBut(Style.PASCAL_CASE, actionContext)) {
+		if (containsAnyMainStyleExcept(Style.PASCAL_CASE, actionContext)) {
 			return Style.PASCAL_CASE.transform(s);
 		} else if (contains(Style.PASCAL_CASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);

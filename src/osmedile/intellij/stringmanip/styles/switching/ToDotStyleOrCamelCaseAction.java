@@ -14,7 +14,7 @@ public class ToDotStyleOrCamelCaseAction extends AbstractSwitchingCaseConverting
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		if (containsAnythingBut(Style.DOT, actionContext)) {
+		if (containsAnyMainStyleExcept(Style.DOT, actionContext)) {
 			return Style.DOT.transform(s);
 		} else if (contains(Style.DOT, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
