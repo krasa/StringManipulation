@@ -12,18 +12,15 @@ public class ToWordLowercaseOrToCamelCaseAction extends AbstractSwitchingCaseCon
 		super(setupHandler);
 	}
 
-	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.WORD_LOWERCASE, Style.CAMEL_CASE};
-	}
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from != Style.WORD_LOWERCASE) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
 			return Style.WORD_LOWERCASE.transform(s);
-		} else {
+		} else if (contains(Style.WORD_LOWERCASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
+		} else {
+			return Style.WORD_LOWERCASE.transform(s);
 		}
 	}
 }

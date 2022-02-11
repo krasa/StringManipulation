@@ -6,7 +6,9 @@ import com.intellij.util.xmlb.XmlSerializer;
 import org.jdom.JDOMException;
 
 import java.io.IOException;
-
+/**
+ * TODO add ID
+ */
 public class UniversalActionModel {
 	private String actionClassName;
 	private String modelClass;

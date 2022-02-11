@@ -3,16 +3,19 @@ package osmedile.intellij.stringmanip.styles.switching;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Caret;
+import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
+import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.utils.ActionUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStringManipAction<Object> {
-	public static final String FROM = "from";
+
 	private final Logger LOG = Logger.getInstance("#" + getClass().getCanonicalName());
 
 	public AbstractSwitchingCaseConvertingAction() {
@@ -28,28 +31,39 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 	}
 
 	@Override
-	protected void analyzeLines(Map<String, Object> actionContext, String[] textParts) {
+	protected void analyzeEditorInWriteAction(Map<String, Object> actionContext, Editor editor, DataContext dataContext) {
+		editor.getCaretModel().runForEachCaret(new CaretAction() {
+			@Override
+			public void perform(Caret caret) {
+				final SelectionModel selectionModel = editor.getSelectionModel();
+				String selectedText = selectionModel.getSelectedText();
+
+				boolean noSelection = selectedText == null;
+				if (noSelection) {
+					selectSomethingUnderCaret(editor, caret, dataContext, selectionModel);
+					selectedText = selectionModel.getSelectedText();
+
+					if (selectedText == null) {
+						return;
+					}
+				}
+
+				analyze(selectedText, actionContext);
+			}
+		});
+	}
+
+	private void analyze(String selectedText, Map<String, Object> actionContext) {
+		String[] textParts = selectedText.split("\n");
 		for (String s : textParts) {
 			Style from = Style.from(s);
-			if (contains(supportedStyles(), from)) {
-				actionContext.put(FROM, from);
-				return;
-			}
+			actionContext.put(from.name(), true);
 		}
 	}
 
-	protected abstract Style[] supportedStyles();
-
-
-	protected Style getFirstStyle(Map<String, Object> actionContext, String s) {
-		Style from = (Style) actionContext.get(FROM);
-		if (from == null) {
-			from = Style.from(s);
-			actionContext.put(FROM, from);
-		}
-		return from;
+	protected boolean contains(Style style, Map<String, Object> actionContext) {
+		return actionContext.get(style.name()) != null;
 	}
-
 
 	public static <T> boolean contains(final T[] array, final T v) {
 		for (final T e : array)
@@ -57,5 +71,30 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 				return true;
 
 		return false;
+	}
+
+	/**
+	 * only for tests
+	 */
+	@Override
+	public String test_transformByLine(String s) {
+		HashMap<String, Object> actionContext = new HashMap<>();
+		analyze(s, actionContext);
+		return transformByLine(actionContext, s);
+	}
+
+	/**
+	 * only for tests
+	 */
+	public String test_transform(String selectedText) {
+		String[] textParts = selectedText.split("\n");
+		HashMap<String, Object> actionContext = new HashMap<>();
+		for (String textPart : textParts) {
+			analyze(textPart, actionContext);
+		}
+		for (int i = 0; i < textParts.length; i++) {
+			textParts[i] = transformByLine(actionContext, textParts[i]);
+		}
+		return StringUtils.join(textParts, "\n");
 	}
 }

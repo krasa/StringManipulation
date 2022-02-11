@@ -12,15 +12,12 @@ public class ToKebabOrCamelCaseCaseAction extends AbstractSwitchingCaseConvertin
 		super(setupHandler);
 	}
 
-	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.KEBAB_LOWERCASE, Style.CAMEL_CASE};
-	}
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from == Style.KEBAB_LOWERCASE) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.KEBAB_LOWERCASE.transform(s);
+		} else if (contains(Style.KEBAB_LOWERCASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.KEBAB_LOWERCASE.transform(s);

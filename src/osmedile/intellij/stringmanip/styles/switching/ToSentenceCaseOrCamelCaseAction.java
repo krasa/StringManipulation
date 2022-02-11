@@ -12,15 +12,12 @@ public class ToSentenceCaseOrCamelCaseAction extends AbstractSwitchingCaseConver
 		super(setupHandler);
 	}
 
-	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.SENTENCE_CASE, Style.CAMEL_CASE, Style._SINGLE_WORD_CAPITALIZED};
-	}
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from == Style.SENTENCE_CASE || from == Style._SINGLE_WORD_CAPITALIZED) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.SENTENCE_CASE.transform(s);
+		} else if (contains(Style.SENTENCE_CASE, actionContext) || contains(Style._SINGLE_WORD_CAPITALIZED, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.SENTENCE_CASE.transform(s);

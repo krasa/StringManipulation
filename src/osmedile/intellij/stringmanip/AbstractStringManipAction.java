@@ -39,7 +39,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 
 				@Override
 				protected void executeWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
-					executeMyWriteAction(editor, dataContext, additionalParam);
+					workInWriteAction(editor, dataContext, additionalParam);
 				}
 
 			});
@@ -64,17 +64,19 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		return new Pair<Boolean, T>(true, null);
 	}
 
-	protected void executeMyWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
+	protected void workInWriteAction(Editor editor, final DataContext dataContext, final T additionalParam) {
 		Map<String, Object> actionContext = new HashMap<>();
+		analyzeEditorInWriteAction(actionContext, editor, dataContext);
+
 		editor.getCaretModel().runForEachCaret(new CaretAction() {
 			@Override
 			public void perform(Caret caret) {
-				executeMyWriteActionPerCaret(caret.getEditor(), caret, actionContext, dataContext, additionalParam);
+				workInWriteActionPerCaret(caret.getEditor(), caret, actionContext, dataContext, additionalParam);
 			}
 		});
 	}
 
-	protected void executeMyWriteActionPerCaret(Editor editor, Caret caret, Map<String, Object> actionContext, DataContext dataContext, T additionalParam) {
+	protected void workInWriteActionPerCaret(Editor editor, Caret caret, Map<String, Object> actionContext, DataContext dataContext, T additionalParam) {
 		final SelectionModel selectionModel = editor.getSelectionModel();
 		String selectedText = selectionModel.getSelectedText();
 
@@ -101,8 +103,6 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	protected String transformSelection(Editor editor, Map<String, Object> actionContext, DataContext dataContext, String selectedText, T additionalParam) {
 		String[] textParts = selectedText.split("\n");
 
-		analyzeLines(actionContext, textParts);
-
 		for (int i = 0; i < textParts.length; i++) {
 			if (!StringUtils.isBlank(textParts[i])) {
 				textParts[i] = transformByLine(actionContext, textParts[i]);
@@ -117,7 +117,7 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 		return join;
 	}
 
-	protected void analyzeLines(Map<String, Object> actionContext, String[] textParts) {
+	protected void analyzeEditorInWriteAction(Map<String, Object> actionContext, Editor editor, DataContext dataContext) {
 
 	}
 
@@ -131,14 +131,8 @@ public abstract class AbstractStringManipAction<T> extends MyEditorAction {
 	/**
 	 * only for tests
 	 */
-	public final String test_transformByLine(String s) {
+	public String test_transformByLine(String s) {
 		return transformByLine(new HashMap<>(), s);
 	}
 
-	/**
-	 * only for tests
-	 */
-	public String test_transformSelection(String selectedText) {
-		return transformSelection(null, new HashMap<>(), null, selectedText, null);
-	}
 }

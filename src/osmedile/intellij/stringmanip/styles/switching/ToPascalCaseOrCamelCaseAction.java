@@ -13,14 +13,10 @@ public class ToPascalCaseOrCamelCaseAction extends AbstractSwitchingCaseConverti
 	}
 
 	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.PASCAL_CASE, Style.CAMEL_CASE, Style._SINGLE_WORD_CAPITALIZED};
-	}
-
-	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from == Style.PASCAL_CASE || from == Style._SINGLE_WORD_CAPITALIZED) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.PASCAL_CASE.transform(s);
+		} else if (contains(Style.PASCAL_CASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.PASCAL_CASE.transform(s);

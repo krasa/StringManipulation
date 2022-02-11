@@ -12,15 +12,12 @@ public class ToSnakeCaseOrCamelCaseAction extends AbstractSwitchingCaseConvertin
 		super(setupHandler);
 	}
 
-	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.SNAKE_CASE, Style.CAMEL_CASE};
-	}
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from == Style.SNAKE_CASE) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.SNAKE_CASE.transform(s);
+		} else if (contains(Style.SNAKE_CASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.SNAKE_CASE.transform(s);

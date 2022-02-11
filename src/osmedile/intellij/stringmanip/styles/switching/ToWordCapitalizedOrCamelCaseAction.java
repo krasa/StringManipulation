@@ -13,14 +13,10 @@ public class ToWordCapitalizedOrCamelCaseAction extends AbstractSwitchingCaseCon
 	}
 
 	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.WORD_CAPITALIZED, Style._SINGLE_WORD_CAPITALIZED, Style.CAMEL_CASE};
-	}
-
-	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-		if (from == Style.WORD_CAPITALIZED || from == Style._SINGLE_WORD_CAPITALIZED) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.WORD_CAPITALIZED.transform(s);
+		} else if (contains(Style.WORD_CAPITALIZED, actionContext) || contains(Style._SINGLE_WORD_CAPITALIZED, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.WORD_CAPITALIZED.transform(s);

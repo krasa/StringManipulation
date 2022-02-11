@@ -13,15 +13,10 @@ public class ToScreamingSnakeCaseOrCamelCaseAction extends AbstractSwitchingCase
 	}
 
 	@Override
-	protected Style[] supportedStyles() {
-		return new Style[]{Style.SCREAMING_SNAKE_CASE, Style._ALL_UPPER_CASE, Style.CAMEL_CASE};
-	}
-
-	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
-		Style from = getFirstStyle(actionContext, s);
-
-		if (from == Style.SCREAMING_SNAKE_CASE || from == Style._ALL_UPPER_CASE) {
+		if (contains(Style.CAMEL_CASE, actionContext)) {
+			return Style.SCREAMING_SNAKE_CASE.transform(s);
+		} else if (contains(Style.SCREAMING_SNAKE_CASE, actionContext) || contains(Style._ALL_UPPER_CASE, actionContext)) {
 			return Style.CAMEL_CASE.transform(s);
 		} else {
 			return Style.SCREAMING_SNAKE_CASE.transform(s);

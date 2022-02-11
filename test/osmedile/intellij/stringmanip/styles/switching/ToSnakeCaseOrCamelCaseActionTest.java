@@ -21,15 +21,15 @@ public class ToSnakeCaseOrCamelCaseActionTest extends CaseSwitchingTest {
 		caseSwitchingSettings.setSeparatorBeforeDigit(false);
 
 		assertEquals("11_foo22_foo_bar33_bar44_foo55_x6_y7_z",
-				action.test_transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
-		assertEquals("transform_db", action.test_transformByLine("transformDB"));
-		assertEquals("2_c_2", action.test_transformByLine("2_C_2"));
-		assertEquals("organ_vizepraesident_1", action.test_transformByLine("organ-vizepraesident-1"));
-		assertEquals("foo_bar", action.test_transformByLine("FOO-BAR"));
-		assertEquals("2_v2_counter_3", action.test_transformByLine("2-v2-counter-3"));
-		assertEquals("2_v2_counter_3", action.test_transformByLine("2_v2_Counter_3"));
-		assertEquals("2_v2_counter_3", action.test_transformByLine("2_V2_COUNTER_3"));
-		assertEquals("\\my\\app_bundle\\app\\twig\\google_tag_manager_data_layer", action.test_transformByLine("\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer"));
+				action.test_transform("11foo22fooBAR33BAR44foo55x6Y7Z"));
+		assertEquals("transform_db", action.test_transform("transformDB"));
+		assertEquals("2_c_2", action.test_transform("2_C_2"));
+		assertEquals("organ_vizepraesident_1", action.test_transform("organ-vizepraesident-1"));
+		assertEquals("foo_bar", action.test_transform("FOO-BAR"));
+		assertEquals("2_v2_counter_3", action.test_transform("2-v2-counter-3"));
+		assertEquals("2_v2_counter_3", action.test_transform("2_v2_Counter_3"));
+		assertEquals("2_v2_counter_3", action.test_transform("2_V2_COUNTER_3"));
+		assertEquals("\\my\\app_bundle\\app\\twig\\google_tag_manager_data_layer", action.test_transform("\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer"));
 
 
 	}
@@ -39,24 +39,32 @@ public class ToSnakeCaseOrCamelCaseActionTest extends CaseSwitchingTest {
 		caseSwitchingSettings.setSeparatorBeforeDigit(true);
 
 		assertEquals("11_foo_22_foo_bar_33_bar_44_foo_55_x_6_y_7_z",
-				action.test_transformByLine("11foo22fooBAR33BAR44foo55x6Y7Z"));
+				action.test_transform("11foo22fooBAR33BAR44foo55x6Y7Z"));
 	}
 
 	@Test
 	public void testTransform3() throws Exception {
 		caseSwitchingSettings.setSeparatorBeforeDigit(true);
 
-		String s = "currency\n" +
+		String actual = action.test_transform("currency\n" +
 				"code\n" +
 				"Official Rate\n" +
 				"rate_buy\n" +
 				"sym\n" +
 				"symInt\n" +
 				"inFront\n" +
-				"coin";
+				"coin");
 
-		String actual = action.test_transformSelection(s);
+		assertEquals("currency\n" +
+				"code\n" +
+				"official_rate\n" +
+				"rate_buy\n" +
+				"sym\n" +
+				"sym_int\n" +
+				"in_front\n" +
+				"coin", actual);
 
+		actual = action.test_transform(actual);
 		assertEquals("currency\n" +
 				"code\n" +
 				"officialRate\n" +
@@ -66,14 +74,5 @@ public class ToSnakeCaseOrCamelCaseActionTest extends CaseSwitchingTest {
 				"inFront\n" +
 				"coin", actual);
 
-		actual = action.test_transformSelection(actual);
-		assertEquals("currency\n" +
-				"code\n" +
-				"official_rate\n" +
-				"rate_buy\n" +
-				"sym\n" +
-				"sym_int\n" +
-				"in_front\n" +
-				"coin", actual);
 	}
 }

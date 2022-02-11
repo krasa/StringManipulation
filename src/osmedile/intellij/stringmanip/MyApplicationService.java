@@ -37,13 +37,16 @@ public class MyApplicationService {
 	}
 
 	@NotNull
-	public Pair<AnAction, Object> setAction() {
+	public Pair<AnAction, Object> getAction() {
 		if (lastCustomActionModel instanceof CustomActionModel) {
-			AnAction action = ActionManagerEx.getInstanceEx().getAction(((CustomActionModel) lastCustomActionModel).getId());
-			return Pair.pair(action, lastCustomActionModel);
+			CustomActionModel lastCustomActionModel = (CustomActionModel) this.lastCustomActionModel;
+			String id = lastCustomActionModel.getId();
+			AnAction action = ActionManagerEx.getInstanceEx().getAction(id);
+			return Pair.pair(action, this.lastCustomActionModel);
 		}
 
-		return Pair.pair(getActionMap().get(lastAction), lastCustomActionModel);
+		AnAction first = getActionMap().get(lastAction);
+		return Pair.pair(first, lastCustomActionModel);
 	}
 
 	public static void setAction(Class aClass, Object customActionModel) {
