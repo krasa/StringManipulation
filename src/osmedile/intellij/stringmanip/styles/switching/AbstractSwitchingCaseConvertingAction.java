@@ -66,7 +66,7 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 	}
 
 	/**
-	 * can be reliably detected and transformed to
+	 * can be reliably detected and transformed from
 	 */
 	public static final ArrayList<Style> MAIN_STYLES = new ArrayList<>(Arrays.asList(KEBAB_LOWERCASE,
 			KEBAB_UPPERCASE,
