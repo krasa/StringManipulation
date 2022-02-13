@@ -9,6 +9,7 @@ import osmedile.intellij.stringmanip.align.ColumnAligner;
 import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.DefaultActions;
+import osmedile.intellij.stringmanip.styles.switching.AbstractSwitchingCaseConvertingAction;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.List;
 public class SwitchStyleActionTest extends CaseSwitchingTest {
 
 	protected static final String TEST_TRANSFORM_VARIATIONS_TXT = "testTransformVariations.txt";
-	AbstractCaseConvertingAction switchStyleAction;
+	AbstractSwitchingCaseConvertingAction switchStyleAction;
 
 	@Before
 	public void setUp() throws Exception {
@@ -51,6 +52,24 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 		input = transform(input, "\\My\\AppBundle\\App\\Twig\\GoogleTagManagerDataLayer");
 		input = transform(input, "\\my\\appBundle\\app\\twig\\googleTagManagerDataLayer");
 	}
+
+	@Test
+	public void testTransform2() throws Exception {
+		String input = "\nMy\nAppBundle\nApp\nTwig\nGoogleTagManagerDataLayer";
+		input = transform(input, "\nmy\nappBundle\napp\ntwig\ngoogleTagManagerDataLayer");
+		input = transform(input, "\nmy\napp-bundle\napp\ntwig\ngoogle-tag-manager-data-layer");
+		input = transform(input, "\nMY\nAPP-BUNDLE\nAPP\nTWIG\nGOOGLE-TAG-MANAGER-DATA-LAYER");
+		input = transform(input, "\nmy\napp_bundle\napp\ntwig\ngoogle_tag_manager_data_layer");
+		input = transform(input, "\nMy\nApp_Bundle\nApp\nTwig\nGoogle_Tag_Manager_Data_Layer");
+		input = transform(input, "\nMY\nAPP_BUNDLE\nAPP\nTWIG\nGOOGLE_TAG_MANAGER_DATA_LAYER");
+		input = transform(input, "\nmy\napp.bundle\napp\ntwig\ngoogle.tag.manager.data.layer");
+		input = transform(input, "\nmy\napp bundle\napp\ntwig\ngoogle tag manager data layer");
+		input = transform(input, "\nMy\nApp bundle\nApp\nTwig\nGoogle tag manager data layer");
+		input = transform(input, "\nMy\nApp Bundle\nApp\nTwig\nGoogle Tag Manager Data Layer");
+		input = transform(input, "\nMy\nAppBundle\nApp\nTwig\nGoogleTagManagerDataLayer");
+		input = transform(input, "\nmy\nappBundle\napp\ntwig\ngoogleTagManagerDataLayer");
+	}
+
 	@Test
 	public void testTransform() throws Exception {
 		String input = "fooBar";
@@ -318,7 +337,7 @@ public class SwitchStyleActionTest extends CaseSwitchingTest {
 
 	private String transform(String fooBar, final String expected) {
 		String input = fooBar;
-		String result = switchStyleAction.test_transformByLine(input);
+		String result = switchStyleAction.test_transform(input);
 		System.out.println(input + " -> " + result);
 		Assert.assertEquals(input + " -> " + result, expected, result);
 		return result;

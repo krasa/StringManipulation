@@ -12,7 +12,6 @@ import osmedile.intellij.stringmanip.utils.ActionUtils;
  * todo write some tests
  */
 public abstract class AbstractCaseConvertingAction extends AbstractStringManipAction<Object> {
-	public static final String FROM = "from";
 	private final Logger LOG = Logger.getInstance("#" + getClass().getCanonicalName());
 
 	public AbstractCaseConvertingAction() {

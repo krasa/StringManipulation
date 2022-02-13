@@ -2,13 +2,15 @@ package osmedile.intellij.stringmanip.styles.custom;
 
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
-import osmedile.intellij.stringmanip.styles.AbstractCaseConvertingAction;
 import osmedile.intellij.stringmanip.styles.Style;
+import osmedile.intellij.stringmanip.styles.switching.AbstractSwitchingCaseConvertingAction;
 
 import java.util.List;
 import java.util.Map;
 
-public class CustomAction extends AbstractCaseConvertingAction {
+public class CustomAction extends AbstractSwitchingCaseConvertingAction {
+	public static final String FROM = "from";
+
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomAction.class);
 	private CustomActionModel customActionModel;
 
@@ -46,57 +48,64 @@ public class CustomAction extends AbstractCaseConvertingAction {
 		return sb.toString();
 	}
 
-	protected Style getStyle(Map<String, Object> actionContext, String s) {
+	protected Style currentStyle(Map<String, Object> actionContext, String text, List<CustomActionModel.Step> steps) {
+		for (CustomActionModel.Step step : steps) {
+			if (!step.isEnabled()) {
+				continue;
+			}
+			if (actionContext.containsKey(step.getStyle())) {
+				return step.getStyleAsEnum();
+			}
+		}
+
+		//fallback
 		Style from = (Style) actionContext.get(FROM);
 		if (from == null) {
-			from = Style.from(s);
+			from = Style.from(text);
 			actionContext.put(FROM, from);
 		}
 		return from;
+	}
+
+	private Style nextStyle(Style from, List<CustomActionModel.Step> steps) {
+		boolean found = false;
+		for (int i = 0; i < steps.size(); i++) {
+			CustomActionModel.Step step = steps.get(i);
+			Style stepStyle = step.getStyleAsEnum();
+
+			if (stepStyle == from) {
+				found = true;
+				continue;
+			}
+
+			if (found) {
+				if (step.isEnabled()) {
+					return step.getStyleAsEnum();
+				}
+			}
+		}
+
+		//return first
+		for (int i = 0; i < steps.size(); i++) {
+			CustomActionModel.Step step = steps.get(i);
+			if (step.isEnabled()) {
+				return step.getStyleAsEnum();
+			}
+		}
+		throw new RuntimeException("No enabled steps. " + customActionModel);
 	}
 
 	@Override
 	public String transformByLine(Map<String, Object> actionContext, String s) {
 		List<CustomActionModel.Step> steps = customActionModel.getSteps();
 
-		Style from = getStyle(actionContext, s);
+		Style from = currentStyle(actionContext, s, steps);
+		Style to = nextStyle(from, steps);
 
-		int currentStep = -1;
-		for (int i = 0; i < steps.size(); i++) {
-			CustomActionModel.Step step = steps.get(i);
-			Style stepStyle = step.getStyleAsEnum();
-
-			if (stepStyle == from) {
-				currentStep = i;
-				continue;
-			}
-
-			if (currentStep != -1) {
-				if (step.isEnabled()) {
-					if (!setupHandler) {
-						System.out.println("from " + from + " to " + step.getStyle());
-					}
-					return stepStyle.transform(s);
-				}
-			}
+		if (!setupHandler) {
+			System.out.println("from " + from.getPresentableName() + " to " + to.getPresentableName());
 		}
-		if (currentStep == -1) {
-			throw new RuntimeException("step not found " + from + " in " + steps);
-
-		}
-		if (currentStep != -1) {
-			for (int i = 0; i < steps.size(); i++) {
-				CustomActionModel.Step step = steps.get(i);
-				if (step.isEnabled()) {
-					if (!setupHandler) {
-						System.out.println("from " + from + " to " + step.getStyle());
-					}
-					return step.getStyleAsEnum().transform(s);
-				}
-			}
-		}
-		throw new RuntimeException("No enabled steps. " + customActionModel);
-
+		return to.transform(s);
 	}
 
 

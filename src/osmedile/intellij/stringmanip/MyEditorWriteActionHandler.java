@@ -16,7 +16,10 @@ import javax.swing.*;
 
 /**
  * for showing dialogs before the action
+ *
+ * @see MyEditorWriteActionHandler2 is cleaner
  */
+@Deprecated
 public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler {
 
 	private final Class actionClass;

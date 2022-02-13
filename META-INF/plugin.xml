@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>8.28.203.5981.1</version>
+    <version>9.0.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -998,7 +998,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
         <![CDATA[
 	<p>
 	    <div>
-	        <h4>Version 8.28</h4>
+	        <h4>Version 9.0</h4>
 	        <ul>
               <li>Improved switching for multicarets for: snake_case/camelCase and others</li>
           </ul>
