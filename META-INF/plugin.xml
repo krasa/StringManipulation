@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>9.0.0</version>
+    <version>9.1.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -997,6 +997,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 9.1</h4>
+	        <ul>
+              <li>Toolwindow hidden by default</li>
+          </ul>
+	    </div>
 	    <div>
 	        <h4>Version 9.0</h4>
 	        <ul>

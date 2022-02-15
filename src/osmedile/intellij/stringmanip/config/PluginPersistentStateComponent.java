@@ -422,12 +422,14 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 
 	public void addToHistory(ReplaceCompositeModel compositeModel) {
-		if (!compositeModel.isValid()) {
+		if (!compositeModel.isAnyEnabledAndValid()) {
 			return;
 		}
+		compositeModel = Cloner.deepClone(compositeModel);
 		compositeModel.setDate(new Date());
 		compositeModel.removeEmpty();
-		replaceHistory.removeIf(m -> Objects.equals(m.getItems(), compositeModel.getItems()));
+		ReplaceCompositeModel finalCompositeModel = compositeModel;
+		replaceHistory.removeIf(m -> Objects.equals(m.getItems(), finalCompositeModel.getItems()));
 		replaceHistory.add(compositeModel);
 		while (replaceHistory.size() > MAX_HISTORY) {
 			replaceHistory.remove(0);

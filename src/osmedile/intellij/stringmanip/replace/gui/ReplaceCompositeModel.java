@@ -131,4 +131,13 @@ public class ReplaceCompositeModel {
 				", date=" + date +
 				'}';
 	}
+
+	public boolean isAnyEnabledAndValid() {
+		for (ReplaceItemModel item : items) {
+			if (item.isEnabled() && item.isValid()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

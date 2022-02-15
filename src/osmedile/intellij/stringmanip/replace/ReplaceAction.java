@@ -46,14 +46,14 @@ public class ReplaceAction extends MyEditorAction {
 					model = compositeForm.getModel();
 				}
 			}
-			if (model != null) {
+			if (model != null && model.isAnyEnabledAndValid()) {
 				PluginPersistentStateComponent.getInstance().addToHistory(model);
 			}
 			if (model == null) {
 				model = PluginPersistentStateComponent.getInstance().getLastReplaceModel();
 			}
 
-			if (model == null) {
+			if (model == null || !model.isAnyEnabledAndValid()) {
 				StringManipulationToolWindowFactory.showToolWindow(project);
 			} else {
 				replace(editor, model);
