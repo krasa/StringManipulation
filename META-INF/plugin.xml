@@ -1,6 +1,6 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>9.1.0</version>
+    <version>9.2.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="203.5981.155"/>
 
@@ -553,6 +553,11 @@
                         text="Keep Only Duplicate Lines"
                         description="Remove non-duplicate lines in selected text or lines within multiple selections">
                 </action>
+                <action id="StringManipulation.GroupAndCount"
+                        class="osmedile.intellij.stringmanip.filter.GroupAndCountAction"
+                        text="Group and Count"
+                >
+                </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
                         text="Remove Empty Lines"
@@ -956,6 +961,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Remove all spaces</li>
 				<li>Remove duplicate lines</li>
 				<li>Keep only duplicate lines</li>
+				<li>Group and Count</li>
 				<li>Remove empty lines</li>
 				<li>Remove all newlines</li>
 				<li>Convert Between Char and Int</li>
@@ -997,6 +1003,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 9.2</h4>
+	        <ul>
+              <li>Added: Group and Count</li>
+          </ul>
+	    </div>
 	    <div>
 	        <h4>Version 9.1</h4>
 	        <ul>
