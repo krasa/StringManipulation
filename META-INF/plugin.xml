@@ -543,6 +543,11 @@
                         description="Inverted grep by a selected text for the whole file - without a dialog">
                 </action>
                 <separator/>
+                <action id="StringManipulation.GroupAndCount"
+                        class="osmedile.intellij.stringmanip.filter.GroupAndCountAction"
+                        text="Group and Count"
+                >
+                </action>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
                         text="Remove Duplicate Lines"
@@ -552,11 +557,6 @@
                         class="osmedile.intellij.stringmanip.filter.KeepOnlyDuplicateLinesAction"
                         text="Keep Only Duplicate Lines"
                         description="Remove non-duplicate lines in selected text or lines within multiple selections">
-                </action>
-                <action id="StringManipulation.GroupAndCount"
-                        class="osmedile.intellij.stringmanip.filter.GroupAndCountAction"
-                        text="Group and Count"
-                >
                 </action>
                 <action id="osmedile.intellij.stringmanip.RemoveEmptyLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveEmptyLinesAction"
