@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.styles.switching;
 
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Caret;
@@ -7,6 +8,7 @@ import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.styles.Style;
 import osmedile.intellij.stringmanip.utils.ActionUtils;
@@ -128,5 +130,9 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 			textParts[i] = transformByLine(actionContext, textParts[i]);
 		}
 		return StringUtils.join(textParts, "\n");
+	}
+
+	public void update(@NotNull AnActionEvent e) {
+		ActionUtils.fixPresentation(this, e);
 	}
 }

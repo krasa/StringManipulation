@@ -1,8 +1,8 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <name>String Manipulation</name>
-    <version>9.2.0</version>
+    <version>9.3.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
-    <idea-version since-build="203.5981.155"/>
+    <idea-version since-build="211.0"/>
 
     <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
     <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
@@ -318,17 +318,17 @@
                 <separator/>
                 <action id="osmedile.intellij.stringmanip.WordsAndCamelToConstantStyleCaseAction"
                         class="osmedile.intellij.stringmanip.styles.switching.ToScreamingSnakeCaseOrCamelCaseAction"
-                        text="SCREAMING__SNAKE__CASE / camelCase"
+                        text="SCREAMING_SNAKE_CASE / camelCase"
                         description="Toggle: SCREAMING_SNAKE_CASE / camelCase">
                 </action>
                 <action id="StringManipulation.ToSnakeCaseOrCamelCase"
                         class="osmedile.intellij.stringmanip.styles.switching.ToSnakeCaseOrCamelCaseAction"
-                        text="snake__case / camelCase"
+                        text="snake_case / camelCase"
                         description="Toggle: snake_case / camelCase">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseAction"
                         class="osmedile.intellij.stringmanip.styles.switching.ToKebabOrSnakeCaseAction"
-                        text="kebab-case / snake__case"
+                        text="kebab-case / snake_case"
                         description="Toggle: kebab-case / snake_case">
                 </action>
                 <action id="StringManipulation.ToHyphenCaseOrCamelCase"
@@ -371,7 +371,7 @@
                 </action>
                 <action id="StringManipulation.ToSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToSnakeCaseAction"
-                        text="To snake__case"
+                        text="To snake_case"
                         description="To snake_case">
                 </action>
                 <action id="StringManipulation.ToPascalCase"
@@ -381,12 +381,12 @@
                 </action>
                 <action id="StringManipulation.ToScreamingSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToScreamingSnakeCaseAction"
-                        text="To SCREAMING__SNAKE__CASE"
+                        text="To SCREAMING_SNAKE_CASE"
                         description="To SCREAMING_SNAKE_CASE">
                 </action>
                 <action id="StringManipulation.ToCapitalizedSnakeCase"
                         class="osmedile.intellij.stringmanip.styles.ToCapitalizedSnakeCaseAction"
-                        text="To Capitalized__Snake__Case"
+                        text="To Capitalized_Snake_Case"
                         description="To Capitalized_Snake_Case">
                 </action>
                 <action id="osmedile.intellij.stringmanip.WordsCapitalizeAction"
@@ -1003,6 +1003,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 9.3</h4>
+	        <ul>
+              <li>Fixed missing underscores in popups for IJ 2021+</li>
+          </ul>
+	    </div>
 	    <div>
 	        <h4>Version 9.2</h4>
 	        <ul>

@@ -1,5 +1,8 @@
 package osmedile.intellij.stringmanip.utils;
 
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileTypes.FileType;
@@ -11,6 +14,7 @@ import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiUtilBase;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -253,6 +257,19 @@ public class ActionUtils {
 			return Integer.parseInt(borderWidth);
 		} catch (Exception e) {
 			return defaultValue;
+		}
+	}
+
+	public static void fixPresentation(AnAction action, @NotNull AnActionEvent e) {
+		String place = e.getPlace();
+		Presentation presentation = e.getPresentation();
+		String text = action.getTemplatePresentation().getTextWithMnemonic();
+		if (text != null) {
+			if ("popup".equals(place)) {
+				presentation.setText(text.replaceFirst("_", "__"), false);
+			} else {
+				presentation.setText(text, false);
+			}
 		}
 	}
 }
