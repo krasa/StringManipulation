@@ -229,7 +229,7 @@ public class ColumnAlignerLine {
 			if (isSeparator(s)) {
 				continue;
 			}
-			strings.add(currentIndex + "=" + s);
+			strings.add(currentIndex + "=" + s.trim());
 			currentIndex++;
 		}
 		return strings;

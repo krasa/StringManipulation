@@ -47,22 +47,22 @@ public class AlignToColumnsForm extends PreviewDialog {
 	private JButton historyButton;
 	private JCheckBox sequentially;
 	private JPanel myPreviewPanel;
-	private JPanel donatePanel;
 	private JPanel sortSubPanel;
 	private JTextField sortColumnsOrder;
 	private JCheckBox skipFirstRow;
-	private JPanel debugValues;
 	private JCheckBox sortOnly;
 	private JTextField maxSeparators;
 	private JCheckBox keepLeadingIndent;
 	private JCheckBox sbcCaseWorkaround;
+	private JButton donateButton;
+	private JTextArea textArea1;
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
 	public AlignToColumnsForm(ColumnAlignerModel lastModel, Editor editor) {
 		super(editor);
 		previewLines = PreviewDialog.getPreviewLines(editor);
-		donatePanel.add(Donate.newDonateButton());
+		Donate.initDonateButton(donateButton);
 		resetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,13 +148,13 @@ public class AlignToColumnsForm extends PreviewDialog {
 			ColumnAligner columnAligner = new ColumnAligner(getModel());
 			List<String> result = columnAligner.align(previewLines);
 
-			debugValues.removeAll();
+			StringBuilder sb = new StringBuilder();
 			List<String> debug = columnAligner.getDebugValues();
 			for (String s : debug) {
-				debugValues.add(new JLabel(s));
+				sb.append(s).append("\n");
 			}
-			debugValues.revalidate();
-			debugValues.repaint();
+			textArea1.setText(sb.toString());
+			textArea1.repaint();
 
 			x = Joiner.on("\n").join(result);
 		} catch (SortException e) {
@@ -180,11 +180,6 @@ public class AlignToColumnsForm extends PreviewDialog {
 		textfields = new JPanel();
 		textfields.setLayout(new BoxLayout(textfields, BoxLayout.Y_AXIS));
 		textfields.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		debugValues = new JPanel();
-		debugValues.removeAll();
-		debugValues.setLayout(new BoxLayout(debugValues, BoxLayout.Y_AXIS));
-		debugValues.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		myPreviewEditor = IdeUtils.createEditorPreview("", false, this);
 		myPreviewPanel = (JPanel) myPreviewEditor.getComponent();
