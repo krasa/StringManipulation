@@ -252,9 +252,9 @@ public class ActionUtils {
 		}
 	}
 
-	public static int safeParse(String borderWidth, int defaultValue) {
+	public static int safeParse(String text, int defaultValue) {
 		try {
-			return Integer.parseInt(borderWidth);
+			return Integer.parseInt(text);
 		} catch (Exception e) {
 			return defaultValue;
 		}

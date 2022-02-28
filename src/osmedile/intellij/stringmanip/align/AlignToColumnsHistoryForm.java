@@ -40,7 +40,7 @@ public class AlignToColumnsHistoryForm implements Disposable {
 		ColumnAlignerModel lastSeparators = new ColumnAlignerModel();
 		alignToColumnsForm = new AlignToColumnsForm(lastSeparators, editor);
 		alignToColumnsForm.disableControls();
-		detail = alignToColumnsForm.root;
+		detail = alignToColumnsForm.mainPanel;
 	}
 
 	public ColumnAlignerModel getModel() {

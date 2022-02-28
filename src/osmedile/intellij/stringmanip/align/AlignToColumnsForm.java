@@ -1,11 +1,17 @@
 package osmedile.intellij.stringmanip.align;
 
 import com.google.common.base.Joiner;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.ActionToolbar;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.CommonActionsPanel;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +27,7 @@ import osmedile.intellij.stringmanip.utils.PreviewDialog;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +36,7 @@ import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static osmedile.intellij.stringmanip.utils.ActionUtils.safeParse;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.disableByAny;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
@@ -55,7 +63,10 @@ public class AlignToColumnsForm extends PreviewDialog {
 	private JCheckBox keepLeadingIndent;
 	private JCheckBox sbcCaseWorkaround;
 	private JButton donateButton;
-	private JTextArea textArea1;
+	private JTextArea debugTextArea;
+	private JTextField debugRowNumber;
+	private JPanel debugRowActions;
+	protected JPanel mainPanel;
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
@@ -71,6 +82,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 				textfields.repaint();
 			}
 		});
+		debugRowPanel();
 
 		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
 		sortTypeForm.donatePanel.setVisible(false);
@@ -128,6 +140,43 @@ public class AlignToColumnsForm extends PreviewDialog {
 		DialogUtils.addListeners(sortTypeForm, this::updateComponents);
 	}
 
+	private void debugRowPanel() {
+		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
+			@Override
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				i = safeParse(debugRowNumber.getText(), 1);
+				i++;
+				debugRowNumber.setText(String.valueOf(i));
+			}
+		};
+		plus.setContextComponent(getRoot());
+		plus.addCustomUpdater(anActionEvent -> true);
+
+		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+			@Override
+			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+				int i;
+				i = safeParse(debugRowNumber.getText(), 1);
+				i--;
+				if (i <= 1) {
+					i = 1;
+				}
+				debugRowNumber.setText(String.valueOf(i));
+			}
+		};
+		minus.setContextComponent(getRoot());
+		minus.addCustomUpdater(anActionEvent -> true);
+
+		DefaultActionGroup actionGroup = new DefaultActionGroup();
+		ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-Align", actionGroup, true);
+		actionToolbar.setTargetComponent(root);
+		actionGroup.addAction(minus);
+		actionGroup.addAction(plus);
+		actionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
+		debugRowActions.add(actionToolbar.getComponent(), BorderLayout.CENTER);
+	}
+
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -148,13 +197,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 			ColumnAligner columnAligner = new ColumnAligner(getModel());
 			List<String> result = columnAligner.align(previewLines);
 
-			StringBuilder sb = new StringBuilder();
-			List<String> debug = columnAligner.getDebugValues();
-			for (String s : debug) {
-				sb.append(s).append("\n");
-			}
-			textArea1.setText(sb.toString());
-			textArea1.repaint();
+			SwingUtilities.invokeLater(() -> paintDebug(columnAligner));
 
 			x = Joiner.on("\n").join(result);
 		} catch (SortException e) {
@@ -166,6 +209,20 @@ public class AlignToColumnsForm extends PreviewDialog {
 		}
 
 		setPreviewTextOnEDT(x, myPreviewEditor, myPreviewPanel, null);
+	}
+
+	private void paintDebug(ColumnAligner columnAligner) {
+		String text = debugRowNumber.getText();
+
+		StringBuilder sb = new StringBuilder();
+		List<String> debug = columnAligner.getDebugValues(safeParse(text, 1));
+		for (String s : debug) {
+			sb.append(s).append("\n");
+		}
+
+		DefaultCaret caret = (DefaultCaret) debugTextArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+		debugTextArea.setText(sb.toString());
 	}
 
 	protected void init(ColumnAlignerModel lastSeparators) {

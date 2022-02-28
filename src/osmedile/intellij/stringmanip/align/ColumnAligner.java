@@ -7,6 +7,7 @@ import osmedile.intellij.stringmanip.sort.support.SortSettings;
 import osmedile.intellij.stringmanip.sort.support.Sortable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ColumnAligner {
 	private static final Logger LOG = Logger.getInstance(ColumnAligner.class);
 
 	private final ColumnAlignerModel model;
-	private List<String> debug = new ArrayList<>();
+	private List<ColumnAlignerLine> originalLines;
 
 	public ColumnAligner() {
 		model = new ColumnAlignerModel();
@@ -90,7 +91,7 @@ public class ColumnAligner {
 	}
 
 	public List<String> process(List<ColumnAlignerLine> lines) {
-		initDebug(lines);
+		originalLines = lines;
 
 		try {
 			lines = sort(lines);
@@ -173,15 +174,6 @@ public class ColumnAligner {
 			strings.add(line.getString());
 		}
 		return strings;
-	}
-
-	private void initDebug(List<ColumnAlignerLine> lines) {
-		for (ColumnAlignerLine line : lines) {
-			if (line.getOriginalString().length() > 0) {
-				debug = line.debugTokens();
-				break;
-			}
-		}
 	}
 
 	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines) {
@@ -288,7 +280,20 @@ public class ColumnAligner {
 		return i;
 	}
 
-	public List<String> getDebugValues() {
-		return debug;
+	public List<String> getDebugValues(int lineNumber) {
+		lineNumber--;
+		int n = 0;
+		for (int j = 0; j < originalLines.size(); j++) {
+			ColumnAlignerLine line = originalLines.get(j);
+			if (line.getOriginalString().length() > 0) {
+				if ((lineNumber <= j - n)) {
+					return line.debugTokens();
+				}
+			} else {
+				n++;
+				continue;
+			}
+		}
+		return Collections.emptyList();
 	}
 }

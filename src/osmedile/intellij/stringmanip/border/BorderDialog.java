@@ -119,6 +119,7 @@ public class BorderDialog extends PreviewDialog {
 		borderActionToolbar = ActionManager.getInstance().createActionToolbar("StringManipulation-CreateBorder", actionGroup, true);
 		actionGroup.addAction(minus);
 		actionGroup.addAction(plus);
+		borderActionToolbar.setTargetComponent(getRoot());
 		borderActionToolbar.setLayoutPolicy(ActionToolbar.NOWRAP_LAYOUT_POLICY);
 		borderPanel.add(borderActionToolbar.getComponent(), BorderLayout.CENTER);
 	}
