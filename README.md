@@ -164,7 +164,7 @@ Provides actions for text manipulation:
     </p>
 </p>
 
-## How to build and run
+# How to build and run
 
 1. Import the project into IDEA.
 
