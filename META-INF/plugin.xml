@@ -1,6 +1,7 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
+    <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.4.0</version>
+    <version>9.4.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="211.0"/>
 
@@ -12,8 +13,8 @@
     <!--branch 131 - WebStorm 7, PyCharm 3.0, PhpStorm 7-->
 
     <depends>com.intellij.modules.platform</depends>
-    <depends optional="true" config-file="plugin-java.xml">com.intellij.modules.java</depends>
-    <depends optional="true" config-file="plugin-properties.xml">com.intellij.properties</depends>
+    <depends optional="true">com.intellij.modules.java</depends>
+    <depends optional="true">com.intellij.properties</depends>
 
     <resource-bundle>messages.StringManipulationBundle</resource-bundle>
 
