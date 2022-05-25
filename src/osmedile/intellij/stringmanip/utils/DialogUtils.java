@@ -70,7 +70,7 @@ public class DialogUtils {
 					JTextField jTextField = (JTextField) o;
 					jTextField.getDocument().addDocumentListener(new DocumentAdapter() {
 						@Override
-						protected void textChanged(DocumentEvent e) {
+						protected void textChanged(@NotNull DocumentEvent e) {
 							updateComponents.run();
 						}
 					});

@@ -6,6 +6,7 @@ import com.intellij.openapi.editor.CaretAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
 import osmedile.intellij.stringmanip.utils.DuplicatUtils;
@@ -31,7 +32,7 @@ public class CreateSequenceAction extends MyEditorAction {
 					final AtomicReference<String> lastValue = new AtomicReference<String>();
 					editor.getCaretModel().runForEachCaret(new CaretAction() {
 						@Override
-						public void perform(Caret caret) {
+						public void perform(@NotNull Caret caret) {
 							if (caret.isValid()) {
 								processCaret(editor, caret, lastValue);
 							}

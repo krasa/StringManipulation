@@ -178,6 +178,7 @@ public class MySelectAllOccurrencesAction extends MyEditorAction {
 			this.model = model;
 		}
 
+		@NotNull
 		public Editor getEditor() {
 			return editor;
 		}

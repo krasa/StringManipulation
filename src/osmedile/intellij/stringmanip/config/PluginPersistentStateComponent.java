@@ -221,7 +221,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	}
 
 	@Override
-	public void loadState(PluginPersistentStateComponent o) {
+	public void loadState(@NotNull PluginPersistentStateComponent o) {
 		XmlSerializerUtil.copyBean(o, this);
 		fixActions();
 	}

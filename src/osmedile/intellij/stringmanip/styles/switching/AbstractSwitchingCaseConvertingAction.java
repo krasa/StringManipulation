@@ -40,7 +40,7 @@ public abstract class AbstractSwitchingCaseConvertingAction extends AbstractStri
 	protected void analyzeEditorInWriteAction(Map<String, Object> actionContext, Editor editor, DataContext dataContext) {
 		editor.getCaretModel().runForEachCaret(new CaretAction() {
 			@Override
-			public void perform(Caret caret) {
+			public void perform(@NotNull Caret caret) {
 				final SelectionModel selectionModel = editor.getSelectionModel();
 				String selectedText = selectionModel.getSelectedText();
 
