@@ -48,6 +48,7 @@ Provides actions for text manipulation:
                <li>Toggle: Capitalized Words / camelCase</li>
                <li>To camelCase</li>
                <li>To snake_case</li>
+               <li>To kebab-case</li>
                <li>To SCREAMING_SNAKE_CASE</li>
                <li>To Capitalized_Snake_Case</li>
                <li>Capitalize</li>

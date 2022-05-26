@@ -375,6 +375,11 @@
                         text="To snake_case"
                         description="To snake_case">
                 </action>
+                <action id="StringManipulation.ToKebabCase"
+                        class="osmedile.intellij.stringmanip.styles.ToKebabCaseAction"
+                        text="To kebab-case"
+                        description="To kebab-case">
+                </action>
                 <action id="StringManipulation.ToPascalCase"
                         class="osmedile.intellij.stringmanip.styles.ToPascalCaseAction"
                         text="To PascalCase"
@@ -871,6 +876,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Toggle: Capitalized Words / camelCase</li>
                 <li>To camelCase</li>
                 <li>To snake_case</li>
+                <li>To kebab-case</li>
                 <li>To PascalCase</li>
                 <li>To SCREAMING_SNAKE_CASE</li>
                 <li>To Capitalized_Snake_Case</li>
@@ -1004,6 +1010,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 9.5</h4>
+	        <ul>
+              <li>Added: To kebab-case</li>
+          </ul>
+	    </div>
 	    <div>
 	        <h4>Version 9.4</h4>
 	        <ul>
