@@ -26,6 +26,10 @@ public class SelectWordInDifferentHumpsModeAction extends TextComponentEditorAct
 					settings.setCamelWords(camelWords);
 				}
 			}
+
+			@Override
+			protected void setLastAction() {
+			}
 		});
 		setInjectedContext(true);
 	}

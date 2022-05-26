@@ -32,7 +32,7 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 
 	@Override
 	protected final void doExecute(final Editor editor, @Nullable final Caret caret, final DataContext dataContext) {
-		MyApplicationService.setAction(actionClass, customActionModel);
+		setLastAction();
 
 		final Pair<Boolean, T> additionalParameter = beforeWriteAction(editor, dataContext);
 		if (!additionalParameter.first) {
@@ -55,6 +55,10 @@ public abstract class MyEditorWriteActionHandler<T> extends EditorActionHandler 
 				runnable.run();
 			}
 		}.doExecute(editor, caret, dataContext);
+	}
+
+	protected void setLastAction() {
+		MyApplicationService.setAction(actionClass, customActionModel);
 	}
 
 

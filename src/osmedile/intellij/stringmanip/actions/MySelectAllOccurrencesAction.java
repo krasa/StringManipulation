@@ -31,7 +31,6 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import osmedile.intellij.stringmanip.MyApplicationService;
 import osmedile.intellij.stringmanip.MyEditorAction;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class MySelectAllOccurrencesAction extends MyEditorAction {
 
 		@Override
 		public void doExecute(@NotNull final Editor editor, @Nullable Caret c, DataContext dataContext) {
-			MyApplicationService.setAction(MySelectAllOccurrencesAction.class);
+//			MyApplicationService.setAction(MySelectAllOccurrencesAction.class);
 
 			HashSet<Pair<String, Boolean>> selectedTexts = new HashSet<>();
 			List<MyModel> models = new ArrayList<>();
