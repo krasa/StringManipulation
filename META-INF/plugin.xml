@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.4.1</version>
+    <version>9.5.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="211.0"/>
 
