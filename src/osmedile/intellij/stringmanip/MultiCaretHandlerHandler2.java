@@ -1,6 +1,5 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
@@ -11,18 +10,15 @@ import osmedile.intellij.stringmanip.utils.IdeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-@Deprecated
-/**
- * @see MultiCaretHandlerHandler2
- */
-public abstract class MultiCaretHandlerHandler<T> extends MyEditorWriteActionHandler<T> {
 
-	public MultiCaretHandlerHandler(Class aClass) {
+public abstract class MultiCaretHandlerHandler2<T> extends MyEditorWriteActionHandler2<T> {
+
+	public MultiCaretHandlerHandler2(Class aClass) {
 		super(aClass);
 	}
 
 	@Override
-	protected void executeWriteAction(Editor editor, DataContext dataContext, @Nullable T additionalParameter) {
+	protected void executeWriteAction(Editor editor, @Nullable T additionalParameter) {
 		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
 		if (caretsAndSelections.size() > 1) {
 			multiSelection(editor, caretsAndSelections, additionalParameter);

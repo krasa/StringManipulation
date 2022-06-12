@@ -137,7 +137,7 @@ Provides actions for text manipulation:
             <li>Trim</li>
             <li>Replace whitespaces with a single space char</li>
             <li>Remove all spaces</li>
-            <li>Remove duplicate lines</li>
+            <li>Remove duplicates - supports multicaret subselection</li>
             <li>Keep only duplicate lines</li>
             <li>Remove empty lines</li>
             <li>Remove all newlines</li>

@@ -48,6 +48,9 @@ public abstract class MyEditorWriteActionHandler2<T> extends EditorWriteActionHa
 		return false;
 	}
 
+	/**
+	 * for fixing ctrl+z when there was a selection <a href="https://youtrack.jetbrains.com/issue/IDEA-288319/">...</a>
+	 */
 	public boolean executeLater(@NotNull Editor editor, DataContext dataContext) {
 		return false;
 	}

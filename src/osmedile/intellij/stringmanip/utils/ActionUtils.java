@@ -3,6 +3,7 @@ package osmedile.intellij.stringmanip.utils;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.editor.CaretState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileTypes.FileType;
@@ -17,6 +18,8 @@ import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class ActionUtils {
 	private static final Logger LOG = LoggerFactory.getLogger(ActionUtils.class);
@@ -271,5 +274,16 @@ public class ActionUtils {
 				presentation.setText(text, false);
 			}
 		}
+	}
+
+	public static int countSelections(Editor editor) {
+		int selections = 0;
+		List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+		for (CaretState caretsAndSelection : caretsAndSelections) {
+			if (caretsAndSelection.getSelectionEnd() != caretsAndSelection.getSelectionStart()) {
+				selections++;
+			}
+		}
+		return selections;
 	}
 }

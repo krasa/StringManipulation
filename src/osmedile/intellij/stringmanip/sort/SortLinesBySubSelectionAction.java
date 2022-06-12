@@ -164,7 +164,7 @@ public class SortLinesBySubSelectionAction extends MyEditorAction {
 		}
 	}
 
-	private class SubSelectionSortLine extends SortLine {
+	private static class SubSelectionSortLine extends SortLine {
 		private final String line;
 		private final int lineStartOffset;
 		private final int lineEndOffset;

@@ -90,7 +90,7 @@ public class ColumnAligner {
 		return lines;
 	}
 
-	public List<String> process(List<ColumnAlignerLine> lines) {
+	private List<String> process(List<ColumnAlignerLine> lines) {
 		originalLines = lines;
 
 		try {
@@ -187,8 +187,8 @@ public class ColumnAligner {
 				if (isBlank(split[i])) {
 					continue;
 				}
-				int s = Integer.parseInt(split[i]);
-				sort(lines, s, sortSettings);
+				int columnIndex = Integer.parseInt(split[i]);
+				sort(lines, columnIndex, sortSettings);
 			}
 		}
 		return lines;

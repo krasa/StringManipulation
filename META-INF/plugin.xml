@@ -556,8 +556,8 @@
                 </action>
                 <action id="StringManipulation.RemoveDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.RemoveDuplicateLinesAction"
-                        text="Remove Duplicate Lines"
-                        description="Remove duplicate lines in selected text or lines within multiple selections">
+                        text="Remove Duplicates"
+                        description="Remove duplicate lines or text. Supports multicaret subselection.">
                 </action>
                 <action id="StringManipulation.KeepOnlyDuplicateLines"
                         class="osmedile.intellij.stringmanip.filter.KeepOnlyDuplicateLinesAction"
@@ -966,7 +966,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Trim</li>
 				<li>Replace whitespaces with a single space char</li>
 				<li>Remove all spaces</li>
-				<li>Remove duplicate lines</li>
+				<li>Remove duplicates (supports multicaret subselection)</li>
 				<li>Keep only duplicate lines</li>
 				<li>Group and Count</li>
 				<li>Remove empty lines</li>
@@ -1014,6 +1014,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 9.5</h4>
 	        <ul>
               <li>Added: To kebab-case</li>
+              <li>Improved: Remove Duplicates - added support for multicaret subselections</li>
           </ul>
 	    </div>
 	    <div>

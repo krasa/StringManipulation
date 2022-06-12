@@ -18,6 +18,7 @@ import osmedile.intellij.stringmanip.align.ColumnAlignerModel;
 import osmedile.intellij.stringmanip.border.BorderSettings;
 import osmedile.intellij.stringmanip.escaping.normalize.NormalizationSettings;
 import osmedile.intellij.stringmanip.filter.GrepSettings;
+import osmedile.intellij.stringmanip.filter.RemoveDuplicatesSettings;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceItemModel;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
@@ -50,6 +51,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private SortTokensModel sortTokensModel = new SortTokensModel();
 	private boolean doNotAddSelection;
 	private NormalizationSettings normalizationSettings = new NormalizationSettings();
+	private RemoveDuplicatesSettings removeDuplicatesSettings = new RemoveDuplicatesSettings();
 
 	private List<GrepSettings> grepHistory = new ArrayList<>();
 	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
@@ -123,6 +125,14 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	public void setNormalizationSettings(NormalizationSettings normalizationSettings) {
 		this.normalizationSettings = normalizationSettings;
+	}
+
+	public RemoveDuplicatesSettings getRemoveDuplicatesSettings() {
+		return removeDuplicatesSettings;
+	}
+
+	public void setRemoveDuplicatesSettings(RemoveDuplicatesSettings removeDuplicatesSettings) {
+		this.removeDuplicatesSettings = removeDuplicatesSettings;
 	}
 
 	public SortSettings getSortSettings(String storeKey) {
