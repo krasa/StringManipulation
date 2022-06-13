@@ -188,6 +188,8 @@ Provides actions for text manipulation:
 
 4. The project should build now. To run add the following run configuration if it's not added already:
 
+   `-Xmx1024m -Xms256m -ea -Didea.is.internal=true -Djava.system.class.loader=com.intellij.util.lang.PathClassLoader`
+   
    ![](images/run-configuration.png)
 
 5. Now you should be able to run and debug the plugin in a separate IDEA instance.
