@@ -1,9 +1,6 @@
 package osmedile.intellij.stringmanip;
 
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.DataContext;
-import com.intellij.openapi.actionSystem.DataProvider;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
@@ -40,11 +37,11 @@ public abstract class MyEditorAction extends EditorAction {
 	}
 
 	@Nullable
-	public static Editor getEditorFromContext(@NotNull DataContext dataContext) {
+	private static Editor getEditorFromContext(@NotNull DataContext dataContext) {
 		final Editor editor = CommonDataKeys.EDITOR.getData(dataContext);
 		if (editor != null) return editor;
 		final Project project = CommonDataKeys.PROJECT.getData(dataContext);
-		final Object data = PlatformDataKeys.CONTEXT_COMPONENT.getData(dataContext);
+		final Object data = PlatformCoreDataKeys.CONTEXT_COMPONENT.getData(dataContext);
 		if (data instanceof EditorComponentImpl) {
 			// can happen if editor is already disposed, or if it's in renderer mode
 			return null;
@@ -75,4 +72,11 @@ public abstract class MyEditorAction extends EditorAction {
 		return null;
 	}
 
+
+	@Override
+	public final @NotNull ActionUpdateThread getActionUpdateThread() {
+		//https://github.com/krasa/StringManipulation/issues/182
+		//Access is allowed from event dispatch thread only exception is thrown from MyEditorAction.findActiveSpeedSearchTextField in IntelliJ 2022.3
+		return ActionUpdateThread.EDT;
+	}
 }
