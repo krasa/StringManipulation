@@ -167,22 +167,19 @@ Provides actions for text manipulation:
 
 # How to build and run
 
-1. Import the project into IDEA.
+1. Import the project into IDEA
 
-2. In "File -> Project Structure" add an SDK. Choose IntelliJ Platform Plugin SDK, not JDK. It looks like this on
-   Windows:
+2. In "File -> Project Structure" add an SDK. Choose `IntelliJ Platform Plugin SDK`, not `JDK`:
 
    ![](images/add-plugin-sdk-win.png)
 
-   And like this on a Mac:
+3. Choose the SDK root:
 
-   ![](images/add-plugin-sdk-mac.png)
-
-3. Choose the SDK root. Windows:
+- Windows
 
    ![](images/select-sdk-root-win.png)
 
-   Mac (select the `/Applications/IntelliJ IDEA/`):
+- Mac (select the `/Applications/IntelliJ IDEA/`)
 
    ![](images/select-sdk-root-mac.png)
 
@@ -192,7 +189,7 @@ Provides actions for text manipulation:
    
    ![](images/run-configuration.png)
 
-5. Now you should be able to run and debug the plugin in a separate IDEA instance.
+5. Now you should be able to run and debug the plugin in a separate IDEA instance
 
 6. To package a distribution:
 
