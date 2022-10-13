@@ -1,6 +1,7 @@
 package osmedile.intellij.stringmanip.sort;
 
 import com.intellij.openapi.editor.Editor;
+import osmedile.intellij.stringmanip.sort.support.Sort;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 public class JsonSortAction extends SortAction {
@@ -13,6 +14,7 @@ public class JsonSortAction extends SortAction {
 	@Override
 	protected SortSettings getSortSettings(Editor editor) {
 		SortSettings sortSettings = new SortSettings();
+		sortSettings.setSortType(Sort.CASE_SENSITIVE_A_Z);
 		sortSettings.setJsonSort(true);
 		return sortSettings;
 	}

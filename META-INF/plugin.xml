@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.5.1</version>
+    <version>9.6.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="222.2964.55"/>
 
@@ -1010,6 +1010,12 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
     <change-notes>
         <![CDATA[
 	<p>
+	    <div>
+	        <h4>Version 9.6.0</h4>
+	        <ul>
+              <li>JSON Sort action - made case sensitive, to prevent merging keys with different casing</li>
+          </ul>
+	    <div>
 	    <div>
 	        <h4>Version 9.5.1</h4>
 	        <ul>
