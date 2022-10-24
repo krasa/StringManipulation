@@ -1014,6 +1014,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 9.6.0</h4>
 	        <ul>
               <li>JSON Sort action - made case sensitive, to prevent merging keys with different casing</li>
+              <li>Compatibility with IJ 2022.3</li>
           </ul>
 	    <div>
 	    <div>
