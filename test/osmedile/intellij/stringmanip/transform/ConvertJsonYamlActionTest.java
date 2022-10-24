@@ -39,6 +39,19 @@ public class ConvertJsonYamlActionTest {
     }
 
     @Test
+    public void yamlDates() {
+        //TODO #188
+        String inputYaml = readFile("dates.yml");
+        String outputJson = readFile("dates.json");
+
+        String json = new ConvertJsonYamlAction().yamlToJson(inputYaml);
+        assertEquals(json, outputJson, json.replace("\r", ""));
+
+//        String yaml = new ConvertJsonYamlAction().jsonToYaml(json);
+//        assertEquals(yaml, inputYaml, yaml.replace("\r", ""));
+    }
+
+    @Test
     public void yamlArrayToJson() {
         String inputYaml = readFile("array.yml");
         String outputJson = readFile("array.json");
