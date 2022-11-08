@@ -12,7 +12,13 @@ import org.json.JSONObject;
 import org.snakeyaml.engine.v2.api.Dump;
 import org.snakeyaml.engine.v2.api.DumpSettings;
 import org.snakeyaml.engine.v2.common.FlowStyle;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.nodes.Tag;
+import org.yaml.snakeyaml.representer.Representer;
+import org.yaml.snakeyaml.resolver.Resolver;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 
@@ -50,10 +56,28 @@ public class ConvertJsonYamlAction extends AbstractStringManipAction<Object> {
     }
 
     protected String yamlToJson(String selectedText) {
-        Yaml yaml = new Yaml();
+        Yaml yaml = new Yaml(new Constructor(new LoaderOptions()), new Representer(new DumperOptions()),
+            new DumperOptions(), new CustomYamlTagResolver());
+
         Object obj = yaml.load(selectedText);
 
         return getGson().toJson(obj).trim();
+    }
+
+    private static class CustomYamlTagResolver extends Resolver {
+
+        /*
+         * Do not resolve timestamps, leave them as string.
+         */
+        protected void addImplicitResolvers() {
+            addImplicitResolver(Tag.BOOL, BOOL, "yYnNtTfFoO");
+            addImplicitResolver(Tag.INT, INT, "-+0123456789");
+            addImplicitResolver(Tag.FLOAT, FLOAT, "-+0123456789.");
+            addImplicitResolver(Tag.MERGE, MERGE, "<");
+            addImplicitResolver(Tag.NULL, NULL, "~nN\u0000");
+            addImplicitResolver(Tag.NULL, EMPTY, null);
+            addImplicitResolver(Tag.YAML, YAML, "!&*");
+        }
     }
 
     @Override
