@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.6.1</version>
+    <version>9.7.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="222.2964.55"/>
 
@@ -771,6 +771,19 @@
 
         <group id="StringManipulation.ToolWindow.Replace"
                text="String Manipulation ToolWindow - Replace">
+            <action id="StringManipulation.ToolWindow.Replace.ReplaceAction"
+                    class="osmedile.intellij.stringmanip.replace.ReplaceAction"
+                    text="Multi Replace"
+                    description="Configure with 'String Manipulation' tool window"
+                    icon="/actions/execute.svg"
+            />
+
+            <action id="StringManipulation.ToolWindow.Replace.DuplicateAndReplaceAction"
+                    class="osmedile.intellij.stringmanip.replace.DuplicateAndReplaceAction"
+                    text="Duplicate Line or Selection and Multi Replace"
+                    description="Configure with 'String Manipulation' tool window"
+                    icon="/actions/rerun.svg"
+            />
 
             <action id="StringManipulation.ToolWindow.Replace.SaveAction"
                     class="osmedile.intellij.stringmanip.replace.gui.actions.SaveAction"
@@ -1011,10 +1024,9 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
         <![CDATA[
 	<p>
 	    <div>
-	        <h4>Version 9.6.0</h4>
+	        <h4>Version 9.7.0</h4>
 	        <ul>
-              <li>JSON Sort action - made case sensitive, to prevent merging keys with different casing</li>
-              <li>Compatibility with IJ 2023</li>
+              <li>Multi replace improvements</li>
           </ul>
 	    <div>
 	    <div>

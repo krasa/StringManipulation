@@ -3,11 +3,13 @@
  */
 package osmedile.intellij.stringmanip.replace;
 
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.editor.actionSystem.EditorWriteActionHandler;
 import com.intellij.openapi.editor.actions.DocumentGuardedTextUtil;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Couple;
 import com.intellij.openapi.util.Pair;
@@ -25,6 +27,19 @@ public class DuplicateAndReplaceAction extends MyEditorAction {
 
 	protected DuplicateAndReplaceAction() {
 		super(new DuplicateAndReplaceAction.Handler());
+	}
+
+	@Override
+	@Nullable
+	protected Editor getEditor(@NotNull final DataContext dataContext) {
+		Editor editor = super.getEditor(dataContext);
+		if (editor == null) {
+			Project project = dataContext.getData(CommonDataKeys.PROJECT);
+			if (project != null) {
+				editor = FileEditorManager.getInstance(project).getSelectedTextEditor();
+			}
+		}
+		return editor;
 	}
 
 	private static class Handler extends EditorWriteActionHandler {
