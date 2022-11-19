@@ -711,7 +711,7 @@
                 <separator/>
                 <action id="StringManipulation.DuplicateAndReplaceAction"
                         class="osmedile.intellij.stringmanip.replace.DuplicateAndReplaceAction"
-                        text="Duplicate Line or Selection and Multi Replace"
+                        text="Duplicate and Multi Replace"
                         description="Configure with 'String Manipulation' tool window"
                 />
                 <action id="StringManipulation.ReplaceAction"
@@ -780,7 +780,7 @@
 
             <action id="StringManipulation.ToolWindow.Replace.DuplicateAndReplaceAction"
                     class="osmedile.intellij.stringmanip.replace.DuplicateAndReplaceAction"
-                    text="Duplicate Line or Selection and Multi Replace"
+                    text="Duplicate and Multi Replace"
                     description="Configure with 'String Manipulation' tool window"
                     icon="/actions/rerun.svg"
             />
@@ -1003,7 +1003,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Select All Occurrences For All Carets</li>
                 <li>Extend Selection in Different "CamelHumps" Mode</li>
                 <li>Multi Replace</li>
-                <li>Duplicate Line or Selection And Multi Replace</li>
+                <li>Duplicate and Multi Replace</li>
                 <li>Paste - camelCased</li>
                 <li>Paste - and Keep Selections</li>
                 <li>Create Border</li>
@@ -1106,7 +1106,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
                 <li>Added: Extend Selection in Different "CamelHumps" Mode</li>
                 <li>Added: Shortcuts...</li>
                 <li>Added: Multi Replace - with a toolwindow for configuration of multiple replacements</li>
-                <li>Added: Duplicate Line or Selection and Multi Replace</li>
+                <li>Added: Duplicate and Multi Replace</li>
             </ul>
 	    </div>
 	    <div>
