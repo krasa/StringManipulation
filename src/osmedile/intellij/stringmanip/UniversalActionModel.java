@@ -1,5 +1,7 @@
 package osmedile.intellij.stringmanip;
 
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.util.JDOMUtil;
 import com.intellij.serialization.SerializationException;
 import com.intellij.util.xmlb.XmlSerializer;
@@ -16,16 +18,20 @@ public class UniversalActionModel {
 	private String name;
 	private String description;
 	private String icon;
+	private String textWithMnemonic;
 
 	public UniversalActionModel() {
 	}
 
-	public UniversalActionModel(String actionClassName, Object model) throws SerializationException {
+	public UniversalActionModel(AnAction anAction, String actionClassName, Object model) throws SerializationException {
 		this.actionClassName = actionClassName;
 		if (model != null) {
 			this.modelClass = model.getClass().getCanonicalName();
 			this.modelData = JDOMUtil.write(XmlSerializer.serialize(model));
 		}
+		Presentation templatePresentation = anAction.getTemplatePresentation();
+		setDescription(templatePresentation.getDescription());
+		setTextWithMnemonic(templatePresentation.getTextWithMnemonic());
 	}
 
 	public String getModelClass() {
@@ -83,4 +89,11 @@ public class UniversalActionModel {
 		return XmlSerializer.deserialize(JDOMUtil.load(modelData), Class.forName(modelClass));
 	}
 
+	public String getTextWithMnemonic() {
+		return textWithMnemonic;
+	}
+
+	public void setTextWithMnemonic(String textWithMnemonic) {
+		this.textWithMnemonic = textWithMnemonic;
+	}
 }

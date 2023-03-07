@@ -21,7 +21,7 @@ public class ShortcutsAction extends AnAction implements DumbAware {
 
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-		Pair<AnAction, Object> pair = MyApplicationService.getInstance().getAction();
+		Pair<AnAction, Object> pair = MyApplicationService.getInstance().getLastAction();
 		AnAction anAction = pair.getFirst();
 		String id = "StringManipulation.Group.Main";
 		if (anAction != null) {

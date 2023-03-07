@@ -25,7 +25,7 @@ public class MyApplicationService {
 	}
 
 	public MyApplicationService() {
-		UniversalActionModel value = PluginPersistentStateComponent.getInstance().getLastAction();
+		UniversalActionModel value = PluginPersistentStateComponent.getInstance().getLastActionModel();
 		if (value != null) {
 			try {
 				lastAction = Class.forName(value.getActionClassName());
@@ -37,7 +37,7 @@ public class MyApplicationService {
 	}
 
 	@NotNull
-	public Pair<AnAction, Object> getAction() {
+	public Pair<AnAction, Object> getLastAction() {
 		if (lastCustomActionModel instanceof CustomActionModel) {
 			CustomActionModel lastCustomActionModel = (CustomActionModel) this.lastCustomActionModel;
 			String id = lastCustomActionModel.getId();
@@ -54,7 +54,12 @@ public class MyApplicationService {
 			MyApplicationService instance = getInstance();
 			instance.lastAction = aClass;
 			instance.lastCustomActionModel = customActionModel;
-			PluginPersistentStateComponent.getInstance().setLastAction(new UniversalActionModel(aClass.getCanonicalName(), customActionModel));
+			Pair<AnAction, Object> action = instance.getLastAction();
+			AnAction anAction = action.first;
+
+			UniversalActionModel model = new UniversalActionModel(anAction, aClass.getCanonicalName(), customActionModel);
+
+			PluginPersistentStateComponent.getInstance().setLastActionModel(model);
 		}
 	}
 

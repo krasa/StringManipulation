@@ -22,7 +22,7 @@ public class RepeatAction extends MyEditorAction {
 			@Override
 			protected Pair beforeWriteAction(Editor editor, DataContext dataContext) {
 				MyApplicationService service = MyApplicationService.getInstance();
-				Pair<AnAction, Object> pair = service.getAction();
+				Pair<AnAction, Object> pair = service.getLastAction();
 				AnAction anAction = pair.getFirst();
 				if (anAction != null) {
 					try {
@@ -68,11 +68,11 @@ public class RepeatAction extends MyEditorAction {
 	@Override
 	public void update(AnActionEvent e) {
 		super.update(e);
-		AnAction anAction = MyApplicationService.getInstance().getAction().getFirst();
+		UniversalActionModel anAction = PluginPersistentStateComponent.getInstance().getLastActionModel();
 		if (anAction != null) {
 			e.getPresentation().setEnabled(true);
-			e.getPresentation().setText(StringManipulationBundle.message("repeat.text") + " - " + anAction.getTemplatePresentation().getTextWithMnemonic());
-			e.getPresentation().setDescription(anAction.getTemplatePresentation().getDescription());
+			e.getPresentation().setText(StringManipulationBundle.message("repeat.text") + " - " + anAction.getTextWithMnemonic());
+			e.getPresentation().setDescription(anAction.getDescription());
 		} else {
 			e.getPresentation().setText(StringManipulationBundle.message("repeat.last.action.text"));
 			e.getPresentation().setDescription((String) null);

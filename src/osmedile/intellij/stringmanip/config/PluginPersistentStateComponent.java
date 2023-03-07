@@ -55,7 +55,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	private List<GrepSettings> grepHistory = new ArrayList<>();
 	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
-	private UniversalActionModel lastAction;
+	private UniversalActionModel lastActionModel;
 	private boolean repeatLastActionWithoutDialog = true;
 	private BorderSettings borderSettings = new BorderSettings();
 	private boolean normalizeCaseSwitching = true;
@@ -453,12 +453,12 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		return null;
 	}
 
-	public UniversalActionModel getLastAction() {
-		return lastAction;
+	public UniversalActionModel getLastActionModel() {
+		return lastActionModel;
 	}
 
-	public void setLastAction(UniversalActionModel lastAction) {
-		this.lastAction = lastAction;
+	public void setLastActionModel(UniversalActionModel lastActionModel) {
+		this.lastActionModel = lastActionModel;
 	}
 
 	public boolean isRepeatLastActionWithoutDialog() {
