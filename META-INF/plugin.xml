@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.8.0</version>
+    <version>9.7.0</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
     <idea-version since-build="222.2964.55"/>
 
@@ -569,6 +569,11 @@
                         text="Remove Empty Lines"
                         description="Remove empty lines in selected text">
                 </action>
+                <action id="osmedile.intellij.stringmanip.RemoveExtraEmptyLinesAction"
+                        class="osmedile.intellij.stringmanip.filter.RemoveExtraEmptyLinesAction"
+                        text="Remove Consecutive Empty Lines"
+                        description="Remove consecutive empty lines in selected text">
+                </action>
                 <action id="StringManipulation.RemoveNewLinesAction"
                         class="osmedile.intellij.stringmanip.filter.RemoveNewLinesAction"
                         text="Remove All Newlines"
@@ -983,6 +988,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Keep only duplicate lines</li>
 				<li>Group and Count</li>
 				<li>Remove empty lines</li>
+				<li>Remove consecutive empty lines</li>
 				<li>Remove all newlines</li>
 				<li>Convert Between Char and Int</li>
 				<li>Minify JSON</li>
@@ -1027,6 +1033,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 	        <h4>Version 9.7.0</h4>
 	        <ul>
               <li>Multi replace improvements</li>
+              <li>Added: Remove consecutive empty lines</li>
+              <li>Fixed exception on EDT RepeatAction#update@EditorPopup</li>
           </ul>
 	    <div>
 	    <div>

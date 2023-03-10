@@ -140,6 +140,7 @@ Provides actions for text manipulation:
             <li>Remove duplicates - supports multicaret subselection</li>
             <li>Keep only duplicate lines</li>
             <li>Remove empty lines</li>
+            <li>Remove consecutive empty lines</li>
             <li>Remove all newlines</li>
             <li>Minify JSON</li>
             <li>Convert Between JSON and YAML</li>
