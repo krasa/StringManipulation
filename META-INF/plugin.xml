@@ -1035,6 +1035,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
               <li>Multi replace improvements</li>
               <li>Added: Remove consecutive empty lines</li>
               <li>Fixed exception on EDT RepeatAction#update@EditorPopup</li>
+              <li>Added: Chinese localization</li>
           </ul>
 	    <div>
 	    <div>
