@@ -34,7 +34,7 @@ public class StringManipulationToolWindowFactory implements ToolWindowFactory, D
 		JBScrollPane toolWindowContent = new JBScrollPane(previewPanel.getRoot());
 		toolWindowContent.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
+		ContentFactory contentFactory = ContentFactory.getInstance();
 		Content content = contentFactory.createContent(toolWindowContent, null, false);
 		content.putUserData(TOOL_WINDOW_PANEL, previewPanel);
 		toolWindow.getContentManager().addContent(content);

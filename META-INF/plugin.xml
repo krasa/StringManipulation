@@ -1,9 +1,9 @@
 <idea-plugin url="https://github.com/krasa/StringManipulation">
     <id>String Manipulation</id>
     <name>String Manipulation</name>
-    <version>9.7.0</version>
+    <version>9.7.1</version>
     <vendor email="vojta.krasa@gmail.com">Maintained by: Vojtech Krasa; original author: Olivier Smedile</vendor>
-    <idea-version since-build="222.2964.55"/>
+    <idea-version since-build="222.3345.118"/>
 
     <!--branch 143 - IntelliJ IDEA 15, WebStorm 11, PyCharm 5, PhpStorm 10, RubyMine 8, AppCode 3.3, CLion 1.2, DataGrip 1.0-->
     <!--branch 141 - IntelliJ IDEA 14.1, WebStorm 10, PyCharm 4.1, Android Studio 1.3-->
