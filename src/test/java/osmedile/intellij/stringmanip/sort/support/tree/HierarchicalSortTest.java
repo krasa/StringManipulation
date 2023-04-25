@@ -49,7 +49,7 @@ public class HierarchicalSortTest {
 
 	public static String readFile(String fileName) {
 		try {
-			String s = FileUtils.readFileToString(new File("test/osmedile/intellij/stringmanip/sort/data/" + fileName), StandardCharsets.UTF_8);
+			String s = FileUtils.readFileToString(new File("src/test/java/osmedile/intellij/stringmanip/sort/data/" + fileName), StandardCharsets.UTF_8);
 			String replace = s.replace("\r", "");
 			return replace;
 		} catch (IOException e) {
