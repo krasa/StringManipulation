@@ -3,3 +3,8 @@
 .idea/
 out/
 
+
+.gradle
+.idea
+.qodana
+build

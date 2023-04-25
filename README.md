@@ -166,38 +166,6 @@ Provides actions for text manipulation:
     </p>
 </p>
 
-# How to build and run
-
-1. Import the project into IDEA
-
-2. In "File -> Project Structure" add an SDK. Choose `IntelliJ Platform Plugin SDK`, not `JDK`:
-
-   ![](images/add-plugin-sdk-win.png)
-
-3. Choose the SDK root:
-
-- Windows
-
-   ![](images/select-sdk-root-win.png)
-
-- Mac (select the `/Applications/IntelliJ IDEA/`)
-
-   ![](images/select-sdk-root-mac.png)
-
-4. The project should build now. To run add the following run configuration if it's not added already:
-
-   `-Xmx1024m -Xms256m -ea -Didea.is.internal=true -Djava.system.class.loader=com.intellij.util.lang.PathClassLoader`
-   
-   ![](images/run-configuration.png)
-
-5. Now you should be able to run and debug the plugin in a separate IDEA instance
-
-6. To package a distribution:
-
-   ![](images/deployment.png)
-
-   (StringManipulation.zip will be generated in the project root, which you can install to the main IDE)
-
 ------
 
 Privacy Notice: No personal data is collected at all
