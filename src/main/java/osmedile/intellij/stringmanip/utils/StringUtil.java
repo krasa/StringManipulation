@@ -231,7 +231,7 @@ public class StringUtil {
 	}
 
 	public static String wordsAndHyphenAndCamelToConstantCase(String s) {
-//		boolean containsLowerCase = containsLowerCase(s);
+		boolean containsLowerCase = containsLowerCase(s);
 
 		StringBuilder buf = new StringBuilder();
 		char previousChar = ' ';
@@ -248,7 +248,12 @@ public class StringUtil {
 			//  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {
 
 			//camelCase handling - add extra _
-			if (isLetter(c) && isLetter(previousChar) && (isUpperCaseAndPreviousIsLowerCase || (putSeparatorBetweenUppercases() && isUpperCaseAndPreviousIsUpperCase))) {
+			if (isLetter(c) && isLetter(previousChar) &&
+					(
+							isUpperCaseAndPreviousIsLowerCase
+									|| (containsLowerCase && putSeparatorBetweenUppercases() && isUpperCaseAndPreviousIsUpperCase)
+					)
+			) {
 				buf.append("_");
 				// extra _ after number
 			} else if ((isSeparatorAfterDigit() && isDigit(previousChar) && isLetter(c))
