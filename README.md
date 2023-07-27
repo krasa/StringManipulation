@@ -135,6 +135,8 @@ Provides actions for text manipulation:
             <li>Inverted Grep</li>
             <li>Group by Grep - matched lines will be separated from not matched</li>
             <li>Trim</li>
+            <li>Trim Trailing</li>
+            <li>Trim Leading</li>
             <li>Replace whitespaces with a single space char</li>
             <li>Remove all spaces</li>
             <li>Remove duplicates - supports multicaret subselection</li>

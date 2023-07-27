@@ -584,6 +584,17 @@
                         text="Trim"
                         description="Trim selected text">
                 </action>
+
+                <action id="osmedile.intellij.stringmanip.TrimTrailingAction"
+                        class="osmedile.intellij.stringmanip.filter.TrimTrailingAction"
+                        text="Trim Trailing"
+                        description="Trim trailing whitespaces from selected text">
+                </action>
+                <action id="osmedile.intellij.stringmanip.TrimLeadingAction"
+                        class="osmedile.intellij.stringmanip.filter.TrimLeadingAction"
+                        text="Trim Leading"
+                        description="Trim leading whitespaces from selected text">
+                </action>
                 <action id="osmedile.intellij.stringmanip.TrimAllSpacesAction"
                         class="osmedile.intellij.stringmanip.filter.TrimAllSpacesAction"
                         text="Replace Whitespaces with a Single Space Char"
@@ -980,6 +991,8 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Inverted Grep</li>
 				<li>Group by Grep - matched lines will be separated from not matched</li>
 				<li>Trim</li>
+				<li>Trim Leading</li>
+				<li>Trim Trailing</li>
 				<li>Replace whitespaces with a single space char</li>
 				<li>Remove all spaces</li>
 				<li>Remove duplicates (supports multicaret subselection)</li>
