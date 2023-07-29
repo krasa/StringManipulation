@@ -3,12 +3,12 @@ package osmedile.intellij.stringmanip.filter;
 import com.intellij.openapi.editor.Editor;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 
-public class QuickInvertedGrepAction extends QuickGrepAction {
+public class QuickPartitionAction extends QuickGrepAction {
 	@Override
 	protected GrepSettings getSettings(Editor editor, String initialValue) {
 		if (!GrepAction.INITIAL_VALUE.equals(initialValue)) {
 			GrepSettings grepSettings = new GrepSettings();
-			grepSettings.setInverted(true);
+			grepSettings.setGroupMatching(true);
 			grepSettings.setPattern(initialValue);
 			grepSettings.setCaseSensitive(true);
 			grepSettings.quick = true;
@@ -19,8 +19,10 @@ public class QuickInvertedGrepAction extends QuickGrepAction {
 		}
 	}
 
+
 	@Override
 	protected GrepSettings getSettings(String initialValue) {
-		return PluginPersistentStateComponent.getInstance().guessSettings(initialValue, true, false);
+		return PluginPersistentStateComponent.getInstance().guessSettings(initialValue, false, true);
 	}
+
 }

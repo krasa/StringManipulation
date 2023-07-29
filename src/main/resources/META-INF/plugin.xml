@@ -546,6 +546,11 @@
                         text="Inverted Grep"
                         description="Inverted grep by a selected text for the whole file - without a dialog">
                 </action>
+                <action id="StringManipulation.PartitionGrep"
+                        class="osmedile.intellij.stringmanip.filter.QuickPartitionAction"
+                        text="Partition"
+                        description="Partition matching lines from not-matching">
+                </action>
                 <separator/>
                 <action id="StringManipulation.GroupAndCount"
                         class="osmedile.intellij.stringmanip.filter.GroupAndCountAction"

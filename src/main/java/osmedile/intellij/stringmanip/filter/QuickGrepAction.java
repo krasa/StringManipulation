@@ -12,6 +12,7 @@ public class QuickGrepAction extends GrepAction {
 			grepSettings.setPattern(initialValue);
 			grepSettings.setCaseSensitive(true);
 			grepSettings.quick = true;
+			grepSettings.setGroupMatching(false);
 			storeGrepSettings(grepSettings);
 			return grepSettings;
 		} else {
@@ -32,6 +33,6 @@ public class QuickGrepAction extends GrepAction {
 
 	@Override
 	protected GrepSettings getSettings(String initialValue) {
-		return PluginPersistentStateComponent.getInstance().guessSettings(initialValue, false);
+		return PluginPersistentStateComponent.getInstance().guessSettings(initialValue, false, false);
 	}
 }

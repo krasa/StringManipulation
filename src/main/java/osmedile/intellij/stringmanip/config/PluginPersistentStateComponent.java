@@ -370,13 +370,13 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 
 	@NotNull
 	@Transient
-	public GrepSettings guessSettings(String text, boolean inverted) {
+	public GrepSettings guessSettings(String text, boolean inverted, boolean groupMatching) {
 		GrepSettings settings = null;
 		//matching
 		if (grepHistory.size() > 0) {
 			for (int i = grepHistory.size() - 1; i >= 0; i--) {
 				GrepSettings s = grepHistory.get(i);
-				if (text.equals(s.getPattern()) && s.isInverted() == inverted) {
+				if (text.equals(s.getPattern()) && s.isInverted() == inverted && s.isGroupMatching() == groupMatching) {
 					settings = s;
 					break;
 				}
@@ -386,7 +386,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 		if (grepHistory.size() > 0) {
 			for (int i = grepHistory.size() - 1; i >= 0; i--) {
 				GrepSettings s = grepHistory.get(i);
-				if (s.isInverted() == inverted) {
+				if (s.isInverted() == inverted && s.isGroupMatching() == groupMatching) {
 					settings = s;
 					break;
 				}
@@ -402,6 +402,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 			clone.setPattern(text);
 		}
 		clone.setInverted(inverted);
+		clone.setGroupMatching(groupMatching);
 		clone.quick = false;
 		return clone;
 	}
