@@ -92,7 +92,7 @@ public class ReplaceItemModel {
 	}
 
 	public FindModel toFindModel() {
-		if (StringUtils.isEmpty(from) || StringUtils.isEmpty(to)) {
+		if (StringUtils.isEmpty(from)) {
 			return null;
 		}
 		FindModel model = new FindModel();
@@ -106,7 +106,7 @@ public class ReplaceItemModel {
 	}
 
 	public boolean isEmpty() {
-		return StringUtils.isEmpty(from) && StringUtils.isEmpty(to);
+		return StringUtils.isEmpty(from);
 	}
 
 	@Override
