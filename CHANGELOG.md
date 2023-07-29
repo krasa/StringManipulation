@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Align columns: added option to right-align cells
+
+
 ## [9.10.0] - 2023-07-27
 
 - Added: Trim Leading, Trim Trailing

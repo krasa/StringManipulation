@@ -340,6 +340,7 @@ public abstract class MySearchTextArea extends JPanel implements PropertyChangeL
 		}
 	}
 
+	@Deprecated
 	/**
 	 * @deprecated use this wrapper component with JBTextArea and its getEmptyText() instead
 	 */

@@ -5,10 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * update #equals!!
@@ -19,6 +16,8 @@ public class ColumnAlignerModel {
 	private boolean spaceBeforeSeparator = true;
 	private boolean spaceAfterSeparator = true;
 	private boolean trimValues = true;
+	private boolean rightAlignNumbers = true;
+	private boolean rightAlign = false;
 	private boolean trimLines = false;
 	private Align alignBy = Align.SEPARATORS;
 	private boolean sequentialProcessing;
@@ -168,6 +167,22 @@ public class ColumnAlignerModel {
 		this.sbcCaseWorkaround = sbcCaseWorkaround;
 	}
 
+	public boolean isRightAlignNumbers() {
+		return rightAlignNumbers;
+	}
+
+	public void setRightAlignNumbers(boolean rightAlignNumbers) {
+		this.rightAlignNumbers = rightAlignNumbers;
+	}
+
+	public boolean isRightAlign() {
+		return rightAlign;
+	}
+
+	public void setRightAlign(boolean rightAlign) {
+		this.rightAlign = rightAlign;
+	}
+
 	public enum Align {
 		VALUES, SEPARATORS
 	}
@@ -182,20 +197,21 @@ public class ColumnAlignerModel {
 		if (spaceBeforeSeparator != that.spaceBeforeSeparator) return false;
 		if (spaceAfterSeparator != that.spaceAfterSeparator) return false;
 		if (trimValues != that.trimValues) return false;
+		if (rightAlignNumbers != that.rightAlignNumbers) return false;
+		if (rightAlign != that.rightAlign) return false;
 		if (trimLines != that.trimLines) return false;
 		if (sequentialProcessing != that.sequentialProcessing) return false;
 		if (skipFirstRow != that.skipFirstRow) return false;
 		if (sortOnly != that.sortOnly) return false;
 		if (keepLeadingIndent != that.keepLeadingIndent) return false;
 		if (sbcCaseWorkaround != that.sbcCaseWorkaround) return false;
-		if (added != null ? !added.equals(that.added) : that.added != null) return false;
-		if (separators != null ? !separators.equals(that.separators) : that.separators != null) return false;
+		if (!Objects.equals(added, that.added)) return false;
+		if (!Objects.equals(separators, that.separators)) return false;
 		if (alignBy != that.alignBy) return false;
-		if (sortSettings != null ? !sortSettings.equals(that.sortSettings) : that.sortSettings != null)
+		if (!Objects.equals(sortSettings, that.sortSettings)) return false;
+		if (!Objects.equals(columnSortOrder, that.columnSortOrder))
 			return false;
-		if (columnSortOrder != null ? !columnSortOrder.equals(that.columnSortOrder) : that.columnSortOrder != null)
-			return false;
-		return maxSeparatorsPerLine != null ? maxSeparatorsPerLine.equals(that.maxSeparatorsPerLine) : that.maxSeparatorsPerLine == null;
+		return Objects.equals(maxSeparatorsPerLine, that.maxSeparatorsPerLine);
 	}
 
 	@Override
@@ -205,6 +221,8 @@ public class ColumnAlignerModel {
 		result = 31 * result + (spaceBeforeSeparator ? 1 : 0);
 		result = 31 * result + (spaceAfterSeparator ? 1 : 0);
 		result = 31 * result + (trimValues ? 1 : 0);
+		result = 31 * result + (rightAlignNumbers ? 1 : 0);
+		result = 31 * result + (rightAlign ? 1 : 0);
 		result = 31 * result + (trimLines ? 1 : 0);
 		result = 31 * result + (alignBy != null ? alignBy.hashCode() : 0);
 		result = 31 * result + (sequentialProcessing ? 1 : 0);

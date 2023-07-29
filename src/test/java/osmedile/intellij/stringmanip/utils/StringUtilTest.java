@@ -4,7 +4,7 @@ import org.junit.Test;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.styles.CaseSwitchingTest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * StringUtil Tester.
@@ -100,6 +100,29 @@ public class StringUtilTest extends CaseSwitchingTest {
     public void replaceSeparator_keepBetweenDigits() {
         assertEquals("_foo bar 1_1_", StringUtil.replaceSeparatorBetweenLetters("_foo_bar_1_1_", '_', ' '));
 
+    }
+
+    @Test
+    public void rightAlignNumber() {
+        assertFalse(StringUtil.NUMBERS.matcher("+").matches());
+        assertFalse(StringUtil.NUMBERS.matcher("-").matches());
+        assertFalse(StringUtil.NUMBERS.matcher(".").matches());
+        assertFalse(StringUtil.NUMBERS.matcher(",").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1 000").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1 000,0").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("123,456.78").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("+999,999,999.999").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1,000.00").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("-1").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("0").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1,000,000").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1,234").matches());
+
+        assertEquals("3", StringUtil.rightAlignNumber("3", 1));
+        assertEquals("  3", StringUtil.rightAlignNumber("3", 3));
+        assertEquals("  x", StringUtil.rightAlign("x", 3));
+        assertEquals("   ", StringUtil.rightAlign("", 3));
     }
 
     @Test

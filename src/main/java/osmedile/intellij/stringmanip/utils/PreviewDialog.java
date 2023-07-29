@@ -211,7 +211,7 @@ public abstract class PreviewDialog<SettingsType, InputType> implements Disposab
 					new TextRange(editor.logicalPositionToOffset(selectionStart),
 							editor.logicalPositionToOffset(selectionEnd)));
 
-			sb.append(text.trim());
+			sb.append(text);
 			sb.append("\n");
 //			if (sb.length() > MAX_PREVIEW) {
 //				break;

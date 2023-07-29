@@ -14,6 +14,7 @@ public class AlignToColumnsActionTest {
 	protected String align(String text, String... separator) {
 		ColumnAlignerModel model = new ColumnAlignerModel(separator);
 		model.setKeepLeadingIndent(true);
+		model.setRightAlignNumbers(false);
 //		model.setTrimLines(true);
 		return new ColumnAligner(model).align(text);
 	}
@@ -21,14 +22,14 @@ public class AlignToColumnsActionTest {
 	@Test
 	public void testSpace1() {
 		String process = align("foo      bar"
-			, " ");
+				, " ");
 		assertThat(process, is("foo bar\n"));
 	}
 
 	@Test
 	public void test() {
 		String process = align("foo 1     | foo 2"
-			, "|");
+				, "|");
 		assertThat(process, is("foo 1 | foo 2\n"));
 	}
 
@@ -36,21 +37,21 @@ public class AlignToColumnsActionTest {
 	@Test
 	public void test2() {
 		String process = align("foo 1     | foo 2|"
-			, "|");
+				, "|");
 		assertThat(process, is("foo 1 | foo 2 |\n"));
 	}
 
 	@Test
 	public void test3() {
 		String process = align("|foo 1     | foo 2"
-			, "|");
+				, "|");
 		assertThat(process, is("| foo 1 | foo 2\n"));
 	}
 
 	@Test
 	public void test4() {
 		String process = align("| foo 1 | foo 2\n| foo 1 | foo 2\n"
-			, "|");
+				, "|");
 		assertThat(process, is("| foo 1 | foo 2\n| foo 1 | foo 2\n"));
 	}
 
@@ -58,14 +59,14 @@ public class AlignToColumnsActionTest {
 	@Test
 	public void test5() {
 		String process = align("| foo 1 | foo 2| foo 3\n| foo 1 | foo 2\n"
-			, "|");
+				, "|");
 		assertThat(process, is("| foo 1 | foo 2 | foo 3\n| foo 1 | foo 2\n"));
 	}
 
 	@Test
 	public void test6() {
 		String process = align("| foo 1 | foo 2\n| foo 1 | foo 2 | foo 3\n"
-			, "|");
+				, "|");
 		assertThat(process, is("| foo 1 | foo 2\n| foo 1 | foo 2 | foo 3\n"));
 	}
 
@@ -84,7 +85,7 @@ public class AlignToColumnsActionTest {
 		// @formatter:on
 
 		String process = align(notFormattedText
-			, "|");
+				, "|");
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
 		System.out.println("EXPECTED >>>>>>>>>>>");
@@ -111,7 +112,7 @@ public class AlignToColumnsActionTest {
 		// @formatter:on
 
 		String process = align(notFormattedText
-			, "|");
+				, "|");
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
 		System.out.println("EXPECTED >>>>>>>>>>>");
@@ -158,6 +159,59 @@ public class AlignToColumnsActionTest {
 		// @formatter:on
 
 		String process = align(notFormattedText, " ");
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
+
+	@Test
+	public void test10r() {
+		//  @formatter:off
+		String notFormattedText =
+				"   1  2  345  67 89 \n" +
+						"1 2 3  4  5 6  7 8  9     \n";
+
+		String expectedText =
+				"1 2 345 67 89 \n" +
+						"1 2   3  4  5 6 7 8 9 \n";
+		// @formatter:on
+
+		ColumnAlignerModel model = new ColumnAlignerModel(" ");
+		model.setKeepLeadingIndent(true);
+		model.setRightAlignNumbers(true);
+		String process = new ColumnAligner(model).align(notFormattedText);
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
+
+	@Test
+	public void test10r2() {
+		//  @formatter:off
+		String notFormattedText =
+				"   a  a  aaa  aa aa \n" +
+						"a a a  a  a 6  7 8  9     \n";
+
+		String expectedText =
+				"a a aaa aa aa \n" +
+						"a a   a  a  a 6 7 8 9 \n";
+		// @formatter:on
+
+		ColumnAlignerModel model = new ColumnAlignerModel(" ");
+		model.setKeepLeadingIndent(true);
+		model.setRightAlign(true);
+		String process = new ColumnAligner(model).align(notFormattedText);
+
 		System.out.println("INPUT >>>>>>>>>>>");
 		System.out.println(notFormattedText);
 		System.out.println("EXPECTED >>>>>>>>>>>");
@@ -339,9 +393,9 @@ public class AlignToColumnsActionTest {
 	@Test
 	public void test14() {
 		String process = align("|| foo 1 ||| foo 2||\n| foo 1 | foo 2 | foo 3\n"
-			, "|");
+				, "|");
 		assertThat(process, is("|       | foo 1 |       | | foo 2 | |\n" +
-			"| foo 1 | foo 2 | foo 3\n"));
+				"| foo 1 | foo 2 | foo 3\n"));
 	}
 
 	@Test
@@ -356,18 +410,18 @@ public class AlignToColumnsActionTest {
 	@Test
 	public void test16() {
 		String process = align("foo  ->    bar   <-    foo\n" +
-				" foo<-bar->foo \n",
-			"->", "<-", "");
+						" foo<-bar->foo \n",
+				"->", "<-", "");
 		assertThat(process, is(
-			"foo -> bar <- foo\n" +
-				"foo <- bar -> foo\n"
+				"foo -> bar <- foo\n" +
+						"foo <- bar -> foo\n"
 		));
 	}
 
 	@Test
 	public void testSpace17() {
 		String process = align("zm9vig-jhcg=="
-			, ",", "");
+				, ",", "");
 		assertThat(process, is("zm9vig-jhcg==\n"));
 	}
 
@@ -414,6 +468,7 @@ public class AlignToColumnsActionTest {
 
 
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel("---", "|", " ");
+		columnAlignerModel.setRightAlignNumbers(false);
 		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
 
 		System.out.println("INPUT >>>>>>>>>>>");
@@ -425,7 +480,6 @@ public class AlignToColumnsActionTest {
 
 		assertThat(process, is(expectedText));
 	}
-
 	@Test
 	public void test20() {
 		// @formatter:off

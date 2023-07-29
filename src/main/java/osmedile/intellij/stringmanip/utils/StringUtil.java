@@ -20,6 +20,7 @@ import static org.apache.commons.lang3.StringUtils.*;
  * @version $Id: StringUtil.java 62 2008-04-20 11:11:54Z osmedile $
  */
 public class StringUtil {
+	public static final Pattern NUMBERS = Pattern.compile("^[ ,.\\-+\\d]*\\d[ ,.\\-+\\d]*$");
 	public static PluginPersistentStateComponent persistentStateComponent;
 	public static final char EMPTY_CHAR = 0;
 
@@ -815,5 +816,26 @@ public class StringUtil {
 
 	public static class Constants {
 		public static final char[] DELIMITERS = new char[]{'\'', '\"', ' '};
+	}
+
+	public static String rightAlign(String input, int textLength) {
+		if (textLength <= 0) {
+			return input;
+		}
+		return String.format("%" + textLength + "s", input);
+
+	}
+
+	public static String rightAlignNumber(String input, int textLength) {
+		if (textLength <= 0) {
+			return input;
+		}
+		boolean isNumber = NUMBERS.matcher(input).matches();
+
+		if (!isNumber) {
+			return input;
+		}
+
+		return String.format("%" + textLength + "s", input);
 	}
 }

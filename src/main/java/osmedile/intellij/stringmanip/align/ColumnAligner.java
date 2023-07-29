@@ -115,16 +115,20 @@ public class ColumnAligner {
 			}
 		}
 
-		int initialSeparatorPosition = initialSeparatorPosition(lines);
-		for (ColumnAlignerLine line : lines) {
-			line.appendInitialSpace(initialSeparatorPosition);
+		if (!model.isRightAlign()) { //conflicts with CellAligner - spaces are added twice for empty token
+			int initialSeparatorPosition = initialSeparatorPosition(lines);
+			for (ColumnAlignerLine line : lines) {
+				line.appendInitialSpace(initialSeparatorPosition);
+			}
 		}
 
 		boolean process = true;
 		while (process) {
 			process = false;
+			CellAligner ca = newAligner(model, lines);
+
 			for (ColumnAlignerLine line : lines) {
-				line.appendText();
+				line.appendText(ca);
 			}
 
 			for (ColumnAlignerLine line : lines) {
@@ -174,6 +178,13 @@ public class ColumnAligner {
 			strings.add(line.getString());
 		}
 		return strings;
+	}
+
+	private CellAligner newAligner(ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
+		if (model.isRightAlignNumbers() || model.isRightAlign()) {
+			return new CellAligner(model, lines);
+		}
+		return null;
 	}
 
 	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines) {

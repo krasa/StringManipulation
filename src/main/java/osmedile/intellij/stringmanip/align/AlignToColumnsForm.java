@@ -67,6 +67,9 @@ public class AlignToColumnsForm extends PreviewDialog {
 	private JTextField debugRowNumber;
 	private JPanel debugRowActions;
 	protected JPanel mainPanel;
+	private JCheckBox alignRightNumbers;
+	private JCheckBox alignRight;
+
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
 
@@ -184,8 +187,10 @@ public class AlignToColumnsForm extends PreviewDialog {
 	}
 
 	private void updateComponents() {
-		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines}, sortOnly);
+		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines, alignRightNumbers, alignRight}
+				, sortOnly);
 		enabledByAny(new JComponent[]{keepLeadingIndent}, trimValues, trimLines);
+		disableByAny(new JComponent[]{alignRightNumbers}, alignRight);
 		submitRenderPreview();
 	}
 
@@ -403,6 +408,8 @@ public class AlignToColumnsForm extends PreviewDialog {
 		sortOnly.setSelected(data.isSortOnly());
 		keepLeadingIndent.setSelected(data.isKeepLeadingIndent());
 		sbcCaseWorkaround.setSelected(data.isSbcCaseWorkaround());
+		alignRightNumbers.setSelected(data.isRightAlignNumbers());
+		alignRight.setSelected(data.isRightAlign());
 	}
 
 	public void getData(ColumnAlignerModel data) {
@@ -417,6 +424,8 @@ public class AlignToColumnsForm extends PreviewDialog {
 		data.setSortOnly(sortOnly.isSelected());
 		data.setKeepLeadingIndent(keepLeadingIndent.isSelected());
 		data.setSbcCaseWorkaround(sbcCaseWorkaround.isSelected());
+		data.setRightAlignNumbers(alignRightNumbers.isSelected());
+		data.setRightAlign(alignRight.isSelected());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
@@ -433,6 +442,8 @@ public class AlignToColumnsForm extends PreviewDialog {
 		if (sortOnly.isSelected() != data.isSortOnly()) return true;
 		if (keepLeadingIndent.isSelected() != data.isKeepLeadingIndent()) return true;
 		if (sbcCaseWorkaround.isSelected() != data.isSbcCaseWorkaround()) return true;
+		if (alignRightNumbers.isSelected() != data.isRightAlignNumbers()) return true;
+		if (alignRight.isSelected() != data.isRightAlign()) return true;
 		return false;
 	}
 }

@@ -2,10 +2,9 @@ package osmedile.intellij.stringmanip.align;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-
-import static com.intellij.openapi.util.text.StringUtil.trimTrailing;
 
 @SuppressWarnings("Duplicates")
 public class ColumnAlignerLine {
@@ -13,33 +12,24 @@ public class ColumnAlignerLine {
 	private final String[] split;
 	protected StringBuilder sb = new StringBuilder();
 	private int index = 0;
+	@NotNull
+	private final ColumnAlignerModel model;
 	private final String originalText;
 	protected final String leadingIndent;
 	protected boolean endsWithNextLine;
 	private boolean hasSeparatorBeforeFirstToken = false;
 
-	private boolean appendSpaceBeforeSeparator = false;
-	private boolean appendSpaceAfterSeparator = false;
-	private boolean trimValues = false;
-	private boolean keepLeadingIndent = false;
-	private boolean trimLines = false;
 	private Set<String> separators;
-	private boolean sbcCaseWorkaround;
 
 
 	public ColumnAlignerLine(ColumnAlignerModel model, String textPart, boolean endsWithNextLine, String... separator) {
+		this.model = model;
 		originalText = textPart;
 		this.endsWithNextLine = endsWithNextLine;
 		separators = new HashSet<String>(Arrays.asList(separator));
-		this.appendSpaceBeforeSeparator = model.isSpaceBeforeSeparator();
-		this.appendSpaceAfterSeparator = model.isSpaceAfterSeparator();
-		this.trimValues = model.isTrimValues();
-		this.trimLines = model.isTrimLines();
-		this.keepLeadingIndent = model.isKeepLeadingIndent();
-		sbcCaseWorkaround = model.isSbcCaseWorkaround();
 
 		leadingIndent = leading(textPart);
-		if (trimLines) {
+		if (this.model.isTrimLines()) {
 			textPart = textPart.trim();
 		}
 		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, model.getMaxSeparatorsPerLineAsInt(), separator).toArray(new String[0]);
@@ -64,15 +54,21 @@ public class ColumnAlignerLine {
 		}
 	}
 
-	public void appendText() {
+	public void appendText(@Nullable CellAligner cellNumberAligner) {
 		if (hasToken()) {
-			sb.append(currentToken());
+			String str = currentToken();
+
+			if (cellNumberAligner != null) {
+				str = cellNumberAligner.align(str);
+			}
+
+			sb.append(str);
 		}
 	}
 
 	protected String currentToken() {
 		String str = split[index];
-		if (trimValues) {
+		if (model.isTrimValues()) {
 			str = str.trim();
 		}
 		return str;
@@ -90,7 +86,7 @@ public class ColumnAlignerLine {
 	}
 
 	protected int getSbLength() {
-		if (sbcCaseWorkaround) {
+		if (model.isSbcCaseWorkaround()) {
 			String s = sb.toString();
 			return sbcReplace(s).length();
 		} else {
@@ -106,7 +102,7 @@ public class ColumnAlignerLine {
 
 	public void appendSpaceBeforeSeparator() {
 //		if (hasToken()) {
-		if (appendSpaceBeforeSeparator && (hasToken() && isSeparator(split[index]) && !split[index].equals(" ")) && sb.length() > 0) {
+		if (model.isSpaceBeforeSeparator() && (hasToken() && isSeparator(split[index]) && !split[index].equals(" ")) && sb.length() > 0) {
 			sb.append(" ");
 		}
 //		}
@@ -114,7 +110,7 @@ public class ColumnAlignerLine {
 
 	public void appendSpaceAfterSeparator() {
 		if (hasToken()) {
-			if (appendSpaceAfterSeparator && !split[index - 1].equals(" ") && hasNotEmptyToken() && !tokenIsStartingWithSpace()) {
+			if (model.isSpaceAfterSeparator() && !split[index - 1].equals(" ") && hasNotEmptyToken() && !tokenIsStartingWithSpace()) {
 				sb.append(" ");
 			}
 		}
@@ -137,7 +133,7 @@ public class ColumnAlignerLine {
 	}
 
 	protected boolean tokenIsStartingWithSpace() {
-		return !trimValues && split[index].startsWith(" ");
+		return !model.isTrimValues() && split[index].startsWith(" ");
 	}
 
 	public int resultLength() {
@@ -164,7 +160,7 @@ public class ColumnAlignerLine {
 		int result = -1;
 		if (hasToken()) {
 			String s = currentToken();
-			if (sbcCaseWorkaround) {
+			if (model.isSbcCaseWorkaround()) {
 				s = sbcReplace(s);
 			}
 			result = s.length();
@@ -180,13 +176,14 @@ public class ColumnAlignerLine {
 	@NotNull
 	String getString() {
 		String e = sb.toString();
-		if (trimLines) {
-			if (keepLeadingIndent) {
-				e = trimTrailing(e);
-			} else {
-				e = e.trim();
-			}
-		}
+//todo conflicst with cellaligner, useless?
+//		if (model.isTrimLines()) {
+//			if (model.isKeepLeadingIndent()) {
+//				e = trimTrailing(e);
+//			} else {
+//				e = e.trim();
+//			}
+//		}
 		if (StringUtils.isBlank(e)) {
 			e = e.trim();
 		}
