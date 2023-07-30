@@ -453,7 +453,6 @@ public class AlignToColumnsForm extends PreviewDialog {
 		if (sbcCaseWorkaround.isSelected() != data.isSbcCaseWorkaround()) return true;
 		if (alignRightNumbers.isSelected() != data.isRightAlignNumbers()) return true;
 		if (alignRight.isSelected() != data.isRightAlign()) return true;
-		if (alignRight.isSelected() != data.isRightAlign()) return true;
 		if (alignDecimalSeparator.isSelected() != data.isAlignDecimalSeparator()) return true;
 		return false;
 	}

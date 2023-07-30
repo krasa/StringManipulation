@@ -8,12 +8,20 @@ import java.util.List;
 public class CellAligner {
 
 	private final ColumnAlignerModel model;
-	private int maxCurrentTokenLength;
+	private int maxCurrentTokenLength = 0;
 
 	public CellAligner(ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
 		this.model = model;
-		maxCurrentTokenLength = 0;
 
+		alignDecimalPlaces(model, lines);
+
+
+		for (ColumnAlignerLine line : lines) {
+			maxCurrentTokenLength = Math.max(maxCurrentTokenLength, line.currentTokenLength());
+		}
+	}
+
+	private static void alignDecimalPlaces(ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
 		String decimalPlaceSeparator = model.getDecimalPlaceSeparator();
 		if (model.isAlignDecimalSeparator() && !decimalPlaceSeparator.isBlank()) {
 			int maxDecimalLength = 0;
@@ -42,12 +50,6 @@ public class CellAligner {
 				}
 			}
 		}
-
-
-		for (ColumnAlignerLine line : lines) {
-			maxCurrentTokenLength = Math.max(maxCurrentTokenLength, line.currentTokenLength());
-		}
-
 	}
 
 	private static int decimalLength(String token, String decimalPlaceSeparator) {
