@@ -196,6 +196,35 @@ public class AlignToColumnsActionTest {
 	}
 
 	@Test
+	public void test10rd() {
+		//  @formatter:off
+		String notFormattedText =
+				"   1.00  2000,000  345.000  67.00 89. \n" +
+						"1000.0 2.00 3.0000  aaa  5 6  7 8  9     \n";
+
+		String expectedText =
+				"   1.00 2000,000    345.000  67.00 89. \n" +
+						"1000.0         2.00   3.0000 aaa    5  6 7 8 9 \n";
+		// @formatter:on
+
+		ColumnAlignerModel model = new ColumnAlignerModel(" ");
+		model.setKeepLeadingIndent(true);
+		model.setRightAlignNumbers(true);
+		model.setAlignDecimalSeparator(true);
+		model.setDecimalPlaceSeparator(".");
+		String process = new ColumnAligner(model).align(notFormattedText);
+		System.out.println("INPUT >>>>>>>>>>>");
+		System.out.println(notFormattedText);
+		System.out.println("EXPECTED >>>>>>>>>>>");
+		System.out.println(expectedText);
+		System.out.println("RESULT >>>>>>>>>>>");
+		System.out.println(process);
+
+		assertThat(process, is(expectedText));
+	}
+
+
+	@Test
 	public void test10r2() {
 		//  @formatter:off
 		String notFormattedText =

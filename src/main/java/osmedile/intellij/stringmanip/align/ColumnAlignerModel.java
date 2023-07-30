@@ -26,6 +26,9 @@ public class ColumnAlignerModel {
 	private boolean skipFirstRow;
 	private boolean sortOnly;
 	private String maxSeparatorsPerLine;
+	private String decimalPlaceSeparator = ".";
+	private boolean alignDecimalSeparator = false;
+
 	private boolean keepLeadingIndent = true;
 	private boolean sbcCaseWorkaround;
 
@@ -34,6 +37,14 @@ public class ColumnAlignerModel {
 
 	public ColumnAlignerModel(String... separator) {
 		this.separators = Arrays.asList(separator);
+	}
+
+	public String getDecimalPlaceSeparator() {
+		return decimalPlaceSeparator;
+	}
+
+	public void setDecimalPlaceSeparator(String decimalPlaceSeparator) {
+		this.decimalPlaceSeparator = decimalPlaceSeparator;
 	}
 
 	public List<String> getSeparators() {
@@ -175,6 +186,14 @@ public class ColumnAlignerModel {
 		this.rightAlignNumbers = rightAlignNumbers;
 	}
 
+	public boolean isAlignDecimalSeparator() {
+		return alignDecimalSeparator;
+	}
+
+	public void setAlignDecimalSeparator(boolean alignDecimalSeparator) {
+		this.alignDecimalSeparator = alignDecimalSeparator;
+	}
+
 	public boolean isRightAlign() {
 		return rightAlign;
 	}
@@ -186,6 +205,24 @@ public class ColumnAlignerModel {
 	public enum Align {
 		VALUES, SEPARATORS
 	}
+
+	@Override
+	public String toString() {
+		String format = "";
+		if (added != null) {
+			format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(added);
+		}
+
+
+		StringBuilder s = new StringBuilder();
+		for (String separator : separators) {
+			if (StringUtils.isNotEmpty(separator)) {
+				s.append(separator).append(" ");
+			}
+		}
+		return format + " - " + s.toString();
+	}
+
 
 	@Override
 	public boolean equals(Object o) {
@@ -203,6 +240,7 @@ public class ColumnAlignerModel {
 		if (sequentialProcessing != that.sequentialProcessing) return false;
 		if (skipFirstRow != that.skipFirstRow) return false;
 		if (sortOnly != that.sortOnly) return false;
+		if (alignDecimalSeparator != that.alignDecimalSeparator) return false;
 		if (keepLeadingIndent != that.keepLeadingIndent) return false;
 		if (sbcCaseWorkaround != that.sbcCaseWorkaround) return false;
 		if (!Objects.equals(added, that.added)) return false;
@@ -211,7 +249,9 @@ public class ColumnAlignerModel {
 		if (!Objects.equals(sortSettings, that.sortSettings)) return false;
 		if (!Objects.equals(columnSortOrder, that.columnSortOrder))
 			return false;
-		return Objects.equals(maxSeparatorsPerLine, that.maxSeparatorsPerLine);
+		if (!Objects.equals(maxSeparatorsPerLine, that.maxSeparatorsPerLine))
+			return false;
+		return Objects.equals(decimalPlaceSeparator, that.decimalPlaceSeparator);
 	}
 
 	@Override
@@ -231,25 +271,11 @@ public class ColumnAlignerModel {
 		result = 31 * result + (skipFirstRow ? 1 : 0);
 		result = 31 * result + (sortOnly ? 1 : 0);
 		result = 31 * result + (maxSeparatorsPerLine != null ? maxSeparatorsPerLine.hashCode() : 0);
+		result = 31 * result + (decimalPlaceSeparator != null ? decimalPlaceSeparator.hashCode() : 0);
+		result = 31 * result + (alignDecimalSeparator ? 1 : 0);
 		result = 31 * result + (keepLeadingIndent ? 1 : 0);
 		result = 31 * result + (sbcCaseWorkaround ? 1 : 0);
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		String format = "";
-		if (added != null) {
-			format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(added);
-		}
-
-
-		StringBuilder s = new StringBuilder();
-		for (String separator : separators) {
-			if (StringUtils.isNotEmpty(separator)) {
-				s.append(separator).append(" ");
-			}
-		}
-		return format + " - " + s.toString();
-	}
 }

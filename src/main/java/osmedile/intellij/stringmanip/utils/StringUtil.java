@@ -830,12 +830,16 @@ public class StringUtil {
 		if (textLength <= 0) {
 			return input;
 		}
-		boolean isNumber = NUMBERS.matcher(input).matches();
+		boolean isNumber = isNumber(input);
 
 		if (!isNumber) {
 			return input;
 		}
 
 		return String.format("%" + textLength + "s", input);
+	}
+
+	public static boolean isNumber(String input) {
+		return NUMBERS.matcher(input).matches();
 	}
 }

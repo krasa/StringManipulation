@@ -33,6 +33,15 @@ public class ColumnAlignerLine {
 			textPart = textPart.trim();
 		}
 		split = FixedStringTokenScanner.splitToFixedStringTokensAndOtherTokens(textPart, model.getMaxSeparatorsPerLineAsInt(), separator).toArray(new String[0]);
+
+		if (model.isTrimValues()) {
+			for (int i = 0, splitLength = split.length; i < splitLength; i++) {
+				if (!isSeparator(split[i])) {
+					split[i] = split[i].trim();
+				}
+			}
+		}
+
 		hasSeparatorBeforeFirstToken = split.length > 0 && split[0].length() == 0;
 	}
 
@@ -67,13 +76,12 @@ public class ColumnAlignerLine {
 	}
 
 	protected String currentToken() {
-		String str = split[index];
-		if (model.isTrimValues()) {
-			str = str.trim();
-		}
-		return str;
+		return split[index];
 	}
 
+	public void setCurrentToken(String token) {
+		split[index] = token;
+	}
 
 	public void appendSpace(int maxLength) {
 		if (hasToken()) {
@@ -235,4 +243,6 @@ public class ColumnAlignerLine {
 	public void append(String text) {
 		sb.append(text);
 	}
+
+
 }

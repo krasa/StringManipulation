@@ -69,6 +69,8 @@ public class AlignToColumnsForm extends PreviewDialog {
 	protected JPanel mainPanel;
 	private JCheckBox alignRightNumbers;
 	private JCheckBox alignRight;
+	private JCheckBox alignDecimalSeparator;
+	private JTextField decimalSeparator;
 
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
@@ -190,6 +192,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines, alignRightNumbers, alignRight}
 				, sortOnly);
 		enabledByAny(new JComponent[]{keepLeadingIndent}, trimValues, trimLines);
+		enabledByAny(new JComponent[]{alignDecimalSeparator, decimalSeparator}, alignRight, alignRightNumbers);
 		disableByAny(new JComponent[]{alignRightNumbers}, alignRight);
 		submitRenderPreview();
 	}
@@ -405,11 +408,13 @@ public class AlignToColumnsForm extends PreviewDialog {
 		trimLines.setSelected(data.isTrimLines());
 		sequentially.setSelected(data.isSequentialProcessing());
 		maxSeparators.setText(data.getMaxSeparatorsPerLine());
+		decimalSeparator.setText(data.getDecimalPlaceSeparator());
 		sortOnly.setSelected(data.isSortOnly());
 		keepLeadingIndent.setSelected(data.isKeepLeadingIndent());
 		sbcCaseWorkaround.setSelected(data.isSbcCaseWorkaround());
 		alignRightNumbers.setSelected(data.isRightAlignNumbers());
 		alignRight.setSelected(data.isRightAlign());
+		alignDecimalSeparator.setSelected(data.isAlignDecimalSeparator());
 	}
 
 	public void getData(ColumnAlignerModel data) {
@@ -421,11 +426,13 @@ public class AlignToColumnsForm extends PreviewDialog {
 		data.setTrimLines(trimLines.isSelected());
 		data.setSequentialProcessing(sequentially.isSelected());
 		data.setMaxSeparatorsPerLine(maxSeparators.getText());
+		data.setDecimalPlaceSeparator(decimalSeparator.getText());
 		data.setSortOnly(sortOnly.isSelected());
 		data.setKeepLeadingIndent(keepLeadingIndent.isSelected());
 		data.setSbcCaseWorkaround(sbcCaseWorkaround.isSelected());
 		data.setRightAlignNumbers(alignRightNumbers.isSelected());
 		data.setRightAlign(alignRight.isSelected());
+		data.setAlignDecimalSeparator(alignDecimalSeparator.isSelected());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
@@ -439,11 +446,15 @@ public class AlignToColumnsForm extends PreviewDialog {
 		if (sequentially.isSelected() != data.isSequentialProcessing()) return true;
 		if (maxSeparators.getText() != null ? !maxSeparators.getText().equals(data.getMaxSeparatorsPerLine()) : data.getMaxSeparatorsPerLine() != null)
 			return true;
+		if (decimalSeparator.getText() != null ? !decimalSeparator.getText().equals(data.getDecimalPlaceSeparator()) : data.getDecimalPlaceSeparator() != null)
+			return true;
 		if (sortOnly.isSelected() != data.isSortOnly()) return true;
 		if (keepLeadingIndent.isSelected() != data.isKeepLeadingIndent()) return true;
 		if (sbcCaseWorkaround.isSelected() != data.isSbcCaseWorkaround()) return true;
 		if (alignRightNumbers.isSelected() != data.isRightAlignNumbers()) return true;
 		if (alignRight.isSelected() != data.isRightAlign()) return true;
+		if (alignRight.isSelected() != data.isRightAlign()) return true;
+		if (alignDecimalSeparator.isSelected() != data.isAlignDecimalSeparator()) return true;
 		return false;
 	}
 }
