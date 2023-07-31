@@ -23,6 +23,7 @@ import osmedile.intellij.stringmanip.sort.support.SortTypeDialog;
 import osmedile.intellij.stringmanip.utils.DialogUtils;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
+import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -88,6 +89,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 			}
 		});
 		debugRowPanel();
+		alignRightNumbers.setToolTipText("Detected by regex: " + StringUtil.NUMBERS.pattern());
 
 		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
 		sortTypeForm.donatePanel.setVisible(false);

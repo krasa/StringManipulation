@@ -108,6 +108,8 @@ public class StringUtilTest extends CaseSwitchingTest {
         assertFalse(StringUtil.NUMBERS.matcher("-").matches());
         assertFalse(StringUtil.NUMBERS.matcher(".").matches());
         assertFalse(StringUtil.NUMBERS.matcher(",").matches());
+        assertFalse(StringUtil.NUMBERS.matcher("a").matches());
+
         assertTrue(StringUtil.NUMBERS.matcher("1 000").matches());
         assertTrue(StringUtil.NUMBERS.matcher("1 000,0").matches());
         assertTrue(StringUtil.NUMBERS.matcher("123,456.78").matches());
@@ -118,6 +120,8 @@ public class StringUtilTest extends CaseSwitchingTest {
         assertTrue(StringUtil.NUMBERS.matcher("0").matches());
         assertTrue(StringUtil.NUMBERS.matcher("1,000,000").matches());
         assertTrue(StringUtil.NUMBERS.matcher("1,234").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1,234%").matches());
+        assertTrue(StringUtil.NUMBERS.matcher("1 mm").matches());
 
         assertEquals("3", StringUtil.rightAlignNumber("3", 1));
         assertEquals("  3", StringUtil.rightAlignNumber("3", 3));

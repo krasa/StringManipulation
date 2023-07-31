@@ -20,7 +20,7 @@ import static org.apache.commons.lang3.StringUtils.*;
  * @version $Id: StringUtil.java 62 2008-04-20 11:11:54Z osmedile $
  */
 public class StringUtil {
-	public static final Pattern NUMBERS = Pattern.compile("^[ ,.\\-+\\d]*\\d[ ,.\\-+\\d]*$");
+	public static final Pattern NUMBERS = Pattern.compile("[ ,.\\-+]*\\d.*");
 	public static PluginPersistentStateComponent persistentStateComponent;
 	public static final char EMPTY_CHAR = 0;
 
