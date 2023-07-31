@@ -155,4 +155,17 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels = properties("pluginVersion").map { listOf(it.split('-').getOrElse(1) { "default" }.split('.').first()) }
     }
+
+    processResources {
+        finalizedBy("deleteChineseBundle")
+    }
+}
+
+tasks.create<Delete>("deleteChineseBundle") {
+    if (!version.toString().contains("Chinese")) {
+        println("Running deleteChineseBundle")
+        val paths = file("build/resources/main/messages/StringManipulationBundle_zh.properties")
+        println("Deleting: " + paths)
+        delete(paths)
+    }
 }
