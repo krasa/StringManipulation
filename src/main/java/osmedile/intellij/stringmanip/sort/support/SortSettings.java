@@ -4,6 +4,7 @@ import com.intellij.openapi.diagnostic.Logger;
 
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 
 public class SortSettings {
 
@@ -21,6 +22,8 @@ public class SortSettings {
 	private BlankLines blankLines = BlankLines.REMOVE;
 	private Sort sortType = Sort.CASE_INSENSITIVE_A_Z;
 	private boolean ignoreLeadingSpaces = true;
+	private String ignoreLeadingCharacters;
+	private boolean ignoreLeadingCharactersEnabled;
 	private boolean preserveLeadingSpaces = true;
 	private boolean preserveTrailingSpecialCharacters = false;
 	private boolean hierarchicalSort = false;
@@ -47,6 +50,22 @@ public class SortSettings {
 
 	public void setGroupClosingLineRegexEnabled(boolean groupClosingLineRegexEnabled) {
 		this.groupClosingLineRegexEnabled = groupClosingLineRegexEnabled;
+	}
+
+	public String getIgnoreLeadingCharacters() {
+		return ignoreLeadingCharacters;
+	}
+
+	public void setIgnoreLeadingCharacters(String ignoreLeadingCharacters) {
+		this.ignoreLeadingCharacters = ignoreLeadingCharacters;
+	}
+
+	public boolean isIgnoreLeadingCharactersEnabled() {
+		return ignoreLeadingCharactersEnabled;
+	}
+
+	public void setIgnoreLeadingCharactersEnabled(boolean ignoreLeadingCharactersEnabled) {
+		this.ignoreLeadingCharactersEnabled = ignoreLeadingCharactersEnabled;
 	}
 
 	public SortSettings ignoreLeadingSpaces(final boolean ignoreLeadingSpaces) {
@@ -262,24 +281,27 @@ public class SortSettings {
 
 		SortSettings that = (SortSettings) o;
 
-		if (groupClosingLineRegexEnabled != that.groupClosingLineRegexEnabled) return false;
 		if (ignoreLeadingSpaces != that.ignoreLeadingSpaces) return false;
+		if (ignoreLeadingCharactersEnabled != that.ignoreLeadingCharactersEnabled) return false;
 		if (preserveLeadingSpaces != that.preserveLeadingSpaces) return false;
 		if (preserveTrailingSpecialCharacters != that.preserveTrailingSpecialCharacters) return false;
 		if (hierarchicalSort != that.hierarchicalSort) return false;
 		if (sortByGroups != that.sortByGroups) return false;
-		if (trailingChars != null ? !trailingChars.equals(that.trailingChars) : that.trailingChars != null)
+		if (jsonSort != that.jsonSort) return false;
+		if (groupClosingLineRegexEnabled != that.groupClosingLineRegexEnabled) return false;
+		if (!Objects.equals(trailingChars, that.trailingChars))
 			return false;
-		if (levelRegex != null ? !levelRegex.equals(that.levelRegex) : that.levelRegex != null) return false;
-		if (groupSeparatorRegex != null ? !groupSeparatorRegex.equals(that.groupSeparatorRegex) : that.groupSeparatorRegex != null)
+		if (!Objects.equals(levelRegex, that.levelRegex)) return false;
+		if (!Objects.equals(groupSeparatorRegex, that.groupSeparatorRegex))
 			return false;
-		if (groupClosingLineRegex != null ? !groupClosingLineRegex.equals(that.groupClosingLineRegex) : that.groupClosingLineRegex != null)
-			return false;
-		if (collatorLanguageTag != null ? !collatorLanguageTag.equals(that.collatorLanguageTag) : that.collatorLanguageTag != null)
+		if (!Objects.equals(collatorLanguageTag, that.collatorLanguageTag))
 			return false;
 		if (baseComparator != that.baseComparator) return false;
 		if (blankLines != that.blankLines) return false;
-		return sortType == that.sortType;
+		if (sortType != that.sortType) return false;
+		if (!Objects.equals(ignoreLeadingCharacters, that.ignoreLeadingCharacters))
+			return false;
+		return Objects.equals(groupClosingLineRegex, that.groupClosingLineRegex);
 	}
 
 	@Override
@@ -287,17 +309,20 @@ public class SortSettings {
 		int result = trailingChars != null ? trailingChars.hashCode() : 0;
 		result = 31 * result + (levelRegex != null ? levelRegex.hashCode() : 0);
 		result = 31 * result + (groupSeparatorRegex != null ? groupSeparatorRegex.hashCode() : 0);
-		result = 31 * result + (groupClosingLineRegex != null ? groupClosingLineRegex.hashCode() : 0);
-		result = 31 * result + (groupClosingLineRegexEnabled ? 1 : 0);
 		result = 31 * result + (collatorLanguageTag != null ? collatorLanguageTag.hashCode() : 0);
 		result = 31 * result + (baseComparator != null ? baseComparator.hashCode() : 0);
 		result = 31 * result + (blankLines != null ? blankLines.hashCode() : 0);
 		result = 31 * result + (sortType != null ? sortType.hashCode() : 0);
 		result = 31 * result + (ignoreLeadingSpaces ? 1 : 0);
+		result = 31 * result + (ignoreLeadingCharacters != null ? ignoreLeadingCharacters.hashCode() : 0);
+		result = 31 * result + (ignoreLeadingCharactersEnabled ? 1 : 0);
 		result = 31 * result + (preserveLeadingSpaces ? 1 : 0);
 		result = 31 * result + (preserveTrailingSpecialCharacters ? 1 : 0);
 		result = 31 * result + (hierarchicalSort ? 1 : 0);
 		result = 31 * result + (sortByGroups ? 1 : 0);
+		result = 31 * result + (jsonSort ? 1 : 0);
+		result = 31 * result + (groupClosingLineRegex != null ? groupClosingLineRegex.hashCode() : 0);
+		result = 31 * result + (groupClosingLineRegexEnabled ? 1 : 0);
 		return result;
 	}
 }

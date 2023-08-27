@@ -40,6 +40,17 @@ public class SortLineTest {
 		assertThatWith(enabledFeatures).line ("     \t  foo ;,     " ).isComparedAs("foo "     ) ;
 		assertThatWith(enabledFeatures).line ("     \t  foo.,;"      ).isComparedAs("foo."     ) ;
 		//@formatter:on
+
+		enabledFeatures.setIgnoreLeadingCharactersEnabled(true);
+		enabledFeatures.setIgnoreLeadingCharacters("#\\s*");
+		assertThatWith(enabledFeatures).line("# jupyterlab-drawio = \">=0.9.0\"").isComparedAs("jupyterlab-drawio = \">=0.9.0\"");
+
+		enabledFeatures.setIgnoreLeadingCharacters("#");
+		assertThatWith(enabledFeatures).line(" # jupyterlab-drawio = \">=0.9.0\"").isComparedAs("jupyterlab-drawio = \">=0.9.0\"");
+
+		enabledFeatures.setIgnoreLeadingCharacters("\\s*;\\s*");
+		assertThatWith(enabledFeatures).line("    ;    \"W0511\",  # (fixme) (todos)").isComparedAs("\"W0511\",  # (fixme) (todos)");
+
 	}
 
 	@Test

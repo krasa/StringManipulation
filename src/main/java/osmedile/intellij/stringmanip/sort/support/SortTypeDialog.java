@@ -95,6 +95,8 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 	private JButton levelRegex_highlight;
 	private JButton groupSeparatorRegex_highlight;
 	private JRadioButton jsonSort;
+	private JCheckBox ignoreLeadingCharactersEnabled;
+	private JTextField ignoreLeadingCharacters;
 	private EditorImpl myPreviewEditor;
 
 	public static final ColoredSideBorder ERROR_BORDER = new ColoredSideBorder(
@@ -406,6 +408,8 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		groupSeparatorRegex.setText(sortSettings.getGroupSeparatorRegex());
 		groupClosingLineRegex_checkbox.setSelected(sortSettings.isGroupClosingLineRegexEnabled());
 		groupClosingLineRegex.setText(sortSettings.getGroupClosingLineRegex());
+		ignoreLeadingCharactersEnabled.setSelected(sortSettings.isIgnoreLeadingCharactersEnabled());
+		ignoreLeadingCharacters.setText(sortSettings.getIgnoreLeadingCharacters());
 
 		validateLocale();
 		validateRegexp();
@@ -547,6 +551,8 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		sortSettings.setGroupSeparatorRegex(groupSeparatorRegex.getText());
 		sortSettings.setGroupClosingLineRegex(groupClosingLineRegex.getText());
 		sortSettings.setGroupClosingLineRegexEnabled(groupClosingLineRegex_checkbox.isSelected());
+		sortSettings.setIgnoreLeadingCharacters(ignoreLeadingCharacters.getText());
+		sortSettings.setIgnoreLeadingCharactersEnabled(ignoreLeadingCharactersEnabled.isSelected());
 		return sortSettings;
 	}
 

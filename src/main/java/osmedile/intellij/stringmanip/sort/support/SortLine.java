@@ -2,6 +2,9 @@ package osmedile.intellij.stringmanip.sort.support;
 
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 import static com.intellij.openapi.util.text.StringUtil.isWhiteSpace;
 
@@ -28,7 +31,21 @@ public class SortLine implements Sortable {
 	protected String makeTextForComparison(String text, SortSettings sortSettings) {
 		String textForComparison = text;
 		if (sortSettings.isIgnoreLeadingSpaces()) {
-			textForComparison = text.substring(StringUtil.indexOfAnyButWhitespace(text));
+			textForComparison = textForComparison.substring(StringUtil.indexOfAnyButWhitespace(textForComparison));
+		}
+		if (sortSettings.isIgnoreLeadingCharactersEnabled()) {
+			String ignoreLeadingCharacters = sortSettings.getIgnoreLeadingCharacters();
+			Matcher matcher = Pattern.compile(ignoreLeadingCharacters).matcher(textForComparison);
+			boolean b = matcher.find();
+			if (b) {
+				int end = matcher.end();
+				if (end > 0) {
+					textForComparison = textForComparison.substring(end);
+				}
+			}
+		}
+		if (sortSettings.isIgnoreLeadingSpaces()) {
+			textForComparison = textForComparison.substring(StringUtil.indexOfAnyButWhitespace(textForComparison));
 		}
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
 			int textWithoutTrailingCharsEndIndex = lastIndexOfAnyBut(textForComparison, sortSettings.getTrailingChars());
