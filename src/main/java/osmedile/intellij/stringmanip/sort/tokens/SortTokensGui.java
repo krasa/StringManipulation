@@ -45,7 +45,7 @@ public class SortTokensGui implements Disposable {
 
 	public SortTokensGui(SortTokensModel lastModel, Editor editor) {
 		this.editor = editor;
-		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
+		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false, editor);
 //		sortTypeForm.donatePanel.setVisible(false);
 		sortTypeForm.reverse.setVisible(false);
 		sortTypeForm.shuffle.setVisible(false);

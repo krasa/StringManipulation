@@ -4,11 +4,15 @@ import com.google.common.base.Joiner;
 import com.intellij.execution.filters.Filter;
 import com.intellij.execution.impl.EditorHyperlinkSupport;
 import com.intellij.ide.BrowserUtil;
+import com.intellij.lang.Commenter;
+import com.intellij.lang.Language;
+import com.intellij.lang.LanguageCommenters;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.util.PsiUtilBase;
 import com.intellij.ui.ColoredSideBorder;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.ui.JBColor;
@@ -40,6 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, InputType> {
@@ -96,7 +101,8 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 	private JButton groupSeparatorRegex_highlight;
 	private JRadioButton jsonSort;
 	private JCheckBox ignoreLeadingCharactersEnabled;
-	private JTextField ignoreLeadingCharacters;
+	private MyJBTextField ignoreLeadingCharacters;
+	private JButton ignoreLeadingCharactersReset;
 	private EditorImpl myPreviewEditor;
 
 	public static final ColoredSideBorder ERROR_BORDER = new ColoredSideBorder(
@@ -113,19 +119,19 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		enabledByAny(new JComponent[]{valid, languageTagLabel, languageTag}, comparatorCollator);
 		enabledByAny(new JComponent[]{asc, desc}, insensitive, sensitive, hexa, length);
 		enabledByAny(new JComponent[]{
-				shuffle,
-				reverse,
-				length,
-				hexa,
-				groupSort},
-				normalSort,hierarchicalSort);
+						shuffle,
+						reverse,
+						length,
+						hexa,
+						groupSort},
+				normalSort, hierarchicalSort);
 		enabledByAny(new JComponent[]{
-				trailingCharacters_checkbox,
-				trailingCharacters,
+						trailingCharacters_checkbox,
+						trailingCharacters,
 				},
-				normalSort,hierarchicalSort);
+				normalSort, hierarchicalSort);
 
-		enabledByAny(new JComponent[]{preserveBlank,preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank}, normalSort);
+		enabledByAny(new JComponent[]{preserveBlank, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank}, normalSort);
 		enabledByAny(new JComponent[]{
 				groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
 				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
@@ -156,14 +162,13 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 	}
 
 
-	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions) {
-		this(sortSettings, additionaloptions, null);
-	}
-
 	public SortTypeDialog(SortSettings sortSettings, boolean additionaloptions, Editor editor) {
 		super(editor);
 		sourceTextForPreview = getPreviewLines(editor);
 
+		if (isEmpty(sortSettings.getIgnoreLeadingCharacters())) {
+			sortSettings.setIgnoreLeadingCharacters(getLineCommentPrefix(editor));
+		}
 		preserveLeadingSpaces.setVisible(additionaloptions);
 		trailingCharacters_checkbox.setVisible(additionaloptions);
 		trailingCharacters.setVisible(additionaloptions);
@@ -182,7 +187,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		levelRegex_reset.addActionListener(e -> levelRegex.setText(SortSettings.LEVEL_REGEX));
 		groupSeparatorRegex_reset.addActionListener(e -> groupSeparatorRegex.setText(SortSettings.GROUP_SEPARATOR_REGEX));
 		groupClosingLineRegex_reset.addActionListener(e -> groupClosingLineRegex.setText(SortSettings.GROUP_CLOSING_LINE_REGEX));
-
+		ignoreLeadingCharactersReset.addActionListener(e -> ignoreLeadingCharacters.setText(getLineCommentPrefix(editor)));
 		groupClosingLineRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_CLOSING_LINE, groupClosingLineRegex, true)));
 		groupSeparatorRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE, groupSeparatorRegex, true)));
 		levelRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_LEVEL, levelRegex, false)));
@@ -277,6 +282,27 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 				"https://github.com/krasa/StringManipulation/wiki/Hierarchical-sort");
 	}
 
+	@Nullable
+	private static String getLineCommentPrefix(Editor editor) {
+		String lineCommentPrefix = null;
+		if (editor != null) {
+			Project project = editor.getProject();
+			if (project != null) {
+				Language languageInEditor = PsiUtilBase.getLanguageInEditor(editor, project);
+				if (languageInEditor != null) {
+					final Commenter commenter = LanguageCommenters.INSTANCE.forLanguage(languageInEditor);
+					if (commenter != null) {
+						lineCommentPrefix = commenter.getLineCommentPrefix();
+//						if (lineCommentPrefix != null) {
+//							lineCommentPrefix = Pattern.quote(lineCommentPrefix);
+//						}
+					}
+				}
+			}
+		}
+		return lineCommentPrefix;
+	}
+
 	private void highlight(TextAttributes attributes, MyJBTextField regex, boolean wholeLine) {
 		AtomicInteger matched = new AtomicInteger();
 		Pattern compile = null;
@@ -351,7 +377,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		if (this.editor == null) {
 			return;
 		}
-		if (!validateRegexp()) return;
+		if (!validateRegex()) return;
 
 		String s;
 		SortSettings settings = null;
@@ -421,7 +447,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		ignoreLeadingCharacters.setText(sortSettings.getIgnoreLeadingCharacters());
 
 		validateLocale();
-		validateRegexp();
+		validateRegex();
 
 		switch (sortSettings.getBaseComparator()) {
 
@@ -496,44 +522,26 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		}
 	}
 
-	private boolean validateRegexp() {
+	public boolean validateRegex() {
 		boolean result = true;
+		result = validateRegex(levelRegex, result);
+		result = validateRegex(groupSeparatorRegex, result);
+		result = validateRegex(groupClosingLineRegex, result);
+		result = validateRegex(ignoreLeadingCharacters, result) || !ignoreLeadingCharactersEnabled.isSelected();
+		return result;
+	}
+
+	private boolean validateRegex(MyJBTextField field, boolean result) {
 		try {
-			String text = levelRegex.getText();
+			String text = field.getText();
 			Pattern.compile(text);
-			levelRegex.setMyBorder(VALID_BORDER);
-			levelRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
+			field.setMyBorder(VALID_BORDER);
+			field.setToolTipText(StringManipulationBundle.message("valid.regex"));
 		} catch (Throwable e) {
-			levelRegex.setMyBorder(ERROR_BORDER);
-			levelRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
+			field.setMyBorder(ERROR_BORDER);
+			field.setToolTipText(StringManipulationBundle.message("invalid.regex"));
 			result = false;
 		}
-
-		try {
-			String text = groupSeparatorRegex.getText();
-			Pattern.compile(text);
-			groupSeparatorRegex.setMyBorder(VALID_BORDER);
-			groupSeparatorRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
-		} catch (Throwable e) {
-			groupSeparatorRegex.setMyBorder(ERROR_BORDER);
-			groupSeparatorRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
-			result = false;
-
-		}
-
-		try {
-			String text = groupClosingLineRegex.getText();
-			Pattern.compile(text);
-			groupClosingLineRegex.setMyBorder(VALID_BORDER);
-			groupClosingLineRegex.setToolTipText(StringManipulationBundle.message("valid.regex"));
-
-		} catch (Throwable e) {
-			groupClosingLineRegex.setMyBorder(ERROR_BORDER);
-			groupClosingLineRegex.setToolTipText(StringManipulationBundle.message("invalid.regex"));
-			result = false;
-
-		}
-
 		return result;
 	}
 

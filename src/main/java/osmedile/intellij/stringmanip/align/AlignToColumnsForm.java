@@ -93,7 +93,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 		debugRowPanel();
 		alignRightNumbers.setToolTipText("Detected by regex: " + StringUtil.NUMBERS.pattern());
 
-		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false);
+		sortTypeForm = new SortTypeDialog(lastModel.getSortSettings(), false, editor);
 		sortTypeForm.donatePanel.setVisible(false);
 		sortTypeForm.reverse.setVisible(false);
 		sortTypeForm.shuffle.setVisible(false);
@@ -211,6 +211,9 @@ public class AlignToColumnsForm extends PreviewDialog {
 		try {
 			ColumnAlignerModel newModel = getModel();
 			if (lastPrevieModel != null && lastPrevieModel.equals(newModel)) {
+				return;
+			}
+			if (!sortTypeForm.validateRegex()) {
 				return;
 			}
 			lastPrevieModel = newModel;
