@@ -156,6 +156,7 @@ Provides actions for text manipulation:
             <li>Swap Characters/Selections/Lines/Tokens</li>
             <li>Wrap or shift double quotes to single quotes to backticks</li>
             <li>Swap between double quotes and single quotes</li>
+            <li>Straighten/Educate quotes</li>
             <li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
             <li>Select All Occurrences For All Carets</li>
             <li>Duplicate Line or Selection And Replace</li>

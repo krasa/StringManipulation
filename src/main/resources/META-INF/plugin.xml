@@ -683,6 +683,14 @@
                     class="osmedile.intellij.stringmanip.swap.SwapAction" text="Swap Characters/Selections/Lines/Tokens"
                     description="Depending on what is selected or how many carets there are">
             </action>
+            <action id="StringManipulation.StraightenQuote"
+                    class="osmedile.intellij.stringmanip.swap.StraightenQuoteAction" text="Straighten Quotes"
+                    description="‘ -&gt; &apos; and ” -&gt; &quot;">
+            </action>
+            <action id="StringManipulation.EducateQuote"
+                    class="osmedile.intellij.stringmanip.swap.EducateQuoteAction" text="Educate Quotes"
+                    description="&apos; -&gt; ‘ and  &quot; -&gt; ”">
+            </action>
             <separator/>
             <action id="StringManipulation.QuoteAction"
                     class="osmedile.intellij.stringmanip.swap.QuoteAction"
@@ -1020,6 +1028,7 @@ Manage pull requests and conduct code reviews in your IDE with full source-tree 
 				<li>Swap Characters/Selections/Lines/Tokens</li>
 				<li>Wrap or shift double quotes to single quotes to backticks</li>
 				<li>Swap between double quotes and single quotes</li>
+				<li>Straighten/Educate quotes</li>
 				<li>Switch file path separators: Windows&lt;-&gt;UNIX</li>
              <br>
                 <li>Select All Occurrences For All Carets</li>
