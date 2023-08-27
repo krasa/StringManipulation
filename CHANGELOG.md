@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
-- Align columns: added option to right-align cells
+- Align Columns: added option to right-align cells
+- Sort: added option to ignore leading characters
+- Multi Replace: bugfix
+- Option to use last settings without a dialog for Repeat Last Action - disabled by default
+
 
 
 ## [9.10.0] - 2023-07-27
