@@ -56,7 +56,7 @@ public class PluginPersistentStateComponent implements PersistentStateComponent<
 	private List<GrepSettings> grepHistory = new ArrayList<>();
 	private List<ReplaceCompositeModel> replaceHistory = new ArrayList<>();
 	private UniversalActionModel lastActionModel;
-	private boolean repeatLastActionWithoutDialog = true;
+	private boolean repeatLastActionWithoutDialog = false;
 	private BorderSettings borderSettings = new BorderSettings();
 	private boolean normalizeCaseSwitching = true;
 

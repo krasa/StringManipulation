@@ -45,24 +45,25 @@ public class RepeatAction extends MyEditorAction {
 	}
 
 	private static boolean withModel() {
+		boolean repeatLastActionWithoutDialog = PluginPersistentStateComponent.getInstance().isRepeatLastActionWithoutDialog();
 		AWTEvent trueCurrentEvent = IdeEventQueue.getInstance().getTrueCurrentEvent();
 		if (trueCurrentEvent instanceof MouseEvent) {
 			MouseEvent mouseEvent = (MouseEvent) trueCurrentEvent;
 			if (mouseEvent.isControlDown() || mouseEvent.isAltDown()) {
-				return false;
+				return !repeatLastActionWithoutDialog;
 			}
 		}
 		if (trueCurrentEvent instanceof KeyEvent) {
 			KeyEvent keyEvent = (KeyEvent) trueCurrentEvent;
 			if (keyEvent.getKeyChar() == '1' && (keyEvent.isControlDown() || keyEvent.isAltDown())) {
-				return false;
+				return !repeatLastActionWithoutDialog;
 			}
 			if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && (keyEvent.isControlDown() || keyEvent.isAltDown())) {
-				return false;
+				return !repeatLastActionWithoutDialog;
 			}
 		}
 
-		return PluginPersistentStateComponent.getInstance().isRepeatLastActionWithoutDialog();
+		return repeatLastActionWithoutDialog;
 	}
 
 	@Override
@@ -72,7 +73,15 @@ public class RepeatAction extends MyEditorAction {
 		if (anAction != null) {
 			e.getPresentation().setEnabled(true);
 			e.getPresentation().setText(StringManipulationBundle.message("repeat.text") + " - " + anAction.getTextWithMnemonic());
-			e.getPresentation().setDescription(anAction.getDescription());
+			String description = anAction.getDescription();
+//			if (anAction.getModelData() != null) {
+//				if (PluginPersistentStateComponent.getInstance().isRepeatLastActionWithoutDialog()) {
+//					description += " - hold Ctrl or Alt to show dialog";
+//				}else{
+//					description += " - hold Ctrl or Alt to skip dialog";
+//				}
+//			}
+			e.getPresentation().setDescription(description);
 		} else {
 			e.getPresentation().setText(StringManipulationBundle.message("repeat.last.action.text"));
 			e.getPresentation().setDescription((String) null);
