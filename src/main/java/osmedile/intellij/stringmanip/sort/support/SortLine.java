@@ -3,7 +3,6 @@ package osmedile.intellij.stringmanip.sort.support;
 import osmedile.intellij.stringmanip.utils.StringUtil;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.intellij.openapi.util.text.StringUtil.isEmpty;
 import static com.intellij.openapi.util.text.StringUtil.isWhiteSpace;
@@ -34,10 +33,8 @@ public class SortLine implements Sortable {
 			textForComparison = textForComparison.substring(StringUtil.indexOfAnyButWhitespace(textForComparison));
 		}
 		if (sortSettings.isIgnoreLeadingCharactersEnabled()) {
-			String ignoreLeadingCharacters = sortSettings.getIgnoreLeadingCharacters();
-			Matcher matcher = Pattern.compile(ignoreLeadingCharacters).matcher(textForComparison);
-			boolean b = matcher.find();
-			if (b) {
+			Matcher matcher = sortSettings.getIgnoreLeadingCharactersPattern().matcher(textForComparison);
+			if (matcher.find()) {
 				int end = matcher.end();
 				if (end > 0) {
 					textForComparison = textForComparison.substring(end);

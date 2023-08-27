@@ -254,6 +254,15 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 				}
 			}
 		});
+
+		ignoreLeadingCharacters.getDocument().addDocumentListener(new DocumentAdapter() {
+			@Override
+			protected void textChanged(@NotNull final DocumentEvent e) {
+				ignoreLeadingCharactersEnabled.setSelected(true);
+			}
+		});
+
+
 		updateComponents();
 		donatePanel.add(Donate.newDonateButton());
 
