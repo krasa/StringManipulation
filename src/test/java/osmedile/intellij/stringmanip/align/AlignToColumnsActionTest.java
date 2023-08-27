@@ -238,7 +238,7 @@ public class AlignToColumnsActionTest {
 
 		ColumnAlignerModel model = new ColumnAlignerModel(" ");
 		model.setKeepLeadingIndent(true);
-		model.setRightAlign(true);
+		model.setRightAlignAll(true);
 		String process = new ColumnAligner(model).align(notFormattedText);
 
 		System.out.println("INPUT >>>>>>>>>>>");
@@ -321,6 +321,7 @@ public class AlignToColumnsActionTest {
 
 
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel(":", "->");
+		columnAlignerModel.setRightAlignNumbers(false);
 		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
 
 		System.out.println("INPUT >>>>>>>>>>>");
@@ -347,6 +348,8 @@ public class AlignToColumnsActionTest {
 
 
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel("->", ":");
+
+		columnAlignerModel.setRightAlignNumbers(false);
 		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
 
 		System.out.println("INPUT >>>>>>>>>>>");
@@ -406,6 +409,7 @@ public class AlignToColumnsActionTest {
 
 
 		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel(":", "->");
+		columnAlignerModel.setRightAlignNumbers(false);
 		columnAlignerModel.setSequentialProcessing(true);
 		String process = new ColumnAligner(columnAlignerModel).align(notFormattedText);
 

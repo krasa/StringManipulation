@@ -1,10 +1,12 @@
 package osmedile.intellij.stringmanip.utils;
 
 import com.intellij.ui.DocumentAdapter;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
@@ -21,15 +23,24 @@ public class DialogUtils {
 		}
 	}
 
-	public static void enabledByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
+	public static void enabledByAny(@NotNull JComponent[] targets, @NotNull JComponent... control) {
 		boolean b = false;
-		for (JToggleButton jToggleButton : control) {
-			b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
+		for (@NotNull JComponent component : control) {
+			if (component instanceof JToggleButton) {
+				JToggleButton jToggleButton = (JToggleButton) component;
+				b = b || (jToggleButton.isEnabled() && jToggleButton.isSelected());
+			} else if (component instanceof JTextComponent) {
+				JTextComponent jTextComponent = (JTextComponent) component;
+				b = b || (jTextComponent.isEnabled() && StringUtils.isNotBlank(jTextComponent.getText()));
+			} else {
+				b = b || (component.isEnabled());
+			}
 		}
 		for (JComponent target : targets) {
 			target.setEnabled(b);
 		}
 	}
+
 
 	public static void disableByAny(@NotNull JComponent[] targets, @NotNull JToggleButton... control) {
 		boolean disable = false;

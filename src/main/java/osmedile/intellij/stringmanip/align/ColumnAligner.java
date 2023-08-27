@@ -115,17 +115,18 @@ public class ColumnAligner {
 			}
 		}
 
-		if (!model.isRightAlign()) { //conflicts with CellAligner - spaces are added twice for empty token
+//		if (!model.isRightAlignAll()) { //conflicts with CellAligner - spaces are added twice for empty token < todo forgot how to reproduce it and what it really means
 			int initialSeparatorPosition = initialSeparatorPosition(lines);
 			for (ColumnAlignerLine line : lines) {
 				line.appendInitialSpace(initialSeparatorPosition);
 			}
-		}
+//		}
 
 		boolean process = true;
+		int column = 1;
 		while (process) {
 			process = false;
-			CellAligner ca = newAligner(model, lines);
+			CellAligner ca = newAligner(column, model, lines);
 
 			for (ColumnAlignerLine line : lines) {
 				line.appendText(ca);
@@ -171,6 +172,7 @@ public class ColumnAligner {
 			for (ColumnAlignerLine line : lines) {
 				process = process || line.hasToken();
 			}
+			column++;
 		}
 
 		List<String> strings = new ArrayList<String>();
@@ -180,9 +182,10 @@ public class ColumnAligner {
 		return strings;
 	}
 
-	private CellAligner newAligner(ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
-		if (model.isRightAlignNumbers() || model.isRightAlign()) {
-			return new CellAligner(model, lines);
+	private CellAligner newAligner(int column, ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
+		boolean alignColumn = model.getAlignRightColumnIndexes() != null && List.of(model.getAlignRightColumnIndexes().split(" ")).contains(String.valueOf(column));
+		if (model.isRightAlignNumbers() || model.isRightAlignAll() || alignColumn) {
+			return new CellAligner(model, lines, alignColumn);
 		}
 		return null;
 	}

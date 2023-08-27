@@ -69,9 +69,11 @@ public class AlignToColumnsForm extends PreviewDialog {
 	private JPanel debugRowActions;
 	protected JPanel mainPanel;
 	private JCheckBox alignRightNumbers;
-	private JCheckBox alignRight;
+	private JCheckBox alignRightAll;
 	private JCheckBox alignDecimalSeparator;
 	private JTextField decimalSeparator;
+	private JTextField alignRightColumnsIndexes;
+	private JLabel alignRightColumnsLabel;
 
 	private EditorImpl myPreviewEditor;
 	private SortTypeDialog sortTypeForm;
@@ -142,7 +144,6 @@ public class AlignToColumnsForm extends PreviewDialog {
 
 			}
 		});
-
 		DialogUtils.addListeners(this, this::updateComponents);
 		DialogUtils.addListeners(sortTypeForm, this::updateComponents);
 	}
@@ -191,20 +192,29 @@ public class AlignToColumnsForm extends PreviewDialog {
 	}
 
 	private void updateComponents() {
-		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines, alignRightNumbers, alignRight}
+		disableByAny(new JComponent[]{addSpaceBeforeSeparatorCheckBox, addSpaceAfterSeparatorCheckBox, alignSeparatorRight, alignSeparatorLeft, trimValues, trimLines,
+						alignRightNumbers, alignRightAll, alignRightColumnsIndexes, alignRightColumnsLabel}
 				, sortOnly);
 		enabledByAny(new JComponent[]{keepLeadingIndent}, trimValues, trimLines);
-		enabledByAny(new JComponent[]{alignDecimalSeparator, decimalSeparator}, alignRight, alignRightNumbers);
-		disableByAny(new JComponent[]{alignRightNumbers}, alignRight);
-		submitRenderPreview();
+		enabledByAny(new JComponent[]{alignDecimalSeparator, decimalSeparator}, alignRightAll, alignRightNumbers, alignRightColumnsIndexes);
+
+		disableByAny(new JComponent[]{alignRightNumbers, alignRightColumnsIndexes, alignRightColumnsLabel}, alignRightAll);
+
+		SwingUtilities.invokeLater(this::submitRenderPreview);
 	}
 
 
+	private volatile ColumnAlignerModel lastPrevieModel;
 	@Override
 	protected void renderPreviewAsync(Object input) {
 		String x = null;
 		try {
-			ColumnAligner columnAligner = new ColumnAligner(getModel());
+			ColumnAlignerModel newModel = getModel();
+			if (lastPrevieModel != null && lastPrevieModel.equals(newModel)) {
+				return;
+			}
+			lastPrevieModel = newModel;
+			ColumnAligner columnAligner = new ColumnAligner(lastPrevieModel);
 			List<String> result = columnAligner.align(previewLines);
 
 			SwingUtilities.invokeLater(() -> paintDebug(columnAligner));
@@ -370,10 +380,10 @@ public class AlignToColumnsForm extends PreviewDialog {
 	}
 
 	public ColumnAlignerModel getModel() {
-		ColumnAlignerModel columnAlignerModel = new ColumnAlignerModel();
-		_getData(columnAlignerModel);
-		columnAlignerModel.setSeparators(getSeparators());
-		return columnAlignerModel;
+		ColumnAlignerModel model = new ColumnAlignerModel();
+		_getData(model);
+		model.setSeparators(getSeparators());
+		return model;
 	}
 
 	public void disableControls() {
@@ -415,7 +425,8 @@ public class AlignToColumnsForm extends PreviewDialog {
 		keepLeadingIndent.setSelected(data.isKeepLeadingIndent());
 		sbcCaseWorkaround.setSelected(data.isSbcCaseWorkaround());
 		alignRightNumbers.setSelected(data.isRightAlignNumbers());
-		alignRight.setSelected(data.isRightAlign());
+		alignRightAll.setSelected(data.isRightAlignAll());
+		alignRightColumnsIndexes.setText(data.getAlignRightColumnIndexes());
 		alignDecimalSeparator.setSelected(data.isAlignDecimalSeparator());
 	}
 
@@ -433,12 +444,15 @@ public class AlignToColumnsForm extends PreviewDialog {
 		data.setKeepLeadingIndent(keepLeadingIndent.isSelected());
 		data.setSbcCaseWorkaround(sbcCaseWorkaround.isSelected());
 		data.setRightAlignNumbers(alignRightNumbers.isSelected());
-		data.setRightAlign(alignRight.isSelected());
+		data.setRightAlignAll(alignRightAll.isSelected());
+		data.setAlignRightColumnIndexes(alignRightColumnsIndexes.getText());
 		data.setAlignDecimalSeparator(alignDecimalSeparator.isSelected());
 	}
 
 	public boolean isModified(ColumnAlignerModel data) {
 		if (sortColumnsOrder.getText() != null ? !sortColumnsOrder.getText().equals(data.getColumnSortOrder()) : data.getColumnSortOrder() != null)
+			return true;
+		if (alignRightColumnsIndexes.getText() != null ? !alignRightColumnsIndexes.getText().equals(data.getAlignRightColumnIndexes()) : data.getAlignRightColumnIndexes() != null)
 			return true;
 		if (skipFirstRow.isSelected() != data.isSkipFirstRow()) return true;
 		if (addSpaceBeforeSeparatorCheckBox.isSelected() != data.isSpaceBeforeSeparator()) return true;
@@ -454,7 +468,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 		if (keepLeadingIndent.isSelected() != data.isKeepLeadingIndent()) return true;
 		if (sbcCaseWorkaround.isSelected() != data.isSbcCaseWorkaround()) return true;
 		if (alignRightNumbers.isSelected() != data.isRightAlignNumbers()) return true;
-		if (alignRight.isSelected() != data.isRightAlign()) return true;
+		if (alignRightAll.isSelected() != data.isRightAlignAll()) return true;
 		if (alignDecimalSeparator.isSelected() != data.isAlignDecimalSeparator()) return true;
 		return false;
 	}

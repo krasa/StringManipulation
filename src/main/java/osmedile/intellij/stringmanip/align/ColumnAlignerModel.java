@@ -17,7 +17,7 @@ public class ColumnAlignerModel {
 	private boolean spaceAfterSeparator = true;
 	private boolean trimValues = true;
 	private boolean rightAlignNumbers = true;
-	private boolean rightAlign = false;
+	private boolean rightAlignAll = false;
 	private boolean trimLines = false;
 	private Align alignBy = Align.SEPARATORS;
 	private boolean sequentialProcessing;
@@ -27,6 +27,7 @@ public class ColumnAlignerModel {
 	private boolean sortOnly;
 	private String maxSeparatorsPerLine;
 	private String decimalPlaceSeparator = ".";
+	private String alignRightColumnIndexes;
 	private boolean alignDecimalSeparator = false;
 
 	private boolean keepLeadingIndent = true;
@@ -46,6 +47,7 @@ public class ColumnAlignerModel {
 	public void setDecimalPlaceSeparator(String decimalPlaceSeparator) {
 		this.decimalPlaceSeparator = decimalPlaceSeparator;
 	}
+
 
 	public List<String> getSeparators() {
 		return separators;
@@ -123,6 +125,14 @@ public class ColumnAlignerModel {
 		return columnSortOrder;
 	}
 
+	public String getAlignRightColumnIndexes() {
+		return alignRightColumnIndexes;
+	}
+
+	public void setAlignRightColumnIndexes(String alignRightColumnIndexes) {
+		this.alignRightColumnIndexes = alignRightColumnIndexes;
+	}
+
 	public void setColumnSortOrder(final String columnSortOrder) {
 		this.columnSortOrder = columnSortOrder;
 	}
@@ -194,12 +204,12 @@ public class ColumnAlignerModel {
 		this.alignDecimalSeparator = alignDecimalSeparator;
 	}
 
-	public boolean isRightAlign() {
-		return rightAlign;
+	public boolean isRightAlignAll() {
+		return rightAlignAll;
 	}
 
-	public void setRightAlign(boolean rightAlign) {
-		this.rightAlign = rightAlign;
+	public void setRightAlignAll(boolean rightAlignAll) {
+		this.rightAlignAll = rightAlignAll;
 	}
 
 	public enum Align {
@@ -223,7 +233,6 @@ public class ColumnAlignerModel {
 		return format + " - " + s.toString();
 	}
 
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -235,7 +244,7 @@ public class ColumnAlignerModel {
 		if (spaceAfterSeparator != that.spaceAfterSeparator) return false;
 		if (trimValues != that.trimValues) return false;
 		if (rightAlignNumbers != that.rightAlignNumbers) return false;
-		if (rightAlign != that.rightAlign) return false;
+		if (rightAlignAll != that.rightAlignAll) return false;
 		if (trimLines != that.trimLines) return false;
 		if (sequentialProcessing != that.sequentialProcessing) return false;
 		if (skipFirstRow != that.skipFirstRow) return false;
@@ -251,7 +260,9 @@ public class ColumnAlignerModel {
 			return false;
 		if (!Objects.equals(maxSeparatorsPerLine, that.maxSeparatorsPerLine))
 			return false;
-		return Objects.equals(decimalPlaceSeparator, that.decimalPlaceSeparator);
+		if (!Objects.equals(decimalPlaceSeparator, that.decimalPlaceSeparator))
+			return false;
+		return Objects.equals(alignRightColumnIndexes, that.alignRightColumnIndexes);
 	}
 
 	@Override
@@ -262,7 +273,7 @@ public class ColumnAlignerModel {
 		result = 31 * result + (spaceAfterSeparator ? 1 : 0);
 		result = 31 * result + (trimValues ? 1 : 0);
 		result = 31 * result + (rightAlignNumbers ? 1 : 0);
-		result = 31 * result + (rightAlign ? 1 : 0);
+		result = 31 * result + (rightAlignAll ? 1 : 0);
 		result = 31 * result + (trimLines ? 1 : 0);
 		result = 31 * result + (alignBy != null ? alignBy.hashCode() : 0);
 		result = 31 * result + (sequentialProcessing ? 1 : 0);
@@ -272,10 +283,10 @@ public class ColumnAlignerModel {
 		result = 31 * result + (sortOnly ? 1 : 0);
 		result = 31 * result + (maxSeparatorsPerLine != null ? maxSeparatorsPerLine.hashCode() : 0);
 		result = 31 * result + (decimalPlaceSeparator != null ? decimalPlaceSeparator.hashCode() : 0);
+		result = 31 * result + (alignRightColumnIndexes != null ? alignRightColumnIndexes.hashCode() : 0);
 		result = 31 * result + (alignDecimalSeparator ? 1 : 0);
 		result = 31 * result + (keepLeadingIndent ? 1 : 0);
 		result = 31 * result + (sbcCaseWorkaround ? 1 : 0);
 		return result;
 	}
-
 }

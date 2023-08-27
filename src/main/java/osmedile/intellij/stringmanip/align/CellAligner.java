@@ -8,11 +8,12 @@ import java.util.List;
 public class CellAligner {
 
 	private final ColumnAlignerModel model;
+	private final boolean alignColumn;
 	private int maxCurrentTokenLength = 0;
 
-	public CellAligner(ColumnAlignerModel model, List<ColumnAlignerLine> lines) {
+	public CellAligner(ColumnAlignerModel model, List<ColumnAlignerLine> lines, boolean alignColumn) {
+		this.alignColumn = alignColumn;
 		this.model = model;
-
 		alignDecimalPlaces(model, lines);
 
 
@@ -66,7 +67,7 @@ public class CellAligner {
 			return str;
 		}
 
-		if (model.isRightAlign()) {
+		if (model.isRightAlignAll() || alignColumn) {
 			return StringUtil.rightAlign(str, maxCurrentTokenLength);
 		} else if (model.isRightAlignNumbers()) {
 			return StringUtil.rightAlignNumber(str, maxCurrentTokenLength);
