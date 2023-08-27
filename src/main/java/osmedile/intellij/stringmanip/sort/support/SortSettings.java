@@ -72,7 +72,11 @@ public class SortSettings {
 	@NotNull
 	public Pattern getIgnoreLeadingCharactersPattern() {
 		if (ignoreLeadingCharactersPattern == null) {
-			ignoreLeadingCharactersPattern = Pattern.compile(ignoreLeadingCharacters);
+			String pattern = ignoreLeadingCharacters;
+			if (!pattern.startsWith("^")) {
+				pattern = "^" + pattern;
+			}
+			ignoreLeadingCharactersPattern = Pattern.compile(pattern);
 		}
 		return ignoreLeadingCharactersPattern;
 	}

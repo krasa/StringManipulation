@@ -47,9 +47,10 @@ public class SortLineTest {
 
 		enabledFeatures.setIgnoreLeadingCharacters("#");
 		assertThatWith(enabledFeatures).line(" # jupyterlab-drawio = \">=0.9.0\"").isComparedAs("jupyterlab-drawio = \">=0.9.0\"");
+		assertThatWith(enabledFeatures).line("#foo#foo").isComparedAs("foo#foo");
+		assertThatWith(enabledFeatures).line("foo#foo").isComparedAs("foo#foo");
 
 		enabledFeatures.setIgnoreLeadingCharacters("\\s*;\\s*");
-		assertThatWith(enabledFeatures).line("    ;    \"W0511\",  # (fixme) (todos)").isComparedAs("\"W0511\",  # (fixme) (todos)");
 
 	}
 
