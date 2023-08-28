@@ -11,6 +11,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.editor.markup.TextAttributes;
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.util.PsiUtilBase;
 import com.intellij.ui.ColoredSideBorder;
@@ -159,6 +160,14 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 //				},
 //				jsonSort);
 
+		Project project = editor.getProject();
+		if (project != null) {
+			boolean dumb = DumbService.isDumb(project);
+			groupClosingLineRegex_highlight.setEnabled(!dumb);
+			groupSeparatorRegex_highlight.setEnabled(!dumb);
+			levelRegex_highlight.setEnabled(!dumb);
+		}
+
 		submitRenderPreview();
 	}
 
@@ -192,6 +201,8 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		groupClosingLineRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_CLOSING_LINE, groupClosingLineRegex, true)));
 		groupSeparatorRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE, groupSeparatorRegex, true)));
 		levelRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_LEVEL, levelRegex, false)));
+
+
 		hierarchicalSort.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
