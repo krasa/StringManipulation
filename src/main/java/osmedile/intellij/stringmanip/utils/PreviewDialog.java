@@ -171,7 +171,7 @@ public abstract class PreviewDialog<SettingsType, InputType> implements Disposab
 			if (disposed) {
 				return;
 			}
-			previewEditor.getDocument().setText(text);
+			previewEditor.getDocument().setText(text.replace("\r", ""));
 
 			inPreviewWriteAction(previewEditor, settings);
 

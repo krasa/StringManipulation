@@ -49,9 +49,9 @@ import static osmedile.intellij.stringmanip.utils.DialogUtils.enabledByAny;
 
 public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, InputType> {
 	private static final Logger LOG = Logger.getInstance(SortTypeDialog.class);
-	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(null, JBColor.ORANGE, null, null, 0);
-	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(null, JBColor.PINK, null, null, 0);
-	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_LEVEL = new TextAttributes(null, JBColor.CYAN, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(JBColor.BLACK, JBColor.ORANGE, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(JBColor.BLACK, JBColor.MAGENTA, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_LEVEL = new TextAttributes(JBColor.BLACK, JBColor.CYAN, null, null, 0);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_IGNORED = new TextAttributes(null, JBColor.LIGHT_GRAY, null, null, 0);
 
 	public JPanel contentPane;
@@ -192,7 +192,6 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		groupClosingLineRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_CLOSING_LINE, groupClosingLineRegex, true)));
 		groupSeparatorRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE, groupSeparatorRegex, true)));
 		levelRegex_highlight.addActionListener(new HighlightListener(() -> highlight(HIGHLIGHT_ATTRIBUTES_LEVEL, levelRegex, false)));
-
 		hierarchicalSort.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -201,6 +200,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 				}
 			}
 		});
+
 
 		init(sortSettings);
 
@@ -320,11 +320,12 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		if (lineCount > 0) {
 			Pattern finalCompile = compile;
 			myHyperlinks.highlightHyperlinks((s, i) -> {
-				int length = s.length();
+				int offset = i - s.length();
+				s = cutNewLine(s);
 				if (wholeLine) {
 					if (finalCompile.matcher(s).matches()) {
 						matched.incrementAndGet();
-						return new Filter.Result(i - length, i, null, attributes);
+						return new Filter.Result(offset, i, null, attributes);
 					}
 				} else {
 					Matcher matcher = finalCompile.matcher(s);
@@ -333,7 +334,6 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 
 						final int start = matcher.start();
 						final int end = matcher.end();
-						int offset = i - length;
 						return new Filter.Result(offset + start, offset + end, null, attributes);
 					}
 				}
@@ -341,6 +341,14 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			}, 0, lineCount - 1);
 		}
 		lastHighlights = matched.get();
+	}
+
+	@NotNull
+	private static String cutNewLine(String s) {
+		if (s.endsWith("\n")) {
+			s = s.substring(0, s.length() - 1);
+		}
+		return s;
 	}
 
 	private void addPreviewListeners(Object object) {
@@ -389,7 +397,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			LOG.warn(e);
 			s = e.getMessage();
 		} catch (Throwable e) {
-			LOG.error(e);
+			LOG.warn(e);
 			s = e.toString();
 //			String s1 = IdeUtils.stacktraceToString(e);
 //			s += "\n\n" + s1;
