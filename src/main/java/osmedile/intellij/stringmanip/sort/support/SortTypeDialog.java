@@ -163,9 +163,11 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		Project project = editor.getProject();
 		if (project != null) {
 			boolean dumb = DumbService.isDumb(project);
-			groupClosingLineRegex_highlight.setEnabled(!dumb);
-			groupSeparatorRegex_highlight.setEnabled(!dumb);
-			levelRegex_highlight.setEnabled(!dumb);
+			if (dumb) {
+				groupClosingLineRegex_highlight.setEnabled(false);
+				groupSeparatorRegex_highlight.setEnabled(false);
+				levelRegex_highlight.setEnabled(false);
+			}
 		}
 
 		submitRenderPreview();
