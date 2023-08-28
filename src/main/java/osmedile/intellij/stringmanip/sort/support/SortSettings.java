@@ -76,7 +76,11 @@ public class SortSettings {
 			if (!pattern.startsWith("^")) {
 				pattern = "^" + pattern;
 			}
-			ignoreLeadingCharactersPattern = Pattern.compile(pattern);
+			try {
+				ignoreLeadingCharactersPattern = Pattern.compile(pattern);
+			} catch (Exception e) {
+				throw new SortException("Ignore Leading Characters - Regex not valid", e);
+			}
 		}
 		return ignoreLeadingCharactersPattern;
 	}

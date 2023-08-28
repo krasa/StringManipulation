@@ -113,24 +113,29 @@ public abstract class PreviewDialog<SettingsType, InputType> implements Disposab
 	}
 
 	protected void renderPreview() {
-		InputType input = preparePreviewInput(this.editor);
-		executor.submit(() -> {
-			if (disposed) {
-				return;
-			}
-			try {
-				renderPreviewAsync(input);
-			} catch (Throwable e) {
-				LOG.error(e);
-			}
-		});
+		if (validateBeforeRenderPreview()) {
+			InputType input = preparePreviewInput(this.editor);
+			executor.submit(() -> {
+				if (disposed) {
+					return;
+				}
+				try {
+					renderPreviewAsync(input);
+				} catch (Throwable e) {
+					LOG.error(e);
+				}
+			});
+		}
+	}
+
+	protected boolean validateBeforeRenderPreview() {
+		return true;
 	}
 
 	protected InputType preparePreviewInput(Editor editor) {
 		return null;
 	}
 
-	;
 
 	protected abstract void renderPreviewAsync(InputType input);
 

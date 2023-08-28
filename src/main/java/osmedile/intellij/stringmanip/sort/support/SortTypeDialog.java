@@ -52,6 +52,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_CLOSING_LINE = new TextAttributes(null, JBColor.ORANGE, null, null, 0);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_SEPARATOR_LINE = new TextAttributes(null, JBColor.PINK, null, null, 0);
 	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_LEVEL = new TextAttributes(null, JBColor.CYAN, null, null, 0);
+	public static final TextAttributes HIGHLIGHT_ATTRIBUTES_IGNORED = new TextAttributes(null, JBColor.LIGHT_GRAY, null, null, 0);
 
 	public JPanel contentPane;
 
@@ -131,7 +132,7 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 				},
 				normalSort, hierarchicalSort);
 
-		enabledByAny(new JComponent[]{preserveBlank, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank}, normalSort);
+		enabledByAny(new JComponent[]{preserveBlank, preserveLeadingSpaces, ignoreLeadingSpaces, removeBlank, ignoreLeadingCharactersEnabled, ignoreLeadingCharacters}, normalSort);
 		enabledByAny(new JComponent[]{
 				groupSeparatorRegex, groupSeparatorRegex_label, groupSeparatorRegex_reset, groupSeparatorRegex_highlight,
 				levelRegex, levelRegex_label, levelRegex_reset, levelRegex_highlight,
@@ -377,7 +378,6 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		if (this.editor == null) {
 			return;
 		}
-		if (!validateRegex()) return;
 
 		String s;
 		SortSettings settings = null;
@@ -421,6 +421,35 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 			String reformat = JsonSort.reformat(text, editor.getProject());
 			myPreviewEditor.getDocument().setText(reformat);
 //			},"StringManipulation", myPreviewEditor.getComponent());
+		}
+
+		if (settings != null && !settings.isJsonSort() && !settings.isHierarchicalSort()) {
+			highlightIgnoredText(previewEditor, settings);
+		}
+	}
+
+	private void highlightIgnoredText(EditorImpl previewEditor, SortSettings settings) {
+		Project project = editor.getProject();
+		EditorHyperlinkSupport myHyperlinks = new EditorHyperlinkSupport(myPreviewEditor, project);
+		int lineCount = myPreviewEditor.getDocument().getLineCount();
+		if (lineCount > 0 && (settings.isIgnoreLeadingCharactersEnabled() || settings.isIgnoreLeadingSpaces())) {
+			try {
+				if (settings.isIgnoreLeadingCharactersEnabled()) {
+					settings.getIgnoreLeadingCharactersPattern();
+				}
+			} catch (Exception e) {
+				return;
+			}
+			myHyperlinks.highlightHyperlinks((s, i) -> {
+				SortLine sortLine = new SortLine(s, settings);
+				int ignoredToIndex = sortLine.ignoredToIndex;
+				if (ignoredToIndex > 0) {
+					int offset = i - s.length();
+					return new Filter.Result(offset, offset + ignoredToIndex, null, HIGHLIGHT_ATTRIBUTES_IGNORED);
+				}
+				return null;
+			}, 0, lineCount - 1);
+
 		}
 	}
 
@@ -529,6 +558,11 @@ public class SortTypeDialog<InputType> extends PreviewDialog<SortSettings, Input
 		result = validateRegex(groupClosingLineRegex, result);
 		result = validateRegex(ignoreLeadingCharacters, result) || !ignoreLeadingCharactersEnabled.isSelected();
 		return result;
+	}
+
+	@Override
+	protected boolean validateBeforeRenderPreview() {
+		return validateRegex();
 	}
 
 	private boolean validateRegex(MyJBTextField field, boolean result) {

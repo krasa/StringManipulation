@@ -12,6 +12,7 @@ public class SortLine implements Sortable {
 	private final String text;
 	private final SortSettings sortSettings;
 	private final String textForComparison;
+	public int ignoredToIndex;
 
 	public SortLine(String text, SortSettings sortSettings) {
 		this.text = text;
@@ -30,20 +31,26 @@ public class SortLine implements Sortable {
 	protected String makeTextForComparison(String text, SortSettings sortSettings) {
 		String textForComparison = text;
 		if (sortSettings.isIgnoreLeadingSpaces()) {
-			textForComparison = textForComparison.substring(StringUtil.indexOfAnyButWhitespace(textForComparison));
+			int i = StringUtil.indexOfAnyButWhitespace(textForComparison);
+			ignoredToIndex += i;
+			textForComparison = textForComparison.substring(i);
 		}
 		if (sortSettings.isIgnoreLeadingCharactersEnabled()) {
 			Matcher matcher = sortSettings.getIgnoreLeadingCharactersPattern().matcher(textForComparison);
 			if (matcher.find()) {
 				int end = matcher.end();
 				if (end > 0) {
+					ignoredToIndex += end;
 					textForComparison = textForComparison.substring(end);
+					if (sortSettings.isIgnoreLeadingSpaces()) {
+						int i = StringUtil.indexOfAnyButWhitespace(textForComparison);
+						ignoredToIndex += i;
+						textForComparison = textForComparison.substring(i);
+					}
 				}
 			}
 		}
-		if (sortSettings.isIgnoreLeadingSpaces()) {
-			textForComparison = textForComparison.substring(StringUtil.indexOfAnyButWhitespace(textForComparison));
-		}
+
 		if (sortSettings.isPreserveTrailingSpecialCharacters()) {
 			int textWithoutTrailingCharsEndIndex = lastIndexOfAnyBut(textForComparison, sortSettings.getTrailingChars());
 			textForComparison = textForComparison.substring(0, textWithoutTrailingCharsEndIndex);

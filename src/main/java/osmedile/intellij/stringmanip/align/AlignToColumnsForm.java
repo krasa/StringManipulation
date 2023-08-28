@@ -210,9 +210,6 @@ public class AlignToColumnsForm extends PreviewDialog {
 		String x = null;
 		try {
 			ColumnAlignerModel newModel = getModel();
-			if (lastPrevieModel != null && lastPrevieModel.equals(newModel)) {
-				return;
-			}
 			if (!sortTypeForm.validateRegex()) {
 				return;
 			}

@@ -191,24 +191,14 @@ public class ColumnAligner {
 	}
 
 	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines) {
-		String sortOrder = model.getColumnSortOrder();
-		if (!isBlank(sortOrder)) {
-			SortSettings sortSettings = model.getSortSettings();
-			String[] split = sortOrder.split(" ");
-			checkParse(split);
-
-			for (int i = split.length - 1; i >= 0; i--) {
-				if (isBlank(split[i])) {
-					continue;
-				}
-				int columnIndex = Integer.parseInt(split[i]);
-				sort(lines, columnIndex, sortSettings);
-			}
+		for (Integer columnIndex : model.validColumnSortOrder()) {
+			sort(lines, columnIndex);
 		}
 		return lines;
 	}
 
-	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines, int index, SortSettings sortSettings) {
+	private List<ColumnAlignerLine> sort(List<ColumnAlignerLine> lines, int index) {
+		SortSettings sortSettings = model.getSortSettings();
 		if (index <= 0) {
 			throw new SortException("Invalid sort column index: " + index);
 		}
@@ -246,19 +236,6 @@ public class ColumnAligner {
 		return lines;
 	}
 
-
-	private void checkParse(String[] split) {
-		try {
-			for (int i = 0; i < split.length; i++) {
-				if (isBlank(split[i])) {
-					continue;
-				}
-				Integer s = Integer.valueOf(split[i]);
-			}
-		} catch (Exception e) {
-			throw new SortException("Invalid sort settings: " + e.getMessage(), e);
-		}
-	}
 
 	protected void debug(List<ColumnAlignerLine> lines) {
 		System.out.println("DEBUG >>>>>>>>>");

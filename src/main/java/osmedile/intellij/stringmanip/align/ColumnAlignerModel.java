@@ -2,10 +2,13 @@ package osmedile.intellij.stringmanip.align;
 
 import com.intellij.util.xmlb.annotations.Transient;
 import org.apache.commons.lang3.StringUtils;
+import osmedile.intellij.stringmanip.sort.support.SortException;
 import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * update #equals!!
@@ -210,6 +213,36 @@ public class ColumnAlignerModel {
 
 	public void setRightAlignAll(boolean rightAlignAll) {
 		this.rightAlignAll = rightAlignAll;
+	}
+
+	public List<Integer> validColumnSortOrder() {
+		String sortOrder = columnSortOrder;
+		if (isBlank(sortOrder)) {
+			return Collections.emptyList();
+		}
+		ArrayList list = new ArrayList();
+		String[] split = sortOrder.split(" ");
+		checkParse(split);
+		for (int i = split.length - 1; i >= 0; i--) {
+			if (isBlank(split[i])) {
+				continue;
+			}
+			list.add(Integer.parseInt(split[i]));
+		}
+		return list;
+	}
+
+	private void checkParse(String[] split) {
+		try {
+			for (int i = 0; i < split.length; i++) {
+				if (isBlank(split[i])) {
+					continue;
+				}
+				Integer s = Integer.valueOf(split[i]);
+			}
+		} catch (Exception e) {
+			throw new SortException("Invalid sort settings: " + e.getMessage(), e);
+		}
 	}
 
 	public enum Align {

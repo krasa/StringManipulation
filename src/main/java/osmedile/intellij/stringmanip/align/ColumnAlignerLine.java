@@ -3,6 +3,8 @@ package osmedile.intellij.stringmanip.align;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import osmedile.intellij.stringmanip.sort.support.SortLine;
+import osmedile.intellij.stringmanip.sort.support.SortSettings;
 
 import java.util.*;
 
@@ -227,6 +229,11 @@ public class ColumnAlignerLine {
 	}
 
 	public List<String> debugTokens() {
+		SortSettings sortSettings = model.getSortSettings();
+		String columnSortOrder = model.getColumnSortOrder();
+		List<Integer> columnIndexs = model.validColumnSortOrder();
+
+
 		int currentIndex = 1;
 		List<String> strings = new ArrayList<>();
 		for (int i = 0; i < split.length; i++) {
@@ -234,7 +241,13 @@ public class ColumnAlignerLine {
 			if (isSeparator(s)) {
 				continue;
 			}
-			strings.add(currentIndex + "=" + s.trim());
+
+			strings.add(currentIndex + " = " + s);
+
+			if (columnIndexs.contains(currentIndex)) {
+				strings.add(currentIndex + "_SortBy = " + new SortLine(s, sortSettings).getTextForComparison());
+			}
+
 			currentIndex++;
 		}
 		return strings;

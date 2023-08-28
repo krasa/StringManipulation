@@ -129,7 +129,7 @@
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Ignore Leading [regex]"/>
+                      <text value="Ignore Leading Characters [regex]"/>
                     </properties>
                   </component>
                   <component id="c54cb" class="osmedile.intellij.stringmanip.sort.support.MyJBTextField" binding="ignoreLeadingCharacters">
@@ -146,7 +146,7 @@
                     </constraints>
                     <properties>
                       <text resource-bundle="messages/StringManipulationBundle" key="button.reset"/>
-                      <toolTipText resource-bundle="messages/StringManipulationBundle" key="default.blank.line.or.starting.with"/>
+                      <toolTipText value="To language specific line comment (if available)"/>
                     </properties>
                   </component>
                 </children>

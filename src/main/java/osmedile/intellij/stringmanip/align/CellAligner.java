@@ -69,10 +69,9 @@ public class CellAligner {
 
 		if (model.isRightAlignAll() || alignColumn) {
 			return StringUtil.rightAlign(str, maxCurrentTokenLength);
-		} else if (model.isRightAlignNumbers()) {
-			return StringUtil.rightAlignNumber(str, maxCurrentTokenLength);
+		} else if (model.isRightAlignNumbers() && StringUtil.isNumber(str)) {
+			return StringUtil.rightAlign(str, maxCurrentTokenLength);
 		} else {
-
 			return str;
 		}
 	}
