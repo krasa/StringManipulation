@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [9.12.0] - 2023-11-28
+- compatibility with 2023.3
+
 ## [9.11.3] - 2023-08-28
 - Align Columns: added option to right-align cells
 - Sort: added option to ignore leading characters, with highlighting
@@ -20,8 +23,8 @@
 ### Changed
 - Gradle Build
 
-[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.11.3...HEAD
-
+[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.12.0...HEAD
+[9.12.0]: https://github.com/krasa/StringManipulation/compare/v9.11.3...v9.12.0
 [9.11.3]: https://github.com/krasa/StringManipulation/compare/v9.10.0...v9.11.3
 [9.10.0]: https://github.com/krasa/StringManipulation/compare/v9.9.0...v9.10.0
 [9.9.0]: https://github.com/krasa/StringManipulation/compare/v9.8.0...v9.9.0

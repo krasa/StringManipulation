@@ -15,19 +15,19 @@ import osmedile.intellij.stringmanip.styles.custom.CustomAction;
 import osmedile.intellij.stringmanip.styles.custom.CustomActionModel;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class ShortcutStartupActivity implements StartupActivity {
 
 	private static final Logger LOG = Logger.getInstance(ShortcutStartupActivity.class);
 
-	private volatile boolean registered = false;
+	private static final AtomicBoolean registered = new AtomicBoolean();
 
 	@Override
 	public void runActivity(@NotNull Project project) {
-		if (!registered) {
+		if (registered.compareAndSet(false, true)) {
 			registerActions();
-			registered = true;
 		}
 	}
 
