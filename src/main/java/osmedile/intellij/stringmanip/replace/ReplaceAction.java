@@ -68,7 +68,7 @@ public class ReplaceAction extends MyEditorAction {
 				model = PluginPersistentStateComponent.getInstance().getLastReplaceModel();
 			}
 
-			if (model == null || !model.isAnyEnabledAndValid()) {
+			if (model == null || !model.isAnyEnabledAndValid() || toolWindowPanel == null) {
 				StringManipulationToolWindowFactory.showToolWindow(project);
 			} else {
 				replace(editor, model);

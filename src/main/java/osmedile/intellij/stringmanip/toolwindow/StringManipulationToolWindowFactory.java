@@ -29,6 +29,10 @@ public class StringManipulationToolWindowFactory implements ToolWindowFactory, D
 
 	@Override
 	public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+		initPanel(project, toolWindow);
+	}
+
+	private static void initPanel(@NotNull Project project, @NotNull ToolWindow toolWindow) {
 		ToolWindowPanel previewPanel = new ToolWindowPanel(project, toolWindow);
 
 		JBScrollPane toolWindowContent = new JBScrollPane(previewPanel.getRoot());
@@ -50,10 +54,13 @@ public class StringManipulationToolWindowFactory implements ToolWindowFactory, D
 				toolWindow.setAvailable(true);
 				toolWindow.show();
 			}
+
 			Content[] contents = toolWindow.getContentManager().getContents();
 			if (contents.length > 0) {
 				Content content = contents[0];
 				return content.getUserData(TOOL_WINDOW_PANEL);
+			} else {
+				initPanel(project, toolWindow);
 			}
 		}
 		return null;

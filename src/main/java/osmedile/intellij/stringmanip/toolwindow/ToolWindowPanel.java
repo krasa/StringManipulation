@@ -3,6 +3,8 @@ package osmedile.intellij.stringmanip.toolwindow;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import osmedile.intellij.stringmanip.config.PluginPersistentStateComponent;
 import osmedile.intellij.stringmanip.replace.gui.CompositeForm;
 import osmedile.intellij.stringmanip.replace.gui.ReplaceCompositeModel;
@@ -13,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolWindowPanel {
+	private static final Logger log = LoggerFactory.getLogger(ToolWindowPanel.class);
+
 	private final Project project;
 	private final ToolWindow toolWindow;
 	private JPanel root;
@@ -27,19 +31,18 @@ public class ToolWindowPanel {
 	public ToolWindowPanel(Project project, ToolWindow toolWindow) {
 		this.project = project;
 		this.toolWindow = toolWindow;
-		addGrepPanel();
+		initPanel();
 		reload.setVisible(!ApplicationManager.getApplication().isInternal());
 		reload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addGrepPanel();
+				initPanel();
 
 			}
 		});
 	}
 
-	private void addGrepPanel() {
-		try {
+	public void initPanel() {
 			content.removeAll();
 			PluginPersistentStateComponent instance = PluginPersistentStateComponent.getInstance();
 			ReplaceCompositeModel lastReplaceModel = instance.getLastReplaceModel();
@@ -50,9 +53,6 @@ public class ToolWindowPanel {
 			content.add(compositeForm, BorderLayout.CENTER);
 			root.revalidate();
 			root.repaint();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void createUIComponents() {

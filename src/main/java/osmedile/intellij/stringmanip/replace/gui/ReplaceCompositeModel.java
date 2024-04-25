@@ -3,7 +3,7 @@ package osmedile.intellij.stringmanip.replace.gui;
 import com.intellij.find.FindModel;
 import com.intellij.openapi.editor.impl.DocumentImpl;
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import osmedile.intellij.stringmanip.replace.MyFindUtil;
 
