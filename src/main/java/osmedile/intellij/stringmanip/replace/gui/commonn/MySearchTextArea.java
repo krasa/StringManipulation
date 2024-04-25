@@ -577,6 +577,11 @@ public abstract class MySearchTextArea extends JPanel implements PropertyChangeL
 		}
 
 		@Override
+		public final @NotNull ActionUpdateThread getActionUpdateThread() {
+			return ActionUpdateThread.BGT;
+		}
+
+		@Override
 		public void setSelected(@NotNull AnActionEvent e, boolean selected) {
 			if (disabled) {
 				return;

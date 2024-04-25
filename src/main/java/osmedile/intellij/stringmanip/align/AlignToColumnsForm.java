@@ -149,7 +149,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 	}
 
 	private void debugRowPanel() {
-		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
+		AnActionButton plus = new MyAnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
@@ -161,7 +161,7 @@ public class AlignToColumnsForm extends PreviewDialog {
 		plus.setContextComponent(getRoot());
 		plus.addCustomUpdater(anActionEvent -> true);
 
-		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+		AnActionButton minus = new MyAnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- compatibility with 2024.1
+
 ## [9.12.0] - 2023-11-28
 - compatibility with 2023.3
 

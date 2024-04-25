@@ -9,12 +9,12 @@ import com.intellij.openapi.application.ModalityState;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ex.util.EditorUtil;
 import com.intellij.openapi.editor.impl.EditorImpl;
-import com.intellij.ui.AnActionButton;
 import com.intellij.ui.CommonActionsPanel;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import osmedile.intellij.stringmanip.Donate;
+import osmedile.intellij.stringmanip.align.MyAnActionButton;
 import osmedile.intellij.stringmanip.utils.DialogUtils;
 import osmedile.intellij.stringmanip.utils.IdeUtils;
 import osmedile.intellij.stringmanip.utils.PreviewDialog;
@@ -83,7 +83,7 @@ public class BorderDialog extends PreviewDialog {
 	}
 
 	private void borderPanel() {
-		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
+		MyAnActionButton plus = new MyAnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
@@ -99,7 +99,7 @@ public class BorderDialog extends PreviewDialog {
 		plus.addCustomUpdater(anActionEvent -> true);
 //		plus.addCustomUpdater(anActionEvent -> safeParse(borderWidth.getText(), 1) < MAX_VALUE);
 
-		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+		MyAnActionButton minus = new MyAnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
@@ -125,7 +125,7 @@ public class BorderDialog extends PreviewDialog {
 	}
 
 	private void paddingPanel() {
-		AnActionButton plus = new AnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
+		MyAnActionButton plus = new MyAnActionButton("Increment", CommonActionsPanel.Buttons.UP.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;
@@ -142,7 +142,7 @@ public class BorderDialog extends PreviewDialog {
 		plus.addCustomUpdater(anActionEvent -> true);
 //		plus.addCustomUpdater(anActionEvent -> safeParse(padding.getText(), 1)  < MAX_VALUE);
 
-		AnActionButton minus = new AnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
+		MyAnActionButton minus = new MyAnActionButton("Decrement", CommonActionsPanel.Buttons.DOWN.getIcon()) {
 			@Override
 			public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
 				int i;

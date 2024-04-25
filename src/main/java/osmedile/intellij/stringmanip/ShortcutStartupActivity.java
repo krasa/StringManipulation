@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.Constraints;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.startup.StartupActivity;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class ShortcutStartupActivity implements StartupActivity {
+public class ShortcutStartupActivity implements StartupActivity, DumbAware {
 
 	private static final Logger LOG = Logger.getInstance(ShortcutStartupActivity.class);
 

@@ -51,10 +51,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
-    implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.apache.commons:commons-text:1.12.0")
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
 
     implementation("uk.com.robust-it:cloning:1.9.12")
 }

@@ -343,7 +343,9 @@ public class CustomActionSettingsForm implements Disposable {
 			}
 		});
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		list.setDragEnabled(true);
+		if (!GraphicsEnvironment.isHeadless()) {
+			list.setDragEnabled(true);
+		}
 		list.setDropMode(DropMode.INSERT);
 		list.setTransferHandler(new MyListDropHandler(list) {
 			@Override
@@ -412,7 +414,9 @@ public class CustomActionSettingsForm implements Disposable {
 				return comp;
 			}
 		});
-		jbList.setDragEnabled(true);
+		if (!GraphicsEnvironment.isHeadless()) {
+			jbList.setDragEnabled(true);
+		}
 		jbList.setDropMode(DropMode.INSERT);
 		jbList.setTransferHandler(new MyListDropHandler(jbList));
 
