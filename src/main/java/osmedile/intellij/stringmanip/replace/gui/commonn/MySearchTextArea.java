@@ -577,8 +577,8 @@ public abstract class MySearchTextArea extends JPanel implements PropertyChangeL
 		}
 
 		@Override
-		public final @NotNull ActionUpdateThread getActionUpdateThread() {
-			return ActionUpdateThread.BGT;
+		public @NotNull ActionUpdateThread getActionUpdateThread() {
+			return ActionUpdateThread.EDT;
 		}
 
 		@Override
