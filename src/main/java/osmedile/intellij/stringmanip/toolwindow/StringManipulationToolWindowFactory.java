@@ -1,5 +1,6 @@
 package osmedile.intellij.stringmanip.toolwindow;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
@@ -52,7 +53,7 @@ public class StringManipulationToolWindowFactory implements ToolWindowFactory, D
 			if (!toolWindow.isShowStripeButton() || !toolWindow.isAvailable()) {
 				toolWindow.setShowStripeButton(true);
 				toolWindow.setAvailable(true);
-				toolWindow.show();
+				ApplicationManager.getApplication().invokeLater(toolWindow::show);
 			}
 
 			Content[] contents = toolWindow.getContentManager().getContents();

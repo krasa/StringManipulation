@@ -2,8 +2,7 @@
 
 ## [Unreleased]
 
-## [9.14.0] - 2024-05-21
-
+## [9.14.1] - 2024-05-21
 - small exception fix
 
 ## [9.13.0] - 2024-04-25
@@ -30,9 +29,9 @@
 ### Changed
 - Gradle Build
 
-[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.14.0...HEAD
+[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.14.1...HEAD
 
-[9.14.0]: https://github.com/krasa/StringManipulation/compare/v9.13.0...v9.14.0
+[9.14.1]: https://github.com/krasa/StringManipulation/compare/v9.13.0...v9.14.1
 [9.13.0]: https://github.com/krasa/StringManipulation/compare/v9.12.0...v9.13.0
 [9.12.0]: https://github.com/krasa/StringManipulation/compare/v9.11.3...v9.12.0
 [9.11.3]: https://github.com/krasa/StringManipulation/compare/v9.10.0...v9.11.3
