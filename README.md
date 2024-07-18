@@ -162,7 +162,7 @@ Provides actions for text manipulation:
 
 ------
 
-Privacy Notice: No personal data is collected at all
+Privacy Notice: No personal data is collected and no source code is transmitted to any server
 
 ------
 ![YourKit-Logo](https://www.yourkit.com/images/yklogo.png)
