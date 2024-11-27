@@ -12,6 +12,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends optional="true">com.intellij.modules.java</depends>
+    <depends optional="true">com.intellij.modules.json</depends>
     <depends optional="true">com.intellij.properties</depends>
 
     <resource-bundle>messages.StringManipulationBundle</resource-bundle>

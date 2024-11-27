@@ -5,7 +5,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.ui.Messages;
-import org.apache.commons.lang.CharEncoding;
+import org.apache.commons.lang3.CharEncoding;
 import osmedile.intellij.stringmanip.AbstractStringManipAction;
 import osmedile.intellij.stringmanip.StringManipulationBundle;
 import ro.isdc.wro.model.resource.processor.support.JSMin;

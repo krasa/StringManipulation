@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [9.15.0] - 2024-11-27
+- Fixed JSON sort
+
 ## [9.14.1] - 2024-05-21
 - small exception fix
 
@@ -29,8 +32,9 @@
 ### Changed
 - Gradle Build
 
-[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.14.1...HEAD
+[Unreleased]: https://github.com/krasa/StringManipulation/compare/v9.15.0...HEAD
 
+[9.15.0]: https://github.com/krasa/StringManipulation/compare/v9.14.1...v9.15.0
 [9.14.1]: https://github.com/krasa/StringManipulation/compare/v9.13.0...v9.14.1
 [9.13.0]: https://github.com/krasa/StringManipulation/compare/v9.12.0...v9.13.0
 [9.12.0]: https://github.com/krasa/StringManipulation/compare/v9.11.3...v9.12.0
