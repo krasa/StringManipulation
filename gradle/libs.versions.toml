@@ -1,20 +1,22 @@
 [versions]
 # libraries
-annotations = "24.0.1"
+junit = "4.13.2"
+opentest4j = "1.3.0"
 
 # plugins
-kotlin = "1.9.0"
-changelog = "2.1.2"
-gradleIntelliJPlugin = "1.15.0"
-qodana = "0.1.13"
-kover = "0.7.2"
+changelog = "2.3.0"
+intelliJPlatform = "2.7.0"
+kotlin = "2.2.0"
+kover = "0.9.1"
+qodana = "2025.1.1"
 
 [libraries]
-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+opentest4j = { group = "org.opentest4j", name = "opentest4j", version.ref = "opentest4j" }
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
-gradleIntelliJPlugin = { id = "org.jetbrains.intellij", version.ref = "gradleIntelliJPlugin" }
+intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 qodana = { id = "org.jetbrains.qodana", version.ref = "qodana" }
