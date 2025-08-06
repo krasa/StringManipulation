@@ -1,10 +1,7 @@
 package osmedile.intellij.stringmanip.config;
 
 import com.intellij.ide.DataManager;
-import com.intellij.ide.ui.customization.CustomActionsSchema;
-import com.intellij.ide.ui.customization.CustomisedActionGroup;
 import com.intellij.openapi.Disposable;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.EditorFactory;
@@ -39,8 +36,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 public class CustomActionSettingsForm implements Disposable {
 	private static final Logger LOG = com.intellij.openapi.diagnostic.Logger.getInstance(CustomActionSettingsForm.class);
@@ -71,7 +68,6 @@ public class CustomActionSettingsForm implements Disposable {
 	public CustomActionSettingsForm() {
 		testField.setText("Foo Bar 1");
 
-		updateWarningVisibility();
 		LinkListener linkListener = new LinkListener() {
 			@Override
 			public void linkSelected(LinkLabel aSource, Object aLinkData) {
@@ -109,7 +105,7 @@ public class CustomActionSettingsForm implements Disposable {
 				element.setName("New action");
 				model.addElement(element);
 				actionsList.setSelectedValue(element, true);
-				updateWarningVisibility();
+//				updateWarningVisibility();
 			}
 		});
 		upStep.addActionListener(new ActionListener() {
@@ -235,20 +231,20 @@ public class CustomActionSettingsForm implements Disposable {
 		});
 	}
 
-	protected void updateWarningVisibility() {
-		warningPanel.setVisible(isGroupCustomized("StringManipulation.Group.Main") || isGroupCustomized("StringManipulation.Group.SwitchCase"));
-	}
+//	protected void updateWarningVisibility() {
+//		warningPanel.setVisible(isGroupCustomized("StringManipulation.Group.Main") || isGroupCustomized("StringManipulation.Group.SwitchCase"));
+//	}
 
-	private boolean isGroupCustomized(String id) {
-		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction(id);
-		if (group1 instanceof CustomisedActionGroup) {
-			CustomisedActionGroup customisedActionGroup = (CustomisedActionGroup) group1;
-			AnAction[] children = customisedActionGroup.getChildren(null);
-			AnAction[] originalChildren = customisedActionGroup.getOrigin().getChildren(null);
-			return !Arrays.equals(children, originalChildren);
-		}
-		return false;
-	}
+//	private boolean isGroupCustomized(String id) {
+//		AnAction group1 = CustomActionsSchema.getInstance().getCorrectedAction(id);
+//		if (group1 instanceof CustomisedActionGroup) {
+//			CustomisedActionGroup customisedActionGroup = (CustomisedActionGroup) group1;
+//			AnAction[] children = customisedActionGroup.getDefaultChildrenOrStubs();
+//			AnAction[] originalChildren = customisedActionGroup.getOrigin().getChildren(null);
+//			return !Arrays.equals(children, originalChildren);
+//		}
+//		return false;
+//	}
 
 	private ActionListener deleteListener() {
 		return new ActionListener() {

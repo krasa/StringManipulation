@@ -223,7 +223,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <font style="1"/>
+                  <font/>
                   <text resource-bundle="messages/StringManipulationBundle" key="label.popups.were.customized.if.actions.are.not.visible.or.the.order.is.wrong.fix.it.manually.here"/>
                 </properties>
               </component>
