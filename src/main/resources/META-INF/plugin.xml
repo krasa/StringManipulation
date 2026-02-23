@@ -894,6 +894,10 @@
             <categoryKey>intentions.group.StringManipulation</categoryKey>
             <!--              <descriptionDirectoryName>OCDeclareMethodInInterfaceIntentionAction</descriptionDirectoryName>-->
         </intentionAction>
+        <intentionAction>
+            <className>osmedile.intellij.stringmanip.intentions.ShowStringManipulationPopupIntention</className>
+            <categoryKey>intentions.group.StringManipulation</categoryKey>
+        </intentionAction>
     </extensions>
 
     <description><![CDATA[
